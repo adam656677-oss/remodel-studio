@@ -5,7 +5,7 @@ SetCompressorDictSize 64
 !include "MUI2.nsh"
 !include "FileFunc.nsh"
 !define APP "Remodel Studio"
-!define VER "1.4.0"
+!define VER "1.5.0"
 !define EXE "Remodel Studio.exe"
 !define UNKEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\RemodelStudio"
 Name "${APP}"

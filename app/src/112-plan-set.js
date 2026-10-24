@@ -315,11 +315,11 @@ function coverSheet(P,p,index,marks){
       for(const i of iss.slice(0,8)){if(ly>A.y1-0.15*k)break;dl.text(A.x0+0.05*k,ly,`${i.sev==='error'?'FAILS':'CHECK'}  ${i.title}${i.rule?`  (${i.rule.set} ${i.rule.code})`:''}`,{size:6*k,color:i.sev==='error'?INK:MID});ly+=0.13*k;}}}
   const rx=A.x0+colW+0.4*k;let ry=y;const lvName=id=>lvlOf(p,id)?.name||'';
   const ops=Object.entries(marks).map(([id,m])=>({m,o:p.openings.find(o=>o.id===id)})).filter(r=>r.o).sort((a,b)=>a.m.slice(1)-b.m.slice(1));const wallOf=o=>p.walls.find(w=>w.id===o.wall);
-  const doors=ops.filter(r=>r.o.type==='door').map(({m,o})=>[m,fmtLen(o.width),fmtLen(o.height),lvName(wallOf(o)?.level),(o.status||'new').toUpperCase(),o.width>=34?'':'Check 32" clear']);
+  const doors=ops.filter(r=>r.o.type==='door').map(({m,o})=>{const sp=doorSpec(p,o);const h=doorHanding(p,o);const dt=o.dtype||'swing';return [m,`${fmtLen(o.width)} x ${fmtLen(o.height)}`,`${dt==='swing'?'':DOOR_TYPES[dt]+' '}${DOOR_STYLES[o.style||'panel6']||''}`.trim(),h.res?(h.ansi?`${h.res} / ${h.ansi}`:h.res):'',dt==='overhead'?'':hwName(sp).replace(/ set,/,','),[o.width>=34?'':'32" clear?',sp.door.fire20?'20 MIN':'',sp.door.closer?'CLOSER':''].filter(Boolean).join(' ')];});
   const wins=ops.filter(r=>r.o.type==='window').map(({m,o})=>[m,fmtLen(o.width),fmtLen(o.height),fmtLen(o.sill),fmtLen(o.sill+o.height),(WINDOW_OPS.find(x=>x[0]===(o.operation||'double-hung'))||['',''])[1],lvName(wallOf(o)?.level)]);
   const cw=Math.min(colW,5.15*k)/5.15;
   dl.text(rx,ry,'DOOR SCHEDULE',{size:7*k,bold:true});ry+=0.08*k;
-  ry+=drawTable(dl,rx,ry,[{h:'MARK',w:0.45*k*cw},{h:'WIDTH',w:0.65*k*cw},{h:'HEIGHT',w:0.65*k*cw},{h:'LEVEL',w:1.05*k*cw},{h:'STATUS',w:0.75*k*cw},{h:'ADA NOTE',w:1.05*k*cw}],doors,k,(A.y1+A.y0)/2+0.4*k)+0.3*k;
+  ry+=drawTable(dl,rx,ry,[{h:'MARK',w:0.38*k*cw},{h:'SIZE',w:0.85*k*cw},{h:'DOOR',w:0.9*k*cw},{h:'HANDING (RES / ANSI)',w:1.05*k*cw},{h:'HARDWARE',w:1.32*k*cw},{h:'NOTES',w:0.65*k*cw}],doors,k,(A.y1+A.y0)/2+0.4*k)+0.3*k;
   dl.text(rx,ry,'WINDOW SCHEDULE',{size:7*k,bold:true});ry+=0.08*k;
   const ibcOn=p.settings?.code==='ibc';
   ry+=drawTable(dl,rx,ry,[{h:'MARK',w:0.45*k*cw},{h:'WIDTH',w:0.65*k*cw},{h:'HEIGHT',w:0.65*k*cw},{h:'SILL',w:0.65*k*cw},{h:'HEAD',w:0.65*k*cw},{h:'TYPE',w:1.0*k*cw},{h:'LEVEL',w:1.05*k*cw}],wins,k,ibcOn?A.y1-2.2*k:A.y1-0.1*k)+0.3*k;

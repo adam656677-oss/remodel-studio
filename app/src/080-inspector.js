@@ -78,10 +78,8 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
   } else if(o&&sel.kind==='opening'){
     const w=p.walls.find(w=>w.id===o.wall); const L=w?wlen(w):0; kind=o.type==='door'?'Door':'Window'; const mk=openingMarks(p)[o.id]; title=`${mk?mk+' · ':''}${fmtLen(o.width)} ${kind.toLowerCase()}`;
     const fromStart=o.pos-o.width/2;
-    body=html`<div className="sec"><h3>Size</h3>
+    body=html`${o.type==='door'?html`<${DoorEditor} p=${p} o=${o} up=${up}/>`:html`<${WindowEditor} p=${p} o=${o} up=${up}/>`}<div className="sec"><h3>Size</h3>
       <${Field} label="Type" id="o-type"><${Sel} id="o-type" value=${o.type} onChange=${v=>up(v==='door'?{type:'door',sill:0,height:80,hinge:o.hinge||0,swing:o.swing||1}:{type:'window',sill:36,height:48,operation:'double-hung'})} options=${[['door','Door'],['window','Window']]}/><//>
-      ${o.type==='door'?html`<${Field} label="Door type" id="o-dt"><${Sel} id="o-dt" value=${o.dtype||'swing'} onChange=${v=>up({dtype:v,lib:null,name:null})} options=${Object.entries(DOOR_TYPES)}/><//>
-      <${Field} label="Style" id="o-ds"><${Sel} id="o-ds" value=${o.style||'panel6'} onChange=${v=>up({style:v,lib:null,name:null})} options=${Object.entries(DOOR_STYLES)}/><//>`:null}
       ${o.name?html`<p className="note">From the library: ${o.name}</p>`:null}
       <${Field} label="Width" id="o-w"><${LenInput} id="o-w" value=${o.width} onChange=${v=>v>0&&v<L&&up({width:v,pos:Math.max(v/2,Math.min(L-v/2,o.pos))})}/><//>
       <${Field} label="Height" id="o-h"><${LenInput} id="o-h" value=${o.height} onChange=${v=>v>0&&up({height:v})}/><//>
@@ -99,7 +97,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
       ${o.type==='door'?html`<div className="row"><button className="btn" onClick=${()=>up({hinge:o.hinge?0:1})}>Flip hinge side</button><button className="btn" onClick=${()=>up({swing:-(o.swing||1)})}>Flip swing</button></div>`:null}
       ${o.type==='door'&&o.width<36?html`<span className="pill warn">Under 36" — may not give the 32" ADA clear opening</span>`:null}
     </div>
-    <div className="sec"><h3>Color</h3><${ColorPick} id="o-col" label=${o.type==='door'?'Door color':'Frame color'} value=${o.color} fallback=${o.type==='door'?'#8a5a35':'#f7f7f4'} onChange=${v=>up({color:v})}/></div>
+    ${o.type==='door'?null:html`<div className="sec"><h3>Color</h3><${ColorPick} id="o-col" label="Frame color" value=${o.color} fallback="#f7f7f4" onChange=${v=>up({color:v})}/></div>`}
     ${w&&w.kind==='exterior'?html`<div className="sec"><h3>Outside trim and shutters</h3>
       <${Field} label="Outside casing" id="o-xc"><${Sel} id="o-xc" value=${String(o.extTrim??(w.siding==='brick'?0:3.5))} onChange=${v=>up({extTrim:+v})} options=${[['0','None (brick mould only)'],['3.5','1x4 flat'],['5.5','1x6 flat'],['7.25','1x8 craftsman']]}/><//>
       ${o.type==='window'?html`<${Field} label="Shutters" id="o-sh"><${Sel} id="o-sh" value=${o.shutters||'none'} onChange=${v=>up({shutters:v})} options=${SHUTTERS}/><//>
@@ -119,7 +117,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
     <${RoomFinishes} p=${p} o=${o} up=${up} commit=${commit}/>`;
   } else if(o&&sel.kind==='fixture'){
     const t=FIXTURES[o.type]||{label:o.type}; kind=o.lib?(LIB_BY_ID[o.lib]||{}).cat||t.cat:t.cat||'Fixture'; title=fxLabel(o);
-    body=html`<div className="sec"><h3>Size</h3>
+    body=html`<${FixturePicEditor} p=${p} o=${o} up=${up}/><div className="sec"><h3>Size</h3>
       <${Field} label="Width" id="x-w"><${LenInput} id="x-w" value=${o.w} onChange=${v=>v>0&&up({w:v})}/><//>
       <${Field} label="Depth" id="x-d"><${LenInput} id="x-d" value=${o.d} onChange=${v=>v>0&&up({d:v})}/><//>
       <${Field} label=${COUNTERTOP.has(o.type)?'Counter height':o.type==='lav'?'Rim height':'Height'} id="x-h"><${LenInput} id="x-h" value=${o.h} onChange=${v=>v>0&&up({h:v})}/><//>

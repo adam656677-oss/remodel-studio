@@ -49,7 +49,7 @@ function fixtureModel3D(f,lv,add,std,isSel,mSel,baseCol){
       const cl=kind==='truck'?0.38:0.5;B(0,0,10,L*0.92,Wd*0.9,22,body);B(kind==='truck'?L*0.12:-L*0.02,0,32,L*cl,Wd*0.82,18,M('cabin',0x9fb4c4,{roughness:.1,metalness:.3}));
       for(const a of [-L*0.32,L*0.32])for(const b of [-Wd*0.4,Wd*0.4])wheel(a,b);return true;}
     case 'tub':{const t=3;box(0,0,0,W,D,2,white);box(0,-D/2+t/2,0,W,t,H,white);box(0,D/2-t/2,0,W,t,H,white);box(-W/2+t/2,0,0,t,D,H,white);box(W/2-t/2,0,0,t,D,H,white);
-      box(0,0,2,W-2*t,D-2*t,0.5,M('tubin',0xe6eef2,{roughness:.2}));cyl(W/2-6,-D/2+t+1,H+2,0.8,3,steel,10);return true;}
+      box(0,0,2,W-2*t,D-2*t,0.5,M('tubin',0xe6eef2,{roughness:.2}));cyl((f.hand==='L'?-1:1)*(W/2-6),-D/2+t+1,H+2,0.8,3,steel,10);return true;}
     case 'shower':case 'rollin':{box(0,0,0,W,D,kind==='rollin'?0.5:4,white);const gl=M('glass',0xcfe4ee,{roughness:.05,transparent:true,opacity:.28});
       if(kind==='shower')box(0,D/2-0.3,4,W,0.4,72,gl);else box(0,D/2-0.5,78,W,0.6,0.6,steel);cyl(0,-D/2+2,76,2.5,1,steel,14);box(0,-D/2+1.5,40,3,1,6,steel);return true;}
     case 'lav':{if(/pedestal/.test((f.name||'').toLowerCase())){cyl(0,-2,0,4,30,white);box(0,0,30,W,D,5,white);}else box(0,0,H-6,W,D,6,white);
@@ -57,7 +57,7 @@ function fixtureModel3D(f,lv,add,std,isSel,mSel,baseCol){
     case 'range':{box(0,0,0,W,D,H-1,steel);box(0,0,H-1,W,D-2,1,glassB);for(const a of [-1,1])for(const b of [-1,1])cyl(a*W/4.5,b*D/5,H,W/9,0.15,M('burner',0x3a3a3a),20);
       box(0,D/2+0.1,6,W-4,0.4,20,glassB);box(0,D/2+1,27,W-6,1,1,steel);box(0,-D/2+1.5,H,W,3,7,steel);return true;}
     case 'fridge':{box(0,0,0,W,D,H,steel);const split=W>=33;if(split){box(0,D/2+0.1,H*0.33,0.5,0.4,H*0.67,dark);for(const s of [-1,1])box(s*2,D/2+1.2,H*0.45,1,1,H*0.4,steel);}
-      else box(W/2-3,D/2+1.2,H*0.45,1,1,H*0.4,steel);box(0,D/2+0.1,H*0.32,W,0.4,0.5,dark);box(0,D/2+1.2,H*0.2,W*0.5,1,1,steel);return true;}
+      else box((f.hand==='R'?-1:1)*(W/2-3),D/2+1.2,H*0.45,1,1,H*0.4,steel);box(0,D/2+0.1,H*0.32,W,0.4,0.5,dark);box(0,D/2+1.2,H*0.2,W*0.5,1,1,steel);return true;}
     case 'dw':{box(0,0,0,W,D,H-1.5,steel);box(0,D/2+1,H-6,W-4,1,1,steel);return true;}
     case 'washer':case 'dryer':{box(0,0,0,W,D,H,white);box(0,D/2+0.1,H-6,W,0.4,6,M('panel',0xdedfdd));disc(0,D/2+0.5,H*0.45,W*0.3,1,M('door',0x9aa3a8,{roughness:.2,metalness:.4}));disc(0,D/2+0.9,H*0.45,W*0.22,0.4,glassB);return true;}
   }

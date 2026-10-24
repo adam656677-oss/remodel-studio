@@ -29,7 +29,7 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     return ()=>{ro.disconnect();mo.disconnect();mq.removeEventListener?.('change',themeSync);controls.dispose();renderer.dispose();renderer.domElement.remove();if(window.__view3d===S.current)window.__view3d=null;};
   },[]);
 
-  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,sel,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
+  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,sel,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
     applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[p,levelId,sel,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
   useEffect(()=>{const st=S.current;if(st&&fitToken&&!st.walk.on){fit3d(st);st.render();}},[fitToken]);
   useEffect(()=>{const st=S.current;if(!st)return;applyClip(st,clip,p);st.render();},[clip]);
@@ -190,14 +190,11 @@ function buildModel(st,p,levelId,sel,opts={}){
           if(!bay&&o.top&&w.kind==='exterior'){const on=outwardNormal(extW,w);addWinTop3D(o,w,px,py,ry,d,e0+sill+o.height,ow,add,std,mGlass,fr,on,t,H-(sill+o.height));}
           if(!bay&&['double-hung','single-hung','slider'].includes(o.operation||'double-hung')){const hz=o.operation==='slider';add(new THREE.BoxGeometry((hz?1.5:ow)*IN,(hz?o.height:1.5)*IN,(t*0.4)*IN),fr,px*IN,(e0+sill+o.height/2)*IN,py*IN,ry,false);}}
         else{const op=o.id===sel?.id;const st=o.style||'';const dc=o.color?hexNum(o.color):o.dtype==='overhead'?0xeeeeea:st==='metal'?0x8d9296:st==='storefront'?0x6f7378:null;
-          const dm=op?mSel:dc!=null?std('door-'+dc,dc,{roughness:.6}):mDoor;
-          if(['fulllite','french','storefront'].includes(st)||o.dtype==='slider'){add(new THREE.BoxGeometry(ow*IN,o.height*IN,0.6*IN),mGlass,px*IN,(e0+o.height/2)*IN,py*IN,ry,false);
-            for(const [zz,hh] of [[1.5,3],[o.height-1.5,3]])add(new THREE.BoxGeometry(ow*IN,hh*IN,1.75*IN),dm,px*IN,(e0+zz)*IN,py*IN,ry);
-            const nmul=o.dtype==='double'||o.dtype==='slider'?2:1;for(let i=0;i<=nmul;i++){const sx=-ow/2+ow*i/nmul;add(new THREE.BoxGeometry(3*IN,o.height*IN,1.75*IN),dm,(px+d.x*sx)*IN,(e0+o.height/2)*IN,(py+d.y*sx)*IN,ry);}}
-          else if(st==='halflite'||st==='garageglass'){const gh=st==='garageglass'?o.height*0.2:o.height*0.42;const gz=st==='garageglass'?o.height*0.7:o.height*0.5;
-            add(new THREE.BoxGeometry(ow*IN,(gz-gh/2)*IN,1.75*IN),dm,px*IN,(e0+(gz-gh/2)/2)*IN,py*IN,ry);add(new THREE.BoxGeometry(ow*IN,gh*IN,0.6*IN),mGlass,px*IN,(e0+gz)*IN,py*IN,ry,false);
-            const top=o.height-(gz+gh/2);add(new THREE.BoxGeometry(ow*IN,top*IN,1.75*IN),dm,px*IN,(e0+o.height-top/2)*IN,py*IN,ry);}
-          else add(new THREE.BoxGeometry(ow*IN,o.height*IN,1.75*IN),dm,px*IN,(e0+o.height/2)*IN,py*IN,ry);
+          const dm=op?mSel:dc!=null?std('door-'+dc,dc,{roughness:.6}):mDoor;const tagW=CUR_TAG;CUR_TAG={kind:'opening',id:o.id};
+          const tc=p.settings?.trimColor?hexNum(p.settings.trimColor):0xf6f4ee;const trimMat=std('trim-'+tc,tc,{roughness:.55});
+          let casingW=2.5;try{const it=LIB_BY_ID[trimOf(p,roomAt(px+d.y*(t/2+6),py-d.x*(t/2+6))||roomAt(px-d.y*(t/2+6),py+d.x*(t/2+6))).casing];if(it&&it.profile!=='none')casingW=it.h||2.5;else if(it)casingW=0;}catch(e){}
+          try{addDoor3D(p,w,o,{px,py,ow,d,t,ry,e0,add,std,mGlass,dm,trimMat,casingW});}catch(e){console.error('door',e);add(new THREE.BoxGeometry(ow*IN,o.height*IN,1.75*IN),dm,px*IN,(e0+o.height/2)*IN,py*IN,ry);}
+          CUR_TAG=tagW;
           if(w.kind==='exterior'&&!struct)addOpeningOutside3D(w,o,extW,{px,py,ow,d,t,ry,z0:e0,h:o.height},add,std);}
         if(struct&&struct.has('h-'+o.id)){const r=struct.get('h-'+o.id);const hd=Math.min(11.25,Math.max(3,H-head-0.5));add(new THREE.BoxGeometry((ow+3)*IN,hd*IN,(t+0.4)*IN),sMat(r),px*IN,(e0+head+hd/2)*IN,py*IN,ry,false);}
       }
@@ -209,7 +206,7 @@ function buildModel(st,p,levelId,sel,opts={}){
       const shape=new THREE.Shape(r.pts.map(q=>new THREE.Vector2(q[0]*IN,q[1]*IN)));for(const h of stairHole(p,lv))if(h.every(q=>inPoly(q.x,q.y,r.pts)))shape.holes.push(new THREE.Path(h.map(q=>new THREE.Vector2(q.x*IN,q.y*IN))));
       const geo=new THREE.ExtrudeGeometry(shape,{depth:0.75*IN,bevelEnabled:false}); geo.rotateX(Math.PI/2);
       const fin=r.finish||(r.use==='bath'||r.use==='kitchen'||r.use==='laundry'?'tile':r.use==='garage'?'concrete':'lvp');
-      const fcol=r.floorColor?hexNum(r.floorColor):FLOOR_COLOR[fin]||0xcfc6b8;let mat=std('floor-'+fcol,fcol,{roughness:.85});
+      const fcol=r.floorColor?hexNum(r.floorColor):FLOOR_COLOR[fin]||0xcfc6b8;let mat=(()=>{try{return std('floorT-'+fin+'-'+fcol,0xffffff,{roughness:/tile|porcelain|polished|epoxy|vct/.test(fin)?.45:.8,map:floorTexture(fin,fcol)});}catch(e){return std('floor-'+fcol,fcol,{roughness:.85});}})();
       if(struct){const a=struct.get('fj-'+r.id),b=struct.get('cj-'+r.id);const v=Math.max(a??-1,b??-1);mat=sMat(v<0?null:v);}
       if(sel&&sel.id===r.id)mat=mSel;
       const m=add(geo,mat,0,(e0+0.75)*IN,0,0,false); m.receiveShadow=true;

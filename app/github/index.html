@@ -499,6 +499,38 @@ table.shop tr.got td{color:var(--ink-2);text-decoration:line-through}table.shop 
 .vc-map{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:4px 14px}
 .vc-prev{max-height:220px;overflow:auto;font-size:12px}.vc-prev td,.vc-prev th{white-space:nowrap;max-width:220px;overflow:hidden;text-overflow:ellipsis}
 .btn.small{padding:2px 8px;font-size:12px;min-height:0}
+/* item pictures */
+.itempic{display:block;width:100%;background:#eef1f4;border-radius:6px;overflow:hidden;position:relative}
+.itempic img{display:block;width:100%;height:100%;object-fit:cover}
+.itempic-wait{position:absolute;inset:0;background:linear-gradient(90deg,#eef1f4,#e3e8ee,#eef1f4);background-size:200% 100%;animation:picwait 1.2s linear infinite}
+@keyframes picwait{to{background-position:-200% 0}}
+.libitem .itempic.libpic{width:88px;height:66px}
+.htile{width:100%;height:auto;display:block}
+.ht-wall{fill:#4a4f57}.ht-leaf{stroke:#1f5fbf;stroke-width:2.5;fill:none}.ht-arc{stroke:#1f5fbf;stroke-width:1.2;fill:none;stroke-dasharray:3 2}.ht-hinge{fill:#1f5fbf}.ht-lab{font-size:9px;fill:var(--muted,#666)}
+.pic-pane{position:relative}.pic-pane .itempic{border:1px solid var(--line)}
+.pic-side{position:absolute;right:8px;bottom:8px;background:rgba(255,255,255,.85);border-radius:8px}
+.hgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.htbtn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px;border:1px solid var(--line);border-radius:8px;background:var(--panel,#fff);cursor:pointer;color:inherit;font:inherit}
+.htbtn.on{border-color:var(--accent,#1f5fbf);box-shadow:0 0 0 2px var(--accent,#1f5fbf) inset}
+.htname{font-weight:600;font-size:13px}.ht-win{fill:#cfe2f1;stroke:#4a4f57;stroke-width:2}
+.stylegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:6px;margin:8px 0}
+.stylebtn{display:flex;flex-direction:column;gap:3px;padding:4px;border:1px solid var(--line);border-radius:8px;background:var(--panel,#fff);cursor:pointer;font:inherit;font-size:11px;color:inherit;text-align:center}
+.stylebtn.on{border-color:var(--accent,#1f5fbf);box-shadow:0 0 0 2px var(--accent,#1f5fbf) inset}
+.finswatches{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.finsw{display:flex;align-items:center;gap:6px;padding:4px 8px 4px 4px;border:1px solid var(--line);border-radius:16px;background:var(--panel,#fff);cursor:pointer;font:inherit;font-size:12px;color:inherit}
+.finsw i{width:18px;height:18px;border-radius:9px;border:1px solid rgba(0,0,0,.2)}.finsw.on{border-color:var(--accent,#1f5fbf);box-shadow:0 0 0 1px var(--accent,#1f5fbf) inset}
+.checkrow{display:flex;flex-wrap:wrap;gap:4px 14px}.warnnote{color:#a35b00}
+.custmodal{max-width:min(1040px,calc(100vw - 24px))!important}
+.cust-body{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px;max-height:calc(100vh - 170px);overflow:auto}
+.cust-left .sec,.cust-right .sec{padding-left:0;padding-right:0}
+@media (max-width:820px){.cust-body{grid-template-columns:1fr}}
+.libitem{align-items:flex-start;grid-template-columns:88px minmax(0,1fr)}
+.libitem>.libicon,.libitem>.libswatch{justify-self:center}
+.libicon.wallsec{width:88px;height:66px;border-radius:6px}
+.libitem>.libicon:not(.wallsec){width:66px;height:66px;background:#eef1f4;border-radius:6px}
+.libitem>.libswatch{width:66px;height:50px}
+.draft-line{stroke:var(--accent,#1f5fbf);stroke-width:1.5;fill:none}
+.corner .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
 </style>
 </head>
 <body>
@@ -9817,7 +9849,8 @@ function PlanView(props){
   function placeOpening(){
     if(!hover) return; const {w,pos}=hover;
     const it=LIB_BY_ID[openPreset[tool]];
-    const o=it?{id:uid('op'),wall:w.id,pos,hinge:0,swing:1,status:'new',...openingFromLib(it)}:tool==='door'?{id:uid('op'),wall:w.id,type:'door',pos,width:36,height:80,sill:0,hinge:0,swing:1,status:'new'}
+    const hs=tool==='door'&&hover.side?{hinge:hover.hinge||0,swing:hover.side}:{};
+    const o=it?{id:uid('op'),wall:w.id,pos,hinge:0,swing:1,status:'new',...openingFromLib(it),...hs}:tool==='door'?{id:uid('op'),wall:w.id,type:'door',pos,width:36,height:80,sill:0,hinge:0,swing:1,status:'new',...hs}
                          :{id:uid('op'),wall:w.id,type:'window',pos,width:36,height:48,sill:36,operation:'double-hung',status:'new'};
     commit({...p,openings:[...p.openings,o]}); setSel({kind:'opening',id:o.id});
   }
@@ -9951,7 +9984,7 @@ function PlanView(props){
     const raw=toWorld(e); const D=drag.current;
     if(D&&D.type==='pan'){setView({...D.v,tx:D.v.tx+e.clientX-D.sx,ty:D.v.ty+e.clientY-D.sy});return;}
     const c=cursorFor(raw,e); setCursor(c);
-    if(tool==='door'||tool==='window'){const nw=nearestWall(raw);if(nw){const L=wlen(nw.w);const width=(LIB_BY_ID[openPreset[tool]]||{width:36}).width;let pos=Math.round(nw.pr.t*L);pos=Math.max(width/2,Math.min(L-width/2,pos));setHover({w:nw.w,pos,width});}else setHover(null);}
+    if(tool==='door'||tool==='window'){const nw=nearestWall(raw);if(nw){const L=wlen(nw.w);const width=(LIB_BY_ID[openPreset[tool]]||{width:36}).width;let pos=Math.round(nw.pr.t*L);pos=Math.max(width/2,Math.min(L-width/2,pos));const dd=wdir(nw.w);const side=((raw.x-nw.w.x1)*(-dd.y)+(raw.y-nw.w.y1)*dd.x)>=0?1:-1;const along=(raw.x-nw.w.x1)*dd.x+(raw.y-nw.w.y1)*dd.y;setHover({w:nw.w,pos,width,side,hinge:along>pos?1:0});}else setHover(null);}
     if(!D) return;
     if(D.type==='rect'){setRect({a:D.a,b:c});return;}
     if(D.type==='xrect'){if(Math.hypot(e.clientX-D.start.x,e.clientY-D.start.y)>6)D.moved=true;if(D.moved)setRect({a:D.a,b:c});return;}
@@ -10107,7 +10140,8 @@ function PlanView(props){
   if(rect){const x0=Math.min(rect.a.x,rect.b.x),y0=Math.min(rect.a.y,rect.b.y),x1=Math.max(rect.a.x,rect.b.x),y1=Math.max(rect.a.y,rect.b.y);drafts.push(html`<polygon key="rr" points=${poly([[x0,y0],[x1,y0],[x1,y1],[x0,y1]])} className="draft-fill"/>`);
     const [tx,ty]=S((x0+x1)/2,y0);drafts.push(html`<text key="rt" x=${tx} y=${ty-8} textAnchor="middle" className="draft-t halo">${fmtLen(x1-x0)} × ${fmtLen(y1-y0)}</text>`);}
   if((tool==='door'||tool==='window')&&hover){const {w,pos,width}=hover;const d=wdir(w),n={x:-d.y,y:d.x},t=w.thick/2+1;const P=(s,o)=>[w.x1+d.x*s+n.x*o,w.y1+d.y*s+n.y*o];
-    drafts.push(html`<polygon key="oh" points=${poly([P(pos-width/2,t),P(pos+width/2,t),P(pos+width/2,-t),P(pos-width/2,-t)])} className="draft-fill"/>`);}
+    drafts.push(html`<polygon key="oh" points=${poly([P(pos-width/2,t),P(pos+width/2,t),P(pos+width/2,-t),P(pos-width/2,-t)])} className="draft-fill"/>`);
+    if(tool==='door'){const it=LIB_BY_ID[openPreset.door];const og={...(it?openingFromLib(it):{type:'door',width,height:80}),hinge:hover.hinge,swing:hover.side};doorGeom(og,w.thick/2,pos-width/2,pos+width/2).forEach((g,i)=>drafts.push(html`<polyline key=${'ohg'+i} points=${poly(g.pts.map(([a,b])=>P(a,b)))} className="draft-line" fill="none" strokeDasharray=${g.dash?'3 3':undefined}/>`));}}
   if(meas.length){const a=meas[0],b=meas[1]||(tool==='measure'||tool==='dim'?cursor:null);if(b){const [ax,ay]=S(a.x,a.y),[bx,by]=S(b.x,b.y);drafts.push(html`<line key="ml" x1=${ax} y1=${ay} x2=${bx} y2=${by} className="meas"/>`,html`<text key="mt" x=${(ax+bx)/2} y=${(ay+by)/2-8} textAnchor="middle" className="meas-t halo">${fmtLen(dist(a,b))}</text>`);}
     const [ax,ay]=S(a.x,a.y);drafts.push(html`<circle key="m0" cx=${ax} cy=${ay} r="3" className="snap-end"/>`);}
   if(cursor&&tool!=='select'&&tool!=='door'&&tool!=='window'){const [sx,sy]=S(cursor.x,cursor.y);
@@ -10116,7 +10150,7 @@ function PlanView(props){
   const hints={
     select:html`<b>Select</b> an item to edit it. Drag to move; drag a wall's end dots to stretch it. <b>Shift-drag</b> a box or Shift-click to pick several; arrow keys nudge 1" (Shift: 12"). Drag empty space to pan.`,
     wall:chain.length?html`Click the next corner, or <b>type a length</b> (12'6", 150", bare numbers are feet) and press Enter. Press <b>Esc</b> (or Enter, double-click, right-click, or the Finish button) to stop drawing walls; press Esc again to put the wall tool away.`:html`<b>Wall:</b> click the first corner. Lines snap to 45° and the ${fmtLen(grid)} grid; hold Shift for free angles.`,
-    door:html`<b>Door:</b> click on a wall to place ${LIB_BY_ID[openPreset.door]?html`a <b>${LIB_BY_ID[openPreset.door].label}</b>`:'a 36" door'}. Pick other doors in the Library.`,
+    door:html`<b>Door:</b> click on a wall to place ${LIB_BY_ID[openPreset.door]?html`a <b>${LIB_BY_ID[openPreset.door].label}</b>`:'a 36" door'}. It swings to the side your pointer is on, hinged at the end nearest the pointer; change handing and hardware after. Pick other doors in the Library.`,
     window:html`<b>Window:</b> click on a wall to place ${LIB_BY_ID[openPreset.window]?html`a <b>${LIB_BY_ID[openPreset.window].label}</b>`:'a 36" × 48" window'}. Pick other windows in the Library.`,
     room:chain.length>=3?html`Click the first corner or press Enter to close the room.`:html`<b>Room:</b> click <b>inside</b> closed walls and the room draws itself, or start on a wall corner and click each corner in order.`,
     fixture:html`<b>Fixture:</b> pick a fixture or cabinet at the top, then click to place it. Cabinets and plumbing fixtures turn to put their back against the nearest wall. Hold Shift while dragging to move freely.`,
@@ -10179,7 +10213,7 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     return ()=>{ro.disconnect();mo.disconnect();mq.removeEventListener?.('change',themeSync);controls.dispose();renderer.dispose();renderer.domElement.remove();if(window.__view3d===S.current)window.__view3d=null;};
   },[]);
 
-  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,sel,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
+  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,sel,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
     applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[p,levelId,sel,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
   useEffect(()=>{const st=S.current;if(st&&fitToken&&!st.walk.on){fit3d(st);st.render();}},[fitToken]);
   useEffect(()=>{const st=S.current;if(!st)return;applyClip(st,clip,p);st.render();},[clip]);
@@ -10340,14 +10374,11 @@ function buildModel(st,p,levelId,sel,opts={}){
           if(!bay&&o.top&&w.kind==='exterior'){const on=outwardNormal(extW,w);addWinTop3D(o,w,px,py,ry,d,e0+sill+o.height,ow,add,std,mGlass,fr,on,t,H-(sill+o.height));}
           if(!bay&&['double-hung','single-hung','slider'].includes(o.operation||'double-hung')){const hz=o.operation==='slider';add(new THREE.BoxGeometry((hz?1.5:ow)*IN,(hz?o.height:1.5)*IN,(t*0.4)*IN),fr,px*IN,(e0+sill+o.height/2)*IN,py*IN,ry,false);}}
         else{const op=o.id===sel?.id;const st=o.style||'';const dc=o.color?hexNum(o.color):o.dtype==='overhead'?0xeeeeea:st==='metal'?0x8d9296:st==='storefront'?0x6f7378:null;
-          const dm=op?mSel:dc!=null?std('door-'+dc,dc,{roughness:.6}):mDoor;
-          if(['fulllite','french','storefront'].includes(st)||o.dtype==='slider'){add(new THREE.BoxGeometry(ow*IN,o.height*IN,0.6*IN),mGlass,px*IN,(e0+o.height/2)*IN,py*IN,ry,false);
-            for(const [zz,hh] of [[1.5,3],[o.height-1.5,3]])add(new THREE.BoxGeometry(ow*IN,hh*IN,1.75*IN),dm,px*IN,(e0+zz)*IN,py*IN,ry);
-            const nmul=o.dtype==='double'||o.dtype==='slider'?2:1;for(let i=0;i<=nmul;i++){const sx=-ow/2+ow*i/nmul;add(new THREE.BoxGeometry(3*IN,o.height*IN,1.75*IN),dm,(px+d.x*sx)*IN,(e0+o.height/2)*IN,(py+d.y*sx)*IN,ry);}}
-          else if(st==='halflite'||st==='garageglass'){const gh=st==='garageglass'?o.height*0.2:o.height*0.42;const gz=st==='garageglass'?o.height*0.7:o.height*0.5;
-            add(new THREE.BoxGeometry(ow*IN,(gz-gh/2)*IN,1.75*IN),dm,px*IN,(e0+(gz-gh/2)/2)*IN,py*IN,ry);add(new THREE.BoxGeometry(ow*IN,gh*IN,0.6*IN),mGlass,px*IN,(e0+gz)*IN,py*IN,ry,false);
-            const top=o.height-(gz+gh/2);add(new THREE.BoxGeometry(ow*IN,top*IN,1.75*IN),dm,px*IN,(e0+o.height-top/2)*IN,py*IN,ry);}
-          else add(new THREE.BoxGeometry(ow*IN,o.height*IN,1.75*IN),dm,px*IN,(e0+o.height/2)*IN,py*IN,ry);
+          const dm=op?mSel:dc!=null?std('door-'+dc,dc,{roughness:.6}):mDoor;const tagW=CUR_TAG;CUR_TAG={kind:'opening',id:o.id};
+          const tc=p.settings?.trimColor?hexNum(p.settings.trimColor):0xf6f4ee;const trimMat=std('trim-'+tc,tc,{roughness:.55});
+          let casingW=2.5;try{const it=LIB_BY_ID[trimOf(p,roomAt(px+d.y*(t/2+6),py-d.x*(t/2+6))||roomAt(px-d.y*(t/2+6),py+d.x*(t/2+6))).casing];if(it&&it.profile!=='none')casingW=it.h||2.5;else if(it)casingW=0;}catch(e){}
+          try{addDoor3D(p,w,o,{px,py,ow,d,t,ry,e0,add,std,mGlass,dm,trimMat,casingW});}catch(e){console.error('door',e);add(new THREE.BoxGeometry(ow*IN,o.height*IN,1.75*IN),dm,px*IN,(e0+o.height/2)*IN,py*IN,ry);}
+          CUR_TAG=tagW;
           if(w.kind==='exterior'&&!struct)addOpeningOutside3D(w,o,extW,{px,py,ow,d,t,ry,z0:e0,h:o.height},add,std);}
         if(struct&&struct.has('h-'+o.id)){const r=struct.get('h-'+o.id);const hd=Math.min(11.25,Math.max(3,H-head-0.5));add(new THREE.BoxGeometry((ow+3)*IN,hd*IN,(t+0.4)*IN),sMat(r),px*IN,(e0+head+hd/2)*IN,py*IN,ry,false);}
       }
@@ -10359,7 +10390,7 @@ function buildModel(st,p,levelId,sel,opts={}){
       const shape=new THREE.Shape(r.pts.map(q=>new THREE.Vector2(q[0]*IN,q[1]*IN)));for(const h of stairHole(p,lv))if(h.every(q=>inPoly(q.x,q.y,r.pts)))shape.holes.push(new THREE.Path(h.map(q=>new THREE.Vector2(q.x*IN,q.y*IN))));
       const geo=new THREE.ExtrudeGeometry(shape,{depth:0.75*IN,bevelEnabled:false}); geo.rotateX(Math.PI/2);
       const fin=r.finish||(r.use==='bath'||r.use==='kitchen'||r.use==='laundry'?'tile':r.use==='garage'?'concrete':'lvp');
-      const fcol=r.floorColor?hexNum(r.floorColor):FLOOR_COLOR[fin]||0xcfc6b8;let mat=std('floor-'+fcol,fcol,{roughness:.85});
+      const fcol=r.floorColor?hexNum(r.floorColor):FLOOR_COLOR[fin]||0xcfc6b8;let mat=(()=>{try{return std('floorT-'+fin+'-'+fcol,0xffffff,{roughness:/tile|porcelain|polished|epoxy|vct/.test(fin)?.45:.8,map:floorTexture(fin,fcol)});}catch(e){return std('floor-'+fcol,fcol,{roughness:.85});}})();
       if(struct){const a=struct.get('fj-'+r.id),b=struct.get('cj-'+r.id);const v=Math.max(a??-1,b??-1);mat=sMat(v<0?null:v);}
       if(sel&&sel.id===r.id)mat=mSel;
       const m=add(geo,mat,0,(e0+0.75)*IN,0,0,false); m.receiveShadow=true;
@@ -10604,10 +10635,8 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
   } else if(o&&sel.kind==='opening'){
     const w=p.walls.find(w=>w.id===o.wall); const L=w?wlen(w):0; kind=o.type==='door'?'Door':'Window'; const mk=openingMarks(p)[o.id]; title=`${mk?mk+' · ':''}${fmtLen(o.width)} ${kind.toLowerCase()}`;
     const fromStart=o.pos-o.width/2;
-    body=html`<div className="sec"><h3>Size</h3>
+    body=html`${o.type==='door'?html`<${DoorEditor} p=${p} o=${o} up=${up}/>`:html`<${WindowEditor} p=${p} o=${o} up=${up}/>`}<div className="sec"><h3>Size</h3>
       <${Field} label="Type" id="o-type"><${Sel} id="o-type" value=${o.type} onChange=${v=>up(v==='door'?{type:'door',sill:0,height:80,hinge:o.hinge||0,swing:o.swing||1}:{type:'window',sill:36,height:48,operation:'double-hung'})} options=${[['door','Door'],['window','Window']]}/><//>
-      ${o.type==='door'?html`<${Field} label="Door type" id="o-dt"><${Sel} id="o-dt" value=${o.dtype||'swing'} onChange=${v=>up({dtype:v,lib:null,name:null})} options=${Object.entries(DOOR_TYPES)}/><//>
-      <${Field} label="Style" id="o-ds"><${Sel} id="o-ds" value=${o.style||'panel6'} onChange=${v=>up({style:v,lib:null,name:null})} options=${Object.entries(DOOR_STYLES)}/><//>`:null}
       ${o.name?html`<p className="note">From the library: ${o.name}</p>`:null}
       <${Field} label="Width" id="o-w"><${LenInput} id="o-w" value=${o.width} onChange=${v=>v>0&&v<L&&up({width:v,pos:Math.max(v/2,Math.min(L-v/2,o.pos))})}/><//>
       <${Field} label="Height" id="o-h"><${LenInput} id="o-h" value=${o.height} onChange=${v=>v>0&&up({height:v})}/><//>
@@ -10625,7 +10654,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
       ${o.type==='door'?html`<div className="row"><button className="btn" onClick=${()=>up({hinge:o.hinge?0:1})}>Flip hinge side</button><button className="btn" onClick=${()=>up({swing:-(o.swing||1)})}>Flip swing</button></div>`:null}
       ${o.type==='door'&&o.width<36?html`<span className="pill warn">Under 36" — may not give the 32" ADA clear opening</span>`:null}
     </div>
-    <div className="sec"><h3>Color</h3><${ColorPick} id="o-col" label=${o.type==='door'?'Door color':'Frame color'} value=${o.color} fallback=${o.type==='door'?'#8a5a35':'#f7f7f4'} onChange=${v=>up({color:v})}/></div>
+    ${o.type==='door'?null:html`<div className="sec"><h3>Color</h3><${ColorPick} id="o-col" label="Frame color" value=${o.color} fallback="#f7f7f4" onChange=${v=>up({color:v})}/></div>`}
     ${w&&w.kind==='exterior'?html`<div className="sec"><h3>Outside trim and shutters</h3>
       <${Field} label="Outside casing" id="o-xc"><${Sel} id="o-xc" value=${String(o.extTrim??(w.siding==='brick'?0:3.5))} onChange=${v=>up({extTrim:+v})} options=${[['0','None (brick mould only)'],['3.5','1x4 flat'],['5.5','1x6 flat'],['7.25','1x8 craftsman']]}/><//>
       ${o.type==='window'?html`<${Field} label="Shutters" id="o-sh"><${Sel} id="o-sh" value=${o.shutters||'none'} onChange=${v=>up({shutters:v})} options=${SHUTTERS}/><//>
@@ -10645,7 +10674,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
     <${RoomFinishes} p=${p} o=${o} up=${up} commit=${commit}/>`;
   } else if(o&&sel.kind==='fixture'){
     const t=FIXTURES[o.type]||{label:o.type}; kind=o.lib?(LIB_BY_ID[o.lib]||{}).cat||t.cat:t.cat||'Fixture'; title=fxLabel(o);
-    body=html`<div className="sec"><h3>Size</h3>
+    body=html`<${FixturePicEditor} p=${p} o=${o} up=${up}/><div className="sec"><h3>Size</h3>
       <${Field} label="Width" id="x-w"><${LenInput} id="x-w" value=${o.w} onChange=${v=>v>0&&up({w:v})}/><//>
       <${Field} label="Depth" id="x-d"><${LenInput} id="x-d" value=${o.d} onChange=${v=>v>0&&up({d:v})}/><//>
       <${Field} label=${COUNTERTOP.has(o.type)?'Counter height':o.type==='lav'?'Rim height':'Height'} id="x-h"><${LenInput} id="x-h" value=${o.h} onChange=${v=>v>0&&up({h:v})}/><//>
@@ -11008,7 +11037,7 @@ function fixtureModel3D(f,lv,add,std,isSel,mSel,baseCol){
       const cl=kind==='truck'?0.38:0.5;B(0,0,10,L*0.92,Wd*0.9,22,body);B(kind==='truck'?L*0.12:-L*0.02,0,32,L*cl,Wd*0.82,18,M('cabin',0x9fb4c4,{roughness:.1,metalness:.3}));
       for(const a of [-L*0.32,L*0.32])for(const b of [-Wd*0.4,Wd*0.4])wheel(a,b);return true;}
     case 'tub':{const t=3;box(0,0,0,W,D,2,white);box(0,-D/2+t/2,0,W,t,H,white);box(0,D/2-t/2,0,W,t,H,white);box(-W/2+t/2,0,0,t,D,H,white);box(W/2-t/2,0,0,t,D,H,white);
-      box(0,0,2,W-2*t,D-2*t,0.5,M('tubin',0xe6eef2,{roughness:.2}));cyl(W/2-6,-D/2+t+1,H+2,0.8,3,steel,10);return true;}
+      box(0,0,2,W-2*t,D-2*t,0.5,M('tubin',0xe6eef2,{roughness:.2}));cyl((f.hand==='L'?-1:1)*(W/2-6),-D/2+t+1,H+2,0.8,3,steel,10);return true;}
     case 'shower':case 'rollin':{box(0,0,0,W,D,kind==='rollin'?0.5:4,white);const gl=M('glass',0xcfe4ee,{roughness:.05,transparent:true,opacity:.28});
       if(kind==='shower')box(0,D/2-0.3,4,W,0.4,72,gl);else box(0,D/2-0.5,78,W,0.6,0.6,steel);cyl(0,-D/2+2,76,2.5,1,steel,14);box(0,-D/2+1.5,40,3,1,6,steel);return true;}
     case 'lav':{if(/pedestal/.test((f.name||'').toLowerCase())){cyl(0,-2,0,4,30,white);box(0,0,30,W,D,5,white);}else box(0,0,H-6,W,D,6,white);
@@ -11016,7 +11045,7 @@ function fixtureModel3D(f,lv,add,std,isSel,mSel,baseCol){
     case 'range':{box(0,0,0,W,D,H-1,steel);box(0,0,H-1,W,D-2,1,glassB);for(const a of [-1,1])for(const b of [-1,1])cyl(a*W/4.5,b*D/5,H,W/9,0.15,M('burner',0x3a3a3a),20);
       box(0,D/2+0.1,6,W-4,0.4,20,glassB);box(0,D/2+1,27,W-6,1,1,steel);box(0,-D/2+1.5,H,W,3,7,steel);return true;}
     case 'fridge':{box(0,0,0,W,D,H,steel);const split=W>=33;if(split){box(0,D/2+0.1,H*0.33,0.5,0.4,H*0.67,dark);for(const s of [-1,1])box(s*2,D/2+1.2,H*0.45,1,1,H*0.4,steel);}
-      else box(W/2-3,D/2+1.2,H*0.45,1,1,H*0.4,steel);box(0,D/2+0.1,H*0.32,W,0.4,0.5,dark);box(0,D/2+1.2,H*0.2,W*0.5,1,1,steel);return true;}
+      else box((f.hand==='R'?-1:1)*(W/2-3),D/2+1.2,H*0.45,1,1,H*0.4,steel);box(0,D/2+0.1,H*0.32,W,0.4,0.5,dark);box(0,D/2+1.2,H*0.2,W*0.5,1,1,steel);return true;}
     case 'dw':{box(0,0,0,W,D,H-1.5,steel);box(0,D/2+1,H-6,W-4,1,1,steel);return true;}
     case 'washer':case 'dryer':{box(0,0,0,W,D,H,white);box(0,D/2+0.1,H-6,W,0.4,6,M('panel',0xdedfdd));disc(0,D/2+0.5,H*0.45,W*0.3,1,M('door',0x9aa3a8,{roughness:.2,metalness:.4}));disc(0,D/2+0.9,H*0.45,W*0.22,0.4,glassB);return true;}
   }
@@ -11264,6 +11293,9 @@ function selText(p,cat){const s=selOf(p)[cat];if(!s||!s.brand)return '';return [
 function SelectionsView({p,commit}){const S=selOf(p);const up=(cat,patch)=>commit(setSel2(p,{[cat]:{...(S[cat]||{}),...patch}}));
   const paint=brandList('paint');const pb=S.paintBrand||'';const colors=(paint.find(b=>b.brand===pb)||{colors:[]}).colors||[];
   return html`<div><div className="mathead"><div><h2>Selections</h2><p className="note">Pick the brands and products for this job. They go on the materials list, the schedules and the proposal. ${VENDOR_CABS.length} cabinet makers and ${SEL_CATS.reduce((s,c)=>s+brandList(c[0]).length,0)} product brands are in the library.</p></div><div className="row"><button className="btn primary" onClick=${()=>window.dispatchEvent(new Event('rs-vendor-import'))}>Import vendor catalog…</button></div></div>
+    <section className="sec"><h3>Door hardware, whole house</h3><div className="sysgrid"><${Field} label="Finish" id="sl-hwf"><${Sel} id="sl-hwf" value=${p.settings?.hwFinish||'satin-nickel'} onChange=${v=>commit({...p,settings:{...p.settings,hwFinish:v}})} options=${HW_FINISHES.map(f=>[f[0],f[1]])}/><//>
+      <${Field} label="Brand" id="sl-hwb"><${Sel} id="sl-hwb" value=${p.settings?.hwBrand||'Any brand'} onChange=${v=>commit({...p,settings:{...p.settings,hwBrand:v}})} options=${HW_BRANDS.map(b=>[b,b])}/><//></div>
+      <p className="note">Every door uses these unless you change it in the door's own panel. Hinges, stops and kick plates follow the finish.</p></section>
     <section className="sec"><h3>Cabinets</h3><p className="note">${vendorLabel(cabStyle(p,{}))?vendorLabel(cabStyle(p,{}))+'.':'Generic cabinets.'} Change the brand, line, door and finish in any cabinet's panel (Kitchen style).</p></section>
     ${SEL_CATS.map(([cat,label])=>{const s=S[cat]||{};const brands=brandList(cat);if(!brands.length)return null;const subs=subList(cat,s.brand);const sub=subs.find(x=>x.name===s.item);const cols=(sub&&sub.colors)||(brands.find(b=>b.brand===s.brand)||{}).colors||[];
       return html`<section key=${cat} className="sec"><h3>${label}</h3><div className="sysgrid">
@@ -12914,10 +12946,11 @@ function takeoff(p,{waste=0.1}={}){
           else if(b)add('Headers and beams',`${b.size} x ${len}' (header)`,b.plies,'EA',`header over ${openingMarks(p)[o.id]||'opening'}`);
           else add('Headers and beams',`Engineered header, ${fmtLen(o.width+3)} span`,1,'EA','size by engineer');}
         if(o.type==='door'){const dt=o.dtype||'swing';const sty=o.style?DOOR_STYLES[o.style]+' ':'';
-          add('Doors and windows',o.name||(dt==='overhead'?`Overhead door ${fmtLen(o.width)} x ${fmtLen(o.height)}`:dt==='pocket'?`${sty}pocket door ${fmtLen(o.width)} x ${fmtLen(o.height)}`:`${w.kind==='exterior'?'Exterior prehung':'Interior prehung'} ${sty.toLowerCase()}${dt==='swing'?'':DOOR_TYPES[dt].toLowerCase()+' '}door ${fmtLen(o.width)} x ${fmtLen(o.height)}`),1,'EA');
+          const hand=(dt==='swing'||dt==='double')?(()=>{const h=doorHanding(p,o);return h.res?`, ${h.res} (ANSI ${h.ansi})`:'';})():'';const dsp=doorSpec(p,o);const matN=(DOOR_MATS.find(x=>x[0]===dsp.door.mat)||['',''])[1].toLowerCase();
+          add('Doors and windows',(o.name||(dt==='overhead'?`Overhead door ${fmtLen(o.width)} x ${fmtLen(o.height)}`:dt==='pocket'?`${sty}pocket door ${fmtLen(o.width)} x ${fmtLen(o.height)}`:`${w.kind==='exterior'?'Exterior prehung':'Interior prehung'} ${sty.toLowerCase()}${dt==='swing'?'':DOOR_TYPES[dt].toLowerCase()+' '}door ${fmtLen(o.width)} x ${fmtLen(o.height)}`))+hand,1,'EA',[matN,dsp.door.sidelites?dsp.door.sidelites+' sidelite'+(dsp.door.sidelites>1?'s':''):'',dsp.door.transom?'transom':'',dsp.door.fire20?'20-minute rated':''].filter(Boolean).join(', '));
           if(dt==='pocket')add('Doors and windows',`Pocket door frame kit ${fmtLen(o.width)}`,1,'EA');if(dt==='barn')add('Doors and windows','Barn door track and hardware',1,'set');if(dt==='bifold')add('Doors and windows','Bifold track and hardware',1,'set');
-          if(dt==='swing'||dt==='double')add('Doors and windows',w.kind==='exterior'?'Entry lever and deadbolt set':'Interior lever set',dt==='double'?2:1,'EA',p.settings?.ada!==false?'lever handles for accessibility':'');}
-        else add('Doors and windows',o.name||`${(WINDOW_OPS.find(x=>x[0]===(o.operation||'double-hung'))||['','Window'])[1]} window ${fmtLen(o.width)} x ${fmtLen(o.height)}`,1,'EA');}
+          }
+        else{const wo=o.win||{};add('Doors and windows',(o.name||`${(WINDOW_OPS.find(x=>x[0]===(o.operation||'double-hung'))||['','Window'])[1]} window ${fmtLen(o.width)} x ${fmtLen(o.height)}`)+(o.operation==='casement'?(o.hinge?', hinged right':', hinged left'):''),1,'EA',[(WIN_FRAMES.find(x=>x[0]===(wo.frame||'vinyl'))||['',''])[1].toLowerCase(),(WIN_GLASS.find(x=>x[0]===(wo.glass||'lowe'))||['',''])[1].toLowerCase(),wo.screen==='none'?'no screen':wo.screen==='full'?'full screen':''].filter(Boolean).join(', '));}}
       const net=(L*H-opArea(w))/144;
       if(w.kind==='exterior'){
         if(mat!=='cmu'&&mat!=='icf'&&mat!=='sip'&&mat!=='glassblock')add('Sheathing and wrap','7/16" OSB wall sheathing 4x8',Math.ceil(net*W/32),'EA');
@@ -13727,6 +13760,191 @@ function addWinTop3D(o,w,px,py,ry,d,z1,ow,add,std,mGlass,fr,outN,t,avail=999){if
   for(let i=N;i>=0;i--){const a=Math.PI*i/N;ring.lineTo(-Math.cos(a)*r*IN,Math.sin(a)*rise*IN);}
   add(new THREE.ExtrudeGeometry(ring,{depth:1.2*IN,bevelEnabled:false}),fr,(px+outN.x*(off-0.4))*IN,(z1+2)*IN,(py+outN.y*(off-0.4))*IN,ry,false);
   add(new THREE.BoxGeometry((ow+6)*IN,2*IN,1.5*IN),fr,(px+outN.x*off)*IN,(z1+1)*IN,(py+outN.y*off)*IN,ry,false);}
+/* ======================= doors in detail: slab styles, jambs and casing, hardware, hinges, handing ======================= */
+DOOR_STYLES.garagecarriage='Carriage-house garage';
+const HW_FINISHES=[['satin-nickel','Satin nickel',0xb6b8b5,.85,.35],['matte-black','Matte black',0x262626,.35,.6],['orb','Oil-rubbed bronze',0x4b3527,.6,.45],['aged-bronze','Aged bronze',0x6a5138,.6,.45],
+  ['polished-chrome','Polished chrome',0xe6e8ea,1,.08],['stainless','Stainless steel',0xc9cacb,.9,.3],['satin-brass','Satin brass',0xc9a75e,.9,.35],['polished-brass','Polished brass',0xd8b13d,1,.12],
+  ['antique-brass','Antique brass',0x9c7a3c,.8,.45],['white','White',0xf2f2f0,0,.5]];
+const HW_TYPES=[['lever','Lever'],['knob','Knob'],['handleset','Handleset with thumb latch'],['pull','Pull handle'],['flushpull','Flush pull (pocket door)'],['barnpull','Barn door pull'],['pushbar','Push bar (exit device)'],['none','No hardware']];
+const HW_FUNCS=[['passage','Passage (no lock)'],['privacy','Privacy (push-button lock)'],['keyed','Keyed entry'],['dummy','Dummy (fixed handle)'],['storeroom','Storeroom (always locked outside)']];
+const HW_BRANDS=['Any brand','Kwikset','Schlage','Baldwin','Emtek','Weiser','Defiant','Yale','Delaney','Nostalgic Warehouse'];
+const HW_ROSES=[['round','Round rose'],['square','Square rose (modern)'],['plate','Long backplate (traditional)']];
+const LEVER_SHAPES=[['straight','Straight'],['curved','Curved'],['tube','Round tube']];
+const DOOR_MATS=[['hollow','Hollow-core molded'],['solidcore','Solid-core molded'],['wood','Solid wood'],['mdf','Solid MDF'],['fiberglass','Fiberglass'],['steel','Steel'],['alum','Aluminum and glass']];
+const DOOR_GLASS=[['clear','Clear'],['lowe','Low-E, tempered'],['frosted','Frosted (privacy)'],['rain','Rain glass'],['reeded','Reeded'],['decorative','Decorative leaded']];
+const DOOR_THRESH=[['none','None (interior)'],['std','Standard sill, about 1"'],['ada','Low profile, 1/2" max (ADA)'],['saddle','Saddle']];
+const DOOR_STOPS=[['baseboard','Baseboard stop'],['hinge','Hinge-pin stop'],['floor','Floor stop'],['wall','Wall bumper'],['none','None']];
+const HINGE_SIZES=[['3.5','3-1/2"'],['4','4"'],['4.5','4-1/2" (heavy)']];
+const HINGE_CORNERS=[['r58','5/8" radius'],['r14','1/4" radius'],['square','Square']];
+const hwFinish=k=>HW_FINISHES.find(f=>f[0]===k)||HW_FINISHES[0];
+// the rooms on each side of a door, and which side is outside
+function doorSides(p,o){const w=p.walls.find(w=>w.id===o.wall);if(!w)return null;const d=wdir(w),n={x:-d.y,y:d.x};const L=wlen(w);const pos=Math.max(o.width/2,Math.min(L-o.width/2,o.pos));
+  const c={x:w.x1+d.x*pos,y:w.y1+d.y*pos};const side=o.swing||1;const sw={x:n.x*side,y:n.y*side};const off=w.thick/2+8;
+  const rooms=p.rooms.filter(r=>r.level===w.level);const at=v=>rooms.find(r=>inPoly(c.x+v.x*off,c.y+v.y*off,r.pts))||null;
+  const ext=w.kind==='exterior';let outN=null;if(ext){const extW=p.walls.filter(x=>x.level===w.level&&x.kind==='exterior'&&x.status!=='demolish');outN=outwardNormal(extW,w);}
+  return {w,d,n,c,sw,ext,outN,into:at(sw),from:at({x:-sw.x,y:-sw.y})};}
+// handing in both conventions. Residential: exterior named from outside (inswing/outswing); interior named from the side the door swings toward.
+// ANSI/BHMA: named from the outside, or the push side for interior doors; reverse bevel (R) when it swings toward that side.
+function doorHanding(p,o){const S=doorSides(p,o);const dt=o.dtype||'swing';if(!S)return {res:'',ansi:'',both:''};const hU=o.hinge?1:-1;const hv={x:S.d.x*hU,y:S.d.y*hU};
+  const right=v=>({x:-v.y,y:v.x});const dot=(a,b)=>a.x*b.x+a.y*b.y;
+  if(dt==='swing'||dt==='double'){let res,ansi;
+    if(S.ext){const v={x:-S.outN.x,y:-S.outN.y};const hr=dot(hv,right(v))>0;const inswing=dot(S.sw,S.outN)<0;ansi=(hr?'RH':'LH')+(inswing?'':'R');res=(hr?'RH':'LH')+(inswing?' inswing':' outswing');}
+    else{const hrPush=dot(hv,right(S.sw))>0;ansi=hrPush?'RH':'LH';res=hrPush?'LH':'RH';}
+    if(dt==='double'){res=(res.startsWith('RH')?'RH active':'LH active')+res.slice(2);ansi+=' active';}
+    return {res,ansi,both:`${res} (ANSI ${ansi})`,ext:S.ext,into:S.into,from:S.from};}
+  // sliding, pocket, barn and bifold: which way it opens, seen from the outside or from the room it serves
+  const v=S.ext?{x:-S.outN.x,y:-S.outN.y}:S.sw;const mv=dt==='barn'?{x:-hv.x,y:-hv.y}:hv;const hr=dot(mv,right(v))>0;
+  const word=dt==='slider'?(hr?'XO (right panel fixed)':'OX (left panel fixed)'):dt==='pocket'?(hr?'pocket on the right':'pocket on the left'):dt==='barn'?(hr?'slides right':'slides left'):dt==='bifold'?(hr?'folds to the right':'folds to the left'):'';
+  return {res:word,ansi:'',both:word?word+(S.ext?', seen from outside':''):'',ext:S.ext,into:S.into,from:S.from};}
+// everything a door is made of, with sensible defaults filled in from where it is
+function doorSpec(p,o){const S=doorSides(p,o)||{};const dt=o.dtype||'swing';const st=o.style||'panel6';const ext=S.ext!==undefined?!!S.ext:!!o.ext;const uses=[S.into,S.from].filter(Boolean).map(r=>r.use);
+  const garageHouse=uses.includes('garage')&&uses.some(u=>u!=='garage')&&!ext;
+  const type=dt==='pocket'?'flushpull':dt==='barn'?'barnpull':dt==='slider'||st==='storefront'?'pull':dt==='overhead'?'none':dt==='bifold'?'knob':'lever';
+  const func=ext?'keyed':uses.some(u=>u==='bath'||u==='bedroom')?'privacy':dt==='bifold'?'dummy':'passage';
+  const H=o.height||80;const hw0={type,func,finish:p.settings?.hwFinish||'satin-nickel',brand:p.settings?.hwBrand||'Any brand',rose:'round',lever:'straight',deadbolt:ext&&(dt==='swing'||dt==='double')};
+  const hw={...hw0,...(o.hw||{})};
+  const mat0=st==='storefront'?'alum':st==='metal'?'steel':ext?'fiberglass':garageHouse?'solidcore':st==='plank'?'wood':'hollow';
+  const door0={mat:mat0,thick:ext||garageHouse||['wood','solidcore','steel','fiberglass'].includes(o.door?.mat||mat0)?1.75:1.375,glass:ext?'lowe':'clear',sidelites:0,sideW:12,transom:0,transomH:14,
+    threshold:ext?(o.ada?'ada':'std'):'none',stop:dt==='swing'||dt==='double'?'baseboard':'none',closer:garageHouse,kick:false,viewer:false,fire20:false};
+  const door={...door0,...(o.door||{})};
+  const hn0={n:H<=60?2:H<=90?3:4,size:ext||door.mat!=='hollow'||H>80?'4':'3.5',corner:'r58',finish:hw.finish,spring:garageHouse};
+  const hinges={...hn0,...(o.hinges||{})};
+  return {hw,door,hinges,ext,garageHouse,sides:S};}
+// the slab, the opening left for it, and sidelites/transom, along the wall (u) and up (y), in inches
+function doorUnit(o,spec){const d=spec.door;const ow=o.width,H=o.height;const jamb=0.75,gap=0.125;
+  const sl=Math.max(0,Math.min(2,d.sidelites|0)),sW=d.sideW||12,mull=1.5;const tr=d.transom?(d.transomH||14):0;
+  const u0=-ow/2+jamb+(sl===2||(sl===1&&!o.hinge)?sW+mull:0),u1=ow/2-jamb-(sl===2||(sl===1&&o.hinge)?sW+mull:0);
+  const top=H-jamb-(tr?tr+mull:0);return {u0:u0+gap,u1:u1-gap,y0:0.5,y1:top-gap,sl,sW,mull,tr,jamb,ow,H};}
+function leafRegions(style,W,H){const S=Math.min(4.75,W*0.16),T=4.75,B=Math.min(9.5,H*0.12),M=7;const R=[];const reg=(x0,x1,y0,y1,kind,x={})=>R.push({x0,x1,y0,y1,kind,...x});
+  const c1=[S,W/2-2],c2=[W/2+2,W-S];
+  switch(style){
+    case 'shaker':reg(S,W-S,B,H-T,'panel',{flat:true});break;
+    case 'panel2':{const ly=H*0.45;reg(S,W-S,B,ly-M/2,'panel');reg(S,W-S,ly+M/2,H-T,'panel');break;}
+    case 'panel6':for(const [a,b] of [[B,H*0.40],[H*0.47,H*0.80],[H*0.85,H-T]])for(const c of [c1,c2])reg(c[0],c[1],a,b,'panel');break;
+    case 'panel5':{const n=5,g=4,h=(H-T-B-g*(n-1))/n;for(let i=0;i<n;i++)reg(S,W-S,B+i*(h+g),B+i*(h+g)+h,'panel',{flat:true});break;}
+    case 'louver':reg(S,W-S,B,H-T,'louver');break;
+    case 'halflite':reg(S,W-S,H*0.5,H-T,'glass');reg(S,W-S,B,H*0.5-M,'panel',{flat:true});break;
+    case 'fulllite':reg(S,W-S,B,H-T,'glass');break;
+    case 'french':reg(S,W-S,B,H-T,'glass',{cols:W>=30?3:2,rows:5});break;
+    case 'sixlite':{const gy=H*0.66;reg(S,W-S,gy,H-T,'glass',{cols:3,rows:2});const w3=(W-2*S-2*3)/3;for(let i=0;i<3;i++)reg(S+i*(w3+3),S+i*(w3+3)+w3,B,gy-M,'panel',{flat:true});break;}
+    case 'storefront':reg(4.5,W-4.5,10,H-4.5,'glass');break;
+    case 'garageglass':case 'garage':case 'garagecarriage':break;
+  }
+  return R;}
+// door panel styles that read as raised (traditional) vs flat (shaker)
+function addDoorSlab(L,u0,u1,y0,y1,zc,thick,style,mats){const W=u1-u0,H=y1-y0;const R=leafRegions(style,W,H);
+  const sh=new THREE.Shape();sh.moveTo(0,0);sh.lineTo(W,0);sh.lineTo(W,H);sh.lineTo(0,H);sh.lineTo(0,0);
+  for(const r of R){const h=new THREE.Path();h.moveTo(r.x0,r.y0);h.lineTo(r.x0,r.y1);h.lineTo(r.x1,r.y1);h.lineTo(r.x1,r.y0);h.lineTo(r.x0,r.y0);sh.holes.push(h);}
+  const geo=new THREE.ExtrudeGeometry(sh,{depth:thick,bevelEnabled:false});geo.translate(u0,y0,zc-thick/2);L.mesh(geo,mats.slab);
+  for(const r of R){const cx=u0+(r.x0+r.x1)/2,cy=y0+(r.y0+r.y1)/2,rw=r.x1-r.x0,rh=r.y1-r.y0;
+    if(r.kind==='panel'){L.box(rw,rh,thick*0.42,cx,cy,zc,mats.slab);if(!r.flat&&rw>4&&rh>4)L.box(rw-3.2,rh-3.2,thick*0.78,cx,cy,zc,mats.slab);}
+    else if(r.kind==='glass'){L.box(rw,rh,0.5,cx,cy,zc,mats.glass,false);const cols=r.cols||1,rows=r.rows||1;
+      for(let i=1;i<cols;i++)L.box(0.875,rh,thick*0.7,u0+r.x0+rw*i/cols,cy,zc,mats.slab);for(let j=1;j<rows;j++)L.box(rw,0.875,thick*0.7,cx,y0+r.y0+rh*j/rows,zc,mats.slab);}
+    else if(r.kind==='louver'){const n=Math.max(3,Math.floor(rh/1.7));for(let i=0;i<n;i++){const g=new THREE.BoxGeometry(rw,1.45,thick*0.7);g.rotateX(0.6);g.translate(cx,y0+r.y0+(i+0.5)*rh/n,zc);L.mesh(g,mats.slab);}}}
+  if(style==='plank'){for(let x=5.5;x<W-1;x+=5.5)for(const s of [-1,1])L.box(0.35,H-0.5,0.12,u0+x,y0+H/2,zc+s*(thick/2+0.02),mats.dark,false);
+    for(const s of [-1,1]){L.box(W-2,5,0.75,u0+W/2,y0+H*0.2,zc+s*(thick/2+0.37),mats.slab);L.box(W-2,5,0.75,u0+W/2,y0+H*0.8,zc+s*(thick/2+0.37),mats.slab);}}}
+// handle, rose and lock on one face of a leaf. f = +1/-1 is the face (along local z); hingeDir = +1/-1 along u
+function addHandle(L,spec,uL,yH,zFace,f,hingeDir,hm,which){const hw=spec.hw;const t=hw.type;const Z=zFace;
+  const rose=(y,r=1.3)=>{if(hw.rose==='square')L.box(2.4,2.4,0.35,uL,y,Z+f*0.18,hm);else if(hw.rose==='plate')L.box(2.4,9,0.3,uL,y+1.5,Z+f*0.15,hm);else L.cyl(r,0.35,uL,y,Z+f*0.18,hm,'z');};
+  if(t==='none')return;
+  if(t==='knob'){rose(yH);L.cyl(0.45,1.6,uL,yH,Z+f*1.1,hm,'z');L.sphere(1.1,uL,yH,Z+f*2.2,hm);}
+  else if(t==='lever'||(t==='handleset'&&which!=='out')){rose(yH);L.cyl(0.4,1.5,uL,yH,Z+f*1.0,hm,'z');const len=4.6;
+    if(hw.lever==='tube')L.cyl(0.35,len,uL+hingeDir*len/2,yH,Z+f*1.9,hm,'x');else{const g=new THREE.BoxGeometry(len,0.7,0.6);if(hw.lever==='curved')g.rotateZ(-hingeDir*0.12);g.translate(uL+hingeDir*len/2,yH-(hw.lever==='curved'?0.25:0),Z+f*1.9);L.mesh(g,hm);}}
+  else if(t==='handleset'){L.box(2.6,11,0.4,uL,yH+2,Z+f*0.2,hm);L.box(1.0,7,1.0,uL,yH,Z+f*2.4,hm);L.box(0.8,0.8,2.2,uL,yH+3.2,Z+f*1.2,hm);L.box(0.8,0.8,2.2,uL,yH-3.2,Z+f*1.2,hm);L.box(0.6,1.1,0.9,uL,yH+3.9,Z+f*2.6,hm);}
+  else if(t==='pull'){L.cyl(0.5,16,uL,yH+2,Z+f*2.6,hm,'y');L.box(0.6,0.6,2.4,uL,yH+9,Z+f*1.3,hm);L.box(0.6,0.6,2.4,uL,yH-5,Z+f*1.3,hm);}
+  else if(t==='flushpull'){L.box(1.6,4.5,0.12,uL,yH,Z+f*0.04,hm);L.box(1.1,3.8,0.14,uL,yH,Z+f*0.06,L.dark);}
+  else if(t==='barnpull'){L.cyl(0.45,11,uL,yH,Z+f*2.0,hm,'y');L.box(0.7,0.7,2,uL,yH+5,Z+f*1.0,hm);L.box(0.7,0.7,2,uL,yH-5,Z+f*1.0,hm);}
+  else if(t==='pushbar'){L.box(Math.abs(hingeDir)*24,2.2,2.2,uL+hingeDir*12,yH-2,Z+f*1.6,hm);}
+  if(hw.deadbolt&&['lever','knob','handleset'].includes(t)&&!(t==='handleset'&&which==='out'))L.cyl(1.05,0.5,uL,yH+5.5,Z+f*0.3,hm,'z');}
+function addHinges(L,spec,uH,y0,y1,zFace,hm){const n=Math.max(2,spec.hinges.n|0),h=+spec.hinges.size||3.5;const ys=[];const top=y1-7-h/2,bot=y0+11+h/2;
+  for(let i=0;i<n;i++)ys.push(n===1?top:top-(top-bot)*i/(n-1));for(const y of ys){L.cyl(0.3,h,uH,y,zFace,hm,'y');L.box(0.1,h,0.9,uH,y,zFace,hm);}}
+// build one door into the model. g = {px,py,ow,d,t,ry,e0,H(wall),extW,sel,add,std,mGlass,dm,trimMat}
+function addDoor3D(p,w,o,g){const spec=doorSpec(p,o);const dt=o.dtype||'swing';const st=o.style||'panel6';const {add,std}=g;const n={x:-g.d.y,y:g.d.x};
+  const side=o.swing||1;const hU=o.hinge?1:-1;const fin=hwFinish(spec.hw.finish);const hm=std('hw-'+fin[0],fin[2],{metalness:fin[3],roughness:fin[4]});
+  const dark=std('door-dark',0x2c2a27,{roughness:.8});
+  const L={dark,mesh:(geo,mat,shadow=true)=>{geo.scale(IN,IN,IN);return add(geo,mat,g.px*IN,g.e0*IN,g.py*IN,g.ry,shadow);},
+    box(w,h,d,u,y,z,mat,shadow=true){const geo=new THREE.BoxGeometry(w,h,d);geo.translate(u,y,z);return this.mesh(geo,mat,shadow);},
+    cyl(r,len,u,y,z,mat,axis){const geo=new THREE.CylinderGeometry(r,r,len,14);if(axis==='z')geo.rotateX(Math.PI/2);else if(axis==='x')geo.rotateZ(Math.PI/2);geo.translate(u,y,z);return this.mesh(geo,mat,false);},
+    sphere(r,u,y,z,mat){const geo=new THREE.SphereGeometry(r,16,12);geo.translate(u,y,z);return this.mesh(geo,mat,false);}};
+  const mats={slab:g.dm,glass:g.mGlass,dark};const U=doorUnit(o,spec);const thick=spec.door.thick||1.75;const t=g.t;
+  // where outside is, for the handleset and the exterior trim
+  let outZ=0;if(spec.ext&&spec.sides&&spec.sides.outN){outZ=(spec.sides.outN.x*n.x+spec.sides.outN.y*n.y)>0?1:-1;}
+  const jm=g.trimMat;
+  // jambs and head
+  if(dt!=='overhead'){for(const s of [-1,1])L.box(U.jamb,o.height,t+0.25,s*(o.width/2-U.jamb/2),o.height/2,0,jm);L.box(o.width,U.jamb,t+0.25,0,o.height-U.jamb/2,0,jm);
+    if(U.sl||U.tr){const glassBox=(u0,u1,y0,y1)=>{L.box(u1-u0,y1-y0,0.5,(u0+u1)/2,(y0+y1)/2,0,g.mGlass,false);};const ga=-o.width/2+U.jamb,gb=o.width/2-U.jamb;
+      if(U.sl===2||(U.sl===1&&!o.hinge)){glassBox(ga,ga+U.sW,1,U.y1);L.box(U.mull,U.y1,t*0.6,ga+U.sW+U.mull/2,U.y1/2,0,jm);}
+      if(U.sl===2||(U.sl===1&&o.hinge)){glassBox(gb-U.sW,gb,1,U.y1);L.box(U.mull,U.y1,t*0.6,gb-U.sW-U.mull/2,U.y1/2,0,jm);}
+      if(U.tr){glassBox(ga,gb,U.y1+U.mull,o.height-U.jamb);L.box(gb-ga,U.mull,t*0.6,0,U.y1+U.mull/2,0,jm);}}
+    // interior casing on faces that are inside the house
+    const cw=g.casingW||2.5;for(const f of [-1,1]){if(spec.ext&&f===outZ)continue;const z=f*(t/2+0.375);
+      for(const s of [-1,1])L.box(cw,o.height+cw,0.75,s*(o.width/2+cw/2),(o.height+cw)/2,z,jm,false);L.box(o.width+2*cw,cw,0.75,0,o.height+cw/2,z,jm,false);}}
+  const zc=side*(t/2-thick/2-0.5);const yH=36;const leaves=[];
+  if(dt==='swing')leaves.push({u0:U.u0,u1:U.u1,hinge:hU,active:true});
+  else if(dt==='double'){const m=(U.u0+U.u1)/2;leaves.push({u0:U.u0,u1:m-0.06,hinge:-1,active:hU<0},{u0:m+0.06,u1:U.u1,hinge:1,active:hU>0});}
+  if(leaves.length){for(const lf of leaves){addDoorSlab(L,lf.u0,lf.u1,U.y0,U.y1,zc,thick,st,mats);const uLatch=lf.hinge>0?lf.u0+2.6:lf.u1-2.6;const uHinge=lf.hinge>0?lf.u1:lf.u0;
+      addHinges(L,spec,uHinge,U.y0,U.y1,zc+side*(thick/2),hm);
+      const sp=lf.active?spec:{...spec,hw:{...spec.hw,deadbolt:false,type:spec.hw.type==='handleset'?'lever':spec.hw.type}};
+      for(const f of [-1,1]){const which=spec.ext?(f===outZ?'out':'in'):'';addHandle(L,sp,uLatch,yH,zc+f*thick/2,f,lf.hinge,hm,which);}
+      if(spec.door.kick)L.box(lf.u1-lf.u0-2,8,0.06,(lf.u0+lf.u1)/2,U.y0+4,zc-side*(thick/2+0.03),hm,false);
+      if(spec.door.viewer&&lf.active)for(const f of [-1,1])L.cyl(0.5,0.3,(lf.u0+lf.u1)/2,58,zc+f*(thick/2+0.15),hm,'z');
+      if(spec.door.closer&&lf.active){const uc=uHinge-lf.hinge*7;L.box(10,2.4,2.2,uc,U.y1-3,zc+side*(thick/2+1.1),hm);L.box(9,0.6,0.6,uc-lf.hinge*3,U.y1+1.2,zc+side*(thick/2+1.6),hm);}}
+    if(spec.door.threshold!=='none')L.box(o.width,spec.door.threshold==='ada'?0.5:1,t+1,0,0.25,0,hm,false);return;}
+  if(dt==='slider'){const m=(U.u0+U.u1)/2;const fixedRight=hU>0;for(const [a,b,z,fixed] of [[U.u0,m+1,-0.9,!fixedRight],[m-1,U.u1,0.9,fixedRight]]){addDoorSlab(L,a,b,U.y0,U.y1,z,1.75,st==='plank'?'plank':st==='panel6'?'fulllite':st,mats);
+      if(!fixed){const uL=fixedRight?a+2.5:b-2.5;for(const f of [-1,1])addHandle(L,{...spec,hw:{...spec.hw,type:spec.hw.type==='lever'?'pull':spec.hw.type}},uL,yH,z+f*0.875,f,fixedRight?1:-1,hm,'');}}
+    L.box(o.width,1,t,0,0.5,0,hm,false);return;}
+  if(dt==='pocket'){addDoorSlab(L,U.u0,U.u1,U.y0,U.y1,0,thick,st,mats);const uL=hU>0?U.u0+1.8:U.u1-1.8;for(const f of [-1,1])addHandle(L,{...spec,hw:{...spec.hw,type:spec.hw.type==='lever'||spec.hw.type==='knob'?'flushpull':spec.hw.type}},uL,yH,f*thick/2,f,hU,hm,'');return;}
+  if(dt==='bifold'){const nP=o.width>=48?4:2;const pw=(U.u1-U.u0)/nP;for(let i=0;i<nP;i++)addDoorSlab(L,U.u0+i*pw+0.06,U.u0+(i+1)*pw-0.06,U.y0,U.y1,zc,1.125,st,mats);
+    const knobAt=nP===2?[hU>0?U.u0+pw*0.25:U.u1-pw*0.25]:[U.u0+pw*1.0-1.5,U.u0+pw*3.0+1.5];for(const u of knobAt)L.sphere(0.8,u,yH,zc+side*(0.56+0.8),hm);
+    L.box(o.width,1,2,0,U.y1+0.6,zc,hm,false);return;}
+  if(dt==='barn'){const wb=o.width+4,hb=o.height+2,zb=side*(t/2+1.25+thick/2);addDoorSlab(L,-wb/2,wb/2,0.5,hb,zb,thick,st==='panel6'?'plank':st,mats);
+    L.box(o.width*2+8,1.2,0.6,(hU>0?-1:1)*(o.width/2),hb+2.5,side*(t/2+0.8),hm,false);for(const u of [-wb/2+5,wb/2-5]){L.box(1.6,5,0.3,u,hb+1,zb+side*(thick/2+0.2),hm,false);L.cyl(1.6,0.6,u,hb+2.6,side*(t/2+1.4),hm,'z');}
+    const uL=hU>0?-wb/2+3:wb/2-3;for(const f of [-1,1])addHandle(L,{...spec,hw:{...spec.hw,type:'barnpull'}},uL,yH+4,zb+f*thick/2,f,hU,hm,'');return;}
+  if(dt==='overhead'){const rows=o.height>96?5:4,cols=Math.max(2,Math.round(o.width/24));const rh=o.height/rows,cwid=o.width/cols;const zo=outZ?outZ*(t/2-1):0;
+    L.box(o.width,o.height,1.75,0,o.height/2,zo,mats.slab);for(let r=0;r<rows;r++){const glassRow=st==='garageglass'&&r===rows-1;
+      for(let c=0;c<cols;c++){const cu=-o.width/2+cwid*(c+0.5),cy=rh*(r+0.5);if(glassRow)L.box(cwid-5,rh-6,0.4,cu,cy,zo+(outZ||1)*0.9,mats.glass,false);else if(st!=='garage'||true)L.box(cwid-5,rh-6,0.5,cu,cy,zo+(outZ||1)*0.95,mats.slab);}
+      if(r)L.box(o.width,0.4,0.2,0,rh*r,zo+(outZ||1)*0.95,dark,false);}
+    if(st==='garagecarriage'){L.box(0.3,o.height,0.25,0,o.height/2,zo+(outZ||1)*1.0,dark,false);for(const s of [-1,1])L.cyl(0.45,10,s*6,o.height*0.45,zo+(outZ||1)*1.6,hm,'y');}return;}
+}
+/* ---- plan diagram of one handing choice, for the picker ---- */
+function handingTile(p,o,hinge,swing,opts={}){const q={...o,hinge,swing};const h=doorHanding(p,q);const S=doorSides(p,q);const W=120,H0=124;const dt=o.dtype||'swing';
+  // draw with the reference side (outside, or the side the drawing is looked at from) at the bottom
+  let ref,ext=false;if(S){ext=S.ext;ref=ext?S.outN:{x:S.n.x,y:S.n.y};}else ref={x:0,y:1};
+  const a={x:ref.y,y:-ref.x};const dU=S?(S.d.x*a.x+S.d.y*a.y>0?1:-1):1;const nS=S?((S.n.x*ref.x+S.n.y*ref.y)>0?1:-1):1;
+  const sideDown=(swing||1)*nS;const hingeX=(hinge?1:-1)*dU;const ww=44,cx=W/2,cy=62,wt=8;const hx=cx+hingeX*ww/2,lx=cx-hingeX*ww/2;
+  const els=[];els.push(html`<rect x="4" y=${cy-wt/2} width=${cx-ww/2-4} height=${wt} className="ht-wall"/>`,html`<rect x=${cx+ww/2} y=${cy-wt/2} width=${W-4-cx-ww/2} height=${wt} className="ht-wall"/>`);
+  if(dt==='swing'||dt==='double'){const leaves=dt==='double'?[[cx-ww/2,1],[cx+ww/2,-1]]:[[hx,-hingeX]];for(const [x0,dir] of leaves){const r=dt==='double'?ww/2:ww;const y0=cy+sideDown*wt/2;
+      els.push(html`<line x1=${x0} y1=${y0} x2=${x0} y2=${y0+sideDown*r} className="ht-leaf"/>`,html`<path d=${`M${x0} ${y0+sideDown*r} A${r} ${r} 0 0 ${(dir*sideDown)>0?0:1} ${x0+dir*r} ${y0}`} className="ht-arc"/>`,html`<circle cx=${x0} cy=${y0} r="2.2" className="ht-hinge"/>`);}}
+  else{const yy=cy+sideDown*(wt/2+3);els.push(html`<line x1=${cx-ww/2} y1=${yy} x2=${cx+ww/2} y2=${yy} className="ht-leaf"/>`,html`<path d=${`M${cx} ${yy+sideDown*6} l${-hingeX*14} 0 m0 0 l${hingeX*4} -3 m${-hingeX*4} 3 l${hingeX*4} 3`} className="ht-arc"/>`);}
+  const lab=(t,y)=>html`<text x=${cx} y=${y} textAnchor="middle" className="ht-lab">${t}</text>`;
+  const roomBelow=S&&!ext?(()=>{const v=ref;const rooms=p.rooms.filter(r=>r.level===S.w.level);const r=rooms.find(r=>inPoly(S.c.x+v.x*(S.w.thick/2+8),S.c.y+v.y*(S.w.thick/2+8),r.pts));return r?r.name:'';})():'';
+  const roomAbove=S&&!ext?(()=>{const v={x:-ref.x,y:-ref.y};const rooms=p.rooms.filter(r=>r.level===S.w.level);const r=rooms.find(r=>inPoly(S.c.x+v.x*(S.w.thick/2+8),S.c.y+v.y*(S.w.thick/2+8),r.pts));return r?r.name:'';})():'';
+  return html`<svg viewBox=${`0 0 ${W} ${H0}`} className="htile" aria-hidden="true">${els}${lab(ext?'Inside':roomAbove,9)}${lab(ext?'Outside':roomBelow,H0-3)}</svg>`;}
+/* ---- door hardware on the materials list, and door code checks ---- */
+try{SHOP_MAP.unshift([/Door hardware/,'Door hardware',7]);}catch(e){}
+function hwName(spec){const hw=spec.hw;const fin=hwFinish(hw.finish)[1].toLowerCase();const br=hw.brand&&hw.brand!=='Any brand'?hw.brand+' ':'';const f=(HW_FUNCS.find(x=>x[0]===hw.func)||['',''])[1].replace(/ \(.*\)/,'').toLowerCase();
+  const t=hw.type==='handleset'?'handleset':hw.type==='knob'?'knob':hw.type==='lever'?'lever':(HW_TYPES.find(x=>x[0]===hw.type)||['',''])[1].toLowerCase();
+  const s=["lever","knob","handleset"].includes(hw.type)?`${br}${f} ${t} set, ${fin}`:`${br}${t}, ${fin}`;return s.charAt(0).toUpperCase()+s.slice(1);}
+regExtra({takeoff:(p,add)=>{for(const o of p.openings){if(o.type!=='door'||o.status==='existing'||o.status==='demolish')continue;const dt=o.dtype||'swing';if(dt==='overhead')continue;const spec=doorSpec(p,o);const hw=spec.hw;const mk=openingMarks(p)[o.id]||'';
+    const leaves=dt==='double'?2:1;const fin=hwFinish(hw.finish)[1].toLowerCase();
+    if(hw.type!=='none'){if(dt==='double'&&['lever','knob','handleset'].includes(hw.type)){add('Door hardware',hwName(spec),1,'EA',mk);add('Door hardware',hwName({...spec,hw:{...hw,func:'dummy',type:hw.type==='handleset'?'lever':hw.type}}),1,'EA',mk+' inactive leaf');add('Door hardware',`Flush bolts, ${fin}`,1,'pair',mk);}
+      else add('Door hardware',hwName(spec),dt==='slider'?1:leaves,'EA',mk);}
+    if(hw.deadbolt&&(dt==='swing'||dt==='double'))add('Door hardware',`${hw.brand&&hw.brand!=='Any brand'?hw.brand+' single':'Single'}-cylinder deadbolt, ${fin}`,1,'EA',mk);
+    if(dt==='swing'||dt==='double'){const hn=spec.hinges;add('Door hardware',`${(HINGE_SIZES.find(x=>x[0]===hn.size)||['',hn.size+'"'])[1]} ${(HINGE_CORNERS.find(x=>x[0]===hn.corner)||['',''])[1].toLowerCase()} ${hn.spring?'spring ':''}hinges, ${hwFinish(hn.finish).at(1).toLowerCase()}`,hn.n*leaves,'EA',mk+(spec.door.mat==='hollow'?' (prehung doors come with hinges; order to change the finish)':''));
+      if(spec.door.stop!=='none')add('Door hardware',`${(DOOR_STOPS.find(x=>x[0]===spec.door.stop)||['',''])[1]}, ${fin}`,leaves,'EA',mk);
+      if(spec.door.closer)add('Door hardware','Door closer (residential, adjustable)',1,'EA',mk+(spec.garageHouse?' required at garage door, R302.5.1':''));
+      if(spec.door.kick)add('Door hardware',`Kick plate 8" x ${Math.round(doorLeafW(o,spec)-2)}", ${fin}`,leaves,'EA',mk);
+      if(spec.door.viewer)add('Door hardware',`Door viewer, ${fin}`,1,'EA',mk);
+      if(spec.door.threshold==='ada')add('Door hardware','Low-profile ADA threshold, 1/2" max',1,'EA',mk);}}},
+  checks:(p,add)=>{const ada=p.settings?.code==='ibc'||p.settings?.ada!==false;
+    for(const o of p.openings){if(o.type!=='door'||o.status==='demolish')continue;const dt=o.dtype||'swing';if(dt==='overhead')continue;const spec=doorSpec(p,o);const S=spec.sides;if(!S||!S.w)continue;const c=openingCenter(p,o);const T={kind:'opening',id:o.id};const mk=openingMarks(p)[o.id]||'Door';const lv=S.w.level;
+      if(ada&&spec.hw.type==='knob')add('warn',{set:'ADA',code:'309.4',title:'Operable parts'},`${mk}: knob hardware`,'Knobs need tight grasping and twisting. Use levers, push/pull or loop handles on accessible doors.',T,c,lv);
+      if(ada&&spec.door.threshold==='std'&&(dt==='swing'||dt==='double'))add('warn',{set:'ADA',code:'404.2.5',title:'Thresholds'},`${mk}: threshold too tall`,'A standard 1" sill is over the 1/2" ADA limit (3/4" for existing sliding doors). Use a low-profile threshold.',T,c,lv);
+      if(spec.garageHouse){const solid=['solidcore','wood','steel'].includes(spec.door.mat)&&(spec.door.thick||1.375)>=1.375-0.01;
+        if(!solid&&!spec.door.fire20)add('error',{set:'IRC',code:'R302.5.1',title:'Garage to house door'},`${mk}: door to the garage is not fire resistant`,'Use solid wood, solid-core or steel at least 1-3/8" thick, honeycomb-core steel, or a 20-minute rated door.',T,c,lv);
+        if(!spec.door.closer)add('error',{set:'IRC',code:'R302.5.1',title:'Garage to house door'},`${mk}: door to the garage needs a closer`,'Doors between the garage and the house must be self-closing or automatic-closing (closer or spring hinges).',T,c,lv);}
+      if(spec.ext&&(dt==='swing'||dt==='double')&&spec.hw.func==='passage')add('warn',{set:'Practice',code:'Security',title:'Entry locks'},`${mk}: outside door does not lock`,'Passage hardware has no lock. Use a keyed entry set or handleset, and a deadbolt.',T,c,lv);
+      const uses=[S.into,S.from].filter(Boolean).map(r=>r.use);if(!spec.ext&&uses.includes('bath')&&spec.hw.func==='passage'&&['lever','knob'].includes(spec.hw.type))add('warn',{set:'Practice',code:'Privacy',title:'Bathroom lock'},`${mk}: bathroom door has no privacy lock`,'Use privacy hardware on bathroom doors.',T,c,lv);}}});
 /* ======================= 2021 IBC checks (commercial and city buildings) ======================= */
 // Planning-level means-of-egress, occupant load and plumbing-fixture checks for buildings that fall under the IBC
 // rather than the IRC. Values come from IBC 2021 Chapters 10, 12 and 29 for the common cases; local amendments
@@ -16219,11 +16437,11 @@ function coverSheet(P,p,index,marks){
       for(const i of iss.slice(0,8)){if(ly>A.y1-0.15*k)break;dl.text(A.x0+0.05*k,ly,`${i.sev==='error'?'FAILS':'CHECK'}  ${i.title}${i.rule?`  (${i.rule.set} ${i.rule.code})`:''}`,{size:6*k,color:i.sev==='error'?INK:MID});ly+=0.13*k;}}}
   const rx=A.x0+colW+0.4*k;let ry=y;const lvName=id=>lvlOf(p,id)?.name||'';
   const ops=Object.entries(marks).map(([id,m])=>({m,o:p.openings.find(o=>o.id===id)})).filter(r=>r.o).sort((a,b)=>a.m.slice(1)-b.m.slice(1));const wallOf=o=>p.walls.find(w=>w.id===o.wall);
-  const doors=ops.filter(r=>r.o.type==='door').map(({m,o})=>[m,fmtLen(o.width),fmtLen(o.height),lvName(wallOf(o)?.level),(o.status||'new').toUpperCase(),o.width>=34?'':'Check 32" clear']);
+  const doors=ops.filter(r=>r.o.type==='door').map(({m,o})=>{const sp=doorSpec(p,o);const h=doorHanding(p,o);const dt=o.dtype||'swing';return [m,`${fmtLen(o.width)} x ${fmtLen(o.height)}`,`${dt==='swing'?'':DOOR_TYPES[dt]+' '}${DOOR_STYLES[o.style||'panel6']||''}`.trim(),h.res?(h.ansi?`${h.res} / ${h.ansi}`:h.res):'',dt==='overhead'?'':hwName(sp).replace(/ set,/,','),[o.width>=34?'':'32" clear?',sp.door.fire20?'20 MIN':'',sp.door.closer?'CLOSER':''].filter(Boolean).join(' ')];});
   const wins=ops.filter(r=>r.o.type==='window').map(({m,o})=>[m,fmtLen(o.width),fmtLen(o.height),fmtLen(o.sill),fmtLen(o.sill+o.height),(WINDOW_OPS.find(x=>x[0]===(o.operation||'double-hung'))||['',''])[1],lvName(wallOf(o)?.level)]);
   const cw=Math.min(colW,5.15*k)/5.15;
   dl.text(rx,ry,'DOOR SCHEDULE',{size:7*k,bold:true});ry+=0.08*k;
-  ry+=drawTable(dl,rx,ry,[{h:'MARK',w:0.45*k*cw},{h:'WIDTH',w:0.65*k*cw},{h:'HEIGHT',w:0.65*k*cw},{h:'LEVEL',w:1.05*k*cw},{h:'STATUS',w:0.75*k*cw},{h:'ADA NOTE',w:1.05*k*cw}],doors,k,(A.y1+A.y0)/2+0.4*k)+0.3*k;
+  ry+=drawTable(dl,rx,ry,[{h:'MARK',w:0.38*k*cw},{h:'SIZE',w:0.85*k*cw},{h:'DOOR',w:0.9*k*cw},{h:'HANDING (RES / ANSI)',w:1.05*k*cw},{h:'HARDWARE',w:1.32*k*cw},{h:'NOTES',w:0.65*k*cw}],doors,k,(A.y1+A.y0)/2+0.4*k)+0.3*k;
   dl.text(rx,ry,'WINDOW SCHEDULE',{size:7*k,bold:true});ry+=0.08*k;
   const ibcOn=p.settings?.code==='ibc';
   ry+=drawTable(dl,rx,ry,[{h:'MARK',w:0.45*k*cw},{h:'WIDTH',w:0.65*k*cw},{h:'HEIGHT',w:0.65*k*cw},{h:'SILL',w:0.65*k*cw},{h:'HEAD',w:0.65*k*cw},{h:'TYPE',w:1.0*k*cw},{h:'LEVEL',w:1.05*k*cw}],wins,k,ibcOn?A.y1-2.2*k:A.y1-0.1*k)+0.3*k;
@@ -16412,7 +16630,7 @@ function renderSnapshot(p,{view=null,layer='proposed',w=1600,h=900,angle='aerial
       const vf=cam.fov*Math.PI/180,hf=2*Math.atan(Math.tan(vf/2)*cam.aspect);const d=r/Math.sin(Math.min(vf,hf)/2)*0.85;
       const dir=angle==='street'?new THREE.Vector3(-0.15,0.18,1):angle==='dollhouse'?new THREE.Vector3(-0.45,0.85,0.6):new THREE.Vector3(-0.55,0.55,0.65);dir.normalize();
       cam.position.copy(c).addScaledVector(dir,d);if(angle==='street')cam.position.y=Math.max(cam.position.y,5.5);cam.lookAt(c);}}
-  R.render(scene,cam);const url=R.domElement.toDataURL('image/jpeg',0.9);
+  applyMetalEnv(st.model,R);R.render(scene,cam);const url=R.domElement.toDataURL('image/jpeg',0.9);
   st.model.traverse(o=>{if(o.geometry)o.geometry.dispose();});return url;
 }
 const PRES_DEFAULT={title:'',subtitle:'Remodel plan for board review',presenter:'',sections:{cover:true,beforeAfter:true,renders:true,views:true,options:true,plans:true,cost:true,code:true,structure:true},notes:''};
@@ -16719,9 +16937,9 @@ function libActions(it,ctx){
   const room=o&&sel.kind==='room'?o:null, wall=o&&sel.kind==='wall'?o:null, op=o&&sel.kind==='opening'?o:null, fx=o&&sel.kind==='fixture'?o:null, roof=o&&sel.kind==='roof'?o:null;
   const allRooms=patch=>commit({...p,rooms:p.rooms.map(r=>({...r,...patch(r)}))});
   switch(it.place){
-    case 'fixture':A.push({label:'Place',primary:true,run:()=>{setFixtureType(it.id);setTool('fixture');setMode&&setMode(m=>m==='3d'?'split':m);}});
+    case 'fixture':A.push({label:'Place',primary:true,run:()=>{setFixtureType(it.id);setTool('fixture');setMode&&setMode(m=>m==='3d'?'split':m);}});A.push({label:it.cat==='My items'?'Edit…':'Customize…',run:()=>window.dispatchEvent(new CustomEvent('rs-customize',{detail:it.id}))});
       if(fx)A.push({label:'Swap selected',run:()=>commit(updObj(p,'fixture',fx.id,{type:it.base,lib:it.id,name:it.label,w:it.w,d:it.d,h:it.h,elev:it.elev??(FIXTURES[it.base]?.elev||0)}))});break;
-    case 'door':case 'window':A.push({label:'Place on a wall',primary:true,run:()=>{setOpenPreset(s=>({...s,[it.place]:it.id}));setTool(it.place);}});
+    case 'door':case 'window':A.push({label:'Place on a wall',primary:true,run:()=>{setOpenPreset(s=>({...s,[it.place]:it.id}));setTool(it.place);}});A.push({label:it.cat==='My items'?'Edit…':'Customize…',run:()=>window.dispatchEvent(new CustomEvent('rs-customize',{detail:it.id}))});
       if(op)A.push({label:'Apply to selected',run:()=>{const w=p.walls.find(w=>w.id===op.wall);const L=w?wlen(w):999;const patch=openingFromLib(it);if(patch.width>L-1){ctx.say&&ctx.say('That is wider than the wall.',false);return;}
         commit(updObj(p,'opening',op.id,{...patch,pos:Math.max(patch.width/2,Math.min(L-patch.width/2,op.pos))}));}});break;
     case 'wall':A.push({label:'Draw with this',primary:true,run:()=>{setWallPreset(it.key);setTool('wall');}});
@@ -16757,7 +16975,9 @@ function libDims(it){
   if(it.place==='color')return it.hex.toUpperCase();
   return '';
 }
-function LibIcon({it}){
+const PIC_PLACES=new Set(['door','window','fixture','floor','wallfin','ceiling','roof','siding']);
+function LibIcon({it,p}){
+  if(PIC_PLACES.has(it.place))return html`<${ItemPic} kind="lib" obj=${it} p=${p||(window.__app&&window.__app.get())} w=${128} h=${96} className="libpic" alt=""/>`;
   const box=(c)=>html`<svg viewBox="0 0 40 40" className="libicon" aria-hidden="true">${c}</svg>`;
   if(it.place==='color')return html`<span className="libswatch" style=${{background:it.hex}} aria-hidden="true"></span>`;
   if(it.place==='trim'){const h=Math.min(34,Math.max(4,it.slot==='wainscot'?30:it.h*5));const t=Math.max(3,it.t*14);const y0=37-h;
@@ -16772,7 +16992,7 @@ function LibIcon({it}){
   if(it.place==='window'){const k=Math.min(30/it.width,30/it.height);const w=it.width*k,h=it.height*k;const x=20-w/2,y=20-h/2;
     return box(html`<rect x=${x} y=${y} width=${w} height=${h} className="li-fill"/>${it.operation==='double-hung'||it.operation==='single-hung'?html`<line x1=${x} y1=${20} x2=${x+w} y2=${20} className="li-line"/>`:it.operation==='slider'?html`<line x1=20 y1=${y} x2=20 y2=${y+h} className="li-line"/>`:it.operation==='casement'?html`<polyline points=${`${x+w},${y} ${x},${20} ${x+w},${y+h}`} className="li-arc"/>`:it.operation==='awning'||it.operation==='hopper'?html`<polyline points=${`${x},${y+h} 20,${y} ${x+w},${y+h}`} className="li-arc"/>`:null}`);}
   if(it.place==='fixture'){const k=Math.min(32/it.w,32/it.d);const w=it.w*k,d=it.d*k;return box(html`<rect x=${20-w/2} y=${20-d/2} width=${w} height=${d} rx="1.5" className=${it.base==='wallcab'?'li-dash':'li-fill'}/>`);}
-  if(it.place==='wall'){const t=Math.min(30,it.thick*2.4);return box(html`<rect x="2" y=${20-t/2} width="36" height=${t} className=${it.kind==='exterior'?'li-solid':'li-fill'}/>`);}
+  if(it.place==='wall')return html`<${WallSectionPic} it=${it}/>`;
   const col=it.place==='floor'?FLOOR_COLOR[it.key]:it.place==='roof'?ROOF_COLOR[it.key]:it.place==='siding'?SIDING_COLOR[it.key]:it.place==='ceiling'?(CEILINGS[it.key]||[])[1]:0xe9e6df;
   return html`<span className="libswatch" style=${{background:'#'+((col??0xdddddd).toString(16).padStart(6,'0'))}} aria-hidden="true"></span>`;
 }
@@ -16780,7 +17000,7 @@ function LibraryPanel({ctx,onClose,collapsed,setCollapsed}){
   const [q,setQ]=useState('');const [cat,setCat]=useState(()=>{try{return localStorage.getItem('remodel-studio:libcat')||'Doors';}catch(e){return 'Doors';}});
   const pick=c=>{setCat(c);try{localStorage.setItem('remodel-studio:libcat',c);}catch(e){}};
   const words=q.toLowerCase().split(/\s+/).filter(Boolean);
-  const items=LIB.filter(x=>(words.length?true:x.cat===cat)&&words.every(w=>(x.label+' '+x.sub+' '+x.cat).toLowerCase().includes(w)));
+  const items=LIB.filter(x=>!x.hidden&&(words.length?true:x.cat===cat)&&words.every(w=>(x.label+' '+x.sub+' '+x.cat).toLowerCase().includes(w)));
   if(words.length){const ql=q.toLowerCase().trim();const score=x=>{const l=x.label.toLowerCase();return (l.includes(ql)?0:1)*10+(l.startsWith(words[0])?0:1)+(l.length/200);};items.sort((a,b)=>score(a)-score(b));}
   const shown=items.slice(0,150);const groups=[];for(const x of shown){let g=groups.find(g=>g.k===x.cat+' / '+x.sub);if(!g)groups.push(g={k:x.cat+' / '+x.sub,sub:words.length?x.cat+': '+x.sub:x.sub,items:[]});g.items.push(x);}
   const o=findObj(ctx.p,ctx.sel);const selName=o?(ctx.sel.kind==='room'?o.name:ctx.sel.kind==='fixture'?fxLabel(o):ctx.sel.kind==='opening'?(openingMarks(ctx.p)[o.id]||o.type):ctx.sel.kind):null;
@@ -16795,7 +17015,7 @@ function LibraryPanel({ctx,onClose,collapsed,setCollapsed}){
     </div>
     ${!words.length&&cat==='Cabinets'?html`<${PriceBookPanel} onChange=${()=>setQ(q=>q+' ').valueOf()||setTimeout(()=>setQ(q=>q.trim()),0)}/>`:null}
     <div className="liblist">${groups.map(g=>html`<div key=${g.k} className="libgrp"><h4>${g.sub}</h4>${g.items.map(it=>{const acts=libActions(it,ctx);return html`<div key=${it.id} className="libitem">
-        <${LibIcon} it=${it}/><div className="libtxt"><div className="libname">${it.label}${it.ada?html` <span className="pill ok">ADA</span>`:null}</div><div className="note">${libDims(it)}</div>
+        <${LibIcon} it=${it} p=${ctx.p}/><div className="libtxt"><div className="libname">${it.label}${it.ada?html` <span className="pill ok">ADA</span>`:null}</div><div className="note">${libDims(it)}</div>
         <div className="libacts">${acts.map((a,i)=>html`<button key=${i} className=${'btn'+(a.primary?' primary':'')} onClick=${a.run}>${a.label}</button>`)}</div></div></div>`;})}</div>`)}
       ${items.length>shown.length?html`<p className="note" style=${{padding:'0 16px 16px'}}>Showing ${shown.length} of ${items.length}. Type more words to narrow it down.</p>`:null}
       ${!items.length?html`<p className="note" style=${{padding:'16px'}}>Nothing matches. Try fewer words.</p>`:null}</div>
@@ -16829,11 +17049,13 @@ function doorGeom(o,t,s0,s1){
   switch(o.dtype||'swing'){
     case 'double':{const h=W/2;out.push({pts:[[s0,side*t],[s0,side*(t+h)]]},{pts:arc(s0,1,h,side),dash:true},{pts:[[s1,side*t],[s1,side*(t+h)]]},{pts:arc(s1,-1,h,side),dash:true});break;}
     case 'slider':{const L=W*0.55;out.push({pts:[[s0,t*0.35],[s0+L,t*0.35]],thick:true},{pts:[[s1-L,-t*0.35],[s1,-t*0.35]],thick:true});break;}
-    case 'pocket':out.push({pts:[[s0,0],[s1,0]],thick:true},{pts:[[s0-W,0],[s0,0]],dash:true});break;
+    case 'pocket':out.push({pts:[[s0,0],[s1,0]],thick:true},o.hinge?{pts:[[s1,0],[s1+W,0]],dash:true}:{pts:[[s0-W,0],[s0,0]],dash:true});break;
     case 'bifold':{const n=W>=48?4:2;const pts=[];for(let i=0;i<=n;i++)pts.push([s0+W*i/n,side*(t+(i%2?W/n*0.5:0))]);out.push({pts});break;}
-    case 'barn':{const off=side*(t+1.5);out.push({pts:[[s0-2,off],[s1+2,off]],thick:true},{pts:[[s1+2,off],[s1+W+2,off]],dash:true});break;}
+    case 'barn':{const off=side*(t+1.5);out.push({pts:[[s0-2,off],[s1+2,off]],thick:true},o.hinge?{pts:[[s0-W-2,off],[s0-2,off]],dash:true}:{pts:[[s1+2,off],[s1+W+2,off]],dash:true});break;}
     case 'overhead':{const off=-side*(t+2);out.push({pts:[[s0,off],[s1,off]],dash:true},{pts:[[s0,off],[s0,off-side*Math.min(W,96)*0.4]],dash:true},{pts:[[s1,off],[s1,off-side*Math.min(W,96)*0.4]],dash:true});break;}
-    default:{const hs=o.hinge?s1:s0,os=o.hinge?s0:s1;const dir=os>hs?1:-1;out.push({pts:[[hs,side*t],[hs,side*(t+W)]]},{pts:arc(hs,dir,W,side),dash:true});}
+    default:{let a=s0,b=s1;if(o.door&&(o.door.sidelites||o.door.transom)){const U=doorUnit(o,{door:o.door});const mid=(s0+s1)/2;a=mid+U.u0;b=mid+U.u1;
+        if(a-s0>2)out.push({pts:[[s0+0.75,0],[a-1,0]],thick:true});if(s1-b>2)out.push({pts:[[b+1,0],[s1-0.75,0]],thick:true});}
+      const Wl=b-a;const hs=o.hinge?b:a,os=o.hinge?a:b;const dir=os>hs?1:-1;out.push({pts:[[hs,side*t],[hs,side*(t+Wl)]]},{pts:arc(hs,dir,Wl,side),dash:true});}
   }
   return out;
 }
@@ -16896,6 +17118,272 @@ function KeysModal({onClose}){const tools=allToolKeys().map(([id,k])=>[k.toUpper
   return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal wide" role="dialog" aria-label="Keyboard shortcuts">
     <h2>Keyboard shortcuts</h2><div className="keygrid"><div><h3>Program</h3>${T(app)}</div><div><h3>Tools</h3>${T(tools)}</div><div><h3>Command line</h3>${T(cmds)}</div></div>
     <div className="row"><span className="spacer"></span><button className="btn" onClick=${onClose}>Close</button></div></div></div>`;}
+/* ======================= item pictures: every library item and every placed item drawn from its real 3D model ======================= */
+// A tiny project is built around the one item (a wall for a door, a corner of a room for a cabinet, a house box for siding),
+// rendered once off screen, and kept as an image. Pictures follow every option: style, size, color, hardware and handing.
+const PIC_BG=0xeef1f4;const _picCache=new Map();const _picQueue=[];let _picBusy=false;
+function picLevel(){return {id:'pv-l',name:'Preview',elevation:0,height:96};}
+function picBase(p){const b=blankProject();return {...b,id:'preview',name:'Preview',levels:[picLevel()],walls:[],openings:[],rooms:[],fixtures:[],roofs:[],elec:[],stairs:[],ramps:[],shapes:[],dims:[],annos:[],
+  settings:{...b.settings,...(p&&p.settings?{cab:p.settings.cab,trim:p.settings.trim,trimColor:p.settings.trimColor,hwFinish:p.settings.hwFinish,counter:p.settings.counter}:{}),gradeOffset:0,ada:false},site:p&&p.site};}
+const pvWall=(id,x1,y1,x2,y2,kind,thick,extra={})=>({id,level:'pv-l',x1,y1,x2,y2,thick:thick||(kind==='exterior'?6.5:4.5),kind,bearing:false,height:null,status:'new',...extra});
+// door or window: interior doors stand in one wall, exterior ones in the front of a small house so inside and outside are known
+function picOpeningProject(p,o,real){const q=picBase(p);const ext=real?real.ext:!!(o.ext||o.type==='window'||o.dtype==='overhead'||['storefront','metal','garageglass','garage'].includes(o.style));
+  const W=Math.max(o.width+60,108),D=280;const op={...o,id:'pv-o',wall:'pv-w1',pos:W/2,status:'new'};
+  if(o.type==='door'&&real&&real.h){const h=real.h;const hr=/^RH/.test(h.res);const out=/outswing/.test(h.res);const dt=o.dtype||'swing';
+    if(dt==='swing'||dt==='double'){op.hinge=hr?1:0;op.swing=ext?(out?1:-1):1;}else{op.hinge=/right|XO/.test(h.res)?1:0;op.swing=ext?-1:1;}}
+  if(ext){q.walls=[pvWall('pv-w1',-W/2,0,W/2,0,'exterior',null,{siding:real&&real.siding}),pvWall('pv-w2',W/2,0,W/2,-D,'exterior'),pvWall('pv-w3',W/2,-D,-W/2,-D,'exterior'),pvWall('pv-w4',-W/2,-D,-W/2,0,'exterior')];
+    q.rooms=[{id:'pv-r',level:'pv-l',name:'Inside',use:'living',pts:[[-W/2,-D],[W/2,-D],[W/2,0],[-W/2,0]]}];}
+  else{q.walls=[pvWall('pv-w1',-W/2,0,W/2,0,'interior')];q.rooms=[{id:'pv-r1',level:'pv-l',name:'Room',use:'living',pts:[[-W/2,-60],[W/2,-60],[W/2,0],[-W/2,0]]},{id:'pv-r2',level:'pv-l',name:'Room',use:'living',pts:[[-W/2,0],[W/2,0],[W/2,60],[-W/2,60]]}];}
+  q.openings=[op];return {q,ext,focus:{x:0,y:0,z:(o.type==='window'?(o.sill||0):0)+o.height/2,w:o.width+(o.type==='door'?10:14),h:o.height+(o.type==='door'?8:16)}};}
+const WALL_ITEMS=new Set(['wallcab','base','sinkbase','tall','vanity','range','fridge','dw','washer','dryer','toilet','lav','tub','shower','rollin','grabbar','mirror','hood']);
+function picFixtureProject(p,f){const q=picBase(p);const fx={...f,id:'pv-f',level:'pv-l',x:0,y:0,rot:0,status:'new'};const w=f.w||24,d=f.d||24;
+  if(WALL_ITEMS.has(f.type)||/cab|vanity|base/.test(f.type||'')){q.walls=[pvWall('pv-wb',-w/2-30,-d/2-2.25,w/2+30,-d/2-2.25,'interior')];}
+  const R=Math.max(w,d)/2+36;q.rooms=[{id:'pv-r',level:'pv-l',name:'',use:f.type==='toilet'||f.type==='lav'||f.type==='tub'?'bath':'kitchen',pts:[[-R,-d/2-2.25],[R,-d/2-2.25],[R,R],[-R,R]],finish:'lvp'}];
+  q.fixtures=[fx];const z0=f.elev||0,h=f.h||30;return {q,focus:{x:0,y:0,z:z0+h/2,w:Math.max(w,12),h:Math.max(h,12),d}};}
+function picFinishProject(p,it){const q=picBase(p);
+  if(it.place==='floor'||it.place==='wallfin'||it.place==='ceiling'){const S=84;q.walls=[pvWall('pv-a',-S,-S,S,-S,'interior'),pvWall('pv-b',-S,S,-S,-S,'interior')];
+    q.rooms=[{id:'pv-r',level:'pv-l',name:'',use:'living',pts:[[-S,-S],[S,-S],[S,S],[-S,S]],...(it.place==='floor'?{finish:it.key}:it.place==='wallfin'?{wallFinish:it.key}:{ceiling:it.key})}];
+    return {q,cam:it.place==='floor'?{pos:[60,110,140],tgt:[-10,0,-10]}:it.place==='ceiling'?{pos:[50,40,60],tgt:[-40,100,-40],walk:true}:{pos:[90,70,120],tgt:[-40,45,-60]}};}
+  if(it.place==='roof'||it.place==='siding'){const W=120,D=96;q.walls=[pvWall('pv-w1',-W/2,D/2,W/2,D/2,'exterior'),pvWall('pv-w2',W/2,D/2,W/2,-D/2,'exterior'),pvWall('pv-w3',W/2,-D/2,-W/2,-D/2,'exterior'),pvWall('pv-w4',-W/2,-D/2,-W/2,D/2,'exterior')];
+    if(it.place==='siding')q.walls=q.walls.map(w=>({...w,siding:it.key}));q.rooms=[{id:'pv-r',level:'pv-l',name:'',use:'living',pts:[[-W/2,-D/2],[W/2,-D/2],[W/2,D/2],[-W/2,D/2]]}];
+    q.roofs=[{id:'pv-roof',level:'pv-l',style:'gable',pitch:7,overhang:12,ridge:'x',x:-W/2-3.25,y:-D/2-3.25,w:W+6.5,h:D+6.5,framing:{system:'rafters',rafter:'2x8',spacing:16,species:'syp2',cover:it.place==='roof'?it.key:'asphalt'}}];
+    return {q,cam:it.place==='roof'?{pos:[150,190,200],tgt:[0,90,0]}:{pos:[70,70,190],tgt:[0,55,0]}};}
+  return null;}
+// render a tiny project off screen; cam in inches (x, up, plan y)
+function snapPreview(q,{w=160,h=120,cam,focus,front=1}={}){const R=snapRenderer(w,h);const scene=new THREE.Scene();scene.background=new THREE.Color(PIC_BG);
+  scene.add(new THREE.HemisphereLight(0xf4f7ff,0x9a958a,0.55));const sun=new THREE.DirectionalLight(0xfff6e8,0.62);sun.position.set(-4,9,7);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.bias=-0.0005;
+  const sc=sun.shadow.camera;sc.left=sc.bottom=-12;sc.right=sc.top=12;scene.add(sun);scene.add(sun.target);const fill=new THREE.DirectionalLight(0xffffff,0.25);fill.position.set(5,3,-6);scene.add(fill);
+  const st={model:new THREE.Group(),sun,camera:new THREE.PerspectiveCamera(32,w/h,0.05,500)};scene.add(st.model);
+  const keep=CUR_TAG;try{buildModel(st,q,'pv-l',null,{cutaway:false,showRoof:!!(q.roofs&&q.roofs.length),layer:'proposed',interior:!!(cam&&cam.walk)});}finally{CUR_TAG=keep;}
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.MeshStandardMaterial({color:0xd9dccf,roughness:1}));ground.rotation.x=-Math.PI/2;ground.position.y=-0.03;ground.receiveShadow=true;scene.add(ground);
+  const c=st.camera;if(cam){c.position.set(cam.pos[0]*IN,cam.pos[1]*IN,cam.pos[2]*IN);c.lookAt(cam.tgt[0]*IN,cam.tgt[1]*IN,cam.tgt[2]*IN);}
+  else if(focus){const vf=c.fov*Math.PI/180;const need=Math.max(focus.h/2/Math.tan(vf/2),focus.w/2/Math.tan(vf/2)/c.aspect)*1.12;const dist=need+(focus.d||0)/2;
+    const tx=focus.x*IN,ty=focus.z*IN,tz=focus.y*IN;const ang=front===0?0:0.32*(front<0?-1:1);const side=front<0?-1:1;
+    c.position.set(tx+Math.sin(ang)*dist*IN,ty+dist*IN*0.16,tz+side*Math.cos(ang)*dist*IN);c.lookAt(tx,ty,tz);}
+  applyMetalEnv(st.model,R);sun.target.position.set(0,0,0);R.render(scene,c);const url=R.domElement.toDataURL('image/png');
+  st.model.traverse(o=>{if(o.geometry)o.geometry.dispose();});ground.geometry.dispose();return url;}
+// what to build for a library item or a placed object
+function picJob(kind,obj,p,opts={}){
+  if(kind==='opening'||kind==='draft'||obj.place==='door'||obj.place==='window'){const o=obj.place?openingFromLib(obj):obj;let real=null;
+    if(kind==='opening'&&p&&p.walls.find(w=>w.id===o.wall)){const S=doorSides(p,o);real={ext:S&&S.ext,h:o.type==='door'?doorHanding(p,o):null,siding:S&&S.w.siding};}
+    if(obj.place==='door'&&obj.ext)o.ext=true;const {q,focus}=picOpeningProject(p,o,real);return {q,focus,front:opts.back?-1:1};}
+  if(kind==='fixture'||obj.place==='fixture'){const f=obj.place?{type:obj.base,lib:obj.id,name:obj.label,w:obj.w,d:obj.d,h:obj.h,elev:obj.elev??(FIXTURES[obj.base]?.elev||0),...(obj.cab?{cab:obj.cab}:{}),...(obj.fx||{})}:obj;
+    const {q,focus}=picFixtureProject(p,f);return {q,focus,front:opts.back?-1:1};}
+  if(['floor','wallfin','ceiling'].includes(obj.place)){const hex=obj.place==='floor'?(FLOOR_COLOR[obj.key]??0xb89a74):obj.place==='wallfin'?(WALLFIN_COL[obj.key]??0xe9e5dc):((CEILINGS[obj.key]||[])[1]??0xf8f6f2);return {swatch:[obj.place,obj.key,hex]};}
+  if(['roof','siding'].includes(obj.place)){const r=picFinishProject(p,obj);if(r)return {q:r.q,cam:r.cam};}
+  return null;}
+function picKey(kind,obj,p,opts){const s=p&&p.settings?JSON.stringify([p.settings.cab,p.settings.trimColor,p.settings.hwFinish,p.settings.trim]):'';
+  let o=obj;if(kind==='opening'&&p){const S=doorSides(p,obj);o={...obj,_h:obj.type==='door'?doorHanding(p,obj).res:'',_e:S&&S.ext,_s:S&&S.w.siding,pos:0,wall:0,id:0};}
+  if(kind==='fixture')o={...obj,x:0,y:0,rot:0,id:0,level:0};return kind+'|'+JSON.stringify(o)+'|'+s+'|'+JSON.stringify(opts||{});}
+function requestPic(kind,obj,p,opts={}){const key=picKey(kind,obj,p,opts);if(_picCache.has(key))return Promise.resolve(_picCache.get(key));
+  return new Promise(res=>{_picQueue.push({key,kind,obj,p,opts,res});pumpPics();});}
+function pumpPics(){if(_picBusy||!_picQueue.length)return;_picBusy=true;
+  const run=()=>{const job=_picQueue.shift();if(!job){_picBusy=false;return;}
+    if(_picCache.has(job.key)){job.res(_picCache.get(job.key));}
+    else{let url=null;try{const j=picJob(job.kind,job.obj,job.p,job.opts);if(j&&j.swatch)url=finishSwatch(j.swatch[0],j.swatch[1],j.swatch[2],job.opts.w||160,job.opts.h||120);else if(j)url=snapPreview(j.q,{w:job.opts.w||160,h:job.opts.h||120,cam:j.cam,focus:j.focus,front:j.front});}catch(e){console.error('picture',e);}
+      if(_picCache.size>600)_picCache.delete(_picCache.keys().next().value);_picCache.set(job.key,url);job.res(url);}
+    if(_picQueue.length)setTimeout(run,0);else _picBusy=false;};
+  setTimeout(run,0);}
+// lazy picture: renders when it scrolls into view
+function ItemPic({kind,obj,p,w=160,h=120,className='',alt='',back=false,eager=false}){const [url,setUrl]=useState(()=>_picCache.get(picKey(kind,obj,p,{w,h,back}))||null);const ref=useRef(null);const [seen,setSeen]=useState(eager);
+  useEffect(()=>{if(seen||!ref.current)return;if(typeof IntersectionObserver==='undefined'){setSeen(true);return;}const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){setSeen(true);io.disconnect();}},{rootMargin:'200px'});io.observe(ref.current);return ()=>io.disconnect();},[seen]);
+  const key=picKey(kind,obj,p,{w,h,back});
+  useEffect(()=>{if(!seen)return;let live=true;const c=_picCache.get(key);if(c!==undefined){setUrl(c);return;}requestPic(kind,obj,p,{w,h,back}).then(u=>{if(live)setUrl(u);});return ()=>{live=false;};},[key,seen]);
+  return html`<span ref=${ref} className=${'itempic '+className} style=${{aspectRatio:w+' / '+h}}>${url?html`<img src=${url} alt=${alt} draggable="false"/>`:html`<span className="itempic-wait" aria-hidden="true"></span>`}</span>`;}
+/* ======================= item editors: picture, handing, options and hardware for doors, windows and fixtures ======================= */
+const STYLE_GLASS=new Set(['halflite','fulllite','french','sixlite','storefront','garageglass']);
+const DOOR_STYLES_FOR={swing:null,double:null,slider:['fulllite','french','sixlite','plank','flush'],pocket:null,bifold:['panel6','panel2','shaker','panel5','louver','flush','fulllite','plank'],barn:['plank','shaker','panel5','fulllite','flush'],overhead:['garage','garageglass','garagecarriage']};
+function PicPane({kind,obj,p,big=true}){const [back,setBack]=useState(false);
+  return html`<div className="pic-pane"><${ItemPic} kind=${kind} obj=${obj} p=${p} w=${big?440:220} h=${big?330:165} back=${back} eager=${true} alt=${'Picture of '+(obj.name||kind)}/>
+    <div className="seg pic-side" role="group" aria-label="Which side"><button className=${back?'':'on'} onClick=${()=>setBack(false)}>${kind==='opening'&&obj.type==='door'?'Front':'Front'}</button><button className=${back?'on':''} onClick=${()=>setBack(true)}>Back</button></div></div>`;}
+// door: style picture grid, handing pictures, construction and hardware
+function DoorEditor({p,o,up,draft=false}){const spec=doorSpec(p,o);const dt=o.dtype||'swing';const h=draft?null:doorHanding(p,o);
+  const uh=patch=>up({hw:{...(o.hw||{}),...patch}});const ud=patch=>up({door:{...(o.door||{}),...patch}});const un=patch=>up({hinges:{...(o.hinges||{}),...patch}});
+  const styles=(DOOR_STYLES_FOR[dt]||Object.keys(DOOR_STYLES).filter(k=>!/^garage/.test(k))).filter(k=>DOOR_STYLES[k]||/^garage/.test(k));
+  const sLabel=k=>DOOR_STYLES[k]||({garage:'Raised panel',garageglass:'Panels with window row',garagecarriage:'Carriage house'})[k]||k;
+  const swingish=dt==='swing'||dt==='double';const combos=swingish?[[0,1],[1,1],[0,-1],[1,-1]]:[[0,o.swing||1],[1,o.swing||1]];
+  const fin=hwFinish(spec.hw.finish);
+  return html`<div className="sec"><h3>Picture</h3><${PicPane} kind="opening" obj=${o} p=${p}/>
+      ${h&&h.both?html`<p className="note"><b>${h.both}</b>${h.into&&swingish?html` · swings into ${h.into.name}`:h.ext&&swingish?html` · ${/outswing/.test(h.res)?'swings outside':'swings inside'}`:null}</p>`:null}</div>
+    ${draft?null:html`<div className="sec"><h3>${swingish?'Handing':'Opening direction'}</h3><div className="hgrid">${combos.map(([hg,sw])=>{const q={...o,hinge:hg,swing:sw};const hh=doorHanding(p,q);const on=(o.hinge?1:0)===hg&&(o.swing||1)===sw;
+        return html`<button key=${hg+'/'+sw} className=${'htbtn'+(on?' on':'')} onClick=${()=>up({hinge:hg,swing:sw})} aria-pressed=${on}>${handingTile(p,o,hg,sw)}<span className="htname">${hh.res}</span>${hh.ansi?html`<span className="note">ANSI ${hh.ansi}</span>`:null}</button>`;})}</div>
+      <p className="note">${swingish?'Residential names: exterior doors seen from outside; interior doors seen from the side the door swings toward. ANSI names: seen from outside or the push side.':'Seen from outside, or from the room the door swings toward.'}</p></div>`}
+    <div className="sec"><h3>Door</h3>
+      <${Field} label="Door type" id="o-dt"><${Sel} id="o-dt" value=${dt} onChange=${v=>{const ok=DOOR_STYLES_FOR[v];up({dtype:v,lib:null,name:null,...(ok&&!ok.includes(o.style)?{style:ok[0]}:{})});}} options=${Object.entries(DOOR_TYPES)}/><//>
+      <div className="stylegrid" role="listbox" aria-label="Door style">${styles.map(k=>{const on=(o.style||'panel6')===k;return html`<button key=${k} role="option" aria-selected=${on} className=${'stylebtn'+(on?' on':'')} onClick=${()=>up({style:k,lib:null,name:null})} title=${sLabel(k)}>
+        <${ItemPic} kind=${draft?'draft':'opening'} obj=${{...o,style:k}} p=${p} w=${120} h=${150}/><span>${sLabel(k)}</span></button>`;})}</div>
+      <div className="grid2"><${Field} label="Slab" id="o-mat"><${Sel} id="o-mat" value=${spec.door.mat} onChange=${v=>ud({mat:v})} options=${DOOR_MATS}/><//>
+        <${Field} label="Thickness" id="o-th"><${Sel} id="o-th" value=${String(spec.door.thick)} onChange=${v=>ud({thick:+v})} options=${[['1.375','1-3/8"'],['1.75','1-3/4"'],['2.25','2-1/4"']]}/><//>
+        ${STYLE_GLASS.has(o.style)||dt==='slider'||spec.door.sidelites||spec.door.transom?html`<${Field} label="Glass" id="o-gl"><${Sel} id="o-gl" value=${spec.door.glass} onChange=${v=>ud({glass:v})} options=${DOOR_GLASS}/><//>`:null}
+        ${swingish&&(spec.ext||o.width>=48)?html`<${Field} label="Sidelites" id="o-sl"><${Sel} id="o-sl" value=${String(spec.door.sidelites||0)} onChange=${v=>ud({sidelites:+v})} options=${[['0','None'],['1','One, latch side'],['2','Both sides']]}/><//>
+          ${spec.door.sidelites?html`<${Field} label="Sidelite width" id="o-slw"><${LenInput} id="o-slw" value=${spec.door.sideW||12} onChange=${v=>v>4&&ud({sideW:v})}/><//>`:null}
+          <${Field} label="Transom" id="o-tr"><${Sel} id="o-tr" value=${spec.door.transom?'1':'0'} onChange=${v=>ud({transom:v==='1'})} options=${[['0','None'],['1','Glass transom above']]}/><//>
+          ${spec.door.transom?html`<${Field} label="Transom height" id="o-trh"><${LenInput} id="o-trh" value=${spec.door.transomH||14} onChange=${v=>v>4&&ud({transomH:v})}/><//>`:null}`:null}
+        ${swingish?html`<${Field} label="Threshold" id="o-thr"><${Sel} id="o-thr" value=${spec.door.threshold} onChange=${v=>ud({threshold:v})} options=${DOOR_THRESH}/><//>`:null}</div>
+      ${spec.door.sidelites||spec.door.transom?html`<p className="note">The opening width and height are for the whole unit; the door slab is ${fmtLen(doorLeafW(o,spec))} wide by ${fmtLen(doorLeafH(o,spec))} high.</p>`:null}
+      <label className="check"><input type="checkbox" checked=${!!spec.door.fire20} onChange=${e=>ud({fire20:e.target.checked})}/> 20-minute fire rated</label>
+      ${spec.garageHouse?html`<p className="note">Between the garage and the house (IRC R302.5.1): solid wood, solid-core or steel at least 1-3/8" thick, or 20-minute rated, with a self-closing device.</p>`:null}
+      <${ColorPick} id="o-col" label="Door color" value=${o.color} fallback=${'#8a5a35'} onChange=${v=>up({color:v})}/></div>
+    ${dt!=='overhead'?html`<div className="sec"><h3>Hardware</h3>
+      <div className="grid2"><${Field} label="Handle" id="o-hwt"><${Sel} id="o-hwt" value=${spec.hw.type} onChange=${v=>uh({type:v})} options=${HW_TYPES}/><//>
+        ${['lever','knob','handleset'].includes(spec.hw.type)?html`<${Field} label="Function" id="o-hwf"><${Sel} id="o-hwf" value=${spec.hw.func} onChange=${v=>uh({func:v})} options=${HW_FUNCS}/><//>`:null}
+        ${['lever','knob','handleset'].includes(spec.hw.type)?html`<${Field} label="Rose" id="o-hwr"><${Sel} id="o-hwr" value=${spec.hw.rose} onChange=${v=>uh({rose:v})} options=${HW_ROSES}/><//>`:null}
+        ${spec.hw.type==='lever'||spec.hw.type==='handleset'?html`<${Field} label="Lever" id="o-hwl"><${Sel} id="o-hwl" value=${spec.hw.lever} onChange=${v=>uh({lever:v})} options=${LEVER_SHAPES}/><//>`:null}
+        <${Field} label="Brand" id="o-hwb"><${Sel} id="o-hwb" value=${spec.hw.brand} onChange=${v=>uh({brand:v})} options=${HW_BRANDS.map(b=>[b,b])}/><//>
+        ${swingish&&['lever','knob','handleset'].includes(spec.hw.type)?html`<label className="check" style=${{alignSelf:'end'}}><input type="checkbox" checked=${!!spec.hw.deadbolt} onChange=${e=>uh({deadbolt:e.target.checked})}/> Deadbolt</label>`:null}</div>
+      <div className="finswatches" role="radiogroup" aria-label="Hardware finish">${HW_FINISHES.map(f=>html`<button key=${f[0]} role="radio" aria-checked=${f[0]===fin[0]} className=${'finsw'+(f[0]===fin[0]?' on':'')} title=${f[1]} onClick=${()=>up({hw:{...(o.hw||{}),finish:f[0]},hinges:{...(o.hinges||{}),finish:f[0]}})}><i style=${{background:'#'+f[2].toString(16).padStart(6,'0')}}></i><span>${f[1]}</span></button>`)}</div>
+      ${swingish?html`<div className="grid2">
+        <${Field} label="Hinges per leaf" id="o-hn"><${Sel} id="o-hn" value=${String(spec.hinges.n)} onChange=${v=>un({n:+v})} options=${[['2','2'],['3','3'],['4','4']]}/><//>
+        <${Field} label="Hinge size" id="o-hs"><${Sel} id="o-hs" value=${spec.hinges.size} onChange=${v=>un({size:v})} options=${HINGE_SIZES}/><//>
+        <${Field} label="Hinge corners" id="o-hc"><${Sel} id="o-hc" value=${spec.hinges.corner} onChange=${v=>un({corner:v})} options=${HINGE_CORNERS}/><//>
+        <${Field} label="Door stop" id="o-st"><${Sel} id="o-st" value=${spec.door.stop} onChange=${v=>ud({stop:v})} options=${DOOR_STOPS}/><//></div>
+        <div className="checkrow"><label className="check"><input type="checkbox" checked=${!!spec.door.closer} onChange=${e=>ud({closer:e.target.checked})}/> Self-closing (closer or spring hinges)</label>
+          <label className="check"><input type="checkbox" checked=${!!spec.door.kick} onChange=${e=>ud({kick:e.target.checked})}/> Kick plate</label>
+          <label className="check"><input type="checkbox" checked=${!!spec.door.viewer} onChange=${e=>ud({viewer:e.target.checked})}/> Peephole viewer</label></div>`:null}
+      ${spec.hw.type==='knob'&&(p.settings?.ada!==false)?html`<p className="note warnnote">Knobs need a tight grasp and twist; ADA 309.4 calls for levers or pulls on accessible routes.</p>`:null}
+      ${o.hw||o.door||o.hinges?html`<button className="btn" onClick=${()=>up({hw:null,door:null,hinges:null})}>Reset to the usual hardware for this door</button>`:null}</div>`:null}`;}
+function doorLeafW(o,spec){const U=doorUnit(o,spec||{door:{}});const dt=o.dtype||'swing';const w=U.u1-U.u0;return dt==='double'?w/2:w;}
+function doorLeafH(o,spec){const U=doorUnit(o,spec||{door:{}});return U.y1-U.y0;}
+// window: picture, casement hinge side, glass and frame
+const WIN_FRAMES=[['vinyl','Vinyl'],['wood','Wood'],['clad','Aluminum-clad wood'],['fiberglass','Fiberglass'],['composite','Composite (Fibrex)'],['alum','Aluminum']];
+const WIN_GLASS=[['lowe','Double pane, low-E'],['lowe3','Triple pane, low-E'],['tempered','Tempered, low-E'],['obscure','Obscure (bath)'],['laminated','Laminated (impact)']];
+function WindowEditor({p,o,up}){const ext=(()=>{const w=p.walls.find(w=>w.id===o.wall);return w&&w.kind==='exterior';})();const op=o.operation||'double-hung';
+  const opt=o.win||{};const uw=patch=>up({win:{...opt,...patch}});
+  return html`<div className="sec"><h3>Picture</h3><${PicPane} kind="opening" obj=${o} p=${p}/></div>
+    ${op==='casement'?html`<div className="sec"><h3>Hinge side</h3><div className="hgrid two">${[0,1].map(hg=>{const on=(o.hinge?1:0)===hg;return html`<button key=${hg} className=${'htbtn'+(on?' on':'')} onClick=${()=>up({hinge:hg})} aria-pressed=${on}>
+        <svg viewBox="0 0 80 60" className="htile" aria-hidden="true"><rect x="14" y="6" width="52" height="48" className="ht-win"/><polyline points=${hg?'66,6 14,30 66,54':'14,6 66,30 14,54'} className="ht-arc"/></svg><span className="htname">${hg?'Hinged on the right':'Hinged on the left'}</span><span className="note">seen from outside</span></button>`;})}</div></div>`:null}
+    <div className="sec"><h3>Window</h3><div className="grid2">
+      <${Field} label="Frame" id="o-wf"><${Sel} id="o-wf" value=${opt.frame||'vinyl'} onChange=${v=>uw({frame:v})} options=${WIN_FRAMES}/><//>
+      <${Field} label="Glass" id="o-wg"><${Sel} id="o-wg" value=${opt.glass||'lowe'} onChange=${v=>uw({glass:v})} options=${WIN_GLASS}/><//>
+      ${op!=='fixed'?html`<${Field} label="Screen" id="o-ws"><${Sel} id="o-ws" value=${opt.screen||'half'} onChange=${v=>uw({screen:v})} options=${[['half','Half screen'],['full','Full screen'],['none','No screen']]}/><//>`:null}
+      ${op!=='fixed'?html`<${Field} label="Lock and crank finish" id="o-wh"><${Sel} id="o-wh" value=${opt.hw||'white'} onChange=${v=>uw({hw:v})} options=${HW_FINISHES.map(f=>[f[0],f[1]])}/><//>`:null}
+      ${ext?html`<${ColorPick} id="o-wco" label="Outside color" value=${opt.outColor} fallback="#f7f7f4" onChange=${v=>uw({outColor:v})}/>`:null}</div>
+      ${(()=>{const s=selOf(p).windows;return s&&s.brand?html`<p className="note">Selected: ${selText(p,'windows')}.</p>`:null;})()}</div>`;}
+// fixtures, appliances, furniture and cabinets: picture plus hand where it applies
+const HANDED={fridge:['Door hinged on the left','Door hinged on the right'],tub:['Drain on the left','Drain on the right']};const HAND_DEF={fridge:'L',tub:'R'};
+function FixturePicEditor({p,o,up}){const hand=HANDED[o.type];
+  return html`<div className="sec"><h3>Picture</h3><${PicPane} kind="fixture" obj=${o} p=${p}/>
+    ${hand?html`<div className="seg" role="group" aria-label="Hand" style=${{marginTop:'8px'}}>${hand.map((t,i)=>html`<button key=${i} className=${(o.hand||HAND_DEF[o.type]||'L')===(i?'R':'L')?'on':''} onClick=${()=>up({hand:i?'R':'L'})}>${t}</button>`)}</div><p className="note">Seen from the front.</p>`:null}</div>`;}
+/* ======================= customize any library item before placing it, and keep favorites as My items ======================= */
+const MY_KEY='remodel-studio:myitems';
+function loadMyItems(){try{return JSON.parse(localStorage.getItem(MY_KEY)||'[]');}catch(e){return [];}}
+function saveMyItems(l){try{localStorage.setItem(MY_KEY,JSON.stringify(l));return true;}catch(e){return false;}}
+function registerLibItem(x){const i=LIB.findIndex(y=>y.id===x.id);if(i>=0)LIB.splice(i,1,x);else LIB.push(x);LIB_BY_ID[x.id]=x;if(x.cat&&!LIB_CATS.includes(x.cat))LIB_CATS.unshift(x.cat);}
+for(const x of loadMyItems())try{registerLibItem(x);}catch(e){}
+// a library item carrying its customized object
+function draftFromLib(it){if(it.draft)return JSON.parse(JSON.stringify(it.draft));
+  if(it.place==='door'||it.place==='window'){const o=openingFromLib(it);if(it.ext)o.ext=true;if(it.ada)o.ada=true;return o;}
+  if(it.place==='fixture')return {type:it.base,lib:it.id,name:it.label,w:it.w,d:it.d,h:it.h,elev:it.elev??(FIXTURES[it.base]?.elev||0),...(it.cab?{cab:it.cab}:{})};return null;}
+function itemFromDraft(base,draft,{name,persist}){const id=(persist?'my-':'tmp-')+uid('i');const label=name||draft.name||base.label;
+  const x={...base,id,label,cat:persist?'My items':base.cat,sub:persist?(base.place==='fixture'?(base.cat||'Items'):base.place==='door'?'Doors':'Windows'):base.sub,draft:{...draft,name:label,lib:id},hidden:!persist,from:base.id};
+  if(base.place==='door'||base.place==='window'){x.width=draft.width;x.height=draft.height;x.sill=draft.sill;x.dtype=draft.dtype;x.style=draft.style;x.operation=draft.operation;}
+  if(base.place==='fixture'){x.w=draft.w;x.d=draft.d;x.h=draft.h;x.elev=draft.elev;}
+  return x;}
+// placing a customized item copies everything it carries
+{const _ofl=openingFromLib;openingFromLib=function(it){if(it&&it.draft){const {id,wall,pos,ext,...rest}=it.draft;return {...rest,lib:it.id,name:it.label,hinge:rest.hinge??0,swing:rest.swing??1};}return _ofl(it);};}
+{const _nf=newFixture;newFixture=function(type,level,x,y,rot=0){const it=LIB_BY_ID[type];if(it&&it.draft){const {id,...rest}=it.draft;return {...rest,id:uid('fx'),level,x,y,rot,lib:it.id,name:it.label,status:'new'};}return _nf(type,level,x,y,rot);};}
+function ItemCustomizeModal({it,p,ctx,onClose}){const [o,setO]=useState(()=>draftFromLib(it));const [name,setName]=useState(it.draft?it.label:'');const [msg,setMsg]=useState(null);
+  const up=patch=>setO(x=>({...x,...patch}));const kind=it.place==='fixture'?'fixture':'draft';
+  const place=()=>{const x=itemFromDraft(it,o,{name:name.trim(),persist:false});registerLibItem(x);
+    if(it.place==='fixture'){ctx.setFixtureType(x.id);ctx.setTool('fixture');}else{ctx.setOpenPreset(s=>({...s,[it.place]:x.id}));ctx.setTool(it.place);}
+    ctx.setMode&&ctx.setMode(m=>m==='3d'||m==='materials'||m==='sheets'||m==='systems'?'plan':m);onClose();};
+  const keep=()=>{const nm=name.trim()||o.name||it.label;const x=itemFromDraft(it,o,{name:nm,persist:true});const l=loadMyItems().filter(y=>y.id!==it.id).concat(x);
+    if(!saveMyItems(l)){setMsg({ok:false,t:'Could not save on this computer.'});return;}registerLibItem(x);setMsg({ok:true,t:`Saved as "${nm}" in My items.`});};
+  const del=()=>{saveMyItems(loadMyItems().filter(y=>y.id!==it.id));const i=LIB.findIndex(y=>y.id===it.id);if(i>=0)LIB.splice(i,1);delete LIB_BY_ID[it.id];onClose();};
+  if(!o)return null;
+  return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal wide custmodal" role="dialog" aria-label="Customize item">
+    <h2>${it.label}</h2><p className="note">Change anything, then place it. Save it to My items to reuse it in any project.</p>
+    <div className="cust-body"><div className="cust-left">
+      ${it.place==='door'?html`<${DoorEditor} p=${p} o=${o} up=${up} draft=${true}/>`:it.place==='window'?html`<div className="sec"><h3>Picture</h3><${PicPane} kind="draft" obj=${o} p=${p}/></div>
+        <div className="sec"><h3>Window</h3><div className="grid2"><${Field} label="Opens as" id="cw-op"><${Sel} id="cw-op" value=${o.operation||'double-hung'} onChange=${v=>up({operation:v})} options=${WINDOW_OPS}/><//>
+          <${Field} label="Grilles" id="cw-gr"><${Sel} id="cw-gr" value=${o.grille||''} onChange=${v=>up({grille:v||null})} options=${GRILLES}/><//>
+          ${(o.operation==='casement')?html`<${Field} label="Hinged on" id="cw-h"><${Sel} id="cw-h" value=${String(o.hinge||0)} onChange=${v=>up({hinge:+v})} options=${[['0','Left, seen from outside'],['1','Right, seen from outside']]}/><//>`:null}
+          <${Field} label="Frame" id="cw-f"><${Sel} id="cw-f" value=${(o.win||{}).frame||'vinyl'} onChange=${v=>up({win:{...(o.win||{}),frame:v}})} options=${WIN_FRAMES}/><//>
+          <${Field} label="Glass" id="cw-g"><${Sel} id="cw-g" value=${(o.win||{}).glass||'lowe'} onChange=${v=>up({win:{...(o.win||{}),glass:v}})} options=${WIN_GLASS}/><//>
+          <${Field} label="Sill height" id="cw-s"><${LenInput} id="cw-s" value=${o.sill} onChange=${v=>up({sill:v})}/><//></div>
+          <${ColorPick} id="cw-c" label="Frame color" value=${o.color} fallback="#f7f7f4" onChange=${v=>up({color:v})}/></div>`
+        :html`<${FixturePicEditor} p=${p} o=${o} up=${up}/>${isCab(o)?html`<${CabinetPanel} p=${p} o=${o} up=${up} commit=${()=>{}}/>`:html`<div className="sec"><${ColorPick} id="cf-c" label="Color" value=${o.color} fallback="#d9d4c9" onChange=${v=>up({color:v})}/></div>`}`}
+    </div><div className="cust-right">
+      <div className="sec"><h3>Size</h3><div className="grid1">${it.place==='fixture'?html`
+        <${Field} label="Width" id="cu-w"><${LenInput} id="cu-w" value=${o.w} onChange=${v=>v>0&&up({w:v})}/><//><${Field} label="Depth" id="cu-d"><${LenInput} id="cu-d" value=${o.d} onChange=${v=>v>0&&up({d:v})}/><//>
+        <${Field} label="Height" id="cu-h"><${LenInput} id="cu-h" value=${o.h} onChange=${v=>v>0&&up({h:v})}/><//><${Field} label="Off the floor" id="cu-e"><${LenInput} id="cu-e" value=${o.elev||0} onChange=${v=>v>=0&&up({elev:v})}/><//>`:html`
+        <${Field} label="Width" id="cu-w"><${LenInput} id="cu-w" value=${o.width} onChange=${v=>v>6&&up({width:v})}/><//><${Field} label="Height" id="cu-h"><${LenInput} id="cu-h" value=${o.height} onChange=${v=>v>6&&up({height:v})}/><//>`}</div></div>
+      <div className="sec"><h3>Name</h3><input className="inp" value=${name} placeholder=${o.name||it.label} onChange=${e=>setName(e.target.value)} aria-label="Item name"/></div>
+      ${msg?html`<div className=${'msg'+(msg.ok?'':' err')}>${msg.t}</div>`:null}
+      <div className="row"><button className="btn primary" onClick=${place}>${it.place==='fixture'?'Place':'Place on a wall'}</button><button className="btn" onClick=${keep}>${it.cat==='My items'?'Save changes':'Save to My items'}</button></div>
+      ${it.cat==='My items'?html`<div className="row"><button className="btn danger" onClick=${del}>Remove from My items</button></div>`:null}
+      <div className="row"><span className="spacer"></span><button className="btn" onClick=${onClose}>Cancel</button></div></div></div></div></div>`;}
+/* ======================= material swatches: drawn patterns for floors, wall finishes and ceilings ======================= */
+// The same patterns texture the floors in 3D, so planks, tile and carpet read in the model and in renders.
+const _swCache={};
+function rng(seed){let s=seed>>>0||1;return ()=>((s=Math.imul(s^(s>>>15),2246822507)^Math.imul(s^(s>>>13),3266489909))>>>0)/4294967296;}
+const shade=(hex,f)=>{const r=(hex>>16)&255,g=(hex>>8)&255,b=hex&255;const c=x=>Math.max(0,Math.min(255,Math.round(x*f)));return `rgb(${c(r)},${c(g)},${c(b)})`;};
+const WALLFIN_COL={paint:0xe9e5dc,smooth:0xeeebe4,orangepeel:0xebe7de,knockdown:0xeae5db,shiplap:0xf2f0ea,beadboard:0xf3f1eb,paneling:0x9b6f45,subway:0xf4f4f1,largetile:0xd9d6cf,mosaic:0xb9c9cf,stone:0x9d958a,brick:0xa4543a,wallpaper:0xdfe7e2,frp:0xf1f1ec,cmu:0xdedbd3,plaster:0xe7dfd0,cement:0xe2e2de};
+// draw a pattern on a 2D canvas context. S = pixels per inch, W/H in pixels
+function drawFinish(g,kind,key,hex,W,H,S){const R=rng([...(kind+key)].reduce((a,c)=>a*31+c.charCodeAt(0),7));g.fillStyle=shade(hex,1);g.fillRect(0,0,W,H);
+  const noise=(n,sz,amp,dark=true)=>{for(let i=0;i<n;i++){const f=1+(R()-0.5)*amp*(dark?2:1);g.fillStyle=shade(hex,f);const s=sz*(0.5+R());g.fillRect(R()*W,R()*H,s,s);}};
+  const blotch=(n,sz,amp)=>{for(let i=0;i<n;i++){g.fillStyle=shade(hex,1+(R()-0.6)*amp);g.beginPath();g.ellipse(R()*W,R()*H,sz*(0.4+R()),sz*(0.3+R()*0.7),R()*3,0,7);g.fill();}};
+  const lines=(sp,vert,col,wd=1)=>{g.fillStyle=col;for(let p=sp;p<(vert?W:H);p+=sp)vert?g.fillRect(p,0,wd,H):g.fillRect(0,p,W,wd);};
+  const planks=(pw,plMin,plMax,grain)=>{for(let y=0;y<H;y+=pw*S){let x=-R()*plMax*S;while(x<W){const L=(plMin+R()*(plMax-plMin))*S;g.fillStyle=shade(hex,0.86+R()*0.26);g.fillRect(x,y,L,pw*S);
+        if(grain)for(let k=0;k<4;k++){g.strokeStyle=shade(hex,0.78+R()*0.1);g.lineWidth=0.7;g.beginPath();const yy=y+R()*pw*S;g.moveTo(x,yy);g.bezierCurveTo(x+L*0.3,yy+(R()-0.5)*4,x+L*0.7,yy+(R()-0.5)*4,x+L,yy+(R()-0.5)*3);g.stroke();}
+        g.fillStyle=shade(hex,0.6);g.fillRect(x,y,1.2,pw*S);x+=L;}g.fillStyle=shade(hex,0.62);g.fillRect(0,y,W,1.2);}};
+  const tiles=(tw,th,grout,stagger,vary,gcol)=>{g.fillStyle=gcol||'#c9c6bf';g.fillRect(0,0,W,H);for(let r=0,y=0;y<H;r++,y+=th*S){const off=stagger&&r%2?tw*S/2:0;for(let x=-off;x<W;x+=tw*S){g.fillStyle=shade(hex,1+(R()-0.5)*vary);g.fillRect(x+grout,y+grout,tw*S-grout*2,th*S-grout*2);}}};
+  const k=key||'';
+  if(kind==='floor'){
+    if(/lvp|laminate|engineered/.test(k))planks(7,30,60,true);else if(/hardwood/.test(k))planks(3.25,18,48,true);else if(/pine/.test(k))planks(5,30,72,true);
+    else if(k==='tile')tiles(12,12,1.5,false,0.08);else if(k==='porcelain')tiles(24,12,1.2,true,0.06);else if(k==='stone'){tiles(16,16,2,false,0.22,'#a8a296');blotch(40,6,0.15);}
+    else if(k==='brickpaver')tiles(8,4,1.6,true,0.25,'#8c8579');else if(k==='vct')tiles(12,12,0.6,false,0.18,shade(hex,0.9));
+    else if(k==='carpet'){noise(W*H/6,1.5,0.18);}else if(k==='cork'){noise(W*H/8,2,0.4);}else if(/concrete|polished|epoxy/.test(k)){blotch(60,W/8,0.08);noise(W*H/40,1,0.15);if(k==='concrete'){g.strokeStyle=shade(hex,0.8);g.lineWidth=1.2;g.beginPath();g.moveTo(0,H*0.5);g.lineTo(W,H*0.5);g.moveTo(W*0.5,0);g.lineTo(W*0.5,H);g.stroke();}}
+    else if(k==='sheetvinyl'){tiles(6,6,0.5,false,0.05,shade(hex,0.94));}else if(k==='rubber'){noise(W*H/10,1.5,0.5);}else noise(W*H/30,1.5,0.1);}
+  else if(kind==='wallfin'){
+    if(k==='orangepeel'){noise(W*H/5,1.2,0.07);}else if(k==='knockdown'){blotch(W*H/180,5,0.06);}else if(k==='shiplap'){lines(6*S,false,shade(hex,0.62),2);}
+    else if(k==='beadboard'){lines(1.75*S,true,shade(hex,0.78),1.2);}else if(k==='paneling'){planks(6,96,96,true);}else if(k==='subway')tiles(6,3,1,true,0.04,'#bdbab3');
+    else if(k==='largetile')tiles(24,12,1,true,0.06,'#bdbab3');else if(k==='mosaic')tiles(1.25,1.25,0.6,false,0.3,'#9aa');else if(k==='stone'){g.fillStyle='#6e675d';g.fillRect(0,0,W,H);for(let i=0;i<W*H/(S*S*30);i++){g.fillStyle=shade(hex,0.75+R()*0.5);g.beginPath();g.ellipse(R()*W,R()*H,S*(3+R()*4),S*(2+R()*2.5),R(),0,7);g.fill();}}
+    else if(k==='brick')tiles(8,2.66,1.4,true,0.25,'#d8d2c6');else if(k==='cmu')tiles(16,8,1.2,true,0.06,shade(hex,0.85));else if(k==='frp'){noise(W*H/4,1,0.05);}
+    else if(k==='wallpaper'){for(let y=0;y<H;y+=4*S)for(let x=(y/(4*S))%2?2*S:0;x<W;x+=4*S){g.fillStyle=shade(hex,0.84);g.beginPath();g.ellipse(x,y,S*0.8,S*1.4,0,0,7);g.fill();}}
+    else if(k==='plaster'){blotch(80,W/6,0.07);}else if(k==='cement')tiles(12,12,1.5,false,0.05,'#aaa');else noise(W*H/60,1,0.03);}
+  else if(kind==='ceiling'){
+    if(k==='popcorn'){noise(W*H/2.5,2.2,0.18);}else if(k==='knockdown')blotch(W*H/180,5,0.06);else if(k==='orangepeel')noise(W*H/5,1.2,0.07);
+    else if(/beadboard/.test(k))lines(1.75*S,true,shade(hex,0.78),1.2);else if(/tng|plank|shiplap/.test(k))planks(5.5,40,96,k!=='shiplap');
+    else if(k==='act22'||k==='act24'){tiles(24,k==='act22'?24:48,2.5,false,0.02,'#f4f4f2');noise(W*H/6,1,0.05);}else if(k==='tin'){tiles(12,12,0.8,false,0.04,'#9a9a96');g.strokeStyle='rgba(0,0,0,.18)';for(let x=6*S;x<W;x+=12*S)for(let y=6*S;y<H;y+=12*S){g.beginPath();g.arc(x,y,3*S,0,7);g.stroke();}}
+    else if(k==='coffered'||k==='beams'){lines(k==='coffered'?24*S:48*S,true,shade(hex,0.72),5);if(k==='coffered')lines(24*S,false,shade(hex,0.72),5);}else if(k==='tray'){g.strokeStyle=shade(hex,0.8);g.lineWidth=4;g.strokeRect(W*0.15,H*0.15,W*0.7,H*0.7);}
+    else if(k==='open'){lines(16*S,true,shade(hex,0.7),6);}else noise(W*H/80,1,0.02);}}
+function finishSwatch(kind,key,hex,w=160,h=120,inches=36){const id=[kind,key,hex,w,h,inches].join('|');if(_swCache[id])return _swCache[id];const c=document.createElement('canvas');c.width=w;c.height=h;
+  drawFinish(c.getContext('2d'),kind,key,hex,w,h,w/inches);return (_swCache[id]=c.toDataURL('image/png'));}
+// tiling texture for 3D floors: one tile covers `inches` square
+const _floorTex={};
+function floorTexture(key,hex){const id=key+'|'+hex;if(_floorTex[id])return _floorTex[id];const N=512,inches=96;const c=document.createElement('canvas');c.width=c.height=N;drawFinish(c.getContext('2d'),'floor',key,hex,N,N,N/inches);
+  const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(12/inches,12/inches);t.anisotropy=4;if('encoding' in t)t.encoding=THREE.sRGBEncoding;return (_floorTex[id]=t);}
+// a soft studio environment so metal (hardware, appliances, faucets) reflects something
+const _envFor=new WeakMap();
+function studioEnv(renderer){if(_envFor.has(renderer))return _envFor.get(renderer);let tex=null;
+  try{const pm=new THREE.PMREMGenerator(renderer);const sc=new THREE.Scene();const mk=(c)=>new THREE.MeshBasicMaterial({color:c,side:THREE.BackSide});
+    const room=new THREE.Mesh(new THREE.BoxGeometry(20,10,20),[mk(0xb9bcc2),mk(0xa9adb3),mk(0xf4f6fa),mk(0x6b6760),mk(0xc8ccd2),mk(0xc2c6cc)]);sc.add(room);
+    const panel=(x,y,z,w,h,ry=0,rx=0)=>{const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),new THREE.MeshBasicMaterial({color:0xffffff,side:THREE.DoubleSide}));m.position.set(x,y,z);m.rotation.set(rx,ry,0);sc.add(m);};
+    panel(0,4.9,0,8,8,0,Math.PI/2);panel(-9.9,2,0,6,4,Math.PI/2);panel(9.9,2,-3,4,3,-Math.PI/2);
+    tex=pm.fromScene(sc,0.04).texture;pm.dispose();}catch(e){tex=null;}_envFor.set(renderer,tex);return tex;}
+// give metal surfaces the studio reflections (only metals, so painted walls keep their color and brightness)
+function applyMetalEnv(root,renderer){const env=studioEnv(renderer);if(!env)return;root.traverse(o=>{if(!o.isMesh)return;for(const m of Array.isArray(o.material)?o.material:[o.material]){if(m&&m.isMeshStandardMaterial&&m.metalness>=0.3&&m.envMap!==env){m.envMap=env;m.envMapIntensity=0.9;m.needsUpdate=true;}}});}
+/* ---- wall assembly section pictures (plan cut through the wall, outside on the left) ---- */
+function wallLayers(it){const t=it.thick,m=it.mat,ext=it.kind==='exterior';const L=[];const dw=['dw',0.5],stud=n=>['stud',n],ins=n=>['ins',n];
+  if(m==='brickveneer'){L.push(['brick',3.625],['gap',1],['sheath',0.5]);const s=t-3.625-1-0.5-0.5;L.push(ins(s),dw);}
+  else if(m==='stoneveneer'){L.push(['stone',4.5],['gap',1],['sheath',0.5]);L.push(ins(t-4.5-1-0.5-0.5),dw);}
+  else if(m==='cmu'){if(/brick/.test(it.key))L.push(['brick',3.625],['gap',1.375]);const b=/12/.test(it.key)?11.625:7.625;L.push(['cmu',b]);if(/fur/.test(it.key))L.push(['fur',1.5],dw);}
+  else if(m==='icf')L.push(['foam',2.5],['conc',6],['foam',2.5]);
+  else if(m==='sip')L.push(['sheath',0.5],['foam',t-1.5],['sheath',0.5],dw);
+  else if(m==='metalstud'){if(ext)L.push(['panel',0.75],['sheath',0.5]);L.push(['mstud',t-(ext?1.75:1)],dw);if(!ext)L.unshift(dw);}
+  else if(m==='postframe')L.push(['panel',0.5],['girt',1.5],['post',t-2]);
+  else if(m==='glassblock')L.push(['glass',t]);
+  else{if(ext)L.push(['siding',0.5],['sheath',0.5]);const n=/demise/.test(it.key||'')?[dw,dw]:[dw];if(!ext)L.push(...n);L.push(stud(t-(ext?1.5:n.length*0.5*2)));L.push(...n);}
+  return L;}
+function WallSectionPic({it}){const L=wallLayers(it);const tot=L.reduce((s,l)=>s+l[1],0)||it.thick;const k=80/Math.max(tot,4.5);let x=4;const H=60,y0=3;const els=[];
+  const fill={brick:'#a4543a',gap:'#ffffff',sheath:'#d9b77a',ins:'#f4d7d7',dw:'#f5f5f2',stone:'#9a938a',cmu:'#b8b6b0',fur:'#c9a36b',foam:'#cde8f0',conc:'#a7a7a2',panel:'#8d9aa6',mstud:'#e9eef1',girt:'#c9a36b',post:'#b48a55',glass:'#cfe5ee',siding:'#c4ccd4',stud:'#f4d7d7'};
+  for(const [kind,th] of L){const w=Math.max(1.5,th*k);els.push(html`<rect key=${els.length} x=${x} y=${y0} width=${w} height=${H} fill=${fill[kind]||'#ddd'} stroke="#555" strokeWidth="0.6"/>`);
+    if(kind==='ins'||kind==='stud'){els.push(html`<rect key=${els.length} x=${x} y=${y0+H/2-1.5*k/2*0} width=${w} height=${Math.min(H*0.3,1.5*k)} fill="#e0b97a" stroke="#555" strokeWidth="0.5"/>`);let zz='';for(let yy=y0+2;yy<y0+H-2;yy+=5)zz+=`${x+1},${yy} ${x+w-1},${yy+2.5} `;els.push(html`<polyline key=${els.length} points=${zz} fill="none" stroke="#c77" strokeWidth="0.6"/>`);}
+    if(kind==='cmu'){els.push(html`<rect key=${els.length} x=${x+w*0.18} y=${y0+H*0.12} width=${w*0.64} height=${H*0.32} fill="#fff" stroke="#777" strokeWidth="0.5"/>`,html`<rect key=${els.length+1} x=${x+w*0.18} y=${y0+H*0.56} width=${w*0.64} height=${H*0.32} fill="#fff" stroke="#777" strokeWidth="0.5"/>`);}
+    if(kind==='brick'||kind==='conc'){for(let i=1;i<7;i++)els.push(html`<line key=${els.length} x1=${x} y1=${y0+i*9} x2=${x+w} y2=${y0+i*9-5} stroke="rgba(0,0,0,.35)" strokeWidth="0.5"/>`);}
+    x+=w;}
+  return html`<svg viewBox="0 0 88 66" className="libicon wallsec" aria-hidden="true"><rect x="0" y="0" width="88" height="66" fill="#eef1f4"/>${els}</svg>`;}
 /* ======================= app ======================= */
 function App(){
   const narrow=window.matchMedia('(max-width: 820px)').matches;
@@ -16922,7 +17410,7 @@ function App(){
   const load=q=>{undo.current.push(project);redo.current=[];setProject(q);setSel(null);setLevelId(q.levels[0].id);setFitPlan(x=>x+1);setFit3(x=>x+1);};
   // ---- file state ----
   const [cmpOpt,setCmpOpt]=useState(null);useEffect(()=>{loadModels(project.id);},[project.id]);
-  const [dlg,setDlg]=useState(null);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
+  const [dlg,setDlg]=useState(null);const [custIt,setCustIt]=useState(null);useEffect(()=>{const f=e=>setCustIt(e.detail);window.addEventListener('rs-customize',f);return ()=>window.removeEventListener('rs-customize',f);},[]);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
   const [savedProj,setSavedProj]=useState(()=>{if(DESK)return project;const q=listSaved().find(x=>x.id===project.id);return q?project:null;});
   const dirty=savedProj!==project;
   const say=(t,ok=true)=>{setToast({t,ok});clearTimeout(say.t);say.t=setTimeout(()=>setToast(null),3500);};
@@ -17054,6 +17542,7 @@ function App(){
     ${dlg==='versions'?html`<${VersionsModal} p=${project} onRestore=${(q,n)=>{commit(q);setDlg(null);say(`Restored "${n}". Undo brings back what you had.`);}} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='blocks'?html`<${BlocksModal} p=${project} sel=${sel} setTool=${setTool} say=${say} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='keys'?html`<${KeysModal} onClose=${()=>setDlg(null)}/>`:null}
+    ${custIt&&LIB_BY_ID[custIt]?html`<${ItemCustomizeModal} it=${LIB_BY_ID[custIt]} p=${project} ctx=${{setTool,setFixtureType,setOpenPreset,setMode}} onClose=${()=>setCustIt(null)}/>`:null}
     ${dlg==='vendors'?html`<${VendorImportModal} onClose=${()=>setDlg(null)} onDone=${()=>commit({...project})}/>`:null}
     ${dlg==='obj'?html`<${OBJImportModal} p=${project} levelId=${lv.id} commit=${commit} setSel=${setSel} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='dxf'?html`<${DXFImportModal} p=${project} levelId=${lv.id} commit=${commit} onClose=${()=>setDlg(null)}/>`:null}

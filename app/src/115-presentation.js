@@ -21,7 +21,7 @@ function renderSnapshot(p,{view=null,layer='proposed',w=1600,h=900,angle='aerial
       const vf=cam.fov*Math.PI/180,hf=2*Math.atan(Math.tan(vf/2)*cam.aspect);const d=r/Math.sin(Math.min(vf,hf)/2)*0.85;
       const dir=angle==='street'?new THREE.Vector3(-0.15,0.18,1):angle==='dollhouse'?new THREE.Vector3(-0.45,0.85,0.6):new THREE.Vector3(-0.55,0.55,0.65);dir.normalize();
       cam.position.copy(c).addScaledVector(dir,d);if(angle==='street')cam.position.y=Math.max(cam.position.y,5.5);cam.lookAt(c);}}
-  R.render(scene,cam);const url=R.domElement.toDataURL('image/jpeg',0.9);
+  applyMetalEnv(st.model,R);R.render(scene,cam);const url=R.domElement.toDataURL('image/jpeg',0.9);
   st.model.traverse(o=>{if(o.geometry)o.geometry.dispose();});return url;
 }
 const PRES_DEFAULT={title:'',subtitle:'Remodel plan for board review',presenter:'',sections:{cover:true,beforeAfter:true,renders:true,views:true,options:true,plans:true,cost:true,code:true,structure:true},notes:''};

@@ -107,7 +107,8 @@ function PlanView(props){
   function placeOpening(){
     if(!hover) return; const {w,pos}=hover;
     const it=LIB_BY_ID[openPreset[tool]];
-    const o=it?{id:uid('op'),wall:w.id,pos,hinge:0,swing:1,status:'new',...openingFromLib(it)}:tool==='door'?{id:uid('op'),wall:w.id,type:'door',pos,width:36,height:80,sill:0,hinge:0,swing:1,status:'new'}
+    const hs=tool==='door'&&hover.side?{hinge:hover.hinge||0,swing:hover.side}:{};
+    const o=it?{id:uid('op'),wall:w.id,pos,hinge:0,swing:1,status:'new',...openingFromLib(it),...hs}:tool==='door'?{id:uid('op'),wall:w.id,type:'door',pos,width:36,height:80,sill:0,hinge:0,swing:1,status:'new',...hs}
                          :{id:uid('op'),wall:w.id,type:'window',pos,width:36,height:48,sill:36,operation:'double-hung',status:'new'};
     commit({...p,openings:[...p.openings,o]}); setSel({kind:'opening',id:o.id});
   }
@@ -241,7 +242,7 @@ function PlanView(props){
     const raw=toWorld(e); const D=drag.current;
     if(D&&D.type==='pan'){setView({...D.v,tx:D.v.tx+e.clientX-D.sx,ty:D.v.ty+e.clientY-D.sy});return;}
     const c=cursorFor(raw,e); setCursor(c);
-    if(tool==='door'||tool==='window'){const nw=nearestWall(raw);if(nw){const L=wlen(nw.w);const width=(LIB_BY_ID[openPreset[tool]]||{width:36}).width;let pos=Math.round(nw.pr.t*L);pos=Math.max(width/2,Math.min(L-width/2,pos));setHover({w:nw.w,pos,width});}else setHover(null);}
+    if(tool==='door'||tool==='window'){const nw=nearestWall(raw);if(nw){const L=wlen(nw.w);const width=(LIB_BY_ID[openPreset[tool]]||{width:36}).width;let pos=Math.round(nw.pr.t*L);pos=Math.max(width/2,Math.min(L-width/2,pos));const dd=wdir(nw.w);const side=((raw.x-nw.w.x1)*(-dd.y)+(raw.y-nw.w.y1)*dd.x)>=0?1:-1;const along=(raw.x-nw.w.x1)*dd.x+(raw.y-nw.w.y1)*dd.y;setHover({w:nw.w,pos,width,side,hinge:along>pos?1:0});}else setHover(null);}
     if(!D) return;
     if(D.type==='rect'){setRect({a:D.a,b:c});return;}
     if(D.type==='xrect'){if(Math.hypot(e.clientX-D.start.x,e.clientY-D.start.y)>6)D.moved=true;if(D.moved)setRect({a:D.a,b:c});return;}
@@ -397,7 +398,8 @@ function PlanView(props){
   if(rect){const x0=Math.min(rect.a.x,rect.b.x),y0=Math.min(rect.a.y,rect.b.y),x1=Math.max(rect.a.x,rect.b.x),y1=Math.max(rect.a.y,rect.b.y);drafts.push(html`<polygon key="rr" points=${poly([[x0,y0],[x1,y0],[x1,y1],[x0,y1]])} className="draft-fill"/>`);
     const [tx,ty]=S((x0+x1)/2,y0);drafts.push(html`<text key="rt" x=${tx} y=${ty-8} textAnchor="middle" className="draft-t halo">${fmtLen(x1-x0)} × ${fmtLen(y1-y0)}</text>`);}
   if((tool==='door'||tool==='window')&&hover){const {w,pos,width}=hover;const d=wdir(w),n={x:-d.y,y:d.x},t=w.thick/2+1;const P=(s,o)=>[w.x1+d.x*s+n.x*o,w.y1+d.y*s+n.y*o];
-    drafts.push(html`<polygon key="oh" points=${poly([P(pos-width/2,t),P(pos+width/2,t),P(pos+width/2,-t),P(pos-width/2,-t)])} className="draft-fill"/>`);}
+    drafts.push(html`<polygon key="oh" points=${poly([P(pos-width/2,t),P(pos+width/2,t),P(pos+width/2,-t),P(pos-width/2,-t)])} className="draft-fill"/>`);
+    if(tool==='door'){const it=LIB_BY_ID[openPreset.door];const og={...(it?openingFromLib(it):{type:'door',width,height:80}),hinge:hover.hinge,swing:hover.side};doorGeom(og,w.thick/2,pos-width/2,pos+width/2).forEach((g,i)=>drafts.push(html`<polyline key=${'ohg'+i} points=${poly(g.pts.map(([a,b])=>P(a,b)))} className="draft-line" fill="none" strokeDasharray=${g.dash?'3 3':undefined}/>`));}}
   if(meas.length){const a=meas[0],b=meas[1]||(tool==='measure'||tool==='dim'?cursor:null);if(b){const [ax,ay]=S(a.x,a.y),[bx,by]=S(b.x,b.y);drafts.push(html`<line key="ml" x1=${ax} y1=${ay} x2=${bx} y2=${by} className="meas"/>`,html`<text key="mt" x=${(ax+bx)/2} y=${(ay+by)/2-8} textAnchor="middle" className="meas-t halo">${fmtLen(dist(a,b))}</text>`);}
     const [ax,ay]=S(a.x,a.y);drafts.push(html`<circle key="m0" cx=${ax} cy=${ay} r="3" className="snap-end"/>`);}
   if(cursor&&tool!=='select'&&tool!=='door'&&tool!=='window'){const [sx,sy]=S(cursor.x,cursor.y);
@@ -406,7 +408,7 @@ function PlanView(props){
   const hints={
     select:html`<b>Select</b> an item to edit it. Drag to move; drag a wall's end dots to stretch it. <b>Shift-drag</b> a box or Shift-click to pick several; arrow keys nudge 1" (Shift: 12"). Drag empty space to pan.`,
     wall:chain.length?html`Click the next corner, or <b>type a length</b> (12'6", 150", bare numbers are feet) and press Enter. Press <b>Esc</b> (or Enter, double-click, right-click, or the Finish button) to stop drawing walls; press Esc again to put the wall tool away.`:html`<b>Wall:</b> click the first corner. Lines snap to 45° and the ${fmtLen(grid)} grid; hold Shift for free angles.`,
-    door:html`<b>Door:</b> click on a wall to place ${LIB_BY_ID[openPreset.door]?html`a <b>${LIB_BY_ID[openPreset.door].label}</b>`:'a 36" door'}. Pick other doors in the Library.`,
+    door:html`<b>Door:</b> click on a wall to place ${LIB_BY_ID[openPreset.door]?html`a <b>${LIB_BY_ID[openPreset.door].label}</b>`:'a 36" door'}. It swings to the side your pointer is on, hinged at the end nearest the pointer; change handing and hardware after. Pick other doors in the Library.`,
     window:html`<b>Window:</b> click on a wall to place ${LIB_BY_ID[openPreset.window]?html`a <b>${LIB_BY_ID[openPreset.window].label}</b>`:'a 36" × 48" window'}. Pick other windows in the Library.`,
     room:chain.length>=3?html`Click the first corner or press Enter to close the room.`:html`<b>Room:</b> click <b>inside</b> closed walls and the room draws itself, or start on a wall corner and click each corner in order.`,
     fixture:html`<b>Fixture:</b> pick a fixture or cabinet at the top, then click to place it. Cabinets and plumbing fixtures turn to put their back against the nearest wall. Hold Shift while dragging to move freely.`,

@@ -24,7 +24,7 @@ function App(){
   const load=q=>{undo.current.push(project);redo.current=[];setProject(q);setSel(null);setLevelId(q.levels[0].id);setFitPlan(x=>x+1);setFit3(x=>x+1);};
   // ---- file state ----
   const [cmpOpt,setCmpOpt]=useState(null);useEffect(()=>{loadModels(project.id);},[project.id]);
-  const [dlg,setDlg]=useState(null);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
+  const [dlg,setDlg]=useState(null);const [custIt,setCustIt]=useState(null);useEffect(()=>{const f=e=>setCustIt(e.detail);window.addEventListener('rs-customize',f);return ()=>window.removeEventListener('rs-customize',f);},[]);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
   const [savedProj,setSavedProj]=useState(()=>{if(DESK)return project;const q=listSaved().find(x=>x.id===project.id);return q?project:null;});
   const dirty=savedProj!==project;
   const say=(t,ok=true)=>{setToast({t,ok});clearTimeout(say.t);say.t=setTimeout(()=>setToast(null),3500);};
@@ -156,6 +156,7 @@ function App(){
     ${dlg==='versions'?html`<${VersionsModal} p=${project} onRestore=${(q,n)=>{commit(q);setDlg(null);say(`Restored "${n}". Undo brings back what you had.`);}} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='blocks'?html`<${BlocksModal} p=${project} sel=${sel} setTool=${setTool} say=${say} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='keys'?html`<${KeysModal} onClose=${()=>setDlg(null)}/>`:null}
+    ${custIt&&LIB_BY_ID[custIt]?html`<${ItemCustomizeModal} it=${LIB_BY_ID[custIt]} p=${project} ctx=${{setTool,setFixtureType,setOpenPreset,setMode}} onClose=${()=>setCustIt(null)}/>`:null}
     ${dlg==='vendors'?html`<${VendorImportModal} onClose=${()=>setDlg(null)} onDone=${()=>commit({...project})}/>`:null}
     ${dlg==='obj'?html`<${OBJImportModal} p=${project} levelId=${lv.id} commit=${commit} setSel=${setSel} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='dxf'?html`<${DXFImportModal} p=${project} levelId=${lv.id} commit=${commit} onClose=${()=>setDlg(null)}/>`:null}

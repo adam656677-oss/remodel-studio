@@ -26,9 +26,9 @@ function libActions(it,ctx){
   const room=o&&sel.kind==='room'?o:null, wall=o&&sel.kind==='wall'?o:null, op=o&&sel.kind==='opening'?o:null, fx=o&&sel.kind==='fixture'?o:null, roof=o&&sel.kind==='roof'?o:null;
   const allRooms=patch=>commit({...p,rooms:p.rooms.map(r=>({...r,...patch(r)}))});
   switch(it.place){
-    case 'fixture':A.push({label:'Place',primary:true,run:()=>{setFixtureType(it.id);setTool('fixture');setMode&&setMode(m=>m==='3d'?'split':m);}});
+    case 'fixture':A.push({label:'Place',primary:true,run:()=>{setFixtureType(it.id);setTool('fixture');setMode&&setMode(m=>m==='3d'?'split':m);}});A.push({label:it.cat==='My items'?'Edit…':'Customize…',run:()=>window.dispatchEvent(new CustomEvent('rs-customize',{detail:it.id}))});
       if(fx)A.push({label:'Swap selected',run:()=>commit(updObj(p,'fixture',fx.id,{type:it.base,lib:it.id,name:it.label,w:it.w,d:it.d,h:it.h,elev:it.elev??(FIXTURES[it.base]?.elev||0)}))});break;
-    case 'door':case 'window':A.push({label:'Place on a wall',primary:true,run:()=>{setOpenPreset(s=>({...s,[it.place]:it.id}));setTool(it.place);}});
+    case 'door':case 'window':A.push({label:'Place on a wall',primary:true,run:()=>{setOpenPreset(s=>({...s,[it.place]:it.id}));setTool(it.place);}});A.push({label:it.cat==='My items'?'Edit…':'Customize…',run:()=>window.dispatchEvent(new CustomEvent('rs-customize',{detail:it.id}))});
       if(op)A.push({label:'Apply to selected',run:()=>{const w=p.walls.find(w=>w.id===op.wall);const L=w?wlen(w):999;const patch=openingFromLib(it);if(patch.width>L-1){ctx.say&&ctx.say('That is wider than the wall.',false);return;}
         commit(updObj(p,'opening',op.id,{...patch,pos:Math.max(patch.width/2,Math.min(L-patch.width/2,op.pos))}));}});break;
     case 'wall':A.push({label:'Draw with this',primary:true,run:()=>{setWallPreset(it.key);setTool('wall');}});
@@ -64,7 +64,9 @@ function libDims(it){
   if(it.place==='color')return it.hex.toUpperCase();
   return '';
 }
-function LibIcon({it}){
+const PIC_PLACES=new Set(['door','window','fixture','floor','wallfin','ceiling','roof','siding']);
+function LibIcon({it,p}){
+  if(PIC_PLACES.has(it.place))return html`<${ItemPic} kind="lib" obj=${it} p=${p||(window.__app&&window.__app.get())} w=${128} h=${96} className="libpic" alt=""/>`;
   const box=(c)=>html`<svg viewBox="0 0 40 40" className="libicon" aria-hidden="true">${c}</svg>`;
   if(it.place==='color')return html`<span className="libswatch" style=${{background:it.hex}} aria-hidden="true"></span>`;
   if(it.place==='trim'){const h=Math.min(34,Math.max(4,it.slot==='wainscot'?30:it.h*5));const t=Math.max(3,it.t*14);const y0=37-h;
@@ -79,7 +81,7 @@ function LibIcon({it}){
   if(it.place==='window'){const k=Math.min(30/it.width,30/it.height);const w=it.width*k,h=it.height*k;const x=20-w/2,y=20-h/2;
     return box(html`<rect x=${x} y=${y} width=${w} height=${h} className="li-fill"/>${it.operation==='double-hung'||it.operation==='single-hung'?html`<line x1=${x} y1=${20} x2=${x+w} y2=${20} className="li-line"/>`:it.operation==='slider'?html`<line x1=20 y1=${y} x2=20 y2=${y+h} className="li-line"/>`:it.operation==='casement'?html`<polyline points=${`${x+w},${y} ${x},${20} ${x+w},${y+h}`} className="li-arc"/>`:it.operation==='awning'||it.operation==='hopper'?html`<polyline points=${`${x},${y+h} 20,${y} ${x+w},${y+h}`} className="li-arc"/>`:null}`);}
   if(it.place==='fixture'){const k=Math.min(32/it.w,32/it.d);const w=it.w*k,d=it.d*k;return box(html`<rect x=${20-w/2} y=${20-d/2} width=${w} height=${d} rx="1.5" className=${it.base==='wallcab'?'li-dash':'li-fill'}/>`);}
-  if(it.place==='wall'){const t=Math.min(30,it.thick*2.4);return box(html`<rect x="2" y=${20-t/2} width="36" height=${t} className=${it.kind==='exterior'?'li-solid':'li-fill'}/>`);}
+  if(it.place==='wall')return html`<${WallSectionPic} it=${it}/>`;
   const col=it.place==='floor'?FLOOR_COLOR[it.key]:it.place==='roof'?ROOF_COLOR[it.key]:it.place==='siding'?SIDING_COLOR[it.key]:it.place==='ceiling'?(CEILINGS[it.key]||[])[1]:0xe9e6df;
   return html`<span className="libswatch" style=${{background:'#'+((col??0xdddddd).toString(16).padStart(6,'0'))}} aria-hidden="true"></span>`;
 }
@@ -87,7 +89,7 @@ function LibraryPanel({ctx,onClose,collapsed,setCollapsed}){
   const [q,setQ]=useState('');const [cat,setCat]=useState(()=>{try{return localStorage.getItem('remodel-studio:libcat')||'Doors';}catch(e){return 'Doors';}});
   const pick=c=>{setCat(c);try{localStorage.setItem('remodel-studio:libcat',c);}catch(e){}};
   const words=q.toLowerCase().split(/\s+/).filter(Boolean);
-  const items=LIB.filter(x=>(words.length?true:x.cat===cat)&&words.every(w=>(x.label+' '+x.sub+' '+x.cat).toLowerCase().includes(w)));
+  const items=LIB.filter(x=>!x.hidden&&(words.length?true:x.cat===cat)&&words.every(w=>(x.label+' '+x.sub+' '+x.cat).toLowerCase().includes(w)));
   if(words.length){const ql=q.toLowerCase().trim();const score=x=>{const l=x.label.toLowerCase();return (l.includes(ql)?0:1)*10+(l.startsWith(words[0])?0:1)+(l.length/200);};items.sort((a,b)=>score(a)-score(b));}
   const shown=items.slice(0,150);const groups=[];for(const x of shown){let g=groups.find(g=>g.k===x.cat+' / '+x.sub);if(!g)groups.push(g={k:x.cat+' / '+x.sub,sub:words.length?x.cat+': '+x.sub:x.sub,items:[]});g.items.push(x);}
   const o=findObj(ctx.p,ctx.sel);const selName=o?(ctx.sel.kind==='room'?o.name:ctx.sel.kind==='fixture'?fxLabel(o):ctx.sel.kind==='opening'?(openingMarks(ctx.p)[o.id]||o.type):ctx.sel.kind):null;
@@ -102,7 +104,7 @@ function LibraryPanel({ctx,onClose,collapsed,setCollapsed}){
     </div>
     ${!words.length&&cat==='Cabinets'?html`<${PriceBookPanel} onChange=${()=>setQ(q=>q+' ').valueOf()||setTimeout(()=>setQ(q=>q.trim()),0)}/>`:null}
     <div className="liblist">${groups.map(g=>html`<div key=${g.k} className="libgrp"><h4>${g.sub}</h4>${g.items.map(it=>{const acts=libActions(it,ctx);return html`<div key=${it.id} className="libitem">
-        <${LibIcon} it=${it}/><div className="libtxt"><div className="libname">${it.label}${it.ada?html` <span className="pill ok">ADA</span>`:null}</div><div className="note">${libDims(it)}</div>
+        <${LibIcon} it=${it} p=${ctx.p}/><div className="libtxt"><div className="libname">${it.label}${it.ada?html` <span className="pill ok">ADA</span>`:null}</div><div className="note">${libDims(it)}</div>
         <div className="libacts">${acts.map((a,i)=>html`<button key=${i} className=${'btn'+(a.primary?' primary':'')} onClick=${a.run}>${a.label}</button>`)}</div></div></div>`;})}</div>`)}
       ${items.length>shown.length?html`<p className="note" style=${{padding:'0 16px 16px'}}>Showing ${shown.length} of ${items.length}. Type more words to narrow it down.</p>`:null}
       ${!items.length?html`<p className="note" style=${{padding:'16px'}}>Nothing matches. Try fewer words.</p>`:null}</div>
@@ -136,11 +138,13 @@ function doorGeom(o,t,s0,s1){
   switch(o.dtype||'swing'){
     case 'double':{const h=W/2;out.push({pts:[[s0,side*t],[s0,side*(t+h)]]},{pts:arc(s0,1,h,side),dash:true},{pts:[[s1,side*t],[s1,side*(t+h)]]},{pts:arc(s1,-1,h,side),dash:true});break;}
     case 'slider':{const L=W*0.55;out.push({pts:[[s0,t*0.35],[s0+L,t*0.35]],thick:true},{pts:[[s1-L,-t*0.35],[s1,-t*0.35]],thick:true});break;}
-    case 'pocket':out.push({pts:[[s0,0],[s1,0]],thick:true},{pts:[[s0-W,0],[s0,0]],dash:true});break;
+    case 'pocket':out.push({pts:[[s0,0],[s1,0]],thick:true},o.hinge?{pts:[[s1,0],[s1+W,0]],dash:true}:{pts:[[s0-W,0],[s0,0]],dash:true});break;
     case 'bifold':{const n=W>=48?4:2;const pts=[];for(let i=0;i<=n;i++)pts.push([s0+W*i/n,side*(t+(i%2?W/n*0.5:0))]);out.push({pts});break;}
-    case 'barn':{const off=side*(t+1.5);out.push({pts:[[s0-2,off],[s1+2,off]],thick:true},{pts:[[s1+2,off],[s1+W+2,off]],dash:true});break;}
+    case 'barn':{const off=side*(t+1.5);out.push({pts:[[s0-2,off],[s1+2,off]],thick:true},o.hinge?{pts:[[s0-W-2,off],[s0-2,off]],dash:true}:{pts:[[s1+2,off],[s1+W+2,off]],dash:true});break;}
     case 'overhead':{const off=-side*(t+2);out.push({pts:[[s0,off],[s1,off]],dash:true},{pts:[[s0,off],[s0,off-side*Math.min(W,96)*0.4]],dash:true},{pts:[[s1,off],[s1,off-side*Math.min(W,96)*0.4]],dash:true});break;}
-    default:{const hs=o.hinge?s1:s0,os=o.hinge?s0:s1;const dir=os>hs?1:-1;out.push({pts:[[hs,side*t],[hs,side*(t+W)]]},{pts:arc(hs,dir,W,side),dash:true});}
+    default:{let a=s0,b=s1;if(o.door&&(o.door.sidelites||o.door.transom)){const U=doorUnit(o,{door:o.door});const mid=(s0+s1)/2;a=mid+U.u0;b=mid+U.u1;
+        if(a-s0>2)out.push({pts:[[s0+0.75,0],[a-1,0]],thick:true});if(s1-b>2)out.push({pts:[[b+1,0],[s1-0.75,0]],thick:true});}
+      const Wl=b-a;const hs=o.hinge?b:a,os=o.hinge?a:b;const dir=os>hs?1:-1;out.push({pts:[[hs,side*t],[hs,side*(t+Wl)]]},{pts:arc(hs,dir,Wl,side),dash:true});}
   }
   return out;
 }
