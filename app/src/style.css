@@ -522,3 +522,10 @@ table.shop tr.got td{color:var(--ink-2);text-decoration:line-through}table.shop 
 .libitem>.libswatch{width:66px;height:50px}
 .draft-line{stroke:var(--accent,#1f5fbf);stroke-width:1.5;fill:none}
 .corner .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+/* landscape and playground symbols */
+.plantsym{stroke:#3d5a2e;stroke-width:1}.plant-ray{stroke:#3d5a2e;stroke-width:0.7;opacity:.8}.plant-code{font-size:9px;font-weight:700;fill:#1f2a1a;pointer-events:none}
+.usezone{fill:rgba(240,120,40,.06);stroke:#e07a2e;stroke-width:1.2;stroke-dasharray:6 4}.playfoot{stroke:#333;stroke-width:1.2}
+.playarea{fill:rgba(168,134,94,.25);stroke:#7a5c3a;stroke-width:1.5}.playarea.surf-pip{fill:rgba(47,111,176,.22)}.playarea.surf-turf{fill:rgba(79,143,58,.25)}.playarea.surf-tiles{fill:rgba(58,122,58,.22)}.playarea.surf-sand{fill:rgba(217,199,159,.35)}
+.stat .bad{color:#c0392b;font-weight:700}
+.area-tag{font-size:12px;font-weight:700;fill:#b05f10}.area-tag.sm{font-size:10px;font-weight:500}
+.adim polyline{stroke:#3a3a3a;stroke-width:1}.adim-ext{stroke:#3a3a3a;stroke-width:.6}.adim text{font-size:11px;fill:#222}.adim-sel polyline{stroke:var(--accent)}

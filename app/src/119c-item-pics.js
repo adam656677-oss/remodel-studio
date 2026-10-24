@@ -49,12 +49,16 @@ function picJob(kind,obj,p,opts={}){
     if(obj.place==='door'&&obj.ext)o.ext=true;const {q,focus}=picOpeningProject(p,o,real);return {q,focus,front:opts.back?-1:1};}
   if(kind==='fixture'||obj.place==='fixture'){const f=obj.place?{type:obj.base,lib:obj.id,name:obj.label,w:obj.w,d:obj.d,h:obj.h,elev:obj.elev??(FIXTURES[obj.base]?.elev||0),...(obj.cab?{cab:obj.cab}:{}),...(obj.fx||{})}:obj;
     const {q,focus}=picFixtureProject(p,f);return {q,focus,front:opts.back?-1:1};}
+  if(kind==='plant'||obj.place==='plant'){const q=picBase(p);const o={...(obj.place?{sp:obj.sp}:obj),id:'pv-p',level:'pv-l',x:0,y:0,status:'new'};q.plants=[o];q.settings={...q.settings,land:{...(p&&p.settings?.land||{}),show:'mature'}};const S=PLANTS_SP[o.sp]||PLANTS_SP.boxwood;const s=o.d||S.s,h=o.h||S.h;
+    return {q,focus:{x:0,y:0,z:h/2,w:s*1.05,h:h*1.05,d:s*0.3},front:1};}
+  if(kind==='play'||obj.place==='play'){const q=picBase(p);const o={...(obj.place?{key:obj.key}:obj),id:'pv-g',level:'pv-l',x:0,y:0,rot:0,status:'new'};q.play=[o];const c=PLAY[o.key]||{};const fp=playFoot(o);
+    return {q,focus:{x:0,y:0,z:(c.h||96)/2,w:Math.max(fp.w,fp.d)*1.1,h:(c.h||96)*1.1,d:fp.d*0.5},front:1};}
   if(['floor','wallfin','ceiling'].includes(obj.place)){const hex=obj.place==='floor'?(FLOOR_COLOR[obj.key]??0xb89a74):obj.place==='wallfin'?(WALLFIN_COL[obj.key]??0xe9e5dc):((CEILINGS[obj.key]||[])[1]??0xf8f6f2);return {swatch:[obj.place,obj.key,hex]};}
   if(['roof','siding'].includes(obj.place)){const r=picFinishProject(p,obj);if(r)return {q:r.q,cam:r.cam};}
   return null;}
 function picKey(kind,obj,p,opts){const s=p&&p.settings?JSON.stringify([p.settings.cab,p.settings.trimColor,p.settings.hwFinish,p.settings.trim]):'';
   let o=obj;if(kind==='opening'&&p){const S=doorSides(p,obj);o={...obj,_h:obj.type==='door'?doorHanding(p,obj).res:'',_e:S&&S.ext,_s:S&&S.w.siding,pos:0,wall:0,id:0};}
-  if(kind==='fixture')o={...obj,x:0,y:0,rot:0,id:0,level:0};return kind+'|'+JSON.stringify(o)+'|'+s+'|'+JSON.stringify(opts||{});}
+  if(kind==='fixture'||kind==='plant'||kind==='play')o={...obj,x:0,y:0,rot:0,id:0,level:0};return kind+'|'+JSON.stringify(o)+'|'+s+'|'+JSON.stringify(opts||{});}
 function requestPic(kind,obj,p,opts={}){const key=picKey(kind,obj,p,opts);if(_picCache.has(key))return Promise.resolve(_picCache.get(key));
   return new Promise(res=>{_picQueue.push({key,kind,obj,p,opts,res});pumpPics();});}
 function pumpPics(){if(_picBusy||!_picQueue.length)return;_picBusy=true;

@@ -31,6 +31,11 @@ function libActions(it,ctx){
     case 'door':case 'window':A.push({label:'Place on a wall',primary:true,run:()=>{setOpenPreset(s=>({...s,[it.place]:it.id}));setTool(it.place);}});A.push({label:it.cat==='My items'?'Edit…':'Customize…',run:()=>window.dispatchEvent(new CustomEvent('rs-customize',{detail:it.id}))});
       if(op)A.push({label:'Apply to selected',run:()=>{const w=p.walls.find(w=>w.id===op.wall);const L=w?wlen(w):999;const patch=openingFromLib(it);if(patch.width>L-1){ctx.say&&ctx.say('That is wider than the wall.',false);return;}
         commit(updObj(p,'opening',op.id,{...patch,pos:Math.max(patch.width/2,Math.min(L-patch.width/2,op.pos))}));}});break;
+    case 'plant':A.push({label:'Place',primary:true,run:()=>{PLANT_PRESET={sp:it.sp};setTool('plant');setMode&&setMode(m=>m==='3d'||m==='materials'||m==='sheets'||m==='systems'?'plan':m);}});
+      {const pl=o&&sel.kind==='plant'?o:null;if(pl)A.push({label:'Swap selected',run:()=>commit(updObj(p,'plant',pl.id,{sp:it.sp,size:PLANTS_SP[it.sp].size,d:null,h:null}))});
+       const bed=o&&sel.kind==='site'&&o.type==='bed'?o:null;if(bed&&['groundcover','perennial','grass','shrub'].includes(PLANTS_SP[it.sp].kind))A.push({label:'Fill selected bed',run:()=>commit(updObj(p,'site',bed.id,{fill:{sp:it.sp,spacing:null}}))});}break;
+    case 'play':A.push({label:'Place',primary:true,run:()=>{PLAY_PRESET={key:it.key};setTool('play');setMode&&setMode(m=>m==='3d'||m==='materials'||m==='sheets'||m==='systems'?'plan':m);}});break;
+    case 'playarea':A.push({label:'Draw',primary:true,run:()=>{PLAYAREA_PRESET={surf:it.surf};setTool('playarea');setMode&&setMode(m=>m==='3d'||m==='materials'||m==='sheets'||m==='systems'?'plan':m);}});break;
     case 'wall':A.push({label:'Draw with this',primary:true,run:()=>{setWallPreset(it.key);setTool('wall');}});
       if(wall)A.push({label:'Apply to selected',run:()=>commit(updObj(p,'wall',wall.id,{thick:it.thick,kind:it.kind,bearing:it.bearing,mat:it.mat,assembly:it.key,height:it.half?42:wall.height}))});break;
     case 'trim':A.push({label:'Whole house',primary:true,run:()=>commit({...p,settings:{...p.settings,trim:{...(p.settings.trim||{}),[it.slot]:it.id}}})});
@@ -57,6 +62,8 @@ function libActions(it,ctx){
 }
 function libDims(it){
   if(it.place==='fixture')return `${fi(it.w)}" W x ${fi(it.d)}" D x ${fi(it.h)}" H`+(it.elev?` · ${it.elev}" up`:'');
+  if(it.place==='plant'){const s=PLANTS_SP[it.sp];return `${Math.round(s.h/12)}' x ${Math.round(s.s/12)}' · ${LAND_SUN[s.sun].toLowerCase()} · zones ${s.z[0]}-${s.z[1]}${s.native?' · native':''}`;}
+  if(it.place==='play'){const c=PLAY[it.key];return c?[c.model?'#'+c.model:'',c.ages?'ages '+c.ages:'',c.fall?'fall height '+fmtLen(c.fall):'',c.uz?`use zone ${Math.round(c.uz.w/12)}' x ${Math.round(c.uz.d/12)}'`:''].filter(Boolean).join(' · '):'';}
   if(it.place==='door')return `${DOOR_TYPES[it.dtype]} · ${DOOR_STYLES[it.style]}`;
   if(it.place==='window')return `${WIN_NAMES[it.operation]||it.operation} · sill ${it.sill}"`+(it.place==='window'&&it.operation!=='fixed'?` · ${windowNet(it).area.toFixed(1)} sq ft open`:'');
   if(it.place==='wall')return `${fmtLen(it.thick)} thick · ${it.bearing?'can carry load':'partition'}`;
@@ -64,7 +71,7 @@ function libDims(it){
   if(it.place==='color')return it.hex.toUpperCase();
   return '';
 }
-const PIC_PLACES=new Set(['door','window','fixture','floor','wallfin','ceiling','roof','siding']);
+const PIC_PLACES=new Set(['door','window','fixture','floor','wallfin','ceiling','roof','siding','plant','play']);
 function LibIcon({it,p}){
   if(PIC_PLACES.has(it.place))return html`<${ItemPic} kind="lib" obj=${it} p=${p||(window.__app&&window.__app.get())} w=${128} h=${96} className="libpic" alt=""/>`;
   const box=(c)=>html`<svg viewBox="0 0 40 40" className="libicon" aria-hidden="true">${c}</svg>`;

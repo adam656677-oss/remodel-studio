@@ -137,6 +137,8 @@ function PlanView(props){
       commit({...p,layers,settings:{...p.settings,cadLayer:l.id}});say('Drawing on layer '+l.name);return;}
     if(c.type==='rotate'){const items=selItems(sel);if(!items.length){say('Select something to rotate first.');return;}const base=XT&&tool==='op-rotate'&&xpts[0]?xpts[0]:selCenter(p,items);const r=xformItems(p,items,T_rot(base,-c.deg));commit(r.p);setSel(r.sel);setXpts([]);say('Rotated '+c.deg+'°');return;}
     if(c.type==='offset'){if(c.val>0){commit({...p,settings:{...p.settings,offsetD:c.val}});setTool('op-offset');say('Offset distance '+fmtLen(c.val)+'. Click a line or wall, then the side.');}return;}
+    if(c.type==='setting'){if(c.val==null||(typeof c.val==='number'&&!isFinite(c.val))){say('That value was not understood.');return;}commit({...p,settings:{...p.settings,[c.key]:c.val}});if(c.tool)setTool(c.tool);say('Set: '+(Array.isArray(c.val)?c.val.join(' x '):typeof c.val==='number'&&/R|D$/.test(c.key)?fmtLen(c.val):c.val));return;}
+    if(c.type==='similar'){const r=selectSimilar(p,sel,lv.id);if(!r){say('Select an item first.');return;}setSel(r);say(r.kind==='multi'?`Selected ${r.items.length} similar items.`:'Nothing similar found.');return;}
     if(c.type==='array'){commit({...p,settings:{...p.settings,arrayN:c.n}});setTool('op-array');say('Array of '+c.n+'. Click a base point, then the spacing.');return;}
     say('Unknown command: '+c.text+'. Try L, PL, REC, C, A, W, D, N, M, CO, RO 90, MI, AR 4, O 6, TR, EX, Z, U.');}
   function applyLen(text){

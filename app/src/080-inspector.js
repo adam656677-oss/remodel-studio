@@ -258,7 +258,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
       <div className="stat"><span>Floor area (rooms)</span><span className="mono">${Math.round(area)} sq ft</span></div>
       <div className="row"><button className="btn" onClick=${onFile}>Save, open or start new…</button></div>
     </div>
-    <${FoundationPanel} p=${p} commit=${commit}/>
+    <${FoundationPanel} p=${p} commit=${commit}/><${LandscapeSettings} p=${p} commit=${commit}/>
     ${p.settings.code==='ibc'?html`<${IbcSummary} p=${p}/>`:null}
     ${(()=>{const t=trimOf(p,null);const opts=slot=>LIB.filter(x=>x.place==='trim'&&x.slot===slot).map(x=>[x.id,x.label]);const ups=patch=>commit({...p,settings:{...p.settings,...patch}});
       return html`<div className="sec"><h3>Trim (whole house)</h3>
