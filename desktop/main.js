@@ -77,6 +77,12 @@ function backup(p,text){try{const base=path.basename(p,path.extname(p)).replace(
   const dir=path.join(docsDir(),'Backups',base);fs.mkdirSync(dir,{recursive:true});const d=new Date();const pad=n=>String(n).padStart(2,'0');
   fs.writeFileSync(path.join(dir,`${base} ${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}${pad(d.getMinutes())}.rsp`),text);
   const all=fs.readdirSync(dir).filter(n=>n.endsWith('.rsp')).sort();for(const n of all.slice(0,Math.max(0,all.length-25)))fs.unlinkSync(path.join(dir,n));}catch(e){}}
+ipcMain.handle('auto-backup',(e,name,text)=>{try{const base=String(name||'Untitled').replace(/[<>:"/\\|?*]+/g,'_').slice(0,80);const dir=path.join(docsDir(),'Backups',base);fs.mkdirSync(dir,{recursive:true});const d=new Date();const pad=n=>String(n).padStart(2,'0');
+  const f=path.join(dir,`${base} ${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}${pad(d.getMinutes())} autosave.rsp`);fs.writeFileSync(f,text);
+  const all=fs.readdirSync(dir).filter(n=>n.endsWith('.rsp')).sort();for(const n of all.slice(0,Math.max(0,all.length-40)))fs.unlinkSync(path.join(dir,n));return {ok:true,path:f};}catch(err){return {ok:false,error:err.message};}});
+ipcMain.handle('list-backups',()=>{const root=path.join(docsDir(),'Backups');const out=[];try{for(const d of fs.readdirSync(root)){const dir=path.join(root,d);let st;try{st=fs.statSync(dir);}catch(e){continue;}if(!st.isDirectory())continue;
+  for(const n of fs.readdirSync(dir).filter(n=>n.endsWith('.rsp'))){const f=path.join(dir,n);const s2=fs.statSync(f);out.push({project:d,name:n,path:f,mtime:s2.mtimeMs,size:s2.size});}}}catch(e){}return out.sort((a,b)=>b.mtime-a.mtime).slice(0,300);});
+ipcMain.handle('open-backups-folder',()=>{const root=path.join(docsDir(),'Backups');try{fs.mkdirSync(root,{recursive:true});}catch(e){}return shell.openPath(root);});
 ipcMain.handle('write-path',async(e,p,text,name)=>{try{fs.writeFileSync(p+'.tmp',text);fs.renameSync(p+'.tmp',p);addRecent(p,name);backup(p,text);return {ok:true,path:p};}catch(err){return {ok:false,error:err.message};}});
 ipcMain.handle('save-project-as',async(e,name,text)=>{
   const r=await dialog.showSaveDialog(win,{title:'Save project as',defaultPath:path.join(settings().lastDir||projectsDir(),name+'.rsp'),filters:PROJ_FILTERS.slice(0,1)});

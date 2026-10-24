@@ -99,4 +99,4 @@ function reg3DCtx(add,std,sel,mSel,layer,struct,opts,p,lv,group){
 }
 
 // dialogs opened from anywhere: window.dispatchEvent(new CustomEvent('rs-dialog',{detail:name}))
-const EXTRA_DIALOGS={};const openDialog=name=>window.dispatchEvent(new CustomEvent('rs-dialog',{detail:name}));
+const EXTRA_DIALOGS={};const APP_OVERLAYS=[];const openDialog=name=>window.dispatchEvent(new CustomEvent('rs-dialog',{detail:name}));

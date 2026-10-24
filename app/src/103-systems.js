@@ -143,7 +143,8 @@ function SystemsView({p,commit}){const [tab,setTab]=useState('energy');const E=e
         <tr><td>Water heater</td><td><b>${P.tank} gal tank</b> or tankless</td><td className="note">${P.baths} bath${P.baths===1?'':'s'}; size a tank by first-hour rating</td></tr></tbody></table></div></section>`;}
   if(tab==='light')body=html`<${LightingTab} p=${p} commit=${commit}/>`;
   return html`<div className="matview"><div className="matinner"><div className="seg mattabs" role="tablist">${tabs.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
-    <div className="mathead"><div><h2>${tabs.find(t=>t[0]===tab)[1]}</h2><p className="note">Calculated from the model. Planning numbers to size and compare; not a stamped design.</p></div></div>${body}</div></div>`;}
+    <div className="mathead"><div><h2>${tabs.find(t=>t[0]===tab)[1]}</h2><p className="note">Calculated from the model. Planning numbers to size and compare; not a stamped design.</p></div></div>${body}${(SYS_EXTRA[tab]||[]).map((C,i)=>html`<${C} key=${i} p=${p} commit=${commit}/>`)}</div></div>`;}
+var SYS_EXTRA=typeof SYS_EXTRA!=='undefined'?SYS_EXTRA:{};
 /* ---- sheet M0.1 ---- */
 function systemsSheet(P,p){const k=P.k;const dl=DL();const A=sheetFrame(dl,P,p,'M0.1','Energy and systems calculations','');const W=A.x1-A.x0;let y=A.y0+0.3*k;const colW=(W-0.4*k)/2;const x2=A.x0+colW+0.4*k;
   const C=energyCompliance(p),L=loadCalc(p),S=serviceLoad(p),PL=plumbingCalc(p);

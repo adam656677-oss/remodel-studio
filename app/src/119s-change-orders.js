@@ -1,0 +1,41 @@
+/* ======================= contract baseline and change orders ======================= */
+// Lock the estimate when the client signs. Later changes to the model show up as added, removed and changed lines
+// with the price difference; each change order records them, resets the baseline and prints for signature.
+function estSnapshot(p){const E=estimateOf(p);const prices=p.prices||{};const rows={};for(const r of E.rows){const k=r.key.replace(/\|(new|demo)$/,'');const pr=prices[k]??r.price;const key=r.cat+'|'+r.item+'|'+r.unit;
+  const R=rows[key]=rows[key]||{cat:r.cat,item:r.item,unit:r.unit,qty:0,price:pr};R.qty+=r.qty;if(pr!=null)R.price=pr;}
+  return {date:new Date().toISOString().slice(0,10),total:Math.round(E.total),mat:Math.round(E.mat),labor:Math.round(E.laborCost),rows};}
+function contractOf(p){return p.contract||null;}
+function changeDiff(p){const C=contractOf(p);if(!C)return null;const base=C.current||C.baseline;const now=estSnapshot(p);const lines=[];
+  const keys=new Set([...Object.keys(base.rows),...Object.keys(now.rows)]);
+  for(const k of keys){const a=base.rows[k],b=now.rows[k];const qa=a?a.qty:0,qb=b?b.qty:0;if(Math.abs(qa-qb)<0.01)continue;const R=b||a;const pr=(b&&b.price)??(a&&a.price);
+    lines.push({cat:R.cat,item:R.item,unit:R.unit,was:Math.round(qa*100)/100,now:Math.round(qb*100)/100,kind:!a?'add':!b?'remove':'change',cost:pr!=null?Math.round((qb-qa)*pr*100)/100:null});}
+  lines.sort((x,y)=>(x.cat+x.item>y.cat+y.item?1:-1));return {lines,was:base.total,now:now.total,delta:now.total-base.total,snap:now};}
+async function changeOrderPDF(p,co){await loadJsPDF();const {jsPDF}=window.jspdf;const d=new jsPDF({unit:'in',format:'letter'});let y=0.8;const L=0.75;const T=(t,x,b,sz=10,al)=>{d.setFont('helvetica',b?'bold':'normal');d.setFontSize(sz);d.text(String(t),x,y,al?{align:al}:undefined);};const nl=(h=0.22)=>{y+=h;if(y>10.2){d.addPage();y=0.8;}};
+  T(`CHANGE ORDER #${co.no}`,L,true,16);T(co.date,7.75,false,10,'right');nl(0.35);T(`Project: ${p.name}`,L,false,11);nl();const info=p.permit||p.settings?.permit||{};if(info.address){T(info.address,L);nl();}if(info.owner){T(`Owner: ${info.owner}`,L);nl();}nl(0.1);
+  T('Description of the change',L,true,11);nl();for(const ln of d.splitTextToSize(co.desc||'Changes to the work as listed below.',7)){T(ln,L);nl(0.18);}nl(0.1);
+  T('Item',L,true,9);T('Was',5.2,true,9,'right');T('Now',6.0,true,9,'right');T('Amount',7.75,true,9,'right');nl(0.06);d.setLineWidth(0.01);d.line(L,y,7.75,y);nl(0.18);
+  for(const l of co.lines.slice(0,60)){T((l.kind==='add'?'+ ':l.kind==='remove'?'- ':'~ ')+l.item.slice(0,58),L,false,8.5);T(`${l.was} ${l.unit}`,5.2,false,8.5,'right');T(`${l.now} ${l.unit}`,6.0,false,8.5,'right');T(l.cost==null?'labor and markup':(l.cost<0?'-':'')+'$'+Math.abs(Math.round(l.cost)).toLocaleString('en-US'),7.75,false,8.5,'right');nl(0.17);}
+  nl(0.15);d.line(L,y,7.75,y);nl(0.25);const $=v=>(v<0?'-':'')+'$'+Math.abs(Math.round(v)).toLocaleString('en-US');
+  T('Contract before this change',L);T($(co.was),7.75,false,10,'right');nl();T(`This change order (materials, labor, markup and contingency)`,L,true);T($(co.delta),7.75,true,10,'right');nl();T('New contract amount',L,true);T($(co.now),7.75,true,11,'right');nl(0.3);
+  if(co.days){T(`Schedule: ${co.days>0?'adds':'saves'} about ${Math.abs(co.days)} working day${Math.abs(co.days)===1?'':'s'}.`,L);nl(0.3);}
+  T('The work above is added to or removed from the contract at the amount shown. All other terms stay the same.',L,false,9);nl(0.6);
+  for(const who of ['Owner','Contractor']){d.line(L,y,4.2,y);d.line(4.8,y,7.75,y);nl(0.18);T(`${who} signature`,L,false,8);T('Date',4.8,false,8);nl(0.5);}
+  return d;}
+function ChangeOrders({p,commit}){const C=contractOf(p);const D=useMemo(()=>{try{return changeDiff(p);}catch(e){return null;}},[p]);const [desc,setDesc]=useState('');const [days,setDays]=useState('');const [msg,setMsg]=useState(null);
+  const $=v=>(v<0?'−':'')+'$'+Math.abs(Math.round(v)).toLocaleString('en-US');
+  const lock=()=>{const s=estSnapshot(p);commit({...p,contract:{baseline:s,current:s,changeOrders:[],signed:s.date}});};
+  const make=()=>{const no=(C.changeOrders||[]).length+1;const co={no,date:new Date().toISOString().slice(0,10),desc:desc.trim()||'Changes to the work as listed.',lines:D.lines,was:D.was,now:D.now,delta:D.delta,days:parseInt(days)||0,status:'pending'};
+    commit({...p,contract:{...C,current:D.snap,changeOrders:[...(C.changeOrders||[]),co]}});setDesc('');setDays('');setMsg(`Change order #${no} recorded. Print it for signatures.`);};
+  const setCO=(no,patch)=>commit({...p,contract:{...C,changeOrders:C.changeOrders.map(c=>c.no===no?{...c,...patch}:c)}});
+  const print=async co=>{try{const d=await changeOrderPDF(p,co);setMsg((await saveFile(safeName(p.name)+` change order ${co.no}.pdf`,d.output('blob'))).t);}catch(e){setMsg(e.message);}};
+  if(!C)return html`<section className="sec co"><h3>Contract and change orders</h3><p className="note">When the client signs the proposal, lock the contract here. Changes you make to the model after that show as a change order with the price difference.</p><button className="btn primary" onClick=${lock}>Lock the contract at today's estimate</button></section>`;
+  const signedSum=(C.changeOrders||[]).filter(c=>c.status==='signed').reduce((s,c)=>s+c.delta,0);
+  return html`<section className="sec co"><h3>Contract and change orders</h3>
+    <div className="rw-stats"><div><span>Original contract (${C.baseline.date})</span><b>${$(C.baseline.total)}</b></div><div><span>Signed change orders</span><b>${$(signedSum)}</b><small>${(C.changeOrders||[]).length} change order${(C.changeOrders||[]).length===1?'':'s'}</small></div><div><span>Contract now</span><b>${$(C.baseline.total+signedSum)}</b></div><div><span>Unrecorded changes</span><b className=${D&&D.delta>0?'bad':''}>${D?$(D.delta):'$0'}</b><small>${D?D.lines.length:0} line${D&&D.lines.length===1?'':'s'}</small></div></div>
+    ${D&&D.lines.length?html`<div className="tablewrap"><table className="mat"><thead><tr><th></th><th>Item</th><th className="num">Was</th><th className="num">Now</th><th className="num">Materials</th></tr></thead><tbody>${D.lines.slice(0,80).map((l,i)=>html`<tr key=${i}><td className=${'co-'+l.kind}>${l.kind==='add'?'Added':l.kind==='remove'?'Removed':'Changed'}</td><td>${l.item}</td><td className="num">${l.was} ${l.unit}</td><td className="num">${l.now} ${l.unit}</td><td className="num">${l.cost==null?'':$(l.cost)}</td></tr>`)}</tbody></table></div>
+      <div className="row"><input className="inp" style=${{flex:1}} placeholder="Describe the change for the client" value=${desc} onInput=${e=>setDesc(e.target.value)} aria-label="Change description"/><input className="inp mono" style=${{width:'7em'}} placeholder="+ days" value=${days} onInput=${e=>setDays(e.target.value)} aria-label="Schedule days"/><button className="btn primary" onClick=${make}>Create change order</button></div>`:html`<p className="note">No changes since the contract${(C.changeOrders||[]).length?' and the last change order':''}.</p>`}
+    ${(C.changeOrders||[]).length?html`<h3>Change orders</h3><table className="mat"><thead><tr><th>#</th><th>Date</th><th>Description</th><th className="num">Amount</th><th>Status</th><th></th></tr></thead><tbody>${C.changeOrders.map(co=>html`<tr key=${co.no}><td>${co.no}</td><td>${co.date}</td><td>${co.desc}</td><td className="num">${$(co.delta)}</td>
+      <td><select className="inp" value=${co.status} onChange=${e=>setCO(co.no,{status:e.target.value})} aria-label=${'Status of change order '+co.no}><option value="pending">Waiting for signature</option><option value="signed">Signed</option><option value="void">Void</option></select></td><td><button className="btn small" onClick=${()=>print(co)}>PDF</button></td></tr>`)}</tbody></table>`:null}
+    ${msg?html`<p className="note">${msg}</p>`:null}<p className="note"><button className="linkbtn" onClick=${()=>{if(confirmClear())commit({...p,contract:null});}}>Unlock the contract</button></p></section>`;}
+function confirmClear(){return true;}
+{const _EV=EstimateView;EstimateView=function(props){return html`<${_EV} ...${props}/><${ChangeOrders} ...${props}/>`;};}

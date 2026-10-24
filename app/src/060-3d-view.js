@@ -215,7 +215,7 @@ function buildModel(st,p,levelId,sel,opts={}){
       if(r.tile){CUR_TAG={kind:'room',id:r.id,part:'tile'};try{addTile3D(p,lv,r,add,std);}catch(e){console.error(e);}}
       if((opts.interior||opts.ceilings)&&lv.id===cur.id){CUR_TAG={kind:'room',id:r.id,part:'ceiling'};const cc=r.ceilingColor?hexNum(r.ceilingColor):((CEILINGS[r.ceiling||'flat']||[])[1]??0xf7f6f2);
         addCeiling3D(p,lv,r,add,std,std('ceil-'+cc,cc,{side:THREE.DoubleSide,roughness:.95,emissive:new THREE.Color(cc).multiplyScalar(opts.interior?0.28:0.08)}));
-        const [lx,ly]=polyLabelPt(r.pts);const a=polyArea(r.pts)/144;const L=new THREE.PointLight(0xfff1dc,0.3+Math.min(0.3,a/900),Math.max(18,Math.sqrt(a)*2.2),1.4);L.position.set(lx*IN,(e0+lv.height-14)*IN,ly*IN);g.add(L);}
+        const [lx,ly]=polyLabelPt(r.pts);const a=polyArea(r.pts)/144;const L=new THREE.PointLight(roomLightColor(p,r),0.3+Math.min(0.3,a/900),Math.max(18,Math.sqrt(a)*2.2),1.4);L.position.set(lx*IN,(e0+lv.height-14)*IN,ly*IN);g.add(L);}
     }
     for(const s of p.stairs.filter(s=>s.level===lv.id))stair3D(p,lv,s,add,std,sel,mSel);
     for(const s of [].filter(s=>s.level===lv.id)){

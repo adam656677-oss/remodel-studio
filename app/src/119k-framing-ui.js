@@ -60,15 +60,17 @@ function TrussSVG({pr,w=380,h=150}){const xs=[...pr.top.map(q=>q[0]),0,pr.L],zs=
     <text x=${w/2} y=${h-2} textAnchor="middle" className="rw-dim">${fmtLen(pr.L)} span</text></svg>`;}
 EXTRA_DIALOGS.roofwiz=RoofWizard;
 // ---------- floor framing ----------
-function FloorFramingModal({p,commit,levelId,onClose}){const lvls=sortedLevels(p);const [lid,setLid]=useState(levelId||lvls[0].id);const lv=lvlOf(p,lid)||lvls[0];const J=joistOpt(lv);
+function FloorFramingModal({p,commit,levelId,onClose}){const lvls=sortedLevels(p);const [lid,setLid]=useState(levelId||lvls[0].id);const lv=lvlOf(p,lid)||lvls[0];const J=joistOpt(lv);const [mode,setMode]=useState('floor');const C=ceilOpt(lv);
   const up=patch=>commit({...p,levels:p.levels.map(l=>l.id===lv.id?{...l,framing:{...(l.framing||{}),...patch}}:l)});
-  const L=useMemo(()=>{try{return joistLayout(p,lv);}catch(e){console.error(e);return null;}},[p,lv.id]);const B=planBounds(p,lv.id);const {S}=fitS(B,420,300);const rows=L?joistSchedule(L):[];
+  const L=useMemo(()=>{try{return joistLayout(p,lv,mode);}catch(e){console.error(e);return null;}},[p,lv.id,mode]);const B=planBounds(p,lv.id);const {S}=fitS(B,420,300);const rows=L?joistSchedule(L):[];
   const first=groundLevel(p).id===lv.id;const sel=(id,label,val,opts,on)=>html`<${Field} label=${label} id=${id}><${Sel} id=${id} value=${String(val)} onChange=${on} options=${opts}/><//>`;
   return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal wide rw" role="dialog" aria-label="Floor framing"><h2>Floor framing</h2>
     <div className="rw-grid"><div className="rw-left">
-      ${sel('ff-lv','Floor of',lid,lvls.map(l=>[l.id,l.name]),setLid)}
-      ${first?sel('ff-fd','Foundation',J.foundation,[['crawl','Crawlspace'],['basement','Basement'],['slab','Slab on grade (no joists)']],v=>up({foundation:v})):null}
-      ${first&&J.foundation==='slab'?html`<p className="note">A slab floor has no joists. Pick crawlspace or basement to frame this floor.</p>`:html`
+      ${sel('ff-mode','Frame',mode,[['floor','Floor joists'],['ceiling','Ceiling joists (under a rafter roof or a flat ceiling)']],setMode)}
+      ${sel('ff-lv',mode==='ceiling'?'Ceiling of':'Floor of',lid,lvls.map(l=>[l.id,l.name]),setLid)}
+      ${mode==='ceiling'?html`${sel('ff-csz','Size',C.joist,['2x4','2x6','2x8','2x10'].map(k=>[k,k]),v=>up({ceiling:v}))}${sel('ff-csp','Spacing',C.spacing,[['12','12" o.c.'],['16','16" o.c.'],['24','24" o.c.']],v=>up({ceilingSpacing:+v}))}${sel('ff-cdir','Direction',C.dir,[['auto','Shortest span (automatic)'],['x','East to west'],['y','North to south']],v=>up({ceilDir:v}))}
+        <label className="check"><input type="checkbox" checked=${!!C.atticStorage} onChange=${e=>up({atticStorage:e.target.checked})}/> Attic used for storage (20 psf)</label><p className="note">Ceiling joists bear on this level's outside and load-bearing walls. Mark the walls that carry them as load-bearing.</p>`:first?sel('ff-fd','Foundation',J.foundation,[['crawl','Crawlspace'],['basement','Basement'],['slab','Slab on grade (no joists)']],v=>up({foundation:v})):null}
+      ${mode==='ceiling'?null:first&&J.foundation==='slab'?html`<p className="note">A slab floor has no joists. Pick crawlspace or basement to frame this floor.</p>`:html`
       ${sel('ff-type','Joists',J.type,[['lumber','Dimensional lumber'],['ijoist','I-joists'],['truss','Open-web floor trusses']],v=>up({jtype:v}))}
       ${J.type==='lumber'?html`${sel('ff-sz','Size',J.joist,['2x6','2x8','2x10','2x12'].map(k=>[k,k]),v=>up({joist:v}))}${sel('ff-sp','Lumber',J.species,Object.entries(SPECIES).map(([k,v])=>[k,v.label]),v=>up({species:v}))}`:J.type==='ijoist'?sel('ff-ij','Depth',J.ij,Object.keys(IJOISTS).map(k=>[k,k.replace('.875','-7/8').replace('.5','-1/2')+'"']),v=>up({ijoist:v})):sel('ff-ft','Depth',J.ft,Object.keys(FTRUSS).map(k=>[k,k+'"']),v=>up({ftruss:+v}))}
       ${sel('ff-sp2','Spacing',J.spacing,[['12','12" o.c.'],['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']],v=>up({spacing:+v}))}
@@ -77,7 +79,7 @@ function FloorFramingModal({p,commit,levelId,onClose}){const lvls=sortedLevels(p
       <p className="note">Allowable spans: lumber from the NDS for 40 psf live (30 at bedrooms) plus 10 dead, L/360. I-joist and floor-truss spans are typical values; confirm with the maker's tables.</p>`}
       ${L&&L.warn.length?html`<ul className="ff-warn">${L.warn.map((t,i)=>html`<li key=${i}>${t}</li>`)}</ul>`:null}
     </div><div className="rw-right">
-      <svg className="rw-plan ff-plan" viewBox="0 0 420 300" role="img" aria-label="Floor framing plan">${floorFramingSVG(p,lv,S,{s:0.6})}</svg>
+      <svg className="rw-plan ff-plan" viewBox="0 0 420 300" role="img" aria-label="Floor framing plan">${floorFramingSVG(p,lv,S,{s:0.6},mode)}</svg>
       ${rows.length?html`<table className="mat ff-sched"><thead><tr><th>Item</th><th className="num">Qty</th><th>Unit</th></tr></thead><tbody>${rows.map((r,i)=>html`<tr key=${i}><td>${r.item}</td><td className="num">${r.qty}</td><td>${r.unit}</td></tr>`)}</tbody></table>`:null}
     </div></div>
     <div className="row"><span className="note">Changes save as you go. The joists show in the 3D framing view, the Floor framing tab and the S2 sheets.</span><span className="spacer"></span><button className="btn primary" onClick=${onClose}>Done</button></div></div></div>`;}

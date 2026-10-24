@@ -66,7 +66,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
     </div>
     <div className="sec"><h3>Structure and plan</h3>
       <label className="check"><input id="w-bear" type="checkbox" checked=${!!o.bearing} onChange=${e=>up({bearing:e.target.checked})}/> Load-bearing wall</label>
-      <div className="row"><button className="btn" onClick=${()=>openDialog('wallrm')}>${o.status==='demolish'?'Removal: beam, posts and footings…':'Remove this wall (wizard)…'}</button></div>
+      <div className="row"><button className="btn" onClick=${()=>openDialog('wallrm')}>${o.status==='demolish'?'Removal: beam, posts and footings…':'Remove this wall (wizard)…'}</button><button className="btn" onClick=${()=>openDialog('wallframe')}>Framing and cut list…</button></div>
       <${Field} label="Side" id="w-kind"><${Sel} id="w-kind" value=${o.kind} onChange=${v=>up({kind:v})} options=${[['exterior','Exterior'],['interior','Interior']]}/><//>
       <${Field} label="Remodel status" id="w-st"><${Sel} id="w-st" value=${o.status||'new'} onChange=${v=>up({status:v})} options=${[['existing','Existing'],['new','New'],['demolish','Demolish']]}/><//>
       ${o.kind==='exterior'?html`<${Field} label="Siding" id="w-sid"><${Sel} id="w-sid" value=${o.siding||'vinyl'} onChange=${v=>up({siding:v})} options=${Object.entries(SIDING).map(([k,v])=>[k,v.label])}/><//>`:null}
@@ -127,7 +127,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
         <button className="btn" onClick=${()=>{const f={...o,id:uid('fx')};const sd=fxSide(o);f.x+=sd.x*o.w;f.y+=sd.y*o.w;commit({...p,fixtures:[...p.fixtures,f]});setSel({kind:'fixture',id:f.id});}}>Add one beside</button></div>
       <${ColorPick} id="x-col" label="Color or finish" value=${o.color} fallback=${'#'+((FIXTURES[o.type]||{}).color||0xcccccc).toString(16).padStart(6,'0')} onChange=${v=>up({color:v})}/>
       <${Field} label="Remodel status" id="x-st"><${Sel} id="x-st" value=${o.status||'new'} onChange=${v=>up({status:v})} options=${[['existing','Existing'],['new','New'],['demolish','Remove']]}/><//>
-      <p className="note">${o.type==='toilet'?'ADA: centerline 16" to 18" from the side wall, with a 60" x 56" clear space.':COUNTERTOP.has(o.type)?'Standard counters are 36" high; ADA kitchens need a 30" section at 34" maximum.':'Drag to move. Hold Shift while dragging to move away from walls.'}</p></div>${isCab(o)?html`<${CabinetPanel} p=${p} o=${o} up=${up} commit=${commit}/>`:null}`;
+      <p className="note">${o.type==='toilet'?'ADA: centerline 16" to 18" from the side wall, with a 60" x 56" clear space.':COUNTERTOP.has(o.type)?'Standard counters are 36" high; ADA kitchens need a 30" section at 34" maximum.':'Drag to move. Hold Shift while dragging to move away from walls.'}</p></div>${isCab(o)?html`<${CabinetPanel} p=${p} o=${o} up=${up} commit=${commit}/>`:null}<${ApplianceSpec} f=${o}/>`;
   } else if(o&&OBJ[sel.kind]){const d=OBJ[sel.kind];kind=d.label;title=d.title?d.title(o,p):d.label;body=d.panel?d.panel(o,{p,up,commit,setSel,lv:lvlOf(p,o.level)||p.levels[0]}):null;
   } else if(o&&sel.kind==='stair'){
     kind='Stair'; const g=stairGeo(p,o); title=`${(STAIR_SHAPES.find(x=>x[0]===(o.shape||'straight'))||['','Stair'])[1]} · ${g.N} risers`;
@@ -159,7 +159,9 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
     body=html`<div className="sec"><h3>Device</h3>
       <${Field} label="Type" id="e-type"><${Sel} id="e-type" value=${o.type} onChange=${v=>up({type:v,h:ELEC[v].h})} options=${Object.entries(ELEC).map(([k,v])=>[k,v.label])}/><//>
       <${Field} label=${e.mount==='ceil'?'Height (ceiling)':'Height to center'} id="e-h"><${LenInput} id="e-h" value=${o.h} onChange=${v=>up({h:v})}/><//>
-      ${LUMENS[o.type]?html`<${Field} label="Light output" id="e-lm"><input id="e-lm" className="inp mono" value=${o.lumens??''} placeholder=${LUMENS[o.type]+' lumens'} onChange=${ev=>{const v=parseInt(ev.target.value);up({lumens:v>0?v:null});}}/><//>`:null}
+      ${LUMENS[o.type]?[html`<${Field} label="Light output" id="e-lm"><input id="e-lm" className="inp mono" value=${o.lumens??''} placeholder=${LUMENS[o.type]+' lumens'} onChange=${ev=>{const v=parseInt(ev.target.value);up({lumens:v>0?v:null});}}/><//>`,html`<${Field} label="Color temperature" id="e-k"><${Sel} id="e-k" value=${String(o.kelvin||2700)} onChange=${v=>up({kelvin:+v})} options=${KELVINS.map(([k,l])=>[String(k),l])}/><//>
+      <label className="check"><input type="checkbox" checked=${!!o.dim} onChange=${ev=>up({dim:ev.target.checked})}/> Dimmable</label>
+      <${Field} label="Fixture mark" id="e-mk"><input id="e-mk" className="inp mono" value=${o.mark||''} placeholder=${lightMark(p,o)} onChange=${ev=>up({mark:ev.target.value.toUpperCase().slice(0,4)||null})}/><//>`]:null}
       <${Field} label="Remodel status" id="e-st"><${Sel} id="e-st" value=${o.status||'new'} onChange=${v=>up({status:v})} options=${[['existing','Existing'],['new','New'],['demolish','Remove']]}/><//>
       <div className="stat"><span>Room</span><span>${roomOf(o)}</span></div>
       ${o.auto?html`<p className="note">Placed by Auto-place. Running Auto-place again replaces it; change anything here to keep it as your own.</p>`:null}</div>

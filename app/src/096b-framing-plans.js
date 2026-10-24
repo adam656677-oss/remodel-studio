@@ -54,26 +54,28 @@ function trusses3D(p,r,b,add,std){const lay=trussLayout(p,r);const mT=std('fr-tr
 // ---------- floor joists ----------
 const IJOISTS={'9.5':{d:9.5,span:{12:208,16:193,19.2:181,24:162}},'11.875':{d:11.875,span:{12:248,16:229,19.2:215,24:193}},'14':{d:14,span:{12:281,16:259,19.2:243,24:218}},'16':{d:16,span:{12:311,16:287,19.2:269,24:241}}};
 const FTRUSS={12:{d:12,span:216},14:{d:14,span:240},16:{d:16,span:264},18:{d:18,span:288},20:{d:20,span:312},24:{d:24,span:360}};
-function joistOpt(lv){const fr=framingOf(lv);return {type:fr.jtype||'lumber',ij:fr.ijoist||'11.875',ft:+(fr.ftruss||16),...fr};}
+function joistOpt(lv){const fr=framingOf(lv);return {type:fr.jtype||'lumber',ij:fr.ijoist||'11.875',ft:+(fr.ftruss||16),...fr,ceilSize:fr.ceiling,ceiling:false};}
 function joistDepth(J){return J.type==='ijoist'?IJOISTS[J.ij].d:J.type==='truss'?FTRUSS[J.ft].d:(LUMBER[J.joist]||9.25);}
-function joistLabel(J){return J.type==='ijoist'?`${J.ij}" I-joists`:J.type==='truss'?`${J.ft}" open-web floor trusses`:`${J.joist} joists`;}
+function joistLabel(J){if(J.ceiling)return `${J.joist} ceiling joists`;return J.type==='ijoist'?`${J.ij}" I-joists`:J.type==='truss'?`${J.ft}" open-web floor trusses`:`${J.joist} joists`;}
 // span limit for one joist (inches), 40 psf live (30 at bedrooms) + 10 dead plus finish
 function joistAllow(p,J,use='living',finish=null){const sp=J.spacing||16;if(J.type==='ijoist'){const t=IJOISTS[J.ij].span;return t[sp]||t[16];}if(J.type==='truss'){const s=FTRUSS[J.ft].span;return s*(sp<=16?1.1:sp<=19.2?1.05:1);}
   const ll=use==='bedroom'?30:40,dl=10+(FLOOR_FINISH[finish]?.dl||0);const s=sp/12;const m=memberProps({species:J.species,size:J.joist},J.joist);let lo=24,hi=480;for(let i=0;i<30;i++){const mid=(lo+hi)/2;if(checkMember(m,mid,(ll+dl)*s,ll*s,{Cr:1.15,liveLim:360,totLim:240}).ratio<=1)lo=mid;else hi=mid;}return Math.floor(lo);}
-function joistLayout(p,lv){const J=joistOpt(lv);const first=groundLevel(p).id===lv.id;if(first&&J.foundation==='slab')return null;const ol=buildingOutline(p,lv.id);if(!ol)return null;const pts=ol.pts;
+function ceilOpt(lv){const fr=framingOf(lv);return {...fr,type:'lumber',joist:fr.ceiling||'2x6',spacing:fr.ceilingSpacing||16,dir:fr.ceilDir||fr.dir,ceiling:true};}
+function ceilAllow(J){const ll=J.atticStorage?20:10,dl=J.atticStorage?10:5;const s=(J.spacing||16)/12;const m=memberProps({species:J.species,size:J.joist},J.joist);let lo=24,hi=480;for(let i=0;i<30;i++){const mid=(lo+hi)/2;if(checkMember(m,mid,(ll+dl)*s,ll*s,{Cr:1.15,liveLim:240,totLim:240}).ratio<=1)lo=mid;else hi=mid;}return Math.floor(lo);}
+function joistLayout(p,lv,mode='floor'){const ceil=mode==='ceiling';const J=ceil?ceilOpt(lv):joistOpt(lv);const first=groundLevel(p).id===lv.id;if(!ceil&&first&&J.foundation==='slab')return null;const ol=buildingOutline(p,lv.id);if(!ol)return null;const pts=ol.pts;
   const xs=pts.map(q=>q.x),ys=pts.map(q=>q.y);const bx=[Math.min(...xs),Math.max(...xs)],by=[Math.min(...ys),Math.max(...ys)];
   const alongX=J.dir==='x'?true:J.dir==='y'?false:(bx[1]-bx[0])<(by[1]-by[0]);// joists run the short way
   const inner=offsetPoly(pts,-1.5);const sp=J.spacing||16;const depth=joistDepth(J);const out={J,alongX,depth,members:[],openings:[],warn:[],level:lv.id};
   // supports: bearing walls on the level below (or this level's outside walls) and girders for crawlspace and basement floors
-  const below=sortedLevels(p).filter(l=>l.elevation<lv.elevation).pop();const walls=floorSupports(p,lv);
+  const below=sortedLevels(p).filter(l=>l.elevation<lv.elevation).pop();const walls=ceil?p.walls.filter(w=>w.level===lv.id&&(w.status!=='demolish'?(w.bearing||w.kind==='exterior'):w.bearing)):floorSupports(p,lv);
   const sup=[];for(const w of walls){const d=wdir(w);const perp=alongX?Math.abs(d.y)>0.9:Math.abs(d.x)>0.9;if(!perp)continue;sup.push({c:alongX?(w.x1+w.x2)/2:(w.y1+w.y2)/2,a:alongX?Math.min(w.y1,w.y2):Math.min(w.x1,w.x2),b:alongX?Math.max(w.y1,w.y2):Math.max(w.x1,w.x2),kind:'wall'});}
   const lo=alongX?bx[0]:by[0],hi=alongX?bx[1]:by[1],clo=alongX?by[0]:bx[0],chi=alongX?by[1]:bx[1];
-  if(first&&J.foundation!=='slab'&&(J.girders||0)>0){const n=Math.ceil((hi-lo)/J.girders);for(let i=1;i<n;i++){const c=lo+(hi-lo)*i/n;if(sup.some(s=>Math.abs(s.c-c)<24&&s.a<=clo+12&&s.b>=chi-12))continue;sup.push({c,a:clo,b:chi,kind:'girder'});
+  if(!ceil&&first&&J.foundation!=='slab'&&(J.girders||0)>0){const n=Math.ceil((hi-lo)/J.girders);for(let i=1;i<n;i++){const c=lo+(hi-lo)*i/n;if(sup.some(s=>Math.abs(s.c-c)<24&&s.a<=clo+12&&s.b>=chi-12))continue;sup.push({c,a:clo,b:chi,kind:'girder'});
     const g=alongX?[{x:c,y:clo},{x:c,y:chi}]:[{x:clo,y:c},{x:chi,y:c}];for(const [a,b] of clipSegPoly(g[0],g[1],inner))out.members.push({kind:'girder',a,b,label:'GIRDER'});}}
   // stair openings in this floor
-  for(const s of p.stairs){const sl=lvlOf(p,s.level);const up=sl&&levelAbove(p,sl);if(!up||up.id!==lv.id)continue;const si=stairInfo(p,s);const cx=si.corners.map(c=>c.x),cy=si.corners.map(c=>c.y);
+  if(!ceil)for(const s of p.stairs){const sl=lvlOf(p,s.level);const up=sl&&levelAbove(p,sl);if(!up||up.id!==lv.id)continue;const si=stairInfo(p,s);const cx=si.corners.map(c=>c.x),cy=si.corners.map(c=>c.y);
     out.openings.push({x0:Math.min(...cx),y0:Math.min(...cy),x1:Math.max(...cx),y1:Math.max(...cy),what:'Stair'});}
-  for(const ch of (p.chimneys||[])){const cl=lvlOf(p,ch.level);if(!cl||cl.elevation>=lv.elevation||ch.status==='demolish')continue;let body=null;try{body=chimneyPolys(ch).body;}catch(e){}if(!body||!body.length)continue;const bxs=body.map(q=>q.x??q[0]),bys=body.map(q=>q.y??q[1]);out.openings.push({x0:Math.min(...bxs)-2,y0:Math.min(...bys)-2,x1:Math.max(...bxs)+2,y1:Math.max(...bys)+2,what:'Chimney (2" clearance)'});}
+  for(const ch of (p.chimneys||[])){const cl=lvlOf(p,ch.level);if(!cl||(ceil?cl.elevation>lv.elevation:cl.elevation>=lv.elevation)||ch.status==='demolish')continue;let body=null;try{body=chimneyPolys(ch).body;}catch(e){}if(!body||!body.length)continue;const bxs=body.map(q=>q.x??q[0]),bys=body.map(q=>q.y??q[1]);out.openings.push({x0:Math.min(...bxs)-2,y0:Math.min(...bys)-2,x1:Math.max(...bxs)+2,y1:Math.max(...bys)+2,what:'Chimney (2" clearance)'});}
   // joist lines across the cross axis, clipped to the rim, split at supports and openings
   const lines=[];for(let t=clo+0.75+sp;t<chi-0.75;t+=sp)lines.push(t);
   const spans=[];
@@ -97,7 +99,7 @@ function joistLayout(p,lv){const J=joistOpt(lv);const first=groundLevel(p).id===
   for(let i=0;i<inner.length;i++){const a=inner[i],b=inner[(i+1)%inner.length];out.members.push({kind:'rim',a,b,len:dist(a,b)});}
   // spans against the allowable span
   const roomAt=q=>p.rooms.find(r=>r.level===lv.id&&inPoly(q.x,q.y,r.pts));
-  for(const m of out.members){if(m.kind!=='joist'&&m.kind!=='tail')continue;const mid={x:(m.a.x+m.b.x)/2,y:(m.a.y+m.b.y)/2};const rm=roomAt(mid);const al=joistAllow(p,J,rm?.use,rm?.finish);m.allow=al;m.ok=m.len<=al+0.5;}
+  for(const m of out.members){if(m.kind!=='joist'&&m.kind!=='tail')continue;const mid={x:(m.a.x+m.b.x)/2,y:(m.a.y+m.b.y)/2};const rm=roomAt(mid);const al=ceil?ceilAllow(J):joistAllow(p,J,rm?.use,rm?.finish);m.allow=al;m.ok=m.len<=al+0.5;}
   const bad=out.members.filter(m=>m.ok===false);if(bad.length)out.warn.push(`${bad.length} joist span${bad.length===1?'':'s'} longer than ${joistLabel(J)} at ${sp}" o.c. allow (longest ${fmtLen(Math.max(...bad.map(m=>m.len)))}). Add a beam or bearing wall below, use deeper joists, or close the spacing.`);
   out.sup=sup;out.inner=inner;out.lo=lo;out.hi=hi;return out;}
 // what to order for the floor framing
@@ -105,12 +107,20 @@ function joistSchedule(L){const J=L.J;const rows=[];const len=m=>m.len??dist(m.a
   const byLen={};for(const m of L.members.filter(m=>m.kind==='joist'||m.kind==='tail'))byLen[buy(len(m))]=(byLen[buy(len(m))]||0)+1;
   const name=joistLabel(J).replace(/s$/,'');for(const [ft,n] of Object.entries(byLen).sort((a,b)=>a[0]-b[0]))rows.push({item:`${name} ${ft}'`,qty:n,unit:'EA'});
   const tr=L.members.filter(m=>m.kind==='trimmer'||m.kind==='header');for(const m of tr)rows.push({item:`${m.kind==='trimmer'?'Trimmer':'Header'} (${m.ply>1?'doubled ':''}${J.type==='lumber'?J.joist:'rim board'}) ${buy(len(m))}'`,qty:m.ply||1,unit:'EA'});
-  const rimLF=L.members.filter(m=>m.kind==='rim').reduce((s,m)=>s+len(m),0)/12;rows.push({item:J.type==='lumber'?`Rim joist ${J.joist}`:`Rim board ${fi(joistDepth(J))}" LSL`,qty:Math.ceil(rimLF*1.05),unit:'LF'});
+  const rimLF=L.members.filter(m=>m.kind==='rim').reduce((s,m)=>s+len(m),0)/12;if(!J.ceiling)rows.push({item:J.type==='lumber'?`Rim joist ${J.joist}`:`Rim board ${fi(joistDepth(J))}" LSL`,qty:Math.ceil(rimLF*1.05),unit:'LF'});
   const hangers=L.members.filter(m=>m.kind==='tail').length+tr.filter(m=>m.kind==='header').length*2;if(hangers)rows.push({item:J.type==='ijoist'?'I-joist hangers':'Joist hangers',qty:hangers,unit:'EA'});
   const gir=L.members.filter(m=>m.kind==='girder');if(gir.length)rows.push({item:'Girder, (3) 2x10 built-up or LVL per plan',qty:Math.ceil(gir.reduce((s,m)=>s+len(m),0)/12),unit:'LF'});
   const blk=L.sup.filter(s=>s.kind==='girder'||s.kind==='wall').length;const nJ=L.members.filter(m=>m.kind==='joist').length;if(blk)rows.push({item:`Blocking at bearing lines (${J.type==='lumber'?J.joist:'I-joist blocking'})`,qty:Math.ceil(nJ/Math.max(1,blk+1))*blk,unit:'EA'});
-  const area=Math.abs(polyArea(L.inner.map(q=>[q.x,q.y])))/144;rows.push({item:'Subfloor 23/32" T&G, 4x8',qty:Math.ceil(area/32*1.08),unit:'SHT'},{item:'Subfloor adhesive, 28 oz',qty:Math.ceil(area/60),unit:'TUBE'});
+  const area=Math.abs(polyArea(L.inner.map(q=>[q.x,q.y])))/144;if(J.ceiling){rows.push({item:'Drywall 1/2" ceiling board, 4x12',qty:Math.ceil(area/48*1.1),unit:'SHT'});return rows;}rows.push({item:'Subfloor 23/32" T&G, 4x8',qty:Math.ceil(area/32*1.08),unit:'SHT'},{item:'Subfloor adhesive, 28 oz',qty:Math.ceil(area/60),unit:'TUBE'});
   return rows;}
+function rafterSchedule(p,r){const rf=rafterOf(r);const b=roofBuild(r,roofTop(p,r));const k=Math.sqrt(1+Math.pow(r.pitch/12,2));const rows=[];const byLen={};
+  for(const l of rafterLines(r,b)){const L=dist(l.a,l.b)*k;if(L<6)continue;const ft=Math.max(8,Math.ceil(L/24)*2);byLen[ft]=(byLen[ft]||0)+1;}
+  for(const [ft,n] of Object.entries(byLen).sort((a,b)=>a[0]-b[0]))rows.push({item:`${rf.rafter} rafter ${ft}'`,qty:n,unit:'EA'});
+  const up={'2x4':'2x6','2x6':'2x8','2x8':'2x10','2x10':'2x12','2x12':'1-3/4" x 14" LVL'}[rf.rafter]||rf.rafter;let G={lines:[]};try{G=roofPlanGeo(p,r.level,[r]);}catch(e){}
+  const ridgeLF=(b.lines||[]).reduce((s,l)=>{const lh=Math.hypot(l[1][0]-l[0][0],l[1][1]-l[0][1]);const dz=Math.abs((l[1][2]||0)-(l[0][2]||0));return s+Math.hypot(lh,dz);},0)/12;
+  if(ridgeLF>0)rows.push({item:`Ridge, hip and valley boards ${up} (one size deeper than the rafters, R802.4.4)`,qty:Math.ceil(ridgeLF*1.1),unit:'LF'});
+  const axis=roofAxis(r);const Ul=axis==='x'?r.w:r.h;if(r.style!=='shed'&&r.style!=='flat')rows.push({item:'Collar ties 1x4 or 2x4 in the upper third, every 4\' (R802.4.6)',qty:Math.ceil(Ul/48)+1,unit:'EA'});
+  rows.push({item:'Hurricane ties (rafter to plate)',qty:Object.values(byLen).reduce((s,n)=>s+n,0),unit:'EA'});return rows;}
 function trussOrder(p){const rows=[];for(const r of p.roofs.filter(r=>r.status!=='existing'&&rafterOf(r).system==='trusses')){const L=trussLayout(p,r);for(const s of L.schedule)rows.push({...s,roof:r.id});}return rows;}
 // ---------- takeoff ----------
 regExtra({takeoff:(p,add)=>{const C='Framing (trusses and joists)';
@@ -138,7 +148,7 @@ function roofFramingSVG(p,lv,S,view){const out=[];const fs=Math.max(8,Math.min(1
     const seen={};L.items.forEach((it,i)=>{if(it.side)return;const k=it.mark;seen[k]=(seen[k]||0)+1;if(it.kind==='common'&&seen[k]%3!==2)return;if(it.jack&&seen[k]>1)return;const m=S((it.a.x+it.b.x)/2,(it.a.y+it.b.y)/2);
       out.push(html`<text key=${r.id+'m'+i} x=${m[0]} y=${m[1]} textAnchor="middle" className="fr-mark halo" style=${{fontSize:fs+'px'}}>${it.mark}${it.ply>1?' ('+it.ply+')':''}</text>`);});}
   return out;}
-function floorFramingSVG(p,lv,S,view){const L=joistLayout(p,lv);if(!L)return [html`<text key="nf" x="20" y="60" className="fr-t">This floor is a slab: no joists.</text>`];const out=[];
+function floorFramingSVG(p,lv,S,view,mode='floor'){const L=joistLayout(p,lv,mode);if(!L)return [html`<text key="nf" x="20" y="60" className="fr-t">This floor is a slab: no joists.</text>`];const out=[];
   L.members.forEach((m,i)=>{const A=S(m.a.x,m.a.y),B=S(m.b.x,m.b.y);out.push(html`<line key=${'j'+i} x1=${A[0]} y1=${A[1]} x2=${B[0]} y2=${B[1]} className=${'fr-j fr-'+m.kind+(m.ok===false?' fr-bad':'')}/>`);});
   for(const [i,o] of L.openings.entries()){const a=S(o.x0,o.y0),b=S(o.x1,o.y1);out.push(html`<g key=${'op'+i}><rect x=${Math.min(a[0],b[0])} y=${Math.min(a[1],b[1])} width=${Math.abs(b[0]-a[0])} height=${Math.abs(b[1]-a[1])} className="fr-open"/><line x1=${a[0]} y1=${a[1]} x2=${b[0]} y2=${b[1]} className="fr-open"/><line x1=${a[0]} y1=${b[1]} x2=${b[0]} y2=${a[1]} className="fr-open"/></g>`);}
   const xs=L.inner.map(q=>q.x),ys=L.inner.map(q=>q.y);const cs=[L.lo,...L.sup.map(q=>q.c).sort((x,y)=>x-y),L.hi];let bi=0;for(let i=1;i<cs.length;i++)if(cs[i]-cs[i-1]>cs[bi+1]-cs[bi])bi=i-1;const mid=(cs[bi]+cs[bi+1])/2,bay=cs[bi+1]-cs[bi];const cc=L.alongX?(Math.min(...ys)+Math.max(...ys))/2:(Math.min(...xs)+Math.max(...xs))/2;const c=L.alongX?{x:mid,y:cc}:{x:cc,y:mid};const len=Math.min(96,bay*0.38);
@@ -162,6 +172,16 @@ function framingSheets(p){const out=[];const P=PAPERS[p.sheet?.paper]||PAPERS.ta
         for(const s of L.schedule)rows.push(`${s.mark.padEnd(5)} ${String(s.qty).padStart(3)}  ${(TRUSS_KIND_LABEL[s.kind]||s.kind).split(' (')[0].padEnd(14)} ${fmtLen(s.span).padEnd(9)} ${s.pitch}  heel ${fi(s.heel)}"${s.ply>1?'  '+s.ply+'-ply':''}`);}
       let y=table(dl,A,'TRUSS SCHEDULE',['MARK','QTY','TYPE','SPAN','PITCH'],rows,k);
       for(const t of ['Trusses designed by the truss manufacturer to IRC R802.10 and','ANSI/TPI 1; submit drawings before fabrication.','Fasten each truss to the plate per R802.11 (uplift).','Install permanent bracing per the truss drawings and BCSI.','Girders (G1) are multi-ply; hang jacks with hangers.'])dl.text(A.x1-3.4*k,(y+=0.15*k),t,{size:4.4*k,color:MID});},3.5*k));}
+  const rr=p.roofs.filter(r=>rafterOf(r).system!=='trusses'&&r.style!=='flat');
+  if(rr.length){const lvId=rr[0].level;let B=planBounds(pp,lvId);for(const r of rr){const oh=r.overhang??12;B={x0:Math.min(B.x0,r.x-oh),y0:Math.min(B.y0,r.y-oh),x1:Math.max(B.x1,r.x+r.w+oh),y1:Math.max(B.y1,r.y+r.h+oh)};}
+    out.push(planSheet(P,p,'S3.1','Roof rafter framing',B,R,(dl,G)=>{const {PT,A}=G;wallsDL(dl,PT,lvId);const rows=[];
+      for(const r of rr){const b=roofBuild(r,roofTop(p,r));dl.poly(b.outline.map(q=>PT(q[0],q[1])),{stroke:INK,w:0.6,dash:[0.08*k,0.04*k]});for(const l of rafterLines(r,b))lineDL(dl,PT,l.a,l.b,0.35);for(const l of (b.lines||[]))lineDL(dl,PT,{x:l[0][0],y:l[0][1]},{x:l[1][0],y:l[1][1]},1.4);
+        const rf=rafterOf(r);const c=PT(r.x+r.w/2,r.y+r.h/2);dl.text(c[0],c[1],`${rf.rafter.toUpperCase()} RAFTERS @ ${rf.spacing}" O.C. · ${r.pitch}/12`,{size:6*k,bold:true,anchor:'middle'});for(const x of rafterSchedule(p,r))rows.push(`${String(x.qty).padStart(4)} ${x.unit.padEnd(4)} ${x.item}`);}
+      let y=table(dl,A,'RAFTER FRAMING SCHEDULE',['QTY','UNIT','ITEM'],rows,k);for(const t of ['Rafters bear on the top plate with a birdsmouth no deeper than 1/4 of the rafter.','Ceiling joists or rafter ties at the plate resist thrust (R802.4.5).','Ridge board at least as deep as the rafter cut end (R802.4.4).'])dl.text(A.x1-3.4*k,(y+=0.15*k),t.slice(0,80),{size:4.4*k,color:MID});},3.5*k));
+    const top=lvlOf(p,lvId);const L=top&&joistLayout(p,top,'ceiling');if(L&&L.members.some(m=>m.kind==='joist'))out.push(planSheet(P,p,'S2.9',`${top.name} ceiling joists`,planBounds(pp,top.id),R,(dl,G)=>{const {PT,A}=G;wallsDL(dl,PT,top.id);
+      for(const m of L.members){const w={rim:0.8,joist:0.35,tail:0.35}[m.kind]||0.6;lineDL(dl,PT,m.a,m.b,w,m.ok===false?{color:'#c23a32'}:{});}
+      const xs=L.inner.map(q=>q.x),ys=L.inner.map(q=>q.y);const c=PT((Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2);dl.text(c[0],c[1],`${joistLabel(L.J).toUpperCase()} @ ${L.J.spacing}" O.C.`,{size:6.5*k,bold:true,anchor:'middle'});
+      let y=table(dl,A,'CEILING JOIST SCHEDULE',['QTY','UNIT','ITEM'],joistSchedule(L).map(r=>`${String(r.qty).padStart(4)} ${r.unit.padEnd(5)} ${r.item}`),k);for(const t of [...L.warn.slice(0,2),'Attic without storage: 10 psf live, L/240 (R802.5).','Ceiling joists lap 3" over bearing and nail to rafters (R802.3.2).'])dl.text(A.x1-3.4*k,(y+=0.15*k),t.slice(0,80),{size:4.4*k,color:MID});},3.5*k));}
   // floor framing per level
   for(const lv of sortedLevels(p)){const L=joistLayout(p,lv);if(!L||!L.members.some(m=>m.kind==='joist'))continue;const B=planBounds(pp,lv.id);const no='S2.'+(sortedLevels(p).indexOf(lv)+1);
     out.push(planSheet(P,p,no,`${lv.name} joist layout`,B,R,(dl,G)=>{const {PT,A}=G;const below=sortedLevels(p).filter(l=>l.elevation<lv.elevation).pop();wallsDL(dl,PT,below?below.id:lv.id);

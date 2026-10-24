@@ -69,7 +69,7 @@ function App(){
   useEffect(()=>{if(!sel)return;if(sel.kind==='multi'){const items=sel.items.filter(i=>findObj(project,i));if(items.length!==sel.items.length)setSel(items.length>1?{kind:'multi',items}:items[0]||null);}else if(!findObj(project,sel))setSel(null);},[project]);
 
   const selShow=s=>{setSel(s);if(s)setCollapsed(false);};
-  window.__app={setTool,commit,get:()=>projRef.current,setSel,setMode,setLevelId};
+  window.__app={setTool,commit,get:()=>projRef.current,setSel,setMode,setLevelId,load:q=>{load(q);fileHandle.current=null;deskPath.current=null;setSavedProj(null);},save:()=>doSave(),dirty:()=>dirty};
   const shown=preview||project;
   const issues=useMemo(()=>runChecks(project),[project]);
   const site=siteOf(project); const sunInfo=useMemo(()=>{if(!sun.on)return {on:false};const s=sunFor(site,sun.date,sun.min);return {on:true,alt:s.alt,az:s.az,bearing:site.bearing};},[sun.on,sun.date,sun.min,site.lat,site.lon,site.tz,site.dst,site.bearing]);
@@ -125,13 +125,13 @@ function App(){
       <${MenuButton} id="menu-file" label="File" items=${[
         {label:'New…',key:'Ctrl+N',run:()=>setDlg('new')},{label:'Open…',key:'Ctrl+O',run:doOpen},
         ...(DESK&&recentFiles.length?['-',...recentFiles.slice(0,8).map(r=>({label:'↻ '+r.name,run:()=>DESK.readPath(r.path).then(deskOpen)}))]:[]),'-',
-        {label:'Save',key:'Ctrl+S',run:()=>doSave()},{label:'Save as…',key:'Ctrl+Shift+S',run:()=>setDlg('saveas')},...(DESK?[{label:'Show file in folder',run:()=>deskPath.current&&DESK.showInFolder(deskPath.current),disabled:!deskPath.current}]:[{label:'Download a copy (.json)',run:download}]),{label:'Copy or paste project text…',run:()=>setModal(true)},{label:'Versions…',run:()=>setDlg('versions')},'-',
+        {label:'Save',key:'Ctrl+S',run:()=>doSave()},{label:'Save as…',key:'Ctrl+Shift+S',run:()=>setDlg('saveas')},{label:'Backups…',run:()=>setDlg('backups')},...(DESK?[{label:'Show file in folder',run:()=>deskPath.current&&DESK.showInFolder(deskPath.current),disabled:!deskPath.current}]:[{label:'Download a copy (.json)',run:download}]),{label:'Copy or paste project text…',run:()=>setModal(true)},{label:'Versions…',run:()=>setDlg('versions')},'-',
         {label:'Import DWG or DXF drawing…',run:()=>setDlg('dxf')},{label:'Import 3D model (OBJ, GLB, DAE, STL)…',run:()=>setDlg('obj')},{label:'Import vendor catalog…',run:()=>setDlg('vendors')},{label:'Add photos…',run:()=>setMode('capture')},{label:'Print plans (PDF) and DXF…',run:()=>setMode('sheets')},{label:'Materials list (CSV)…',run:()=>setMode('materials')},{label:'Render (photoreal)…',run:()=>setRenderOpen(true)},{label:'AR view and 3D export…',run:()=>setExportOpen(true)}]}/>
       <${MenuButton} id="menu-edit" label="Edit" items=${[
         {label:'Undo',key:'Ctrl+Z',run:doUndo,disabled:!undo.current.length},{label:'Redo',key:'Ctrl+Y',run:doRedo,disabled:!redo.current.length},'-',
         {label:'Cut',key:'Ctrl+X',run:doCut,disabled:!sel},{label:'Copy',key:'Ctrl+C',run:doCopy,disabled:!sel},{label:'Paste',key:'Ctrl+V',run:doPaste,disabled:!clip.current},
         {label:'Duplicate',key:'Ctrl+D',run:doDup,disabled:!sel},{label:'Rotate 90° or flip',key:'E',run:doRotate,disabled:!sel},{label:'Delete',key:'Del',run:onDelete,disabled:!sel},'-',
-        {label:'Select nothing',key:'Esc',run:()=>setSel(null),disabled:!sel},'-',{label:'Save selection as block…',run:()=>setDlg('blocks'),disabled:!sel},{label:'Blocks…',run:()=>setDlg('blocks')},'-',{label:'Rename project…',run:()=>setDlg('rename')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')}]}/>
+        {label:'Select nothing',key:'Esc',run:()=>setSel(null),disabled:!sel},'-',{label:'Save selection as block…',run:()=>setDlg('blocks'),disabled:!sel},{label:'Blocks…',run:()=>setDlg('blocks')},'-',{label:'Rename project…',run:()=>setDlg('rename')},{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')}]}/>
       </div>
       <div className="projname" title=${project.name+(dirty?' (not saved)':'')}>${project.name}${dirty?html`<span className="dirty" aria-label="not saved"> •</span>`:null}</div>
       <div className="spacer"></div>
@@ -163,6 +163,7 @@ function App(){
     ${dlg==='obj'?html`<${OBJImportModal} p=${project} levelId=${lv.id} commit=${commit} setSel=${setSel} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='dxf'?html`<${DXFImportModal} p=${project} levelId=${lv.id} commit=${commit} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='rename'?html`<${RenameModal} p=${project} onDone=${n=>{commit({...project,name:n});setDlg(null);}} onClose=${()=>setDlg(null)}/>`:null}
+    ${APP_OVERLAYS.map((C,i)=>html`<${C} key=${'ov'+i} p=${project} commit=${commit} setMode=${setMode} setDlg=${setDlg} sel=${sel} levelId=${lv.id}/>`)}
     ${toast?html`<div className=${'toast'+(toast.ok?'':' err')} role="status">${toast.t}</div>`:null}
     ${exportOpen?html`<${ExportModal} p=${project} sun=${sun} onClose=${()=>setExportOpen(false)} onRender=${()=>setRenderOpen(true)}/>`:null}${renderOpen?html`<${RenderStudio} p=${project} sun=${sun} onClose=${()=>setRenderOpen(false)}/>`:null}
   </div>`;
