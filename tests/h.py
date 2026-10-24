@@ -12,7 +12,7 @@ def page_html():
     src = pathlib.Path('/home/claude/remodel-studio/index.html').read_text()
     return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>' + src + '</body></html>'
 @contextlib.contextmanager
-def app(w=1400,h=900,scheme='light',project=None):
+def app(w=1400,h=900,scheme='light',project=None,mode='split'):
     html=page_html()
     with sync_playwright() as p:
         b = p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
@@ -27,6 +27,7 @@ def app(w=1400,h=900,scheme='light',project=None):
             if u.startswith('http://app.local'): return r.fulfill(body=html, content_type='text/html')
             return r.continue_()
         pg.route('**/*', route)
+        if mode: pg.add_init_script("try{if(!sessionStorage.getItem('rs-t-mode')){localStorage.setItem('remodel-studio:mode',%s);sessionStorage.setItem('rs-t-mode','1');}}catch(e){}"%json.dumps(mode))
         if project is not None:
             pg.add_init_script("localStorage.setItem('remodel-studio:project', %s)"%json.dumps(json.dumps(project)))
         pg.goto('http://app.local/'); pg.wait_for_timeout(1200)

@@ -2,6 +2,7 @@ exec(open('test.py').read().split("with sync_playwright() as p:")[0])
 with sync_playwright() as p:
     b = p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
     pg = b.new_page(viewport={'width':1400,'height':860})
+    pg.add_init_script("try{if(!sessionStorage.getItem('rs-t-mode')){localStorage.setItem('remodel-studio:mode','split');sessionStorage.setItem('rs-t-mode','1')}}catch(e){}")
     errs=[]; pg.on('pageerror', lambda e: errs.append(str(e)))
     def route(r):
         u=r.request.url

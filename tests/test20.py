@@ -4,6 +4,7 @@ MAP['fflate@0.7.4/umd/index.js']=D/'fflate/umd/index.js'
 with sync_playwright() as p:
     b = p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader'])
     pg = b.new_context(viewport={'width':1400,'height':900},accept_downloads=True).new_page()
+    pg.add_init_script("try{if(!sessionStorage.getItem('rs-t-mode')){localStorage.setItem('remodel-studio:mode','split');sessionStorage.setItem('rs-t-mode','1')}}catch(e){}")
     def route(r):
         u=r.request.url
         for k,f in MAP.items():

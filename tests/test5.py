@@ -4,6 +4,7 @@ w=int(_a[1]) if len(_a)>1 else 1400; h=int(_a[2]) if len(_a)>2 else 860
 with sync_playwright() as p:
     b = p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader'])
     pg = b.new_page(viewport={'width':w,'height':h})
+    pg.add_init_script("try{if(!sessionStorage.getItem('rs-t-mode')){localStorage.setItem('remodel-studio:mode','split');sessionStorage.setItem('rs-t-mode','1')}}catch(e){}")
     errs=[]; pg.on('pageerror', lambda e: errs.append(str(e))); pg.on('console', lambda m: errs.append(m.text) if m.type=='error' and 'ERR_FAILED' not in m.text else None)
     def route(r):
         u=r.request.url

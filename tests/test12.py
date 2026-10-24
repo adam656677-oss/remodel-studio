@@ -3,6 +3,7 @@ with sync_playwright() as p:
     b = p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader'])
     for (w,h,name) in [(390,844,'phone'),(1280,800,'laptop')]:
         pg = b.new_page(viewport={'width':w,'height':h}); errs=[]
+        pg.add_init_script("try{if(!sessionStorage.getItem('rs-t-mode')){localStorage.setItem('remodel-studio:mode','split');sessionStorage.setItem('rs-t-mode','1')}}catch(e){}")
         pg.on('pageerror', lambda e: errs.append(str(e)))
         def route(r):
             u=r.request.url

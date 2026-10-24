@@ -17,7 +17,7 @@ function PlanView(props){
   const [meas,setMeas]=useState([]);
   const [hover,setHover]=useState(null);
   const [shift,setShift]=useState(false); const [box,setBox]=useState(null); const [xpts,setXpts]=useState([]);
-  const XT=XTOOLS[tool]||null; const SH=showOf(p0); const [disp,setDisp]=useState(false); const [cmd,setCmd]=useState(''); const [cmdLog,setCmdLog]=useState(''); const cmdRef=useRef(null);
+  const XT=XTOOLS[tool]||null; const SH={...showOf(p0),...(props.filter||{})}; const [disp,setDisp]=useState(false); const [cmd,setCmd]=useState(''); const [cmdLog,setCmdLog]=useState(''); const cmdRef=useRef(null);
   const drag=useRef(null), ptrs=useRef(new Map()), pinch=useRef(null);
   const lv=lvlOf(p,levelId)||p.levels[0];
   const walls=p.walls.filter(w=>w.level===lv.id);
@@ -25,7 +25,7 @@ function PlanView(props){
   const ghost=below?p.walls.filter(w=>w.level===below.id):[];
   const joins=useMemo(()=>wallJoins(walls),[p.walls,lv.id]);
 
-  useLayoutEffect(()=>{const el=svgRef.current;const ro=new ResizeObserver(()=>{const r=el.getBoundingClientRect();setSize({w:r.width,h:r.height});});ro.observe(el);return ()=>ro.disconnect();},[]);
+  useLayoutEffect(()=>{const el=svgRef.current;let last=null;const ro=new ResizeObserver(()=>{const r=el.getBoundingClientRect();if(last&&r.width>0&&r.height>0&&(Math.abs(r.width-last.w)>2||Math.abs(r.height-last.h)>2)){const dx=(r.width-last.w)/2,dy=(r.height-last.h)/2;setView(v=>({...v,tx:v.tx+dx,ty:v.ty+dy}));}if(r.width>0)last={w:r.width,h:r.height};setSize({w:r.width,h:r.height});});ro.observe(el);return ()=>ro.disconnect();},[]);
   function fit(){
     let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const add=(x,y)=>{x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);};
     for(const w of walls){add(w.x1,w.y1);add(w.x2,w.y2);} for(const r of p.rooms.filter(r=>r.level===lv.id)) for(const q of r.pts) add(q[0],q[1]);
@@ -41,7 +41,7 @@ function PlanView(props){
 
   const S=(x,y)=>[x*view.s+view.tx,y*view.s+view.ty];
   const selHas=id=>!!sel&&(sel.id===id||(sel.kind==='multi'&&sel.items.some(i=>i.id===id)));
-  window.__planView={view,svg:svgRef};
+  if(props.active!==false)window.__planView={view,svg:svgRef,fit:()=>fit()};
   const toWorld=e=>{const r=svgRef.current.getBoundingClientRect();const v=vr.current;return {x:(e.clientX-r.left-v.tx)/v.s,y:(e.clientY-r.top-v.ty)/v.s};};
 
   function snap(raw,{anchor=null,useOrtho=false,skip=null}={}){
@@ -161,7 +161,7 @@ function PlanView(props){
 
   /* ---- keyboard ---- */
   useEffect(()=>{
-    const kd=e=>{
+    const kd=e=>{if(props.active===false)return;
       if(e.key==='Shift')setShift(true);
       const t=document.activeElement; const inField=t&&/INPUT|TEXTAREA|SELECT/.test(t.tagName);
       // Esc ends the wall or room run even when a toolbar control still has focus
@@ -326,10 +326,10 @@ function PlanView(props){
   const ghostEls=[...ghost.map(w=>html`<polygon key=${'gh'+w.id} points=${poly(wallPoly(w))} className="w-ghost"/>`),...compareWalls.filter(w=>w.level===lv.id).map(w=>html`<polygon key=${'cmp'+w.id} points=${poly(wallPoly(w))} className="w-compare"/>`)];
   // stairs
   const cnum=useMemo(()=>cabNumbers(p),[p.fixtures,p.rooms]);const ctrGeo=useMemo(()=>counterGeo(p,lv.id),[p.fixtures,p.walls,p.settings,lv.id]);
-  const fixEls=[...(p.fixtures||[]).filter(f=>f.level===lv.id).map(f=>html`<g key=${f.id} data-id=${f.id}>${fxPlanSymbol(f,S,'fx'+(selHas(f.id)?' fx-sel':'')+(f.status==='demolish'?' fx-demo':'')+(f.type==='filler'?' fx-filler':''))}${cnum[f.id]&&view.s>0.9&&SH.cabnums?(()=>{const [x,y]=S(f.x,f.y);return html`<g className="cabnum"><circle cx=${x} cy=${y} r="7"/><text x=${x} y=${y+3.5} textAnchor="middle">${cnum[f.id]}</text></g>`;})():null}</g>`),
-    ...ctrGeo.map((c,i)=>html`<g key=${'ctr'+i}><polygon points=${c.pts.map(q=>S(q.x,q.y).join(',')).join(' ')} className="ctr"/>${c.holes.map((h,j)=>html`<polygon key=${j} points=${h.map(q=>S(q.x,q.y).join(',')).join(' ')} className="ctr-sink"/>`)}</g>`)];
+  const fixEls=[...(p.fixtures||[]).filter(f=>f.level===lv.id&&(!SH.fxOnly||SH.fxOnly(f))).map(f=>html`<g key=${f.id} data-id=${f.id}>${fxPlanSymbol(f,S,'fx'+(selHas(f.id)?' fx-sel':'')+(f.status==='demolish'?' fx-demo':'')+(f.type==='filler'?' fx-filler':''))}${cnum[f.id]&&view.s>0.9&&SH.cabnums?(()=>{const [x,y]=S(f.x,f.y);return html`<g className="cabnum"><circle cx=${x} cy=${y} r="7"/><text x=${x} y=${y+3.5} textAnchor="middle">${cnum[f.id]}</text></g>`;})():null}</g>`),
+    ...(SH.counters===false?[]:ctrGeo).map((c,i)=>html`<g key=${'ctr'+i}><polygon points=${c.pts.map(q=>S(q.x,q.y).join(',')).join(' ')} className="ctr"/>${c.holes.map((h,j)=>html`<polygon key=${j} points=${h.map(q=>S(q.x,q.y).join(',')).join(' ')} className="ctr-sink"/>`)}</g>`)];
   if(tool==='fixture'&&cursor){let g=newFixture(fixtureType,lv.id,cursor.x,cursor.y,0);if(!fxDef(fixtureType).free)g=snapFixtureToWall(p,lv.id,g,cursor,g.d/2+18);var fixGhost=html`<g className="fx-ghost">${fxPlanSymbol(g,S,'fx')}</g>`;}
-  const elecEls=(p.elec||[]).filter(d=>d.level===lv.id).map(d=>html`<g key=${d.id} className=${d.status==='demolish'?'el-demo':''}>${elecSVG(d,S,view.s,'el'+(selHas(d.id)?' el-sel':''))}</g>`);
+  const elecEls=(p.elec||[]).filter(d=>d.level===lv.id&&(!SH.elOnly||SH.elOnly(d))).map(d=>html`<g key=${d.id} className=${d.status==='demolish'?'el-demo':''}>${elecSVG(d,S,view.s,'el'+(selHas(d.id)?' el-sel':''))}</g>`);
   if(SH.legs!==false&&showElec)for(const s2 of (p.elec||[]).filter(d=>d.level===lv.id&&d.links&&d.links.length&&!(sel&&sel.id===d.id)))for(const id of s2.links){const t=(p.elec||[]).find(d=>d.id===id);if(!t)continue;const [ax,ay]=S(s2.x,s2.y),[bx,by]=S(t.x,t.y);elecEls.push(html`<path key=${'lka'+s2.id+id} d=${`M${ax},${ay} Q${(ax+bx)/2-(by-ay)*0.2},${(ay+by)/2+(bx-ax)*0.2} ${bx},${by}`} className="el-link el-link-faint"/>`);}
   {const sw=sel&&sel.kind==='elec'?(p.elec||[]).find(d=>d.id===sel.id):null;if(sw&&sw.links)for(const id of sw.links){const t=(p.elec||[]).find(d=>d.id===id);if(!t)continue;const [ax,ay]=S(sw.x,sw.y),[bx,by]=S(t.x,t.y);elecEls.push(html`<path key=${'lk'+id} d=${`M${ax},${ay} Q${(ax+bx)/2-(by-ay)*0.2},${(ay+by)/2+(bx-ax)*0.2} ${bx},${by}`} className="el-link"/>`);}}
   if(tool==='elec'&&cursor){let g=newElec(elecType,lv.id,cursor.x,cursor.y,0);if(ELEC[elecType].mount==='wall')g=snapElecToWall(p,lv.id,g,cursor);elecEls.push(html`<g key="ghost" className="el-ghost">${elecSVG(g,S,view.s,'el')}</g>`);}
@@ -427,7 +427,7 @@ function PlanView(props){
   return html`<div className="pane">
     <svg ref=${svgRef} tabIndex="0" className="plan" style=${{cursor:cur}} onPointerDown=${onDown} onPointerMove=${onMove} onPointerUp=${onUp} onPointerCancel=${onUp}
       onPointerLeave=${()=>setCursor(c=>tool==='select'?null:c)} onDoubleClick=${()=>{if(tool==='wall'||tool==='room'||tool==='shape'||(XT&&XT.mode==='chain'))finishChain();}} onContextMenu=${e=>e.preventDefault()}>
-      <g>${gl}</g><g>${roomEls}</g>${under&&under.u?html`<image href=${under.u.url} x=${S(under.u.x,under.u.y)[0]} y=${S(under.u.x,under.u.y)[1]} width=${under.u.w*under.u.scale*view.s} height=${under.u.h*under.u.scale*view.s} opacity=${under.u.opacity} preserveAspectRatio="none" transform=${under.u.rot?`rotate(${under.u.rot} ${S(under.u.x,under.u.y)[0]} ${S(under.u.x,under.u.y)[1]})`:undefined} style=${{pointerEvents:'none'}}/>`:null}${under&&under.slice?html`<image href=${under.slice.url} x=${S(under.slice.x,under.slice.y)[0]} y=${S(under.slice.x,under.slice.y)[1]} width=${under.slice.w*view.s} height=${under.slice.h*view.s} preserveAspectRatio="none" style=${{pointerEvents:'none'}}/>`:null}<g>${SH.ghost?ghostEls:null}</g><g>${stairEls}</g><g>${SH.fixtures?fixEls:null}</g><g>${regUnder}</g><g>${draftSVG({...p,elec:[],dims:SH.dims?(p.dims||[]).filter(d=>layerOn(p,d.layer||'L-DIM')):[],annos:SH.notes?(p.annos||[]).filter(n=>layerOn(p,n.layer||'L-TEXT')):[]},lv,S,view,sel)}</g>${showElec?html`<g>${elecEls}</g>`:null}<g>${wallEls}</g><g>${opEls}</g><g>${regOver}</g><g>${SH.roof?roofEls:null}</g><g>${SH.roomLabels?roomLabels:null}</g><g>${SH.wallDims?dimEls:null}</g><g>${SH.issues?markers:null}</g><g>${drafts}</g><g>${typeof fixGhost!=='undefined'?fixGhost:null}</g><g>${handles}</g>
+      <g>${gl}</g><g>${roomEls}</g>${under&&under.u?html`<image href=${under.u.url} x=${S(under.u.x,under.u.y)[0]} y=${S(under.u.x,under.u.y)[1]} width=${under.u.w*under.u.scale*view.s} height=${under.u.h*under.u.scale*view.s} opacity=${under.u.opacity} preserveAspectRatio="none" transform=${under.u.rot?`rotate(${under.u.rot} ${S(under.u.x,under.u.y)[0]} ${S(under.u.x,under.u.y)[1]})`:undefined} style=${{pointerEvents:'none'}}/>`:null}${under&&under.slice?html`<image href=${under.slice.url} x=${S(under.slice.x,under.slice.y)[0]} y=${S(under.slice.x,under.slice.y)[1]} width=${under.slice.w*view.s} height=${under.slice.h*view.s} preserveAspectRatio="none" style=${{pointerEvents:'none'}}/>`:null}<g>${SH.ghost?ghostEls:null}</g><g>${stairEls}</g><g>${SH.fixtures?fixEls:null}</g><g>${regUnder}</g><g>${draftSVG({...p,elec:[],dims:SH.dims?(p.dims||[]).filter(d=>layerOn(p,d.layer||'L-DIM')):[],annos:SH.notes?(p.annos||[]).filter(n=>layerOn(p,n.layer||'L-TEXT')):[]},lv,S,view,sel)}</g>${showElec&&SH.elec!==false?html`<g>${elecEls}</g>`:null}<g>${wallEls}</g><g>${opEls}</g><g>${regOver}</g><g>${SH.roof?roofEls:null}</g><g>${SH.overlay?SH.overlay(p,lv,S,view):null}</g><g>${SH.roomLabels?roomLabels:null}</g><g>${SH.wallDims?dimEls:null}</g><g>${SH.issues?markers:null}</g><g>${drafts}</g><g>${typeof fixGhost!=='undefined'?fixGhost:null}</g><g>${handles}</g>
     </svg>
     <div className="optbar"><span className="badgeplan">Plan · ${lv.name}</span>${props.optbar}</div>
     <div className="corner"><button className=${'btn'+(disp?' on':'')} onClick=${()=>setDisp(!disp)} title="What shows in the plan, object snaps and drafting layers">Display</button><button className="btn" onClick=${fit} title="Fit drawing (F)">Fit</button></div>
