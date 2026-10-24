@@ -4,6 +4,8 @@ import glob, os
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 head=open('src/head.html').read(); css=open('src/style.css').read(); markup=open('src/markup.html').read()
 js=''.join(open(f).read() for f in sorted(glob.glob('src/*.js')))
+import re as _re
+assert not _re.search(r'</script',js,_re.I), 'a source file contains </script, which ends the inline script early; write <\\/script>'
 eng=open('render-engine/rs-render-engine.js').read().replace('</script','<\\/script')
 page=head+'<style>'+css+'</style>'+markup+'<script type="text/plain" id="rs-render-engine">'+eng+'</script>'+"<script>\n"+js+"</script>\n"
 open('index.html','w').write(page)
@@ -23,6 +25,7 @@ if os.path.isdir(D):
   lazy={'https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.js':'fflate/umd/index.js','https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js':'jspdf/dist/jspdf.umd.min.js'}
   lazy['https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js']='pdfjs-dist/build/pdf.min.js'
   lazy['https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js']='xlsx/dist/xlsx.full.min.js'
+  for n in ['GLTFLoader','ColladaLoader','STLLoader']:lazy['https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/loaders/%s.js'%n]='three/examples/js/loaders/%s.js'%n
   for n in ['GLTFExporter','USDZExporter','STLExporter','OBJExporter']:lazy['https://cdn.jsdelivr.net/npm/three@0.147.0/examples/js/exporters/%s.js'%n]='three/examples/js/exporters/%s.js'%n
   esc=lambda t:t.replace('</script','<\\/script')
   off=std

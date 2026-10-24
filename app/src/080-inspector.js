@@ -1,7 +1,7 @@
 /* ======================= inspector ======================= */
 function IssueRow({i,onClick}){
   return html`<button className=${'issue sev-'+i.sev} onClick=${onClick} disabled=${!onClick}>
-    <span className=${'pill '+(i.sev==='error'?'bad':'warn')}>${i.sev==='error'?'Fails':'Check'}</span>
+    <span className=${'pill '+(i.sev==='error'?'bad':i.sev==='tip'?'tip':'warn')}>${i.sev==='error'?'Fails':i.sev==='tip'?'Tip':'Check'}</span>
     <span className="issue-t"><b>${i.title}</b><span>${i.detail}</span>${i.rule?html`<small>${i.rule.set} ${i.rule.code} · ${i.rule.title}</small>`:html`<small>Model check</small>`}</span></button>`;
 }
 function RuleRow({p,r,commit}){
@@ -27,7 +27,7 @@ function ChecksPanel({p,issues,goTo,commit,setPanel,members=[]}){
   return html`<div className="sec"><h3>Summary</h3>
       <div className="row"><span className=${'pill '+(nE?'bad':'ok')}>${nE} fail${nE===1?'s':''}</span><span className=${'pill '+(nW?'warn':'ok')}>${nW} to check</span></div>
       <p className="note">Checked against the ${p.settings?.code==='ibc'?'2021 IBC':'2021 IRC'}${p.settings?.code==='ibc'||p.settings?.ada!==false?' and the 2010 ADA Standards':''} as the building is drawn now. Tap an item to go to it. These are planning checks, not a plan review.</p>
-      <div className="seg" role="group" aria-label="Filter">${[['all','All'],['error','Fails'],['warn','To check']].map(([k,l])=>html`<button key=${k} className=${filter===k?'on':''} onClick=${()=>setFilter(k)}>${l}</button>`)}</div></div>
+      <div className="seg" role="group" aria-label="Filter">${[['all','All'],['error','Fails'],['warn','To check'],['tip','Tips']].map(([k,l])=>html`<button key=${k} className=${filter===k?'on':''} onClick=${()=>setFilter(k)}>${l}</button>`)}</div></div>
     ${groups.length?groups.map(G=>html`<div key=${G.g} className="sec"><h3>${G.g}</h3>${G.items.map(i=>html`<${IssueRow} key=${i.id} i=${i} onClick=${i.target||i.level?()=>goTo(i):null}/>`)}</div>`)
       :html`<div className="sec"><p className="note">${issues.length?'Nothing in this filter.':'No problems found. Keep drawing; checks update as you go.'}</p></div>`}
     <div className="sec"><h3>Structure</h3><p className="note">Joists, rafters, headers and beams sized for ${p.settings?.code==='ibc'?'2021 IBC Table 1607.1 live loads by room use (offices 50 psf plus 15 psf partitions, assembly and corridors 100, storage 125; roof 20)':'2021 IRC live loads (40 psf floors, 30 psf bedrooms, 20 psf roof, attic 10 or 20 psf)'} using approximate NDS lumber values. Bars show the share of capacity used. Planning level only; an engineer signs off real changes.</p>
@@ -66,6 +66,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
     </div>
     <div className="sec"><h3>Structure and plan</h3>
       <label className="check"><input id="w-bear" type="checkbox" checked=${!!o.bearing} onChange=${e=>up({bearing:e.target.checked})}/> Load-bearing wall</label>
+      <div className="row"><button className="btn" onClick=${()=>openDialog('wallrm')}>${o.status==='demolish'?'Removal: beam, posts and footings…':'Remove this wall (wizard)…'}</button></div>
       <${Field} label="Side" id="w-kind"><${Sel} id="w-kind" value=${o.kind} onChange=${v=>up({kind:v})} options=${[['exterior','Exterior'],['interior','Interior']]}/><//>
       <${Field} label="Remodel status" id="w-st"><${Sel} id="w-st" value=${o.status||'new'} onChange=${v=>up({status:v})} options=${[['existing','Existing'],['new','New'],['demolish','Demolish']]}/><//>
       ${o.kind==='exterior'?html`<${Field} label="Siding" id="w-sid"><${Sel} id="w-sid" value=${o.siding||'vinyl'} onChange=${v=>up({siding:v})} options=${Object.entries(SIDING).map(([k,v])=>[k,v.label])}/><//>`:null}
@@ -254,6 +255,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
       ${p.settings.code==='ibc'?html`<${Field} label="Occupancy group" id="p-occ"><${Sel} id="p-occ" value=${p.settings.occupancy||'B'} onChange=${v=>commit({...p,settings:{...p.settings,occupancy:v}})} options=${Object.entries(OCCUPANCIES).map(([k,v])=>[k,v.label])}/><//>
         <label className="check"><input id="p-spr" type="checkbox" checked=${!!p.settings.sprinklered} onChange=${e=>commit({...p,settings:{...p.settings,sprinklered:e.target.checked}})}/> Fire sprinklers throughout</label>`
       :html`<label className="check"><input id="p-ada" type="checkbox" checked=${p.settings.ada!==false} onChange=${e=>commit({...p,settings:{...p.settings,ada:e.target.checked}})}/> Accessible design (2010 ADA checks)</label>`}
+      <${NkbaSettings} p=${p} commit=${commit}/>
       <div className="stat"><span>Walls · openings · rooms</span><span className="mono">${p.walls.length} · ${p.openings.length} · ${p.rooms.length}</span></div>
       <div className="stat"><span>Floor area (rooms)</span><span className="mono">${Math.round(area)} sq ft</span></div>
       <div className="row"><button className="btn" onClick=${onFile}>Save, open or start new…</button></div>

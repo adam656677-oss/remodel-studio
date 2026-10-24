@@ -112,7 +112,8 @@ function SystemsView({p,commit}){const [tab,setTab]=useState('energy');const E=e
     <section className="sec"><h3>2021 IRC prescriptive check (Table N1102.1.2), climate zone ${E.zone}</h3>
       <div className="tablewrap"><table className="mat"><thead><tr><th>Component</th><th>Required</th><th>This project</th><th>Result</th></tr></thead><tbody>
       ${C.rows.map(r=>html`<tr key=${r.item}><td>${r.item}${r.note?html`<div className="note">${r.note}</div>`:null}</td><td>${r.req}</td><td>${r.prov}</td><td><span className=${'pill '+(r.ok?'ok':'warn')}>${r.ok?'Meets':'Below'}</span></td></tr>`)}</tbody></table></div>
-      <p className="note">In a remodel the energy code applies to the new and altered parts (N1109). Existing walls you leave closed do not have to be brought up to these values.</p></section>`;}
+      <p className="note">In a remodel the energy code applies to the new and altered parts (N1109). Existing walls you leave closed do not have to be brought up to these values.</p></section>
+    <${UAPanel} p=${p}/>`;}
   if(tab==='loads'){const L=loadCalc(p);body=html`<section className="sec"><h3>Design conditions</h3><div className="sysgrid">
       ${num('l-th','Winter outdoor',E.tHeat,v=>up({tHeat:v}),1,'°F')}${num('l-tc','Summer outdoor',E.tCool,v=>up({tCool:v}),1,'°F')}${num('l-ih','Indoor winter',E.inHeat,v=>up({inHeat:v}),1,'°F')}${num('l-ic','Indoor summer',E.inCool,v=>up({inCool:v}),1,'°F')}
       ${num('l-gr','Moisture difference',E.grains,v=>up({grains:v}),1,'grains')}${num('l-pp','People',L.people,v=>up({people:v}))}</div>

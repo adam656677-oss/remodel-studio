@@ -94,7 +94,9 @@ async function proposalPDF(p){await loadJsPDF();const {jsPDF}=window.jspdf;const
   if(selRows.length){T('Product selections',13,true);nl(0.1);rule();for(const [a,b] of selRows){T(a,9.5,true);for(const ln of d.setFontSize(9.5).splitTextToSize(b,R-L-1.6)){T(ln,9.5,false,L+1.6);nl(0.17);}}nl(0.15);}
   T('Price',13,true);nl(0.1);rule();const row=(a,b,bold)=>{T(a,10,bold);T(b,10,bold,R,{align:'right'});nl(0.2);};
   row('Materials and sales tax'+(est.unpriced?` (${est.priced} of ${est.rows.length} items priced)`:''),money(est.mat+est.tax));row('Labor',money(est.laborCost));if(est.permit)row('Permit',money(est.permit));if(est.dumps)row('Debris removal',money(est.dump));for(const x of est.extras)row(x.name,money(+x.cost));
-  row('Overhead and profit',money(est.markup));row('Contingency',money(est.cont));d.setLineWidth(0.01);d.line(L,y-0.12,R,y-0.12);row('Total contract price',money(est.total),true);nl(0.2);
+  row('Overhead and profit',money(est.markup));row('Contingency',money(est.cont));d.setLineWidth(0.01);d.line(L,y-0.12,R,y-0.12);row('Total contract price',money(est.total),true);nl(0.1);
+  if((p.estimate||{}).alternates){const P=ensureOptions(p);const cur=P.options.find(o=>o.id===P.activeOption);for(const o of P.options){if(!cur||o.id===cur.id)continue;try{const e2=estimateOf(optionProject(P,o));const dd=e2.total-est.total;row(`Alternate: ${o.name} (${dd>=0?'add':'deduct'})`,(dd>=0?'+':'-')+money(Math.abs(dd)));}catch(e){}}nl(0.1);}
+  nl(0.1);
   T('Schedule',13,true);nl(0.1);rule();row('Start',J.start.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}));row('Substantial completion',J.end.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'})+` (${J.workdays} workdays)`);
   for(const r of J.rows){T(r.label,8.5);T(`${fmtD(r.s)} to ${fmtD(r.e)}`,8.5,false,R,{align:'right'});nl(0.16);}nl(0.15);
   T('Payment schedule',13,true);nl(0.1);rule();for(const dr of draws){T(`${dr.label} (${dr.pct}%)`,10);T(`${money(dr.amt)}   due about ${fmtD(dr.date)}`,10,false,R,{align:'right'});nl(0.2);}nl(0.15);

@@ -399,6 +399,8 @@ function PlanSetView({p,commit}){
         <button className="btn primary" disabled=${busy} onClick=${pdf}>${busy?'Making PDF…':`Download PDF (${sheets.length} sheets)`}</button>
         <button className="btn" onClick=${svg}>Download this sheet as SVG</button>
         <button className="btn" disabled=${busy} onClick=${dxf}>Download DXF floor plans (zip)</button>
+        <button className="btn" disabled=${busy} onClick=${async()=>{setBusy(true);setMsg(null);try{setMsg(await exportSheetsDXF(p,sheets));}catch(e){setMsg({ok:false,t:e.message||'The DXF files could not be made.'});}setBusy(false);}}>Download all sheets as DXF (zip)</button>
+        <button className="btn" onClick=${async()=>setMsg(await saveFile(`${safeName(p.name)} ${cur.no}.dxf`,sheetToDXF(cur)))}>Download this sheet as DXF</button>
         ${msg?html`<div className=${'msg'+(msg.ok?'':' err')}>${msg.t}</div>`:null}
         <p className="note">The PDF is vector, so lines stay sharp at any zoom. North is the top of the plan. DXF files are full size in inches, one per level, for AutoCAD, LibreCAD or other CAD programs.</p></div>
     </aside></div>`;

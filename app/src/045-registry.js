@@ -97,3 +97,6 @@ function reg3DCtx(add,std,sel,mSel,layer,struct,opts,p,lv,group){
       else if(style==='board'){const mid={x:(a.x+b.x)/2,y:(a.y+b.y)/2};box(mid.x,mid.y,(a.z+b.z)/2+3.5,L,0.75,H-3.5,Math.atan2(b.y-a.y,b.x-a.x),m);}}};
   return {add,std,col,sel,mSel,isSel,layer,struct,opts,p,lv,box,cyl,stick,prism,tris,quad,railing,group,matFor:(o,c,extra)=>isSel(o)?mSel:col(c,extra)};
 }
+
+// dialogs opened from anywhere: window.dispatchEvent(new CustomEvent('rs-dialog',{detail:name}))
+const EXTRA_DIALOGS={};const openDialog=name=>window.dispatchEvent(new CustomEvent('rs-dialog',{detail:name}));

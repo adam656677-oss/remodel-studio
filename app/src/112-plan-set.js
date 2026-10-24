@@ -349,8 +349,7 @@ function dxfForLevel(p,lv){
   for(const r of p.rooms.filter(r=>r.level===lv.id)){for(let i=0;i<r.pts.length;i++){const a=r.pts[i],b=r.pts[(i+1)%r.pts.length];line('A-AREA',a[0],a[1],b[0],b[1]);}
     const [cx,cy]=polyLabelPt(r.pts);text('A-AREA-IDEN',cx,cy,6,r.name.toUpperCase(),true);text('A-AREA-IDEN',cx,cy+9,4,Math.round(polyArea(r.pts)/144)+' SF',true);}
   for(const f of (p.fixtures||[]).filter(f=>f.level===lv.id&&f.status!=='demolish')){const c=fxCorners(f);for(let i=0;i<4;i++)line(f.type==='wallcab'?'A-FLOR-CASE-UPPR':'A-FLOR-FIXT',c[i].x,c[i].y,c[(i+1)%4].x,c[(i+1)%4].y);}
-  for(const s of p.stairs.filter(s=>s.level===lv.id)){const g=stairGeo(p,s);for(const c of stairPieces(g))for(let i=0;i<c.length;i++)line('A-FLOR-STRS',c[i].x,c[i].y,c[(i+1)%c.length].x,c[(i+1)%c.length].y);
-    for(let i=1;i<=si.treads;i++)line('A-FLOR-STRS',c[0].x+si.d.x*s.tread*i,c[0].y+si.d.y*s.tread*i,c[1].x+si.d.x*s.tread*i,c[1].y+si.d.y*s.tread*i);}
+  for(const s of p.stairs.filter(s=>s.level===lv.id)){const g=stairGeo(p,s);for(const c of stairPieces(g))for(let i=0;i<c.length;i++)line('A-FLOR-STRS',c[i].x,c[i].y,c[(i+1)%c.length].x,c[(i+1)%c.length].y);}
   const layers=['A-WALL','A-WALL-EXST','A-GLAZ','A-DOOR','A-AREA','A-AREA-IDEN','A-ANNO-TAGS','A-FLOR-FIXT','A-FLOR-CASE-UPPR','A-FLOR-STRS'];const colors=[7,8,4,2,9,7,3,6,6,5];
   const tbl=`0\nSECTION\n2\nTABLES\n0\nTABLE\n2\nLAYER\n70\n${layers.length}\n`+layers.map((l,i)=>`0\nLAYER\n2\n${l}\n70\n0\n62\n${colors[i]}\n6\n${l==='A-FLOR-CASE-UPPR'?'DASHED':'CONTINUOUS'}`).join('\n')+`\n0\nENDTAB\n0\nENDSEC`;
   return `0\nSECTION\n2\nHEADER\n9\n$ACADVER\n1\nAC1009\n9\n$INSUNITS\n70\n1\n0\nENDSEC\n${tbl}\n0\nSECTION\n2\nENTITIES\n${E.join('\n')}\n0\nENDSEC\n0\nEOF\n`;

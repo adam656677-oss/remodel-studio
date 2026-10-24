@@ -7,6 +7,7 @@ MAP = {'react.production.min.js': D/'react/umd/react.production.min.js','react-d
  'htm.umd.js': D/'htm/dist/htm.umd.js','three.min.js': D/'three/build/three.min.js','OrbitControls.js': D/'three/examples/js/controls/OrbitControls.js',
  'fflate@0.7.4/umd/index.js':D/'fflate/umd/index.js','jspdf.umd.min.js':D/'jspdf/dist/jspdf.umd.min.js','pdf.js/3.11.174/pdf.min.js':D/'pdfjs-dist/build/pdf.min.js','pdf.js/3.11.174/pdf.worker.min.js':D/'pdfjs-dist/build/pdf.worker.min.js','xlsx/0.18.5/xlsx.full.min.js':D/'xlsx/dist/xlsx.full.min.js'}
 for n in ['GLTFExporter.js','USDZExporter.js','STLExporter.js','OBJExporter.js']: MAP['exporters/'+n]=D/'three/examples/js/exporters'/n
+for n in ['GLTFLoader.js','ColladaLoader.js','STLLoader.js']: MAP['loaders/'+n]=D/'three/examples/js/loaders'/n
 def page_html():
     src = pathlib.Path('/home/claude/remodel-studio/index.html').read_text()
     return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>' + src + '</body></html>'

@@ -114,13 +114,14 @@ function CaptureView({p,commit,sel,setSel,levelId,setLevelId,setMode,libCtx}){
   const [tab,setTab]=useState('measure');
   return html`<div className="matview"><div className="matinner">
     <div className="mathead"><div><h2>Capture</h2><p className="note">Turn photos and tape measurements into the model. Photos and scans are kept in this browser only; the project file stores where they are pinned.</p></div></div>
-    <div className="seg" role="tablist">${[['measure','Measure, color and trim from photos'],['assistant','Photo assistant'],['room','Room from measurements'],['photos','Photos'],['underlay','Underlay and scans']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
+    <div className="seg" role="tablist">${[['measure','Measure, color and trim from photos'],['assistant','Photo assistant'],['room','Room from measurements'],['photos','Photos'],['underlay','Underlay and scans'],...CAPTURE_EXTRA.map(x=>[x[0],x[1]])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
     ${assets.err?html`<div className="msg err">${assets.err}</div>`:null}
     ${tab==='measure'?html`<${PhotoMeasure} p=${p} commit=${commit} sel=${sel} assets=${assets} libCtx=${libCtx}/>`:null}
     ${tab==='assistant'?html`<${PhotoAssistant} p=${p} commit=${commit} sel=${sel} levelId=${levelId} assets=${assets} setMode=${setMode} setSel=${setSel}/>`:null}
     ${tab==='room'?html`<${RoomWizard} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel}/>`:null}
     ${tab==='photos'?html`<${PhotoGallery} p=${p} commit=${commit} sel=${sel} assets=${assets}/>`:null}
     ${tab==='underlay'?html`<${UnderlayPanel} p=${p} commit=${commit} levelId=${levelId} assets=${assets} setMode=${setMode}/>`:null}
+    ${CAPTURE_EXTRA.filter(x=>x[0]===tab).map(x=>html`<${x[2]} key=${x[0]} p=${p} commit=${commit} sel=${sel} setSel=${setSel} levelId=${levelId} setMode=${setMode} assets=${assets}/>`)}
   </div></div>`;
 }
 function MeasureForm({questions,values,setValues}){
@@ -250,7 +251,8 @@ function UnderlayPanel({p,commit,levelId,assets,setMode}){
     ${u&&img?html`<div className="calwrap"><img ref=${imgRef} src=${blobURL(img.id,img.blob)} alt="Underlay image" onClick=${onImgClick}/>${cal.map((c,i)=>html`<span key=${i} className="calpt" style=${{left:(c[0]/u.w*100)+'%',top:(c[1]/u.h*100)+'%'}}>${i+1}</span>`)}</div>
       <div className="row"><span className="note">${cal.length<2?`Click point ${cal.length+1} on the image.`:'Distance between the two points:'}</span>${cal.length===2?html`<${LenInput} id="ul-dist" value=${dist} bare="ft" placeholder="e.g. 28'" onChange=${setDist}/><button className="btn primary" disabled=${!(dist>0)} onClick=${applyCal}>Set scale</button>`:null}</div>
       <div className="grid2 capgrid"><label>Opacity<input id="ul-op" type="range" min="0.1" max="1" step="0.05" value=${u.opacity} onInput=${e=>commit({...p,underlay:{...u,opacity:+e.target.value}})}/></label>
-        <label>Width on plan<${LenInput} id="ul-w" value=${u.w*u.scale} bare="ft" onChange=${v=>v>0&&commit({...p,underlay:{...u,scale:v/u.w}})}/></label></div>
+        <label>Width on plan<${LenInput} id="ul-w" value=${u.w*u.scale} bare="ft" onChange=${v=>v>0&&commit({...p,underlay:{...u,scale:v/u.w}})}/></label>
+        <label>Rotate (degrees)<input id="ul-rot" className="inp mono" type="number" step="0.5" value=${u.rot||0} onChange=${e=>commit({...p,underlay:{...u,rot:+e.target.value||0}})}/></label></div>
       <div className="row"><button className="btn" onClick=${()=>setMode('plan')}>Open plan to trace</button></div>`:null}
     <h3>Point cloud scan</h3><p className="note">Import a PLY point cloud from COLMAP (made from your photos with the capture kit below) or from a scanning app. A slice through the walls shows on the plan for tracing, and the points show in 3D.</p>
     <div className="row"><label className="btn" htmlFor="pc-file">${cbusy?'Reading…':cloud?'Replace scan…':'Import .ply scan…'}</label><input id="pc-file" type="file" accept=".ply" hidden onChange=${pickPLY}/>
@@ -347,7 +349,7 @@ function PinnedPhotos({p,sel}){const {list}=useAssets(p.id||'default');const min
 function useUnderlayImages(p,levelId){
   const [u,setU]=useState(null);const [slice,setSlice]=useState(null);const [cloudPts,setCloudPts]=useState(null);
   const ul=p.underlay;const cl=p.cloud;
-  useEffect(()=>{let live=true;if(!ul||ul.level!==levelId){setU(null);return;}assetGet(ul.asset).then(a=>{if(live&&a)setU({...ul,url:blobURL(a.id,a.blob)});}).catch(()=>{});return ()=>{live=false;};},[ul&&ul.asset,ul&&ul.level,ul&&ul.x,ul&&ul.y,ul&&ul.scale,ul&&ul.opacity,levelId]);
+  useEffect(()=>{let live=true;if(!ul||ul.level!==levelId){setU(null);return;}assetGet(ul.asset).then(a=>{if(live&&a)setU({...ul,url:blobURL(a.id,a.blob)});}).catch(()=>{});return ()=>{live=false;};},[ul&&ul.asset,ul&&ul.level,ul&&ul.x,ul&&ul.y,ul&&ul.scale,ul&&ul.opacity,ul&&ul.rot,levelId]);
   useEffect(()=>{let live=true;if(!cl){setSlice(null);setCloudPts(null);return;}assetGet(cl.asset).then(a=>{if(!live||!a)return;const pts=cloudToPlan({points:a.points},cl);setCloudPts({pts,colors:a.colors});const lv=lvlOf(p,cl.level);const e=(lv?lv.elevation:0);setSlice(cl.level===levelId?cloudSliceImage(pts,e+(cl.lo||12),e+(cl.hi||72)):null);}).catch(()=>{});return ()=>{live=false;};},[cl&&cl.asset,cl&&cl.scale,cl&&cl.up,cl&&cl.rot,cl&&cl.dx,cl&&cl.dy,cl&&cl.dz,cl&&cl.lo,cl&&cl.hi,cl&&cl.level,levelId]);
   return {u,slice,cloudPts};
 }

@@ -24,7 +24,7 @@ function App(){
   const load=q=>{undo.current.push(project);redo.current=[];setProject(q);setSel(null);setLevelId(q.levels[0].id);setFitPlan(x=>x+1);setFit3(x=>x+1);};
   // ---- file state ----
   const [cmpOpt,setCmpOpt]=useState(null);useEffect(()=>{loadModels(project.id);},[project.id]);
-  const [dlg,setDlg]=useState(null);const [custIt,setCustIt]=useState(null);useEffect(()=>{const f=e=>setCustIt(e.detail);window.addEventListener('rs-customize',f);return ()=>window.removeEventListener('rs-customize',f);},[]);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
+  const [dlg,setDlg]=useState(null);const [custIt,setCustIt]=useState(null);useEffect(()=>{const f=e=>setCustIt(e.detail);window.addEventListener('rs-customize',f);return ()=>window.removeEventListener('rs-customize',f);},[]);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]);useEffect(()=>{const f=e=>setDlg(e.detail);window.addEventListener('rs-dialog',f);return ()=>window.removeEventListener('rs-dialog',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
   const [savedProj,setSavedProj]=useState(()=>{if(DESK)return project;const q=listSaved().find(x=>x.id===project.id);return q?project:null;});
   const dirty=savedProj!==project;
   const say=(t,ok=true)=>{setToast({t,ok});clearTimeout(say.t);say.t=setTimeout(()=>setToast(null),3500);};
@@ -125,7 +125,7 @@ function App(){
         {label:'New…',key:'Ctrl+N',run:()=>setDlg('new')},{label:'Open…',key:'Ctrl+O',run:doOpen},
         ...(DESK&&recentFiles.length?['-',...recentFiles.slice(0,8).map(r=>({label:'↻ '+r.name,run:()=>DESK.readPath(r.path).then(deskOpen)}))]:[]),'-',
         {label:'Save',key:'Ctrl+S',run:()=>doSave()},{label:'Save as…',key:'Ctrl+Shift+S',run:()=>setDlg('saveas')},...(DESK?[{label:'Show file in folder',run:()=>deskPath.current&&DESK.showInFolder(deskPath.current),disabled:!deskPath.current}]:[{label:'Download a copy (.json)',run:download}]),{label:'Copy or paste project text…',run:()=>setModal(true)},{label:'Versions…',run:()=>setDlg('versions')},'-',
-        {label:'Import DXF drawing…',run:()=>setDlg('dxf')},{label:'Import 3D model (OBJ)…',run:()=>setDlg('obj')},{label:'Import vendor catalog…',run:()=>setDlg('vendors')},{label:'Add photos…',run:()=>setMode('capture')},{label:'Print plans (PDF) and DXF…',run:()=>setMode('sheets')},{label:'Materials list (CSV)…',run:()=>setMode('materials')},{label:'Render (photoreal)…',run:()=>setRenderOpen(true)},{label:'AR view and 3D export…',run:()=>setExportOpen(true)}]}/>
+        {label:'Import DWG or DXF drawing…',run:()=>setDlg('dxf')},{label:'Import 3D model (OBJ, GLB, DAE, STL)…',run:()=>setDlg('obj')},{label:'Import vendor catalog…',run:()=>setDlg('vendors')},{label:'Add photos…',run:()=>setMode('capture')},{label:'Print plans (PDF) and DXF…',run:()=>setMode('sheets')},{label:'Materials list (CSV)…',run:()=>setMode('materials')},{label:'Render (photoreal)…',run:()=>setRenderOpen(true)},{label:'AR view and 3D export…',run:()=>setExportOpen(true)}]}/>
       <${MenuButton} id="menu-edit" label="Edit" items=${[
         {label:'Undo',key:'Ctrl+Z',run:doUndo,disabled:!undo.current.length},{label:'Redo',key:'Ctrl+Y',run:doRedo,disabled:!redo.current.length},'-',
         {label:'Cut',key:'Ctrl+X',run:doCut,disabled:!sel},{label:'Copy',key:'Ctrl+C',run:doCopy,disabled:!sel},{label:'Paste',key:'Ctrl+V',run:doPaste,disabled:!clip.current},
@@ -157,6 +157,7 @@ function App(){
     ${dlg==='blocks'?html`<${BlocksModal} p=${project} sel=${sel} setTool=${setTool} say=${say} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='keys'?html`<${KeysModal} onClose=${()=>setDlg(null)}/>`:null}
     ${custIt&&LIB_BY_ID[custIt]?html`<${ItemCustomizeModal} it=${LIB_BY_ID[custIt]} p=${project} ctx=${{setTool,setFixtureType,setOpenPreset,setMode}} onClose=${()=>setCustIt(null)}/>`:null}
+    ${dlg&&EXTRA_DIALOGS[dlg]?html`<${EXTRA_DIALOGS[dlg]} p=${project} commit=${commit} levelId=${lv.id} setMode=${setMode} sel=${sel} setSel=${setSel} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='vendors'?html`<${VendorImportModal} onClose=${()=>setDlg(null)} onDone=${()=>commit({...project})}/>`:null}
     ${dlg==='obj'?html`<${OBJImportModal} p=${project} levelId=${lv.id} commit=${commit} setSel=${setSel} onClose=${()=>setDlg(null)}/>`:null}
     ${dlg==='dxf'?html`<${DXFImportModal} p=${project} levelId=${lv.id} commit=${commit} onClose=${()=>setDlg(null)}/>`:null}

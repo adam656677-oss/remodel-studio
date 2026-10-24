@@ -21,7 +21,7 @@ with app(1400,900) as (pg,errs):
     print('template',n0,pg.evaluate("()=>[window.__app.get().walls.length,window.__app.get().fixtures.length,window.__app.get().openings.length]"))
     pg.wait_for_timeout(300); pg.screenshot(path=str(OUT/'t46_bath.png'))
     # OBJ
-    pg.get_by_role('button',name='File').click(); pg.get_by_text('Import 3D model (OBJ)…').click(); pg.wait_for_timeout(300)
+    pg.get_by_role('button',name='File').click(); pg.get_by_text('Import 3D model (OBJ, GLB, DAE, STL)…').click(); pg.wait_for_timeout(300)
     pg.select_option('#ob-u','ft'); pg.set_input_files('#ob-file','box.obj'); pg.wait_for_timeout(1200); print(pg.locator('.modal .msg').inner_text()); pg.get_by_role('button',name='Done').click()
     # option compare
     pg.evaluate("()=>{const a=window.__app;let p=addOption(a.get());p={...p,walls:p.walls.filter(w=>w.id!=='wc')};a.commit(p)}"); pg.wait_for_timeout(300)

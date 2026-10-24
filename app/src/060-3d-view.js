@@ -84,6 +84,8 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
       <button className=${'chip'+(viewsOpen?' on':'')} onClick=${()=>setViewsOpen(!viewsOpen)} title="Save and return to camera views">Views${views.length?' ('+views.length+')':''}</button>
       <button className=${'chip'+(paintOn?' on':'')} onClick=${()=>{setPaintOn(!paintOn);setHit(null);}} title="Click any surface to change its finish or color">Paint</button>
       <button className=${'chip'+(framing?' on':'')} onClick=${()=>setFraming(!framing)} title="Show studs, plates, headers, joists and rafters">Framing</button>
+      <button className="chip" onClick=${()=>openDialog('pano')} title="Make a 360° panorama from this camera spot">360°</button>
+      <button className="chip" onClick=${()=>openDialog('video')} title="Record a walkthrough or fly-around video">Video</button>
       <select className="inp v3sel" value=${clip.mode} onChange=${e=>setClip({...clip,mode:e.target.value})} aria-label="Section cut"><option value="off">No section cut</option><option value="h">Cut height</option><option value="x">Cut left to right</option><option value="y">Cut front to back</option>${(p.sections||[]).map(s=>html`<option key=${s.id} value=${'s:'+s.id}>Section ${s.label}</option>`)}</select>
       ${clip.mode!=='off'?html`<button className=${'chip'+(clip.flip?' on':'')} onClick=${()=>setClip({...clip,flip:!clip.flip})} title="Keep the other side of the cut">Flip</button>`:null}
       ${clip.mode!=='off'&&!clip.mode.startsWith('s:')?html`<input type="range" className="v3range" min="0" max="1" step="0.005" value=${clip.v} onInput=${e=>setClip({...clip,v:+e.target.value})} aria-label="Section position"/>`:null}

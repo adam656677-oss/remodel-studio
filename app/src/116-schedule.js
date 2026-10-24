@@ -4,24 +4,27 @@ const PHASES=[
   {id:'permit',label:'Permit and ordering',fixed:10,deps:[]},
   {id:'demo',label:'Demolition',trades:['demo'],deps:['permit']},
   {id:'found',label:'Foundation and masonry',trades:['masonry'],deps:['demo'],insp:'Footing and foundation inspection'},
-  {id:'framing',label:'Framing',trades:['framing'],deps:['found']},
+  {id:'inspF',label:'Footing and foundation inspection',fixed:1,milestone:true,deps:['found'],cond:J=>!J.byId.found.skip},
+  {id:'framing',label:'Framing',trades:['framing'],deps:['inspF']},
   {id:'roof',label:'Roofing',trades:['roofing'],deps:['framing']},
   {id:'windows',label:'Windows and exterior doors',trades:['doors'],share:0.6,deps:['framing']},
   {id:'rough',label:'Plumbing, electrical and HVAC rough-in',trades:['plumbing','electrical'],share:0.7,parallel:true,deps:['roof','windows']},
   {id:'insp1',label:'Framing and rough-in inspections',fixed:2,milestone:true,deps:['rough']},
   {id:'siding',label:'Siding and exterior trim',trades:['siding'],deps:['windows']},
   {id:'insul',label:'Insulation',trades:['insulation'],deps:['insp1'],insp:'Insulation inspection'},
-  {id:'drywall',label:'Drywall hang and finish',trades:['drywall','ceilings'],deps:['insul']},
+  {id:'inspI',label:'Insulation inspection',fixed:1,milestone:true,deps:['insul'],cond:J=>!J.byId.insul.skip},
+  {id:'drywall',label:'Drywall hang and finish',trades:['drywall','ceilings'],deps:['inspI']},
   {id:'paint1',label:'Prime and first coat',trades:['paint'],share:0.5,deps:['drywall']},
   {id:'cab',label:'Cabinets and countertops',trades:['cabinets'],deps:['paint1']},
-  {id:'tile',label:'Tile',trades:['tile'],deps:['paint1']},
+  {id:'ctr',label:'Countertops: template, fabricate, install',fixed:10,deps:['cab'],cond:(J,p)=>p.levels.some(l=>counterGeo(p,l.id).length)&&!J.byId.cab.skip},
+  {id:'tile',label:'Tile',trades:['tile'],deps:['paint1','ctr']},
   {id:'floor',label:'Flooring',trades:['flooring'],deps:['tile']},
   {id:'trim',label:'Interior doors and trim',trades:['finish','doors'],shareOf:{doors:0.4},deps:['floor','cab']},
-  {id:'finishmep',label:'Plumbing and electrical trim-out',trades:['plumbing','electrical'],share:0.3,parallel:true,deps:['cab','tile']},
+  {id:'finishmep',label:'Plumbing and electrical trim-out',trades:['plumbing','electrical'],share:0.3,parallel:true,deps:['cab','ctr','tile']},
   {id:'paint2',label:'Final paint and touch-up',trades:['paint'],share:0.5,deps:['trim','finishmep']},
   {id:'general',label:'Cleanup and general labor',trades:['general'],deps:['paint2']},
   {id:'final',label:'Final inspection and punch list',fixed:3,milestone:true,deps:['general']}];
-function schedOf(p){return {start:new Date().toISOString().slice(0,10),crew:2,crews:{},days:{},draws:null,...(p.settings?.sched||{})};}
+function schedOf(p){return {start:new Date().toISOString().slice(0,10),crew:2,crews:{},days:{},draws:null,leads:{},...(p.settings?.sched||{})};}
 const setSched=(p,patch)=>({...p,settings:{...p.settings,sched:{...schedOf(p),...patch}}});
 // US holidays crews usually take off: New Year's, Memorial Day, July 4, Labor Day, Thanksgiving and the day after, Christmas Eve and Day
 function isHoliday(x){const m=x.getMonth(),d=x.getDate(),w=x.getDay();const nth=(n)=>Math.ceil(d/7)===n;const last=d+7>new Date(x.getFullYear(),m+1,0).getDate();
@@ -30,16 +33,18 @@ const isWork=x=>{const w=x.getDay();return w!==0&&w!==6&&!isHoliday(x);};
 function addWorkdays(d,n){const x=new Date(d);let k=0;while(k<n){x.setDate(x.getDate()+1);if(isWork(x))k++;}return x;}
 function nextWorkday(d){const x=new Date(d);while(!isWork(x))x.setDate(x.getDate()+1);return x;}
 function jobSchedule(p){const S=schedOf(p);const est=estimateOf(p);const hrs={};for(const l of est.labor)hrs[l.t]=l.h;const out=[];const byId={};
-  const start=nextWorkday(new Date(S.start+'T08:00:00'));
+  const start=nextWorkday(new Date(S.start+'T08:00:00'));const LEADS=typeof leadItems==='function'?leadItems(p,S,est.rows):[];
   for(const ph of PHASES){let h=0;if(ph.trades)for(const t of ph.trades){const f=ph.shareOf&&ph.shareOf[t]!=null?ph.shareOf[t]:ph.share??1;h+=(hrs[t]||0)*f;}
     const crew=S.crews[ph.id]||S.crew;let days=ph.fixed!=null?ph.fixed:Math.ceil(h/(ph.parallel?Math.max(1,ph.trades.length):1)/(crew*8));if(S.days[ph.id]!=null)days=S.days[ph.id];
     const depEnd=ph.deps.map(d=>byId[d]).filter(Boolean).map(d=>d.skip?d.depEnd:d.e).filter(Boolean);
     const ds=depEnd.length?new Date(Math.max(...depEnd.map(d=>d.getTime()))):null;
-    if(ph.fixed==null&&h<=0&&S.days[ph.id]==null){byId[ph.id]={...ph,skip:true,s:null,e:null,depEnd:ds};continue;}
-    const sd=ds?nextWorkday(new Date(ds.getTime()+864e5)):start;
-    const e=days>0?addWorkdays(sd,days-1):sd;const r={...ph,h:Math.round(h),days,crew,s:sd,e,depEnd:ds};byId[ph.id]=r;out.push(r);}
+    if((ph.fixed==null&&h<=0&&S.days[ph.id]==null)||(ph.cond&&!ph.cond({byId},p))){byId[ph.id]={...ph,skip:true,s:null,e:null,depEnd:ds};continue;}
+    let sd=ds?nextWorkday(new Date(ds.getTime()+864e5)):start;
+    // long-lead items ordered at signing can hold a phase back
+    const leads=LEADS.filter(L=>L.phase===ph.id);let wait=null;for(const L of leads){const ready=nextWorkday(addWorkdays(start,L.days));if(ready>sd){sd=ready;wait=L;}}
+    const e=days>0?addWorkdays(sd,days-1):sd;const r={...ph,h:Math.round(h),days,crew,s:sd,e,depEnd:ds,wait};byId[ph.id]=r;out.push(r);}
   const end=out.length?new Date(Math.max(...out.map(r=>r.e.getTime()))):start;const wd=(a,b)=>{let n=0;const x=new Date(a);while(x<=b){if(isWork(x))n++;x.setDate(x.getDate()+1);}return n;};
-  return {S,rows:out,start,end,workdays:wd(start,end),est};}
+  return {S,rows:out,start,end,workdays:wd(start,end),est,byId};}
 const DEFAULT_DRAWS=[['Deposit at signing',10,'permit'],['Framing complete',25,'framing'],['Dried in, rough-ins passed',20,'insp1'],['Drywall finished',20,'drywall'],['Cabinets and trim set',15,'trim'],['Final inspection and punch list',10,'final']];
 function drawSchedule(p,J){const S=J.S;const list=(S.draws||DEFAULT_DRAWS.map(([label,pct,after])=>({label,pct,after})));const total=J.est.total;const byId=Object.fromEntries(J.rows.map(r=>[r.id,r]));
   return list.map(d=>{const r=byId[d.after];return {...d,amt:total*d.pct/100,date:r?r.e:J.end};});}
