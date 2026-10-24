@@ -236,7 +236,12 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
       <${Field} label="Framing" id="f-sys"><${Sel} id="f-sys" value=${rf.system} onChange=${v=>upf({system:v})} options=${[['rafters','Rafters and ceiling joists'],['trusses','Engineered trusses']]}/><//>
       ${rf.system==='rafters'?html`<${Field} label="Rafter size" id="f-raf"><${Sel} id="f-raf" value=${rf.rafter} onChange=${v=>upf({rafter:v})} options=${Object.keys(LUMBER).map(k=>[k,k])}/><//>
       <${Field} label="Spacing" id="f-sp"><${Sel} id="f-sp" value=${String(rf.spacing)} onChange=${v=>upf({spacing:+v})} options=${[['12','12" o.c.'],['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']]}/><//>
-      <${Field} label="Lumber" id="f-spc"><${Sel} id="f-spc" value=${rf.species} onChange=${v=>upf({species:v})} options=${Object.entries(SPECIES).map(([k,v])=>[k,v.label])}/><//>`:html`<p className="note">Truss design comes from the truss supplier; rafter and ceiling joist checks are skipped.</p>`}</div>`;})()}`;
+      <${Field} label="Lumber" id="f-spc"><${Sel} id="f-spc" value=${rf.species} onChange=${v=>upf({species:v})} options=${Object.entries(SPECIES).map(([k,v])=>[k,v.label])}/><//>`:html`<${Field} label="Truss type" id="f-tt"><${Sel} id="f-tt" value=${rf.trussType||'common'} onChange=${v=>upf({trussType:v})} options=${TRUSS_TYPES}/><//>
+      <${Field} label="Truss spacing" id="f-tsp"><${Sel} id="f-tsp" value=${String(rf.trussSpacing||24)} onChange=${v=>upf({trussSpacing:+v})} options=${[['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']]}/><//>
+      <${Field} label="Heel height" id="f-heel"><${LenInput} id="f-heel" value=${trussOpt(o).heel} onChange=${v=>v>0&&upf({heel:v})}/><//>
+      ${['hip','dutch','mansard'].includes(o.style)?html`<${Field} label="Hip girder setback" id="f-sb"><${LenInput} id="f-sb" value=${trussOpt(o).setback} bare="ft" onChange=${v=>v>0&&upf({setback:v})}/><//><${Field} label="Girder plies" id="f-gp"><${Sel} id="f-gp" value=${String(trussOpt(o).ply)} onChange=${v=>upf({girderPly:+v})} options=${[['2','2-ply'],['3','3-ply']]}/><//>`:null}
+      <p className="note">${(()=>{const L=trussLayout(p,o);return `${L.schedule.reduce((n,x)=>n+x.qty,0)} trusses and jacks: ${L.schedule.map(x=>x.qty+' '+x.mark).join(', ')}.`;})()} Truss design comes from the truss supplier (R802.10); rafter and ceiling joist checks are skipped. See the Roof framing tab in the Designer and sheet S3.0.</p>`}
+      <button className="btn" onClick=${()=>window.dispatchEvent(new CustomEvent('rs-dialog',{detail:'roofwiz'}))}>Roof wizard…</button></div>`;})()}`;
   } else {
     const lvls=sortedLevels(p);
     const area=p.rooms.reduce((s,r)=>s+polyArea(r.pts),0)/144;
@@ -283,7 +288,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
           <div className="grid2"><label>Floor elevation<${LenInput} id=${'lve-'+l.id} value=${l.elevation} bare="ft" onChange=${v=>updLv(l.id,{elevation:v})}/></label>
           <label>Wall height<${LenInput} id=${'lvh-'+l.id} value=${l.height} bare="ft" onChange=${v=>v>0&&updLv(l.id,{height:v})}/></label></div>
           ${(()=>{const fr=framingOf(l);const first=l.id===groundLevel(p).id;const top=!levelAbove(p,l);const upf=patch=>updLv(l.id,{framing:{...fr,...patch}});
-            return html`<details className="framing"><summary>Floor and ceiling framing</summary><div className="grid2">
+            return html`<details className="framing"><summary>Floor and ceiling framing</summary><button className="btn small" style=${{margin:'4px 0'}} onClick=${()=>{setLevelId(l.id);window.dispatchEvent(new CustomEvent('rs-dialog',{detail:'joists'}));}}>Joist layout, I-joists and floor trusses…</button><div className="grid2">
               ${first?html`<label>Foundation<${Sel} id=${'fnd-'+l.id} value=${fr.foundation} onChange=${v=>upf({foundation:v})} options=${[['crawl','Crawlspace'],['slab','Slab on grade'],['basement','Basement']]}/></label>`:null}
               ${first&&fr.foundation==='slab'?null:html`<label>Floor joists<${Sel} id=${'fj-'+l.id} value=${fr.joist} onChange=${v=>upf({joist:v})} options=${Object.keys(LUMBER).map(k=>[k,k])}/></label>
               <label>Spacing<${Sel} id=${'fs-'+l.id} value=${String(fr.spacing)} onChange=${v=>upf({spacing:+v})} options=${[['12','12" o.c.'],['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']]}/></label>

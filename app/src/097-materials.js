@@ -90,8 +90,10 @@ function takeoff(p,{waste=0.1}={}){
     add('Roofing','Ridge and hip cap',ridge,'LF');add('Roofing','Drip edge, 10\'',Math.ceil(per/10),'EA');
     const axis=roofAxis(r);const Ul=axis==='x'?r.w:r.h,Vl=axis==='x'?r.h:r.w;const run=(r.style==='shed'?Vl:Vl/2)+r.overhang;
     const rafterLen=run*Math.sqrt(1+Math.pow(r.pitch/12,2));const rm=S.find(x=>x.id==='rf-'+r.id);
-    add('Roof and ceiling framing',`${(rm&&rm.suggest)||rf.rafter} x ${stockLen(rafterLen)}' rafter`,(Math.ceil(Ul/rf.spacing)+1)*(r.style==='shed'?1:2),'EA',`${rf.spacing}" o.c.`);
+    if(rf.system!=='trusses')add('Roof and ceiling framing',`${(rm&&rm.suggest)||rf.rafter} x ${stockLen(rafterLen)}' rafter`,(Math.ceil(Ul/rf.spacing)+1)*(r.style==='shed'?1:2),'EA',`${rf.spacing}" o.c.`);
     {const t=roofTrimOf(r);const {eaves}=roofEdges(b);const eL=eaves.reduce((s,[a,c])=>s+Math.hypot(c[0]-a[0],c[1]-a[1]),0)/12;
+      if(rf.ice&&eL>0)add('Roofing','Ice and water barrier, 2 sq roll',Math.ceil(eL*((r.overhang??12)+24)/12/200*W*10)/10,'roll','eaves to 24" inside the wall (R905.1.2)');
+      if(rf.vent&&rf.vent.ridge&&r.style!=='flat')add('Roofing','Ridge vent',Math.ceil(ridge*0.8),'LF','attic exhaust (R806.2)');if(rf.vent&&rf.vent.soffit&&eL>0)add('Roofing','Continuous soffit vent',Math.ceil(eL),'LF','attic intake');
       if(t.gutters&&eL>0){add('Roofing',`Gutter, 5" K-style ${t.gutterColor}`,Math.ceil(eL*W),'LF');add('Roofing','Downspout 2x3 with elbows',Math.max(2,eaves.length*2),'EA','one at each end of each eave run');}
       if(eL>0)add('Exterior trim',`1x${t.fascia+2} fascia board`,Math.ceil(eL*W),'LF');if(t.soffit&&eL>0)add('Exterior trim','Vented soffit',Math.ceil(eL*(r.overhang||12)/12*W),'SF');}
     if(r.style!=='shed')add('Roof and ceiling framing',`${LUMBER[(rm&&rm.suggest)||rf.rafter]>9?'2x12':'2x10'} ridge board`,Math.max(0,ridge),'LF');

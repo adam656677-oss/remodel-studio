@@ -1,7 +1,7 @@
 {
   "name": "remodel-studio",
   "productName": "Remodel Studio",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "description": "Remodel Studio - home design, remodel planning, estimating and plan sets",
   "author": "Adam",
   "main": "main.js",

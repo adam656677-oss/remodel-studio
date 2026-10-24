@@ -647,6 +647,21 @@ table.shop tr.got td{color:var(--ink-2);text-decoration:line-through}table.shop 
 .dz-pb .overlay .hint{font-size:12px;max-width:min(520px,70%)}
 @media (max-width:1750px){.top{gap:7px}.top .lvlsel{max-width:118px}.top .seg button{padding:5px 8px}.top .projname{max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 .app:has(.designer) .top .undo-redo{display:none}
+/* framing overlays */
+.fr-roof{fill:none;stroke:var(--ink-2);stroke-width:1;stroke-dasharray:6 4}
+.fr-truss{stroke:#b07a2a;stroke-width:1.2}.fr-gable{stroke:#7a4f12;stroke-width:2.2}.fr-girder{stroke:#c0392b;stroke-width:3}.fr-hip{stroke:#d08a2a;stroke-width:1.4}.fr-jack{stroke:#b07a2a;stroke-width:1;stroke-dasharray:4 3}
+.fr-j{stroke:#b07a2a;stroke-width:1}.fr-rim{stroke:#7a4f12;stroke-width:2.4}.fr-girder.fr-j{stroke:#c0392b;stroke-width:3.2;stroke-dasharray:10 4 2 4}.fr-trimmer,.fr-header{stroke:#7a4f12;stroke-width:2.6}.fr-tail{stroke:#d08a2a}.fr-bad{stroke:#c23a32!important;stroke-width:2}
+.fr-open{fill:none;stroke:var(--ink-2);stroke-width:1}.fr-arrow line{stroke:var(--accent);stroke-width:2}.fr-arrow polygon{fill:var(--accent)}
+.fr-t{font:600 12px var(--f-mono);fill:var(--ink)}.fr-mark{font:700 11px var(--f-mono);fill:#7a4f12}
+.rw{max-width:min(1040px,calc(100vw - 32px))!important}
+.rw-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,420px);gap:18px}.rw h3{margin:6px 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-2)}
+.rw-styles{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}.rw-style{display:flex;flex-direction:column;align-items:center;gap:2px;border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:6px 2px;cursor:pointer;color:var(--ink);font-size:11px}
+.rw-style svg path{fill:var(--accent-soft);stroke:var(--ink);stroke-width:1.2;stroke-linejoin:round}.rw-style.on{border-color:var(--accent);background:var(--accent-soft)}.rw-style.on svg path{fill:var(--accent)}
+.rw-plan,.rw-truss{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:8px}.rw-wall{stroke:var(--ink);stroke-width:3}
+.rw-chord{fill:none;stroke:#b07a2a;stroke-width:3}.rw-web{stroke:#cfae80;stroke-width:2}.rw-dim{font:11px var(--f-mono);fill:var(--ink-2)}
+.rw-stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}.rw-stats>div{border:1px solid var(--line);border-radius:8px;padding:6px 8px;display:flex;flex-direction:column;font-size:12px}.rw-stats span{color:var(--ink-2)}.rw-stats b{font-size:15px}.rw-stats small{color:var(--ink-2)}
+.ff-warn{color:var(--warn);font-size:12px;padding-left:18px}.ff-sched{margin-top:8px;font-size:12px}
+@media (max-width:820px){.rw-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -11056,7 +11071,12 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
       <${Field} label="Framing" id="f-sys"><${Sel} id="f-sys" value=${rf.system} onChange=${v=>upf({system:v})} options=${[['rafters','Rafters and ceiling joists'],['trusses','Engineered trusses']]}/><//>
       ${rf.system==='rafters'?html`<${Field} label="Rafter size" id="f-raf"><${Sel} id="f-raf" value=${rf.rafter} onChange=${v=>upf({rafter:v})} options=${Object.keys(LUMBER).map(k=>[k,k])}/><//>
       <${Field} label="Spacing" id="f-sp"><${Sel} id="f-sp" value=${String(rf.spacing)} onChange=${v=>upf({spacing:+v})} options=${[['12','12" o.c.'],['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']]}/><//>
-      <${Field} label="Lumber" id="f-spc"><${Sel} id="f-spc" value=${rf.species} onChange=${v=>upf({species:v})} options=${Object.entries(SPECIES).map(([k,v])=>[k,v.label])}/><//>`:html`<p className="note">Truss design comes from the truss supplier; rafter and ceiling joist checks are skipped.</p>`}</div>`;})()}`;
+      <${Field} label="Lumber" id="f-spc"><${Sel} id="f-spc" value=${rf.species} onChange=${v=>upf({species:v})} options=${Object.entries(SPECIES).map(([k,v])=>[k,v.label])}/><//>`:html`<${Field} label="Truss type" id="f-tt"><${Sel} id="f-tt" value=${rf.trussType||'common'} onChange=${v=>upf({trussType:v})} options=${TRUSS_TYPES}/><//>
+      <${Field} label="Truss spacing" id="f-tsp"><${Sel} id="f-tsp" value=${String(rf.trussSpacing||24)} onChange=${v=>upf({trussSpacing:+v})} options=${[['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']]}/><//>
+      <${Field} label="Heel height" id="f-heel"><${LenInput} id="f-heel" value=${trussOpt(o).heel} onChange=${v=>v>0&&upf({heel:v})}/><//>
+      ${['hip','dutch','mansard'].includes(o.style)?html`<${Field} label="Hip girder setback" id="f-sb"><${LenInput} id="f-sb" value=${trussOpt(o).setback} bare="ft" onChange=${v=>v>0&&upf({setback:v})}/><//><${Field} label="Girder plies" id="f-gp"><${Sel} id="f-gp" value=${String(trussOpt(o).ply)} onChange=${v=>upf({girderPly:+v})} options=${[['2','2-ply'],['3','3-ply']]}/><//>`:null}
+      <p className="note">${(()=>{const L=trussLayout(p,o);return `${L.schedule.reduce((n,x)=>n+x.qty,0)} trusses and jacks: ${L.schedule.map(x=>x.qty+' '+x.mark).join(', ')}.`;})()} Truss design comes from the truss supplier (R802.10); rafter and ceiling joist checks are skipped. See the Roof framing tab in the Designer and sheet S3.0.</p>`}
+      <button className="btn" onClick=${()=>window.dispatchEvent(new CustomEvent('rs-dialog',{detail:'roofwiz'}))}>Roof wizard…</button></div>`;})()}`;
   } else {
     const lvls=sortedLevels(p);
     const area=p.rooms.reduce((s,r)=>s+polyArea(r.pts),0)/144;
@@ -11103,7 +11123,7 @@ function Inspector({libCtx,p,levelId,setLevelId,sel,setSel,commit,onDelete,colla
           <div className="grid2"><label>Floor elevation<${LenInput} id=${'lve-'+l.id} value=${l.elevation} bare="ft" onChange=${v=>updLv(l.id,{elevation:v})}/></label>
           <label>Wall height<${LenInput} id=${'lvh-'+l.id} value=${l.height} bare="ft" onChange=${v=>v>0&&updLv(l.id,{height:v})}/></label></div>
           ${(()=>{const fr=framingOf(l);const first=l.id===groundLevel(p).id;const top=!levelAbove(p,l);const upf=patch=>updLv(l.id,{framing:{...fr,...patch}});
-            return html`<details className="framing"><summary>Floor and ceiling framing</summary><div className="grid2">
+            return html`<details className="framing"><summary>Floor and ceiling framing</summary><button className="btn small" style=${{margin:'4px 0'}} onClick=${()=>{setLevelId(l.id);window.dispatchEvent(new CustomEvent('rs-dialog',{detail:'joists'}));}}>Joist layout, I-joists and floor trusses…</button><div className="grid2">
               ${first?html`<label>Foundation<${Sel} id=${'fnd-'+l.id} value=${fr.foundation} onChange=${v=>upf({foundation:v})} options=${[['crawl','Crawlspace'],['slab','Slab on grade'],['basement','Basement']]}/></label>`:null}
               ${first&&fr.foundation==='slab'?null:html`<label>Floor joists<${Sel} id=${'fj-'+l.id} value=${fr.joist} onChange=${v=>upf({joist:v})} options=${Object.keys(LUMBER).map(k=>[k,k])}/></label>
               <label>Spacing<${Sel} id=${'fs-'+l.id} value=${String(fr.spacing)} onChange=${v=>upf({spacing:+v})} options=${[['12','12" o.c.'],['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']]}/></label>
@@ -13455,6 +13475,183 @@ function addRafters3D(p,r,b,add,std){const rf=rafterOf(r);const rd=LUMBER[rf.raf
     const V=new THREE.Vector3((c.x-a.x)*IN,(zc-za)*IN,(c.y-a.y)*IN);const L=V.length();if(L<0.05)continue;const dd=rd+2;const m=add(new THREE.BoxGeometry(1.5*IN,L,dd*IN),mR,(a.x+c.x)/2*IN,((za+zc)/2-dd/2)*IN,(a.y+c.y)/2*IN,0,false);
     const dir=V.clone().normalize();const up=new THREE.Vector3(0,1,0);let side=new THREE.Vector3().crossVectors(dir,up);if(side.length()<1e-6)side.set(1,0,0);side.normalize();const m4=new THREE.Matrix4().makeBasis(side,dir,new THREE.Vector3().crossVectors(side,dir).normalize());m.quaternion.setFromRotationMatrix(m4);}
 }
+/* ======================= roof truss layout, floor joist layout, their plans, schedules, 3D and takeoff ======================= */
+// Trusses follow IRC R802.10 (engineered by the truss maker); floor framing follows R502 (spans, bearing, openings).
+// Everything here is for planning and ordering: the truss supplier's drawings and the span tables govern.
+const TRUSS_TYPES=[['common','Common (Fink W)'],['energy','Energy heel (raised heel for full attic insulation)'],['scissor','Scissor (vaulted ceiling)'],['attic','Attic (room in the roof)']];
+function trussOpt(r){const f=r.framing||{};const t=f.trussType||'common';return {type:t,spacing:+f.trussSpacing||24,heel:f.heel??(t==='energy'?12:4.5),ply:f.girderPly||2,setback:f.setback||84,peak:!!f.peakTruss};}
+const tPt=(axis,u,v)=>axis==='x'?{x:u,y:v}:{x:v,y:u};
+// one line per truss or jack, plan coordinates from bearing to bearing
+function trussLayout(p,r){const ax=roofAxis(r);const o=trussOpt(r);const st=r.style||'gable';const U0=ax==='x'?r.x:r.y,Ul=ax==='x'?r.w:r.h,V0=ax==='x'?r.y:r.x,Vl=ax==='x'?r.h:r.w;const sp=o.spacing;const items=[];
+  const T=(mark,kind,u,v0,v1,extra={})=>items.push({mark,kind,a:tPt(ax,u,v0),b:tPt(ax,u,v1),u,span:v1-v0,...extra});
+  const J=(mark,kind,v,u0,u1,extra={})=>items.push({mark,kind,a:tPt(ax,u0,v),b:tPt(ax,u1,v),v,span:Math.abs(u1-u0),jack:true,...extra});
+  const z0=roofTop(p,r);
+  if(st==='flat'||st==='shed'){const kind=st==='flat'?'flat':'mono';for(let u=U0+0.75;u<=U0+Ul-0.75+0.01;u+=sp){const end=u+sp>U0+Ul-0.75;T(kind==='flat'?'F1':'M1',kind,u,V0,V0+Vl);if(end)break;}
+    const last=items[items.length-1];if(last&&U0+Ul-0.75-last.u>2)T(kind==='flat'?'F1':'M1',kind,U0+Ul-0.75,V0,V0+Vl);}
+  else if(['hip','dutch','mansard'].includes(st)&&Ul>=Vl){// step-down hip set at each end, commons in the middle
+    const half=Vl/2;const S=Math.max(36,Math.min(o.setback,half-12));
+    for(const end of [0,1]){const sgn=end?-1:1,Ue=end?U0+Ul:U0;
+      T('G1','girder',Ue+sgn*S,V0,V0+Vl,{ply:o.ply,flat:true});
+      let k=1;for(let d=S+sp;d<half-0.5;d+=sp,k++)T('H'+k,'hip',Ue+sgn*d,V0,V0+Vl,{flat:true});
+      for(let v=V0+sp;v<V0+Vl-0.5;v+=sp){const reach=Math.min(S,v-V0,V0+Vl-v);if(reach<6)continue;J('EJ'+Math.round(reach/12),'jack',v,Ue,Ue+sgn*reach);}
+      for(let d=sp;d<S-0.5;d+=sp)for(const vv of [V0,V0+Vl]){const s2=vv===V0?1:-1;J('CJ'+Math.round(d/12),'jack',null,0,0,{a:tPt(ax,Ue+sgn*d,vv),b:tPt(ax,Ue+sgn*d,vv+s2*d),span:d,side:true});}}
+    const c0=U0+half,c1=U0+Ul-half;if(c1>c0+0.5){let u=c0;while(u<=c1+0.01){T('T1','common',u,V0,V0+Vl);u+=sp;}}
+    else T('T1','common',U0+Ul/2,V0,V0+Vl);}
+  else{// gable, gambrel, salt box and the rest: gable-end trusses at the ends, commons between
+    T('GE1','gable',U0+0.75,V0,V0+Vl);let u=U0+sp;while(u<U0+Ul-0.75-sp*0.5){T(st==='gambrel'?'T1G':'T1','common',u,V0,V0+Vl);u+=sp;}T('GE1','gable',U0+Ul-0.75,V0,V0+Vl);}
+  for(const it of items)it.z0=z0;
+  // schedule: one line per mark
+  const pitch=`${r.pitch}/12`,oh=r.overhang??12;const rows={};for(const it of items){const k=it.mark+'|'+Math.round(it.span);const R=rows[k]=rows[k]||{mark:it.mark,kind:it.kind,qty:0,span:it.span,pitch,heel:o.heel,oh:it.jack&&!it.side?0:oh,ply:it.ply||1,type:it.kind==='common'?o.type:it.kind};R.qty+=it.ply||1;}
+  const schedule=Object.values(rows).sort((a,b)=>(a.mark>b.mark?1:-1));
+  return {items,schedule,axis:ax,opt:o,U0,Ul,V0,Vl};}
+const TRUSS_KIND_LABEL={common:'Common',gable:'Gable end (with verticals for sheathing)',girder:'Hip girder',hip:'Step-down hip',jack:'Jack',mono:'Mono (single slope)',flat:'Flat (parallel chord)'};
+// ---------- truss profile in its own plane, for 3D ----------
+function trussProfile(p,r,b,it){const o=trussOpt(r);const L=Math.hypot(it.b.x-it.a.x,it.b.y-it.a.y);if(L<1)return null;const dir={x:(it.b.x-it.a.x)/L,y:(it.b.y-it.a.y)/L};const oh=it.jack&&!it.side?0:(r.overhang??12);
+  const chord=3.5,shth=0.75;const surf=(s)=>{const q={x:it.a.x+dir.x*s,y:it.a.y+dir.y*s};const z=roofHeightAt(b,q.x,q.y);return isFinite(z)?z-shth-chord/2:NaN;};
+  const cap=it.flat?surf(L/2):Infinity;const N=16;const top=[];for(let i=0;i<=N;i++){const s=-oh+(L+2*oh)*i/N;let z=surf(s);if(!isFinite(z))continue;z=Math.min(z,cap);top.push([s,z]);}
+  if(top.length<2)return null;const zb=it.z0+chord/2;const scis=o.type==='scissor'&&it.kind==='common';const bot=scis?[[0,zb],[L/2,zb+L/2*(r.pitch/2)/12],[L,zb]]:[[0,zb],[L,zb]];
+  const topAt=s=>{for(let i=1;i<top.length;i++)if(top[i][0]>=s){const [s0,z0]=top[i-1],[s1,z1]=top[i];return z0+(z1-z0)*(s-s0)/Math.max(1e-6,s1-s0);}return top[top.length-1][1];};
+  const botAt=s=>{for(let i=1;i<bot.length;i++)if(bot[i][0]>=s){const [s0,z0]=bot[i-1],[s1,z1]=bot[i];return z0+(z1-z0)*(s-s0)/Math.max(1e-6,s1-s0);}return bot[bot.length-1][1];};
+  const webs=[];const W=(s0,s1)=>webs.push([[s0,botAt(s0)],[s1,topAt(s1)]]);
+  if(it.kind==='gable'){for(let s=16;s<L-4;s+=16)webs.push([[s,botAt(s)],[s,topAt(s)]]);}
+  else if(it.kind==='mono'||it.jack){webs.push([[L-0.75,botAt(L-0.75)],[L-0.75,topAt(L-0.75)]]);if(L>72){W(L*0.5,L*0.5);W(L*0.5,L-1);} }
+  else if(it.kind==='flat'){for(let s=24;s<L;s+=24){webs.push([[s,botAt(s)],[s,topAt(s)]]);}}
+  else if(it.kind==='girder'||it.kind==='hip'){const rise=cap-zb;const run=rise/(r.pitch/12);const a=Math.min(run,L/2),c=Math.max(L-run,L/2);webs.push([[a,botAt(a)],[a,topAt(a)]],[[c,botAt(c)],[c,topAt(c)]]);if(c-a>48){for(let s=a+48;s<c-12;s+=48)webs.push([[s,botAt(s)],[s,topAt(s)]]);W(a,a+Math.min(48,(c-a)/2));}}
+  else if(o.type==='attic'&&L>=240){const rw=Math.min(144,L*0.5);const s0=(L-rw)/2,s1=(L+rw)/2;const kh=Math.min(topAt(s0)-zb-6,90);for(const s of [s0,s1])webs.push([[s,zb],[s,zb+kh]]);webs.push([[s0,zb+kh],[s1,zb+kh]]);}
+  else if(L<=240){webs.push([[L/2,botAt(L/2)],[L/2,topAt(L/2)]]);W(L/4,L/2);W(3*L/4,L/2);}
+  else if(L<=432){W(L/3,L/4);W(L/3,L/2);W(2*L/3,L/2);W(2*L/3,3*L/4);}
+  else{for(const f of [[1/6,1/8],[1/6,1/4],[1/3,1/4],[1/3,1/2],[2/3,1/2],[2/3,3/4],[5/6,3/4],[5/6,7/8]])W(L*f[0],L*f[1]);}
+  return {dir,top,bot,webs,L,a:it.a};}
+function trusses3D(p,r,b,add,std){const lay=trussLayout(p,r);const mT=std('fr-truss',0xd9b98a,{roughness:.85}),mG=std('fr-girder',0xc58f4c,{roughness:.8}),mWb=std('fr-web',0xcfae80,{roughness:.85});
+  const seg=(it,pr,P,Q,m,th,dp)=>{const A={x:pr.a.x+pr.dir.x*P[0],y:pr.a.y+pr.dir.y*P[0],z:P[1]},C={x:pr.a.x+pr.dir.x*Q[0],y:pr.a.y+pr.dir.y*Q[0],z:Q[1]};const V=new THREE.Vector3((C.x-A.x)*IN,(C.z-A.z)*IN,(C.y-A.y)*IN);const L=V.length();if(L<0.02)return;
+    const mesh=add(new THREE.BoxGeometry(th*IN,L,dp*IN),m,(A.x+C.x)/2*IN,(A.z+C.z)/2*IN,(A.y+C.y)/2*IN,0,false);const dirv=V.clone().normalize();const side=new THREE.Vector3(-pr.dir.y,0,pr.dir.x);const third=new THREE.Vector3().crossVectors(side,dirv).normalize();mesh.quaternion.setFromRotationMatrix(new THREE.Matrix4().makeBasis(side,dirv,third));};
+  for(const it of lay.items){const pr=trussProfile(p,r,b,it);if(!pr)continue;const th=1.5*(it.ply||1);const m=it.kind==='girder'?mG:mT;
+    for(let i=1;i<pr.top.length;i++)seg(it,pr,pr.top[i-1],pr.top[i],m,th,3.5);for(let i=1;i<pr.bot.length;i++)seg(it,pr,pr.bot[i-1],pr.bot[i],m,th,3.5);for(const [P,Q] of pr.webs)seg(it,pr,P,Q,mWb,1.5,3.5);}}
+{const _ar=addRafters3D;addRafters3D=function(p,r,b,add,std){if(rafterOf(r).system==='trusses'&&r.style!=='flat'||(rafterOf(r).system==='trusses'&&r.style==='flat'))return trusses3D(p,r,b,add,std);return _ar(p,r,b,add,std);};}
+// ---------- floor joists ----------
+const IJOISTS={'9.5':{d:9.5,span:{12:208,16:193,19.2:181,24:162}},'11.875':{d:11.875,span:{12:248,16:229,19.2:215,24:193}},'14':{d:14,span:{12:281,16:259,19.2:243,24:218}},'16':{d:16,span:{12:311,16:287,19.2:269,24:241}}};
+const FTRUSS={12:{d:12,span:216},14:{d:14,span:240},16:{d:16,span:264},18:{d:18,span:288},20:{d:20,span:312},24:{d:24,span:360}};
+function joistOpt(lv){const fr=framingOf(lv);return {type:fr.jtype||'lumber',ij:fr.ijoist||'11.875',ft:+(fr.ftruss||16),...fr};}
+function joistDepth(J){return J.type==='ijoist'?IJOISTS[J.ij].d:J.type==='truss'?FTRUSS[J.ft].d:(LUMBER[J.joist]||9.25);}
+function joistLabel(J){return J.type==='ijoist'?`${J.ij}" I-joists`:J.type==='truss'?`${J.ft}" open-web floor trusses`:`${J.joist} joists`;}
+// span limit for one joist (inches), 40 psf live (30 at bedrooms) + 10 dead plus finish
+function joistAllow(p,J,use='living',finish=null){const sp=J.spacing||16;if(J.type==='ijoist'){const t=IJOISTS[J.ij].span;return t[sp]||t[16];}if(J.type==='truss'){const s=FTRUSS[J.ft].span;return s*(sp<=16?1.1:sp<=19.2?1.05:1);}
+  const ll=use==='bedroom'?30:40,dl=10+(FLOOR_FINISH[finish]?.dl||0);const s=sp/12;const m=memberProps({species:J.species,size:J.joist},J.joist);let lo=24,hi=480;for(let i=0;i<30;i++){const mid=(lo+hi)/2;if(checkMember(m,mid,(ll+dl)*s,ll*s,{Cr:1.15,liveLim:360,totLim:240}).ratio<=1)lo=mid;else hi=mid;}return Math.floor(lo);}
+function joistLayout(p,lv){const J=joistOpt(lv);const first=groundLevel(p).id===lv.id;if(first&&J.foundation==='slab')return null;const ol=buildingOutline(p,lv.id);if(!ol)return null;const pts=ol.pts;
+  const xs=pts.map(q=>q.x),ys=pts.map(q=>q.y);const bx=[Math.min(...xs),Math.max(...xs)],by=[Math.min(...ys),Math.max(...ys)];
+  const alongX=J.dir==='x'?true:J.dir==='y'?false:(bx[1]-bx[0])<(by[1]-by[0]);// joists run the short way
+  const inner=offsetPoly(pts,-1.5);const sp=J.spacing||16;const depth=joistDepth(J);const out={J,alongX,depth,members:[],openings:[],warn:[],level:lv.id};
+  // supports: bearing walls on the level below (or this level's outside walls) and girders for crawlspace and basement floors
+  const below=sortedLevels(p).filter(l=>l.elevation<lv.elevation).pop();const walls=floorSupports(p,lv);
+  const sup=[];for(const w of walls){const d=wdir(w);const perp=alongX?Math.abs(d.y)>0.9:Math.abs(d.x)>0.9;if(!perp)continue;sup.push({c:alongX?(w.x1+w.x2)/2:(w.y1+w.y2)/2,a:alongX?Math.min(w.y1,w.y2):Math.min(w.x1,w.x2),b:alongX?Math.max(w.y1,w.y2):Math.max(w.x1,w.x2),kind:'wall'});}
+  const lo=alongX?bx[0]:by[0],hi=alongX?bx[1]:by[1],clo=alongX?by[0]:bx[0],chi=alongX?by[1]:bx[1];
+  if(first&&J.foundation!=='slab'&&(J.girders||0)>0){const n=Math.ceil((hi-lo)/J.girders);for(let i=1;i<n;i++){const c=lo+(hi-lo)*i/n;if(sup.some(s=>Math.abs(s.c-c)<24&&s.a<=clo+12&&s.b>=chi-12))continue;sup.push({c,a:clo,b:chi,kind:'girder'});
+    const g=alongX?[{x:c,y:clo},{x:c,y:chi}]:[{x:clo,y:c},{x:chi,y:c}];for(const [a,b] of clipSegPoly(g[0],g[1],inner))out.members.push({kind:'girder',a,b,label:'GIRDER'});}}
+  // stair openings in this floor
+  for(const s of p.stairs){const sl=lvlOf(p,s.level);const up=sl&&levelAbove(p,sl);if(!up||up.id!==lv.id)continue;const si=stairInfo(p,s);const cx=si.corners.map(c=>c.x),cy=si.corners.map(c=>c.y);
+    out.openings.push({x0:Math.min(...cx),y0:Math.min(...cy),x1:Math.max(...cx),y1:Math.max(...cy),what:'Stair'});}
+  for(const ch of (p.chimneys||[])){const cl=lvlOf(p,ch.level);if(!cl||cl.elevation>=lv.elevation||ch.status==='demolish')continue;let body=null;try{body=chimneyPolys(ch).body;}catch(e){}if(!body||!body.length)continue;const bxs=body.map(q=>q.x??q[0]),bys=body.map(q=>q.y??q[1]);out.openings.push({x0:Math.min(...bxs)-2,y0:Math.min(...bys)-2,x1:Math.max(...bxs)+2,y1:Math.max(...bys)+2,what:'Chimney (2" clearance)'});}
+  // joist lines across the cross axis, clipped to the rim, split at supports and openings
+  const lines=[];for(let t=clo+0.75+sp;t<chi-0.75;t+=sp)lines.push(t);
+  const spans=[];
+  for(const t of lines){const A=alongX?{x:lo-2,y:t}:{x:t,y:lo-2},Bq=alongX?{x:hi+2,y:t}:{x:t,y:hi+2};
+    for(const [a,b] of clipSegPoly(A,Bq,inner)){let s0=alongX?a.x:a.y,s1=alongX?b.x:b.y;if(s1<s0)[s0,s1]=[s1,s0];
+      // openings cut this joist into tail joists
+      const cuts=[];for(const o of out.openings){const ta=alongX?o.y0:o.x0,tb=alongX?o.y1:o.x1;if(t<ta||t>tb)continue;const ca=alongX?o.x0:o.y0,cb=alongX?o.x1:o.y1;cuts.push([ca,cb]);}
+      let pieces=[[s0,s1]];for(const [ca,cb] of cuts)pieces=pieces.flatMap(([u0,u1])=>cb<=u0||ca>=u1?[[u0,u1]]:[[u0,ca],[cb,u1]]).filter(q=>q[1]-q[0]>3);
+      for(const [u0,u1] of pieces){const tail=cuts.some(([ca,cb])=>Math.abs(u1-ca)<0.6||Math.abs(u0-cb)<0.6);
+        const sups=sup.filter(s=>s.c>u0+3&&s.c<u1-3&&t>=s.a-1&&t<=s.b+1).map(s=>s.c).sort((x,y)=>x-y);const brk=[u0,...sups,u1];
+        for(let i=1;i<brk.length;i++){const v0=brk[i-1],v1=brk[i];const P0=alongX?{x:v0,y:t}:{x:t,y:v0},P1=alongX?{x:v1,y:t}:{x:t,y:v1};spans.push({kind:tail?'tail':'joist',a:P0,b:P1,len:v1-v0,t});}}}}
+  // trimmers (doubled) beside openings and headers (doubled) across them: R502.10
+  for(const o of out.openings){const ta=alongX?o.y0:o.x0,tb=alongX?o.y1:o.x1,ca=alongX?o.x0:o.y0,cb=alongX?o.x1:o.y1;const hdrSpan=tb-ta;const dbl=hdrSpan>48?2:1;
+    for(const tt of [ta-0.75,tb+0.75]){const A=alongX?{x:lo-2,y:tt}:{x:tt,y:lo-2},Bq=alongX?{x:hi+2,y:tt}:{x:tt,y:hi+2};for(const [a,b] of clipSegPoly(A,Bq,inner))out.members.push({kind:'trimmer',a,b,ply:dbl,label:dbl>1?'DBL TRIMMER':'TRIMMER'});}
+    for(const cc of [ca-0.75,cb+0.75]){const a=alongX?{x:cc,y:ta}:{x:ta,y:cc},b=alongX?{x:cc,y:tb}:{x:tb,y:cc};out.members.push({kind:'header',a,b,ply:dbl,label:dbl>1?'DBL HEADER':'HEADER'});}
+    if(hdrSpan>72)out.warn.push(`${o.what} opening header spans ${fmtLen(hdrSpan)}: R502.10 calls for hangers and an engineered header over 6'.`);}
+  // drop joists that collide with trimmers
+  const trimT=new Set(out.openings.flatMap(o=>[alongX?o.y0:o.x0,alongX?o.y1:o.x1]));
+  for(const s of spans){if([...trimT].some(tt=>Math.abs(s.t-tt)<sp*0.35))continue;out.members.push(s);}
+  // rim around the outside
+  for(let i=0;i<inner.length;i++){const a=inner[i],b=inner[(i+1)%inner.length];out.members.push({kind:'rim',a,b,len:dist(a,b)});}
+  // spans against the allowable span
+  const roomAt=q=>p.rooms.find(r=>r.level===lv.id&&inPoly(q.x,q.y,r.pts));
+  for(const m of out.members){if(m.kind!=='joist'&&m.kind!=='tail')continue;const mid={x:(m.a.x+m.b.x)/2,y:(m.a.y+m.b.y)/2};const rm=roomAt(mid);const al=joistAllow(p,J,rm?.use,rm?.finish);m.allow=al;m.ok=m.len<=al+0.5;}
+  const bad=out.members.filter(m=>m.ok===false);if(bad.length)out.warn.push(`${bad.length} joist span${bad.length===1?'':'s'} longer than ${joistLabel(J)} at ${sp}" o.c. allow (longest ${fmtLen(Math.max(...bad.map(m=>m.len)))}). Add a beam or bearing wall below, use deeper joists, or close the spacing.`);
+  out.sup=sup;out.inner=inner;out.lo=lo;out.hi=hi;return out;}
+// what to order for the floor framing
+function joistSchedule(L){const J=L.J;const rows=[];const len=m=>m.len??dist(m.a,m.b);const buy=x=>Math.max(8,Math.ceil((x+3)/24)*2);// stock lengths in even feet, with 1-1/2" bearing each end
+  const byLen={};for(const m of L.members.filter(m=>m.kind==='joist'||m.kind==='tail'))byLen[buy(len(m))]=(byLen[buy(len(m))]||0)+1;
+  const name=joistLabel(J).replace(/s$/,'');for(const [ft,n] of Object.entries(byLen).sort((a,b)=>a[0]-b[0]))rows.push({item:`${name} ${ft}'`,qty:n,unit:'EA'});
+  const tr=L.members.filter(m=>m.kind==='trimmer'||m.kind==='header');for(const m of tr)rows.push({item:`${m.kind==='trimmer'?'Trimmer':'Header'} (${m.ply>1?'doubled ':''}${J.type==='lumber'?J.joist:'rim board'}) ${buy(len(m))}'`,qty:m.ply||1,unit:'EA'});
+  const rimLF=L.members.filter(m=>m.kind==='rim').reduce((s,m)=>s+len(m),0)/12;rows.push({item:J.type==='lumber'?`Rim joist ${J.joist}`:`Rim board ${fi(joistDepth(J))}" LSL`,qty:Math.ceil(rimLF*1.05),unit:'LF'});
+  const hangers=L.members.filter(m=>m.kind==='tail').length+tr.filter(m=>m.kind==='header').length*2;if(hangers)rows.push({item:J.type==='ijoist'?'I-joist hangers':'Joist hangers',qty:hangers,unit:'EA'});
+  const gir=L.members.filter(m=>m.kind==='girder');if(gir.length)rows.push({item:'Girder, (3) 2x10 built-up or LVL per plan',qty:Math.ceil(gir.reduce((s,m)=>s+len(m),0)/12),unit:'LF'});
+  const blk=L.sup.filter(s=>s.kind==='girder'||s.kind==='wall').length;const nJ=L.members.filter(m=>m.kind==='joist').length;if(blk)rows.push({item:`Blocking at bearing lines (${J.type==='lumber'?J.joist:'I-joist blocking'})`,qty:Math.ceil(nJ/Math.max(1,blk+1))*blk,unit:'EA'});
+  const area=Math.abs(polyArea(L.inner.map(q=>[q.x,q.y])))/144;rows.push({item:'Subfloor 23/32" T&G, 4x8',qty:Math.ceil(area/32*1.08),unit:'SHT'},{item:'Subfloor adhesive, 28 oz',qty:Math.ceil(area/60),unit:'TUBE'});
+  return rows;}
+function trussOrder(p){const rows=[];for(const r of p.roofs.filter(r=>r.status!=='existing'&&rafterOf(r).system==='trusses')){const L=trussLayout(p,r);for(const s of L.schedule)rows.push({...s,roof:r.id});}return rows;}
+// ---------- takeoff ----------
+regExtra({takeoff:(p,add)=>{const C='Framing (trusses and joists)';
+  for(const r of p.roofs.filter(r=>r.status!=='existing'&&rafterOf(r).system==='trusses')){const L=trussLayout(p,r);
+    for(const s of L.schedule)add(C,`Truss ${s.mark}: ${TRUSS_KIND_LABEL[s.kind]||s.kind}${s.kind==='common'&&s.type!=='common'?' ('+s.type+')':''}, ${fmtLen(s.span)} span, ${s.pitch}${s.ply>1?`, ${s.ply}-ply`:''}`,s.qty,'EA');
+    const bear=L.items.reduce((n,it)=>n+(it.jack?1:2),0);add(C,'Hurricane ties (truss to plate)',bear,'EA','R802.11 uplift connection');
+    const hang=L.items.filter(it=>it.jack&&!it.side).length;if(hang)add(C,'Jack truss hangers at hip girders',hang,'EA');
+    const rows=L.Vl>=432?3:L.Vl>=288?2:1;add(C,'Permanent truss bracing, 2x4 continuous lateral',Math.ceil(rows*L.Ul/12*1.1),'LF','per truss drawings');}
+  for(const lv of p.levels){const L=joistLayout(p,lv);if(!L||!L.members.some(m=>m.kind==='joist'))continue;if(!(p.walls||[]).some(w=>w.level===lv.id&&w.status!=='existing'))continue;for(const r of joistSchedule(L))add(C,`${lv.name}: ${r.item}`,r.qty,r.unit);}}});
+// ---------- plan overlays (Designer tabs and the framing sheets) ----------
+function rafterLines(r,b){const rf=rafterOf(r);const sp=rf.spacing||16;const out=[];
+  for(const f of b.polys){const [a,c,e]=f;const u=[c[0]-a[0],c[1]-a[1],c[2]-a[2]],v=[e[0]-a[0],e[1]-a[1],e[2]-a[2]];const n=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]];if(Math.abs(n[2])<1e-9)continue;
+    let g={x:n[0]/n[2],y:n[1]/n[2]};const gl=Math.hypot(g.x,g.y);if(gl<1e-6)continue;g={x:g.x/gl,y:g.y/gl};const per={x:-g.y,y:g.x};const xy=f.map(q=>({x:q[0],y:q[1]}));
+    const proj=xy.map(q=>q.x*per.x+q.y*per.y),pg=xy.map(q=>q.x*g.x+q.y*g.y);const s0=Math.min(...proj),s1=Math.max(...proj),t0=Math.min(...pg),t1=Math.max(...pg);
+    for(let s=s0+0.75;s<=s1-0.5;s+=sp){const A={x:per.x*s+g.x*(t0-2),y:per.y*s+g.y*(t0-2)},C={x:per.x*s+g.x*(t1+2),y:per.y*s+g.y*(t1+2)};for(const [q0,q1] of clipSegPoly(A,C,xy))out.push({a:q0,b:q1});}}
+  return out;}
+function roofFramingSVG(p,lv,S,view){const out=[];const fs=Math.max(8,Math.min(12,11*view.s));
+  for(const r of p.roofs.filter(r=>r.level===lv.id)){const sys=rafterOf(r).system;const b=roofBuild(r,roofTop(p,r));
+    out.push(html`<polygon key=${'ro'+r.id} points=${b.outline.map(q=>S(q[0],q[1]).join(',')).join(' ')} className="fr-roof"/>`);
+    if(sys!=='trusses'){const rf=rafterOf(r);rafterLines(r,b).forEach((l,i)=>{const A=S(l.a.x,l.a.y),B=S(l.b.x,l.b.y);out.push(html`<line key=${r.id+'rf'+i} x1=${A[0]} y1=${A[1]} x2=${B[0]} y2=${B[1]} className="fr-truss"/>`);});
+      for(const [i,l] of (b.lines||[]).entries()){const A=S(l[0][0],l[0][1]),B=S(l[1][0],l[1][1]);out.push(html`<line key=${r.id+'rl'+i} x1=${A[0]} y1=${A[1]} x2=${B[0]} y2=${B[1]} className="fr-gable"/>`);}
+      const c=S(r.x+r.w/2,r.y+r.h/2);out.push(html`<text key=${'rl'+r.id} x=${c[0]} y=${c[1]} textAnchor="middle" className="fr-t halo">${rf.rafter} RAFTERS @ ${rf.spacing}" O.C.</text>`);continue;}
+    const L=trussLayout(p,r);L.items.forEach((it,i)=>{const A=S(it.a.x,it.a.y),B=S(it.b.x,it.b.y);out.push(html`<line key=${r.id+'t'+i} x1=${A[0]} y1=${A[1]} x2=${B[0]} y2=${B[1]} className=${'fr-truss fr-'+it.kind}/>`);});
+    // marks every few trusses
+    const seen={};L.items.forEach((it,i)=>{if(it.side)return;const k=it.mark;seen[k]=(seen[k]||0)+1;if(it.kind==='common'&&seen[k]%3!==2)return;if(it.jack&&seen[k]>1)return;const m=S((it.a.x+it.b.x)/2,(it.a.y+it.b.y)/2);
+      out.push(html`<text key=${r.id+'m'+i} x=${m[0]} y=${m[1]} textAnchor="middle" className="fr-mark halo" style=${{fontSize:fs+'px'}}>${it.mark}${it.ply>1?' ('+it.ply+')':''}</text>`);});}
+  return out;}
+function floorFramingSVG(p,lv,S,view){const L=joistLayout(p,lv);if(!L)return [html`<text key="nf" x="20" y="60" className="fr-t">This floor is a slab: no joists.</text>`];const out=[];
+  L.members.forEach((m,i)=>{const A=S(m.a.x,m.a.y),B=S(m.b.x,m.b.y);out.push(html`<line key=${'j'+i} x1=${A[0]} y1=${A[1]} x2=${B[0]} y2=${B[1]} className=${'fr-j fr-'+m.kind+(m.ok===false?' fr-bad':'')}/>`);});
+  for(const [i,o] of L.openings.entries()){const a=S(o.x0,o.y0),b=S(o.x1,o.y1);out.push(html`<g key=${'op'+i}><rect x=${Math.min(a[0],b[0])} y=${Math.min(a[1],b[1])} width=${Math.abs(b[0]-a[0])} height=${Math.abs(b[1]-a[1])} className="fr-open"/><line x1=${a[0]} y1=${a[1]} x2=${b[0]} y2=${b[1]} className="fr-open"/><line x1=${a[0]} y1=${b[1]} x2=${b[0]} y2=${a[1]} className="fr-open"/></g>`);}
+  const xs=L.inner.map(q=>q.x),ys=L.inner.map(q=>q.y);const cs=[L.lo,...L.sup.map(q=>q.c).sort((x,y)=>x-y),L.hi];let bi=0;for(let i=1;i<cs.length;i++)if(cs[i]-cs[i-1]>cs[bi+1]-cs[bi])bi=i-1;const mid=(cs[bi]+cs[bi+1])/2,bay=cs[bi+1]-cs[bi];const cc=L.alongX?(Math.min(...ys)+Math.max(...ys))/2:(Math.min(...xs)+Math.max(...xs))/2;const c=L.alongX?{x:mid,y:cc}:{x:cc,y:mid};const len=Math.min(96,bay*0.38);
+  const A=S(L.alongX?c.x-len:c.x,L.alongX?c.y:c.y-len),B=S(L.alongX?c.x+len:c.x,L.alongX?c.y:c.y+len);const ang=Math.atan2(B[1]-A[1],B[0]-A[0]);const ah=9;
+  out.push(html`<g key="arr" className="fr-arrow"><line x1=${A[0]} y1=${A[1]} x2=${B[0]} y2=${B[1]}/>${[[A,ang+Math.PI],[B,ang]].map(([P,a],k)=>html`<polygon key=${k} points=${`${P[0]},${P[1]} ${P[0]-ah*Math.cos(a-0.45)},${P[1]-ah*Math.sin(a-0.45)} ${P[0]-ah*Math.cos(a+0.45)},${P[1]-ah*Math.sin(a+0.45)}`}/>`)}</g>`);
+  const T=S(c.x,c.y);out.push(html`<text key="lab" x=${T[0]+(L.alongX?0:10)} y=${T[1]+(L.alongX?-10:4)} textAnchor=${L.alongX?'middle':'start'} className="fr-t halo">${joistLabel(L.J).toUpperCase()} @ ${L.J.spacing}" O.C.</text>`);
+  for(const [i,m] of L.members.filter(m=>m.kind==='girder').entries()){const q=S(m.a.x+(m.b.x-m.a.x)*0.1,m.a.y+(m.b.y-m.a.y)*0.1);out.push(html`<text key=${'g'+i} x=${q[0]+6} y=${q[1]-6} className="fr-mark halo">GIRDER</text>`);}
+  return out;}
+// ---------- framing sheets in the plan set ----------
+function framingSheets(p){const out=[];const P=PAPERS[p.sheet?.paper]||PAPERS.tabloid;const k=P.k;const R=1.2*k;const pp=filteredProject(p,'proposed');
+  const lineDL=(dl,PT,a,b,w,o={})=>{const A=PT(a.x,a.y),B=PT(b.x,b.y);dl.line(A[0],A[1],B[0],B[1],w,o);};
+  const wallsDL=(dl,PT,lvId)=>{for(const w of pp.walls.filter(w=>w.level===lvId)){const d=wdir(w),n={x:-d.y,y:d.x},t=w.thick/2;dl.poly([PT(w.x1+n.x*t,w.y1+n.y*t),PT(w.x2+n.x*t,w.y2+n.y*t),PT(w.x2-n.x*t,w.y2-n.y*t),PT(w.x1-n.x*t,w.y1-n.y*t)],{fill:'#e6e6e6',stroke:MID,w:0.35});}};
+  const table=(dl,A,title,head,rows,k)=>{let y=A.y0+0.3*k;const x=A.x1-3.4*k;dl.text(x,y,title,{size:7*k,bold:true});y+=0.2*k;dl.text(x,y,head.join('   '),{size:4.6*k,bold:true,color:MID});y+=0.16*k;for(const r of rows.slice(0,34)){dl.text(x,y,r,{size:4.6*k});y+=0.15*k;}return y;};
+  // roof framing
+  const tr=p.roofs.filter(r=>rafterOf(r).system==='trusses');
+  if(tr.length){const lvId=tr[0].level;let B=planBounds(pp,lvId);for(const r of tr){const oh=r.overhang??12;B={x0:Math.min(B.x0,r.x-oh),y0:Math.min(B.y0,r.y-oh),x1:Math.max(B.x1,r.x+r.w+oh),y1:Math.max(B.y1,r.y+r.h+oh)};}
+    out.push(planSheet(P,p,'S3.0','Roof truss layout',B,R,(dl,G)=>{const {PT,A}=G;wallsDL(dl,PT,lvId);const rows=[];
+      for(const r of tr){const L=trussLayout(p,r);const b=roofBuild(r,roofTop(p,r));dl.poly(b.outline.map(q=>PT(q[0],q[1])),{stroke:INK,w:0.6,dash:[0.08*k,0.04*k]});
+        for(const it of L.items)lineDL(dl,PT,it.a,it.b,it.kind==='girder'?1.6:it.kind==='gable'?1.0:0.5,it.jack?{dash:[0.05*k,0.03*k]}:{});
+        const seen={};for(const it of L.items){if(it.side)continue;seen[it.mark]=(seen[it.mark]||0)+1;if(it.kind==='common'&&seen[it.mark]%3!==2)continue;if(it.jack&&seen[it.mark]>1)continue;const m=PT((it.a.x+it.b.x)/2,(it.a.y+it.b.y)/2);dl.text(m[0],m[1]-0.03*k,it.mark+(it.ply>1?` (${it.ply})`:''),{size:5*k,bold:true,anchor:'middle'});}
+        for(const s of L.schedule)rows.push(`${s.mark.padEnd(5)} ${String(s.qty).padStart(3)}  ${(TRUSS_KIND_LABEL[s.kind]||s.kind).split(' (')[0].padEnd(14)} ${fmtLen(s.span).padEnd(9)} ${s.pitch}  heel ${fi(s.heel)}"${s.ply>1?'  '+s.ply+'-ply':''}`);}
+      let y=table(dl,A,'TRUSS SCHEDULE',['MARK','QTY','TYPE','SPAN','PITCH'],rows,k);
+      for(const t of ['Trusses designed by the truss manufacturer to IRC R802.10 and','ANSI/TPI 1; submit drawings before fabrication.','Fasten each truss to the plate per R802.11 (uplift).','Install permanent bracing per the truss drawings and BCSI.','Girders (G1) are multi-ply; hang jacks with hangers.'])dl.text(A.x1-3.4*k,(y+=0.15*k),t,{size:4.4*k,color:MID});},3.5*k));}
+  // floor framing per level
+  for(const lv of sortedLevels(p)){const L=joistLayout(p,lv);if(!L||!L.members.some(m=>m.kind==='joist'))continue;const B=planBounds(pp,lv.id);const no='S2.'+(sortedLevels(p).indexOf(lv)+1);
+    out.push(planSheet(P,p,no,`${lv.name} joist layout`,B,R,(dl,G)=>{const {PT,A}=G;const below=sortedLevels(p).filter(l=>l.elevation<lv.elevation).pop();wallsDL(dl,PT,below?below.id:lv.id);
+      for(const m of L.members){const w={rim:1.2,girder:1.8,header:1.2,trimmer:1.2,joist:0.35,tail:0.35}[m.kind]||0.4;lineDL(dl,PT,m.a,m.b,w,m.kind==='girder'?{dash:[0.12*k,0.04*k,0.03*k,0.04*k]}:m.ok===false?{color:'#c23a32'}:{});}
+      for(const o of L.openings){const a=PT(o.x0,o.y0),b=PT(o.x1,o.y1);dl.line(a[0],a[1],b[0],b[1],0.4);dl.line(a[0],b[1],b[0],a[1],0.4);dl.text((a[0]+b[0])/2,(a[1]+b[1])/2,'OPEN',{size:5*k,bold:true,anchor:'middle'});}
+      const xs=L.inner.map(q=>q.x),ys=L.inner.map(q=>q.y);const c=PT((Math.min(...xs)+Math.max(...xs))/2,(Math.min(...ys)+Math.max(...ys))/2);dl.text(c[0],c[1]-0.08*k,`${joistLabel(L.J).toUpperCase()} @ ${L.J.spacing}" O.C.`,{size:6.5*k,bold:true,anchor:'middle'});
+      const rows=joistSchedule(L).map(r=>`${String(r.qty).padStart(4)} ${r.unit.padEnd(5)} ${r.item}`);let y=table(dl,A,'FLOOR FRAMING SCHEDULE',['QTY','UNIT','ITEM'],rows,k);
+      for(const t of [...L.warn.slice(0,3),'Bearing 1-1/2" on wood, 3" on masonry (R502.6).','Double trimmers and headers over 4\' openings (R502.10).','Full-depth blocking or rim at joist ends (R502.7).'])dl.text(A.x1-3.4*k,(y+=0.15*k),t.slice(0,78),{size:4.4*k,color:MID});},3.5*k));}
+  return out;}
+{const _bs=buildSheets;buildSheets=function(p){const out=_bs(p);try{const fs=framingSheets(p);if(fs.length){let i=-1;out.forEach((x,j)=>{if(/^S1/.test(x.no))i=j;});if(i<0)i=out.findIndex(x=>/^A6|^M|^E/.test(x.no))-1;out.splice(i>=0?i+1:out.length,0,...fs.sort((a,b)=>a.no>b.no?1:-1));}}catch(e){console.warn('framing sheets',e);}return out;};}
+// ---------- checks ----------
+regExtra({checks:(p,add)=>{for(const lv of p.levels){let L=null;try{L=joistLayout(p,lv);}catch(e){}if(!L)continue;const bad=L.members.filter(m=>m.ok===false);if(bad.length){const m=bad.sort((a,b)=>b.len-a.len)[0];add('warn',null,`${lv.name}: floor joists overspanned`,`${joistLabel(L.J)} at ${L.J.spacing}" o.c. reach about ${fmtLen(m.allow)} here; the longest run is ${fmtLen(m.len)}. Add a beam or bearing wall, go deeper, or close the spacing (R502.3).`,null,{x:(m.a.x+m.b.x)/2,y:(m.a.y+m.b.y)/2},lv.id);}}
+  for(const r of p.roofs.filter(r=>r.status!=='existing'&&r.style!=='flat')){const v=(r.framing||{}).vent;if(v&&v.none){const lv=lvlOf(p,r.level);add('warn',null,'Attic is not vented',`R806.1 requires cross ventilation of enclosed attics (1/150 of the attic area, or 1/300 with balanced high and low vents), unless the attic is built unvented under R806.5.`,{kind:'roof',id:r.id},{x:r.x+r.w/2,y:r.y+r.h/2},r.level);}}}});
 /* ======================= materials ======================= */
 // Builder's takeoff from the model. Quantities are estimates with waste included; prices are entered by the user.
 const SIDING={vinyl:{label:'Vinyl siding'},fibercement:{label:'Fiber cement lap siding'},brick:{label:'Brick veneer'},wood:{label:'Wood lap siding'},concrete:{label:'Poured concrete or block (basement wall)'}};
@@ -13547,8 +13744,10 @@ function takeoff(p,{waste=0.1}={}){
     add('Roofing','Ridge and hip cap',ridge,'LF');add('Roofing','Drip edge, 10\'',Math.ceil(per/10),'EA');
     const axis=roofAxis(r);const Ul=axis==='x'?r.w:r.h,Vl=axis==='x'?r.h:r.w;const run=(r.style==='shed'?Vl:Vl/2)+r.overhang;
     const rafterLen=run*Math.sqrt(1+Math.pow(r.pitch/12,2));const rm=S.find(x=>x.id==='rf-'+r.id);
-    add('Roof and ceiling framing',`${(rm&&rm.suggest)||rf.rafter} x ${stockLen(rafterLen)}' rafter`,(Math.ceil(Ul/rf.spacing)+1)*(r.style==='shed'?1:2),'EA',`${rf.spacing}" o.c.`);
+    if(rf.system!=='trusses')add('Roof and ceiling framing',`${(rm&&rm.suggest)||rf.rafter} x ${stockLen(rafterLen)}' rafter`,(Math.ceil(Ul/rf.spacing)+1)*(r.style==='shed'?1:2),'EA',`${rf.spacing}" o.c.`);
     {const t=roofTrimOf(r);const {eaves}=roofEdges(b);const eL=eaves.reduce((s,[a,c])=>s+Math.hypot(c[0]-a[0],c[1]-a[1]),0)/12;
+      if(rf.ice&&eL>0)add('Roofing','Ice and water barrier, 2 sq roll',Math.ceil(eL*((r.overhang??12)+24)/12/200*W*10)/10,'roll','eaves to 24" inside the wall (R905.1.2)');
+      if(rf.vent&&rf.vent.ridge&&r.style!=='flat')add('Roofing','Ridge vent',Math.ceil(ridge*0.8),'LF','attic exhaust (R806.2)');if(rf.vent&&rf.vent.soffit&&eL>0)add('Roofing','Continuous soffit vent',Math.ceil(eL),'LF','attic intake');
       if(t.gutters&&eL>0){add('Roofing',`Gutter, 5" K-style ${t.gutterColor}`,Math.ceil(eL*W),'LF');add('Roofing','Downspout 2x3 with elbows',Math.max(2,eaves.length*2),'EA','one at each end of each eave run');}
       if(eL>0)add('Exterior trim',`1x${t.fascia+2} fascia board`,Math.ceil(eL*W),'LF');if(t.soffit&&eL>0)add('Exterior trim','Vented soffit',Math.ceil(eL*(r.overhang||12)/12*W),'SF');}
     if(r.style!=='shed')add('Roof and ceiling framing',`${LUMBER[(rm&&rm.suggest)||rf.rafter]>9?'2x12':'2x10'} ridge board`,Math.max(0,ridge),'LF');
@@ -19224,6 +19423,8 @@ const DZ_TABS=[
   ['plumb','Plumbing',{fxOnly:f=>PLUMB_T.has(f.type),elec:false,counters:false}],
   ['furn','Furniture',{fxOnly:f=>isDecor(f),elec:false,counters:false}],
   ['land','Landscape',{fxOnly:()=>false,elec:false,roomLabels:false,site:true,decks:true}],
+  ['rfr','Roof framing',{fxOnly:()=>false,elec:false,counters:false,roomLabels:false,wallDims:false,dims:false,roof:false,issues:false,site:false,decks:false,overlay:(p,lv,S,v)=>roofFramingSVG(p,lv,S,v)}],
+  ['ffr','Floor framing',{fxOnly:()=>false,elec:false,counters:false,roomLabels:false,wallDims:false,dims:false,roof:false,issues:false,site:false,decks:false,overlay:(p,lv,S,v)=>floorFramingSVG(p,lv,S,v)}],
   ['nkba','NKBA',{elec:false}],
   ['legend','Legend',{}],
   ['print','Print',{}],
@@ -19270,12 +19471,12 @@ function DesignerView({D}){
   const menus=[
     ['View',[{label:'Plan view in this pane',run:()=>setView(cur,'plan')},{label:'3D perspective in this pane',run:()=>setView(cur,'3d')},{label:'Elevation in this pane',run:()=>setView(cur,'elev')},{label:'Exterior elevation in this pane',run:()=>setView(cur,'ext:south')},{label:'Reflected ceiling plan in this pane',run:()=>setView(cur,'rcp')},'-',
       {label:'Fit all views',key:'F',run:()=>{D.fitPlan();D.fit3();}},{label:(D.showRoof?'Hide':'Show')+' roof in 3D',run:()=>D.setShowRoof(!D.showRoof)},{label:(D.cutaway?'Show':'Cut away')+' levels above',run:()=>D.setCutaway(!D.cutaway)},{label:(D.showElec?'Hide':'Show')+' electrical on plan',run:()=>D.setShowElec(!D.showElec)},{label:(D.structView?'Hide':'Show')+' structure check in 3D',run:()=>D.setStructView(!D.structView)},'-',
-      ...['all','nodims','cab','ctr','arch','elec','plumb','furn','land','nkba'].map(k=>({label:'Plan shows: '+DZ_TABS.find(t=>t[0]===k)[1],run:()=>setTab(k)}))]],
-    ['Place',[...archIds.map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})),'-',{label:'Catalog item (from the left dock)…',run:()=>setDock(true)},
+      ...['all','nodims','cab','ctr','arch','elec','plumb','furn','land','rfr','ffr','nkba'].map(k=>({label:'Plan shows: '+DZ_TABS.find(t=>t[0]===k)[1],run:()=>setTab(k)}))]],
+    ['Place',[...archIds.map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})),'-',{label:'Roof wizard…',run:()=>D.setDlg('roofwiz')},{label:'Floor joists…',run:()=>D.setDlg('joists')},'-',{label:'Catalog item (from the left dock)…',run:()=>setDock(true)},
       ...['column','chimney','curvewall','deck','deckpoly','porch','steps','rail','skylight','dormer','plant','play','playarea','block','fieldpin'].filter(id=>toolInfo(id)).map(id=>({label:toolInfo(id).label,run:()=>pickTool(id)}))]],
     ['Report',[{label:'Materials and price report',run:()=>D.setMode('materials')},{label:'Cabinet order and schedule',run:()=>D.setMode('materials')},{label:'Code and NKBA check',run:()=>{D.setPanel('checks');setInsp(true);D.setCollapsed(false);}},{label:'Job schedule and lead times',run:()=>D.setMode('systems')},{label:'Store prices…',run:()=>D.setDlg('storeprices')}]],
     ['Design',[{label:'Cabinet job settings (door, finish, species)…',run:()=>{D.setPanel('props');setSel(null);setInsp(true);D.setCollapsed(false);say('Job-wide cabinet settings are in the panel on the right when nothing is selected.');}},{label:'NKBA checks on or off',run:()=>{D.setPanel('checks');setInsp(true);D.setCollapsed(false);}},
-      {label:'Lighting, energy and systems',run:()=>D.setMode('systems')},...LAYOUTS.map(([k,l])=>({label:'Layout: '+l,run:()=>{const room=(sel&&sel.kind==='room'&&p.rooms.find(r=>r.id===sel.id))||(selF&&p.rooms.find(r=>r.level===selF.level&&inPoly(selF.x,selF.y,r.pts)))||p.rooms.find(r=>r.level===lv.id&&(k==='bath5'?r.use==='bath':r.use==='kitchen'));if(!room){say('Select a room first.',false);return;}const r=layoutTemplate(p,room,k);if(r.n)commit(r.p);say(r.msg,!!r.n);}})),'-',{label:'Fill the cabinet run (cabinets and fillers)',disabled:!(selF&&isCab(selF)),run:()=>{const r=fillRun(p,selF);if(r.n)commit(r.p);say(r.msg,!!r.n);}},{label:'Under-cabinet lights for this level',run:()=>{const r=underCabLights(p,lv.id);if(r.n){commit(r.p);say(`Added ${r.n} under-cabinet light${r.n===1?'':'s'}.`);}else say('Every wall cabinet on this level already has an under-cabinet light, or there are no wall cabinets.',false);}},{label:'Remove or open a wall…',run:()=>D.setDlg('wallrm'),disabled:!(sel&&sel.kind==='wall')},{label:'Library and customize items',run:()=>{D.setPanel('library');setInsp(true);D.setCollapsed(false);}}]],
+      {label:'Lighting, energy and systems',run:()=>D.setMode('systems')},...LAYOUTS.map(([k,l])=>({label:'Layout: '+l,run:()=>{const room=(sel&&sel.kind==='room'&&p.rooms.find(r=>r.id===sel.id))||(selF&&p.rooms.find(r=>r.level===selF.level&&inPoly(selF.x,selF.y,r.pts)))||p.rooms.find(r=>r.level===lv.id&&(k==='bath5'?r.use==='bath':r.use==='kitchen'));if(!room){say('Select a room first.',false);return;}const r=layoutTemplate(p,room,k);if(r.n)commit(r.p);say(r.msg,!!r.n);}})),'-',{label:'Roof wizard…',run:()=>D.setDlg('roofwiz')},{label:'Floor framing (joists)…',run:()=>D.setDlg('joists')},{label:'Show roof framing',run:()=>setTab('rfr')},{label:'Show floor framing',run:()=>setTab('ffr')},'-',{label:'Fill the cabinet run (cabinets and fillers)',disabled:!(selF&&isCab(selF)),run:()=>{const r=fillRun(p,selF);if(r.n)commit(r.p);say(r.msg,!!r.n);}},{label:'Under-cabinet lights for this level',run:()=>{const r=underCabLights(p,lv.id);if(r.n){commit(r.p);say(`Added ${r.n} under-cabinet light${r.n===1?'':'s'}.`);}else say('Every wall cabinet on this level already has an under-cabinet light, or there are no wall cabinets.',false);}},{label:'Remove or open a wall…',run:()=>D.setDlg('wallrm'),disabled:!(sel&&sel.kind==='wall')},{label:'Library and customize items',run:()=>{D.setPanel('library');setInsp(true);D.setCollapsed(false);}}]],
     ['Draw',cadIds.filter(id=>!/^op-|dim|meas/.test(id)).map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})).concat(['-'],cadIds.filter(id=>/^op-/.test(id)).map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})))],
     ['Dimensions',cadIds.filter(id=>/dim|meas/.test(id)).map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})).concat(['-',{label:'Show all dimensions',run:()=>setTab('all')},{label:'Hide dimensions',run:()=>setTab('nodims')}])],
     ['Render',[{label:'Render studio…',run:D.openRender},{label:'360° panorama…',run:()=>D.setDlg('pano')},{label:'Walk-through video…',run:()=>D.setDlg('video')},{label:'Export 3D model…',run:D.openExport}]],
@@ -19680,6 +19881,90 @@ function layoutTemplate(p,room,kind){const E=roomEdgesOf(p,room);if(!E.length)re
   for(const f of add)delete f._w;
   if(!add.length)return {p,n:0,msg:'There was no clear wall to lay out a kitchen.'};
   return {p:{...p,fixtures:[...p.fixtures,...add]},n:add.length,msg:`Laid out a ${(LAYOUTS.find(x=>x[0]===kind)||['',''])[1].replace(/^L-/,'L-').toLowerCase().replace('l-shaped','L-shaped')} in ${room.name}: ${add.filter(isCab).length} cabinets and ${add.filter(f=>!isCab(f)).length} appliances.${add.some(f=>f.type==='fridge')?'':' There was no clear 36" spot left for the refrigerator; place one from the catalog.'} Undo takes it out.`};}
+/* ======================= roof wizard and floor framing dialogs ======================= */
+const fitS=(B,W,H,pad=16)=>{const s=Math.min((W-2*pad)/Math.max(1,B.x1-B.x0),(H-2*pad)/Math.max(1,B.y1-B.y0));const ox=(W-(B.x1-B.x0)*s)/2,oy=(H-(B.y1-B.y0)*s)/2;return {S:(x,y)=>[ox+(x-B.x0)*s,oy+(y-B.y0)*s],s};};
+const ROOF_ICONS={gable:'M4 18 L20 18 L20 12 L12 5 L4 12 Z',hip:'M3 18 L21 18 L17 9 L7 9 Z',dutch:'M3 18 L21 18 L17 10 L14 10 L14 7 L10 7 L10 10 L7 10 Z',gambrel:'M3 18 L21 18 L20 11 L15 6 L9 6 L4 11 Z',mansard:'M3 18 L21 18 L19 9 L5 9 Z',shed:'M4 18 L20 18 L20 9 L4 13 Z',flat:'M3 18 L21 18 L21 12 L3 12 Z'};
+function RoofWizard({p,commit,levelId,onClose}){const lvls=sortedLevels(p);const topLv=lvls.filter(l=>!levelAbove(p,l)).pop()||lvls[lvls.length-1];
+  const def=p.settings.roofDefault||{};const cur=p.roofs.find(r=>r.level===(levelId||topLv.id))||p.roofs[0]||{};const rf0=cur.framing||{};
+  const [lv,setLv]=useState(()=>(p.roofs.some(r=>r.level===levelId)||!levelAbove(p,lvlOf(p,levelId)||topLv))?levelId||topLv.id:topLv.id);
+  const [o,setO]=useState(()=>({style:cur.style||def.style||'hip',pitch:cur.pitch||def.pitch||6,overhang:cur.overhang??def.overhang??12,ridge:'auto',system:rf0.system||'trusses',trussType:rf0.trussType||'common',trussSpacing:rf0.trussSpacing||24,heel:rf0.heel??null,setback:rf0.setback||84,girderPly:rf0.girderPly||2,
+    rafter:rf0.rafter||'2x8',spacing:rf0.spacing||16,species:rf0.species||'syp2',cover:rf0.cover||'asphalt',under:'synthetic',ice:false,drip:true,ridgeVent:true,soffitVent:true,gutters:true}));
+  const set=patch=>setO(x=>({...x,...patch}));
+  const framing={system:o.system,cover:o.cover,trussType:o.trussType,trussSpacing:o.trussSpacing,...(o.heel!=null?{heel:o.heel}:{}),setback:o.setback,girderPly:o.girderPly,rafter:o.rafter,spacing:o.spacing,species:o.species,under:o.under,ice:o.ice,drip:o.drip,vent:{ridge:o.ridgeVent,soffit:o.soffitVent,none:!o.ridgeVent&&!o.soffitVent}};
+  const roofs=useMemo(()=>autoRoof(p,lv,{style:o.style,pitch:o.pitch,overhang:o.overhang}).map(r=>({...r,ridge:o.ridge==='auto'||['hip','dutch','mansard'].includes(o.style)?r.ridge:o.ridge,framing,trim:{...(r.trim||{}),gutters:o.gutters}})),[p,lv,o]);
+  const q=useMemo(()=>({...p,roofs:[...p.roofs.filter(r=>r.level!==lv),...roofs]}),[p,roofs,lv]);
+  const B0=planBounds(p,lv);const B=roofs.reduce((B,r)=>{const oh=r.overhang??12;return {x0:Math.min(B.x0,r.x-oh),y0:Math.min(B.y0,r.y-oh),x1:Math.max(B.x1,r.x+r.w+oh),y1:Math.max(B.y1,r.y+r.h+oh)};},B0);
+  const {S}=fitS(B,380,260);const lvO=lvlOf(p,lv);
+  // numbers: roofing, edges, ventilation, trusses
+  const stats=useMemo(()=>{let area=0,plan=0;for(const r of roofs){const b=roofBuild(r,roofTop(q,r));for(const f of b.polys){const [a,c,e]=f;const u=[c[0]-a[0],c[1]-a[1],c[2]-a[2]],v=[e[0]-a[0],e[1]-a[1],e[2]-a[2]];area+=Math.hypot(u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0])/2;}plan+=r.w*r.h;}
+    let G={lines:[],edges:[]};try{G=roofPlanGeo(q,lv,roofs);}catch(e){}const len=k=>G.lines.filter(l=>l.kind===k).reduce((s,l)=>s+Math.hypot(l.b[0]-l.a[0],l.b[1]-l.a[1]),0)/12;const eave=G.edges.reduce((s,e)=>s+Math.hypot(e.b[0]-e.a[0],e.b[1]-e.a[1]),0)/12;
+    const attic=plan/144;const nfa=Math.ceil(attic/300*144);const trusses=o.system==='trusses'?roofs.reduce((n,r)=>n+trussLayout(q,r).schedule.reduce((m,s)=>m+s.qty,0),0):0;
+    return {sq:area/144/100,area:area/144,ridge:len('ridge'),hip:len('hip'),valley:len('valley'),eave,attic,nfa,trusses};},[roofs,q]);
+  const T1=useMemo(()=>{if(o.system!=='trusses'||!roofs.length)return null;const r=roofs[0];const L=trussLayout(q,r);const it=L.items.find(i=>i.kind==='common')||L.items.find(i=>!i.jack);if(!it)return null;const b=roofBuild(r,roofTop(q,r));const pr=trussProfile(q,r,b,it);return pr&&{pr,it,sched:L.schedule};},[roofs,q,o.system]);
+  const apply=()=>{const next={...q,dormers:(p.dormers||[]).filter(d=>q.roofs.some(r=>r.id===d.roof)),settings:{...p.settings,roofDefault:{style:o.style,pitch:o.pitch,overhang:o.overhang}}};commit(next);onClose();window.__say&&window.__say(`Built ${roofs.length} roof${roofs.length===1?'':'s'} on ${lvO.name}${o.system==='trusses'?` with ${stats.trusses} trusses and jacks`:''}. See the Roof framing tab and sheet S3.0.`);};
+  const sel=(id,label,val,opts,on)=>html`<${Field} label=${label} id=${id}><${Sel} id=${id} value=${String(val)} onChange=${on} options=${opts}/><//>`;
+  return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal wide rw" role="dialog" aria-label="Roof wizard"><h2>Roof wizard</h2>
+    <div className="rw-grid"><div className="rw-left">
+      <h3>1 · Shape</h3><div className="rw-styles">${ROOF_STYLES.map(([k,l])=>html`<button key=${k} className=${'rw-style'+(o.style===k?' on':'')} aria-pressed=${o.style===k} onClick=${()=>set({style:k})}><svg viewBox="0 0 24 22" width="44" height="40"><path d=${ROOF_ICONS[k]||ROOF_ICONS.gable}/></svg><span>${l.split(' (')[0]}</span></button>`)}</div>
+      ${sel('rw-lv','Level',lv,lvls.map(l=>[l.id,l.name+(levelAbove(p,l)?'':' (top)')]),setLv)}
+      ${sel('rw-pitch','Pitch',o.pitch,[2,3,4,5,6,7,8,9,10,12,14,16,18].map(n=>[String(n),`${n}/12${n<4?' (low slope)':''}`]),v=>set({pitch:+v}))}
+      <${Field} label="Overhang" id="rw-oh"><${LenInput} id="rw-oh" value=${o.overhang} onChange=${v=>v>=0&&set({overhang:v})}/><//>
+      ${['gable','gambrel','shed'].includes(o.style)?sel('rw-ridge','Ridge runs',o.ridge,[['auto','The long way (automatic)'],['x','East to west'],['y','North to south']],v=>set({ridge:v})):null}
+      <h3>2 · Framing</h3>
+      ${sel('rw-sys','System',o.system,[['trusses','Engineered trusses'],['rafters','Rafters and ceiling joists']],v=>set({system:v}))}
+      ${o.system==='trusses'?html`${sel('rw-tt','Truss type',o.trussType,TRUSS_TYPES,v=>set({trussType:v}))}${sel('rw-tsp','Spacing',o.trussSpacing,[['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']],v=>set({trussSpacing:+v}))}
+        ${['hip','dutch','mansard'].includes(o.style)?html`<${Field} label="Hip girder setback" id="rw-sb"><${LenInput} id="rw-sb" value=${o.setback} bare="ft" onChange=${v=>v>0&&set({setback:v})}/><//>${sel('rw-gp','Girder plies',o.girderPly,[['2','2-ply'],['3','3-ply']],v=>set({girderPly:+v}))}`:null}`
+        :html`${sel('rw-raf','Rafters',o.rafter,Object.keys(LUMBER).map(k=>[k,k]),v=>set({rafter:v}))}${sel('rw-rsp','Spacing',o.spacing,[['12','12" o.c.'],['16','16" o.c.'],['24','24" o.c.']],v=>set({spacing:+v}))}${sel('rw-spc','Lumber',o.species,Object.entries(SPECIES).map(([k,v])=>[k,v.label]),v=>set({species:v}))}`}
+      <h3>3 · Covering and venting</h3>
+      ${sel('rw-cov','Covering',o.cover,Object.entries(ROOF_COVER).map(([k,v])=>[k,v.label]),v=>set({cover:v}))}
+      ${sel('rw-und','Underlayment',o.under,[['synthetic','Synthetic underlayment'],['felt30','#30 felt'],['ice','Ice and water shield, full roof']],v=>set({under:v}))}
+      <label className="check"><input type="checkbox" checked=${o.ice} onChange=${e=>set({ice:e.target.checked})}/> Ice barrier at the eaves, 24" inside the wall (R905.1.2, cold climates)</label>
+      <label className="check"><input type="checkbox" checked=${o.drip} onChange=${e=>set({drip:e.target.checked})}/> Drip edge at eaves and rakes (R905.2.8.5)</label>
+      <label className="check"><input type="checkbox" checked=${o.ridgeVent} onChange=${e=>set({ridgeVent:e.target.checked})}/> Ridge vent</label>
+      <label className="check"><input type="checkbox" checked=${o.soffitVent} onChange=${e=>set({soffitVent:e.target.checked})}/> Soffit vents</label>
+      <label className="check"><input type="checkbox" checked=${o.gutters} onChange=${e=>set({gutters:e.target.checked})}/> Gutters and downspouts</label>
+    </div><div className="rw-right">
+      <h3>Roof framing plan</h3>
+      <svg className="rw-plan" viewBox="0 0 380 260" role="img" aria-label="Roof framing preview">${q.walls.filter(w=>w.level===lv).map(w=>{const A=S(w.x1,w.y1),Bq=S(w.x2,w.y2);return html`<line key=${w.id} x1=${A[0]} y1=${A[1]} x2=${Bq[0]} y2=${Bq[1]} className="rw-wall"/>`;})}
+        ${roofFramingSVG(q,lvO,S,{s:0.6})}</svg>
+      ${T1?html`<h3>Typical truss (${T1.it.mark})</h3><${TrussSVG} pr=${T1.pr}/>`:null}
+      <div className="rw-stats">
+        <div><span>Roofing</span><b>${stats.sq.toFixed(1)} squares</b><small>${Math.round(stats.area)} sq ft</small></div>
+        <div><span>Ridges and hips · valleys · eaves and rakes</span><b>${Math.round(stats.ridge)}' · ${Math.round(stats.valley)}' · ${Math.round(stats.eave)}'</b></div>
+        <div><span>Attic ventilation (R806.2)</span><b>${stats.nfa} sq in free area</b><small>1/300 of ${Math.round(stats.attic)} sq ft with balanced high and low vents; ${Math.round(stats.nfa/2)} at the ridge, ${Math.round(stats.nfa/2)} at the soffits</small></div>
+        ${o.system==='trusses'?html`<div><span>Trusses and jacks</span><b>${stats.trusses}</b><small>${T1?T1.sched.map(s=>s.qty+' '+s.mark).join(', '):''}</small></div>`:null}
+      </div>
+      ${!roofs.length?html`<p className="note bad">There are no outside walls on ${lvO.name} to roof.</p>`:null}
+    </div></div>
+    <div className="row"><span className="note">This replaces the roofs on ${lvO.name}. Undo brings them back.</span><span className="spacer"></span><button className="btn" onClick=${onClose}>Cancel</button><button className="btn primary" disabled=${!roofs.length} onClick=${apply}>Build the roof</button></div></div></div>`;}
+function TrussSVG({pr,w=380,h=150}){const xs=[...pr.top.map(q=>q[0]),0,pr.L],zs=[...pr.top.map(q=>q[1]),...pr.bot.map(q=>q[1])];const B={x0:Math.min(...xs),x1:Math.max(...xs),y0:-Math.max(...zs),y1:-Math.min(...zs)};const {S}=fitS(B,w,h,12);const P=q=>S(q[0],-q[1]);
+  const poly=a=>a.map(q=>P(q).join(',')).join(' ');
+  return html`<svg className="rw-truss" viewBox=${`0 0 ${w} ${h}`} role="img" aria-label="Truss elevation"><polyline points=${poly(pr.top)} className="rw-chord"/><polyline points=${poly(pr.bot)} className="rw-chord"/>${pr.webs.map((wv,i)=>html`<line key=${i} x1=${P(wv[0])[0]} y1=${P(wv[0])[1]} x2=${P(wv[1])[0]} y2=${P(wv[1])[1]} className="rw-web"/>`)}
+    <text x=${w/2} y=${h-2} textAnchor="middle" className="rw-dim">${fmtLen(pr.L)} span</text></svg>`;}
+EXTRA_DIALOGS.roofwiz=RoofWizard;
+// ---------- floor framing ----------
+function FloorFramingModal({p,commit,levelId,onClose}){const lvls=sortedLevels(p);const [lid,setLid]=useState(levelId||lvls[0].id);const lv=lvlOf(p,lid)||lvls[0];const J=joistOpt(lv);
+  const up=patch=>commit({...p,levels:p.levels.map(l=>l.id===lv.id?{...l,framing:{...(l.framing||{}),...patch}}:l)});
+  const L=useMemo(()=>{try{return joistLayout(p,lv);}catch(e){console.error(e);return null;}},[p,lv.id]);const B=planBounds(p,lv.id);const {S}=fitS(B,420,300);const rows=L?joistSchedule(L):[];
+  const first=groundLevel(p).id===lv.id;const sel=(id,label,val,opts,on)=>html`<${Field} label=${label} id=${id}><${Sel} id=${id} value=${String(val)} onChange=${on} options=${opts}/><//>`;
+  return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal wide rw" role="dialog" aria-label="Floor framing"><h2>Floor framing</h2>
+    <div className="rw-grid"><div className="rw-left">
+      ${sel('ff-lv','Floor of',lid,lvls.map(l=>[l.id,l.name]),setLid)}
+      ${first?sel('ff-fd','Foundation',J.foundation,[['crawl','Crawlspace'],['basement','Basement'],['slab','Slab on grade (no joists)']],v=>up({foundation:v})):null}
+      ${first&&J.foundation==='slab'?html`<p className="note">A slab floor has no joists. Pick crawlspace or basement to frame this floor.</p>`:html`
+      ${sel('ff-type','Joists',J.type,[['lumber','Dimensional lumber'],['ijoist','I-joists'],['truss','Open-web floor trusses']],v=>up({jtype:v}))}
+      ${J.type==='lumber'?html`${sel('ff-sz','Size',J.joist,['2x6','2x8','2x10','2x12'].map(k=>[k,k]),v=>up({joist:v}))}${sel('ff-sp','Lumber',J.species,Object.entries(SPECIES).map(([k,v])=>[k,v.label]),v=>up({species:v}))}`:J.type==='ijoist'?sel('ff-ij','Depth',J.ij,Object.keys(IJOISTS).map(k=>[k,k.replace('.875','-7/8').replace('.5','-1/2')+'"']),v=>up({ijoist:v})):sel('ff-ft','Depth',J.ft,Object.keys(FTRUSS).map(k=>[k,k+'"']),v=>up({ftruss:+v}))}
+      ${sel('ff-sp2','Spacing',J.spacing,[['12','12" o.c.'],['16','16" o.c.'],['19.2','19.2" o.c.'],['24','24" o.c.']],v=>up({spacing:+v}))}
+      ${sel('ff-dir','Direction',J.dir,[['auto','Shortest span (automatic)'],['x','East to west'],['y','North to south']],v=>up({dir:v}))}
+      ${first&&J.foundation!=='slab'?html`<${Field} label="Girder spacing" id="ff-gir"><${LenInput} id="ff-gir" value=${J.girders||0} bare="ft" onChange=${v=>v>=0&&up({girders:v})}/><//>`:null}
+      <p className="note">Allowable spans: lumber from the NDS for 40 psf live (30 at bedrooms) plus 10 dead, L/360. I-joist and floor-truss spans are typical values; confirm with the maker's tables.</p>`}
+      ${L&&L.warn.length?html`<ul className="ff-warn">${L.warn.map((t,i)=>html`<li key=${i}>${t}</li>`)}</ul>`:null}
+    </div><div className="rw-right">
+      <svg className="rw-plan ff-plan" viewBox="0 0 420 300" role="img" aria-label="Floor framing plan">${floorFramingSVG(p,lv,S,{s:0.6})}</svg>
+      ${rows.length?html`<table className="mat ff-sched"><thead><tr><th>Item</th><th className="num">Qty</th><th>Unit</th></tr></thead><tbody>${rows.map((r,i)=>html`<tr key=${i}><td>${r.item}</td><td className="num">${r.qty}</td><td>${r.unit}</td></tr>`)}</tbody></table>`:null}
+    </div></div>
+    <div className="row"><span className="note">Changes save as you go. The joists show in the 3D framing view, the Floor framing tab and the S2 sheets.</span><span className="spacer"></span><button className="btn primary" onClick=${onClose}>Done</button></div></div></div>`;}
+EXTRA_DIALOGS.joists=FloorFramingModal;
 /* ======================= app ======================= */
 function App(){
   const narrow=window.matchMedia('(max-width: 820px)').matches;
