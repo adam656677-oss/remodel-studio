@@ -1,0 +1,4892 @@
+{
+ "brands": [
+  {
+   "id": "kraftmaid",
+   "name": "KraftMaid",
+   "parent": "Cabinetworks Group (not MasterBrand)",
+   "tier": "semi-custom",
+   "soldAt": [
+    "dealers",
+    "Home Depot",
+    "Lowe's"
+   ],
+   "lines": [
+    {
+     "name": "KraftMaid",
+     "frame": "framed",
+     "overlay": [
+      "half",
+      "full"
+     ],
+     "notes": "Classic KraftMaid door set (no Product Line tag on kraftmaid.com); doors offered in Full and Half overlay versions. Species per guidebook: Alder, Cherry, Maple, Hickory, Quartersawn Oak, Oak, EverCore."
+    },
+    {
+     "name": "KraftMaid Vantage",
+     "frame": "framed",
+     "overlay": [
+      "half",
+      "full"
+     ],
+     "notes": "Premium tier: all-plywood box sides and shelves standard, I-beam base construction, solid-wood dovetail drawers on all four corners, full-extension soft-close drawers (90 lb), DuraKraft Plus finish, Whisper Touch hinges w/ SureMount. 2024 guidebook KM-TMVAN0924. 2026Q1 adds Reeded Maple door, Daybreak stain."
+    },
+    {
+     "name": "KraftMaid 200 Professional Series",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Tag shown on kraftmaid.com door pages (2025-26); swatches limited to Birch, Laminate, Paint. 5 doors."
+    },
+    {
+     "name": "KraftMaid 400 Designer Series",
+     "frame": "framed",
+     "overlay": [
+      "half",
+      "full"
+     ],
+     "notes": "Tag shown on kraftmaid.com door pages; 40 doors. Several mirror Masterpiece door designs."
+    },
+    {
+     "name": "KraftMaid 600 Luxury Series",
+     "frame": "framed, frameless, inset",
+     "overlay": [
+      "full",
+      "inset"
+     ],
+     "notes": "Reimagined Schuler line per loweslaunch.kraftmaid.com: frameless launch Aug 2026, framed and inset Oct 2026; walnut in all three constructions. Door slugs carry Framed/Frameless/Inset suffix."
+    }
+   ],
+   "doors": [
+    {
+     "name": "Alana Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3/4\" Wide Solid Wood Mitered Molding; panel: Slab; slab with applied mitered molding"
+    },
+    {
+     "name": "Alana Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3/4\" Wide Solid Wood Mitered Molding; panel: Slab; slab with applied mitered molding"
+    },
+    {
+     "name": "Aletha Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "slimshaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 1-7/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Aletha Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "slimshaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 1-7/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Amhurst",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Avery",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Bagley",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Barlow Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Baxter",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16” stiles and rails*; panel: Recessed"
+    },
+    {
+     "name": "Bingham",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    },
+    {
+     "name": "Boardwalk Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Boardwalk Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Bosley",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    },
+    {
+     "name": "Bowen",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Brenton",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Breslin",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Briarwood",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "beadboard",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Beaded"
+    },
+    {
+     "name": "Bromont",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Brookfield",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "beadboard",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Beaded"
+    },
+    {
+     "name": "Brooks",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Capistrano Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Carolton",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" stiles and rails; panel: Raised"
+    },
+    {
+     "name": "Carter",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Cayden",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" rails and stiles; panel: Recessed"
+    },
+    {
+     "name": "Chanlott",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Raised"
+    },
+    {
+     "name": "Cillian Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Cillian Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Cillian Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 3-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Cole",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Columbus",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Raised"
+    },
+    {
+     "name": "Cornell",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Cushing Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3/4\" Wide Solid Wood Mitered Molding; panel: Slab; slab with applied mitered molding"
+    },
+    {
+     "name": "Cushing Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3/4\" Wide Solid Wood Mitered Molding; panel: Slab; slab with applied mitered molding"
+    },
+    {
+     "name": "Dakota",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Raised"
+    },
+    {
+     "name": "Dalton Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Dalton Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 2-3/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Decker",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "slimshaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3/4\" front profile; panel: Recessed"
+    },
+    {
+     "name": "Denison Partial",
+     "lines": [
+      "KraftMaid 200 Professional Series"
+     ],
+     "kind": "shaker",
+     "material": "birch, laminate, paint (per series swatch list)",
+     "notes": "Partial Overlay; door frame: Shaker style; panel: Recessed"
+    },
+    {
+     "name": "Deveron Full",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2-3/16\" rails and 2-3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Deveron Half",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Dillon",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Raised"
+    },
+    {
+     "name": "Dorsey",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "slimshaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3/4\" front profile; panel: Recessed"
+    },
+    {
+     "name": "Durango",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Raised"
+    },
+    {
+     "name": "Durham",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Eamon Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Eamon Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Eckhart Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "thermofoil",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Elias Full",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Elias Half",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Ellery Full",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Ellery Half",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Elliot Full",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Elliot Half",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Falk Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3/8\" Wide Solid Wood Mitered Molding; panel: Slab; slab with applied mitered molding"
+    },
+    {
+     "name": "Falk Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3/8\" Wide Solid Wood Mitered Molding; panel: Slab; slab with applied mitered molding"
+    },
+    {
+     "name": "Ferguson",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "flat",
+     "material": "veneer panel, solid wood",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Fielding",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "flat",
+     "material": "veneer panel, solid wood",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Fox Chase Square Full",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fox Chase Square Half",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fox Hill Square Full",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fox Hill Square Half",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fox Ridge Square Full",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/16\" rails and 2-3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fox Ridge Square Half",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Frederickton",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "flat",
+     "material": "veneer panel, solid wood",
+     "notes": "Full Overlay; door frame: Slab styles; panel: Slab"
+    },
+    {
+     "name": "Galeston Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "thermofoil",
+     "notes": "Full Overlay; door frame: 2\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Garrison",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Geneva Square Full",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Geneva Square Half",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Gentry Square Full",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Gentry Square Half",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Half Overlay; door frame: 2-3/16\" rails and 2-3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Georgetown Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Gerron Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Grandview Square Full",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Grandview Square Half",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Grange",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Gresham",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Hallett",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3 1/2\" rails and 3 1/2\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hamilton",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hampton Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Harper Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Harper Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Harper Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 2-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Harrington",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hartwell",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hayward",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hettle",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3 1/2\" rails and 3 1/2\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hightide Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Hoffman",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-1/2\" rails and 3-1/2\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Holace",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Holbrook Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Holcombe Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2-1/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Holcombe Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "veneer panel",
+     "notes": "Inset; door frame: 2-1/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Huxford Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 1-7/8\" Stiles and Rails; panel: Reeded"
+    },
+    {
+     "name": "Huxford Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 1-7/8\" Stiles and Rails; panel: Reeded"
+    },
+    {
+     "name": "Jackson",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Jamestown",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Jamison",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Janell",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Jaycey",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" rails and 2-5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Jonesboro Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Jonesboro Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 2-1/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Jovana",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Keagan",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/4\" stiles and rails*; panel: Recessed"
+    },
+    {
+     "name": "Kent",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    },
+    {
+     "name": "Kessler",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    },
+    {
+     "name": "Key Largo Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "louver",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and 2\" Rails; panel: Louvered"
+    },
+    {
+     "name": "Key Largo Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "louver",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and 2\" Rails; panel: Louvered"
+    },
+    {
+     "name": "Key Largo Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 2-1/4\" Stiles and 2\" Rails; panel: Louvered"
+    },
+    {
+     "name": "Kirkdale Full",
+     "lines": [
+      "KraftMaid 200 Professional Series"
+     ],
+     "kind": "shaker",
+     "material": "birch, laminate, paint (per series swatch list)",
+     "notes": "Full Overlay; door frame: Shaker style; panel: Recessed"
+    },
+    {
+     "name": "Kirkland",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Knollwood",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Lisbon Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Lisbon Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Lockheart Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Lockheart Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Lockheart Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Lyndale Full",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Lyndale Half",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Madison",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Malibu",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Manchester",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "quartersawn oak",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Manhattan Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Marietta Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; panel: Raised"
+    },
+    {
+     "name": "Maris",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "flat",
+     "material": "thermofoil, high-gloss foil",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Marquette Roman Full",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Marquette Roman Half",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Marquette Square Full",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Marquette Square Half",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Matheson Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Matheson Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 3\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Maxton",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "flat",
+     "material": "thermofoil, high-gloss foil",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Melrose",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "quartersawn oak",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Meredith",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "quartersawn oak",
+     "notes": "Full Overlay; door frame: 2-1/4\" rails and 2-1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Merrill",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "flat",
+     "material": "thermofoil, high-gloss foil",
+     "notes": "Full Overlay; door frame: Slab styles; panel: Slab"
+    },
+    {
+     "name": "Milford Full",
+     "lines": [
+      "KraftMaid 200 Professional Series"
+     ],
+     "kind": "shaker",
+     "material": "birch, laminate, paint (per series swatch list)",
+     "notes": "Full Overlay; door frame: Shaker style; panel: Recessed"
+    },
+    {
+     "name": "Milford Partial",
+     "lines": [
+      "KraftMaid 200 Professional Series"
+     ],
+     "kind": "shaker",
+     "material": "birch, laminate, paint (per series swatch list)",
+     "notes": "Partial Overlay; door frame: Shaker style; panel: Recessed"
+    },
+    {
+     "name": "Monroe Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Monroe Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 2-5/8\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Montclair Roman Full",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/16\" rails and 2-3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Montclair Roman Half",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Montclair Square Full",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/16\" rails and 2-3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Montclair Square Half",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "New Haven Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "New Haven Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "New Haven Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 3-3/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Ocala Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 2-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Ocala Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Ozella",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 3\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Pacifica Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Paramount Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Paramount Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 2-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Parkhurst",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/16\" rails and 2-3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Piermont Roman Full",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Piermont Roman Half",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Piermont Square Full",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Piermont Square Half",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Pindell Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Prairie Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Prairie Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Princeton Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/8\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Putnam",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Ralden",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Reeded",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/16” stiles and rails; panel: Recessed"
+    },
+    {
+     "name": "Renway",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Rutherford",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/8\" rails and 2 3/8\" stiles; panel: Raised"
+    },
+    {
+     "name": "Ruxton",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Salem",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" rails and 2-5/8\" stiles; panel: V-Groove"
+    },
+    {
+     "name": "Sarasota",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: V-Groove"
+    },
+    {
+     "name": "Savoy Partial",
+     "lines": [
+      "KraftMaid 200 Professional Series"
+     ],
+     "kind": "shaker",
+     "material": "birch, laminate, paint (per series swatch list)",
+     "notes": "Partial Overlay; door frame: Recessed panel; panel: Recessed"
+    },
+    {
+     "name": "Scottsdale Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/2\" Stiles and Rails; panel: Flat"
+    },
+    {
+     "name": "Scottsdale Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/2\" Stiles and Rails; panel: Flat"
+    },
+    {
+     "name": "Scottsdale Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 2-1/2\" Stiles and Rails; panel: Flat"
+    },
+    {
+     "name": "Sedona",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Seton",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: V-Groove"
+    },
+    {
+     "name": "Shepparton",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "mitered",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Soho Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Soho Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Soho Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: Slab; panel: Slab"
+    },
+    {
+     "name": "Sonata",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/4\" rails and 2-3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Sonora",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Sorrento Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Sorrento Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Sorrento Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "solid wood",
+     "notes": "Inset; door frame: 2-3/4\" Stiles and Rails; panel: Raised"
+    },
+    {
+     "name": "Standish",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "mitered",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Stilton",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "mitered",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2-3/4\" rails and 2-3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Sugar Creek Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Sugar Creek Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-1/4\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Taft",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "mitered",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-1/2\" stiles and rails; panel: Recessed"
+    },
+    {
+     "name": "Tahoe Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; panel: V-Groove"
+    },
+    {
+     "name": "Tavis",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "mitered",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2-1/2\" stiles and rails; panel: Recessed"
+    },
+    {
+     "name": "Thaxton",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Thornberry Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; "
+    },
+    {
+     "name": "Thornton Full",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Thornton Half",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Tillman Heights Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "solid wood",
+     "notes": "Full Overlay; "
+    },
+    {
+     "name": "Timber Ridge Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "other",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-3/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Timber Ridge Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 2-3/4\" Stiles and Rails; panel: Reverse Raised"
+    },
+    {
+     "name": "Trumbull",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Turlow Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "shaker",
+     "material": "thermofoil",
+     "notes": "Full Overlay; door frame: 3\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Tuxbury",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Vanderbilt",
+     "lines": [
+      "KraftMaid",
+      "KraftMaid Vantage"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Veranda",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Victoria",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Vienna",
+     "lines": [
+      "KraftMaid 400 Designer Series"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Welch",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Wilmington",
+     "lines": [
+      "KraftMaid"
+     ],
+     "kind": "beadboard",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Beaded"
+    },
+    {
+     "name": "Windsor Framed",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Windsor Frameless",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2-5/8\" Stiles and Rails; panel: Recessed"
+    },
+    {
+     "name": "Windsor Inset",
+     "lines": [
+      "KraftMaid 600 Luxury Series"
+     ],
+     "kind": "inset",
+     "material": "",
+     "notes": "Inset; door frame: 2-5/8\" Stiles and Rails; panel: Recessed"
+    }
+   ],
+   "finishes": [
+    {
+     "name": "Frost",
+     "type": "paint"
+    },
+    {
+     "name": "Dove White",
+     "type": "paint"
+    },
+    {
+     "name": "Warm White",
+     "type": "paint"
+    },
+    {
+     "name": "Cottage",
+     "type": "paint"
+    },
+    {
+     "name": "Canvas",
+     "type": "paint"
+    },
+    {
+     "name": "Serenity",
+     "type": "paint"
+    },
+    {
+     "name": "Moonshine",
+     "type": "paint"
+    },
+    {
+     "name": "Pebble Grey",
+     "type": "paint"
+    },
+    {
+     "name": "Heron",
+     "type": "paint"
+    },
+    {
+     "name": "Overcast",
+     "type": "paint"
+    },
+    {
+     "name": "Rainfall",
+     "type": "paint"
+    },
+    {
+     "name": "Bonsai",
+     "type": "paint"
+    },
+    {
+     "name": "Evergreen",
+     "type": "paint"
+    },
+    {
+     "name": "Greyloft",
+     "type": "paint"
+    },
+    {
+     "name": "Urban Grey",
+     "type": "paint"
+    },
+    {
+     "name": "Lagoon",
+     "type": "paint"
+    },
+    {
+     "name": "Caribbean",
+     "type": "paint"
+    },
+    {
+     "name": "Harbor",
+     "type": "paint"
+    },
+    {
+     "name": "Midnight",
+     "type": "paint"
+    },
+    {
+     "name": "Carbon",
+     "type": "paint"
+    },
+    {
+     "name": "Riverbed",
+     "type": "paint"
+    },
+    {
+     "name": "Onyx",
+     "type": "paint"
+    },
+    {
+     "name": "Natural",
+     "type": "stain"
+    },
+    {
+     "name": "Honey Spice",
+     "type": "stain"
+    },
+    {
+     "name": "Shortbread",
+     "type": "stain"
+    },
+    {
+     "name": "Wicker",
+     "type": "stain"
+    },
+    {
+     "name": "Praline",
+     "type": "stain"
+    },
+    {
+     "name": "Barley",
+     "type": "stain"
+    },
+    {
+     "name": "Ginger",
+     "type": "stain"
+    },
+    {
+     "name": "Husk",
+     "type": "stain"
+    },
+    {
+     "name": "Cabin",
+     "type": "stain"
+    },
+    {
+     "name": "Cognac",
+     "type": "stain"
+    },
+    {
+     "name": "Chocolate",
+     "type": "stain"
+    },
+    {
+     "name": "Baltic",
+     "type": "stain"
+    },
+    {
+     "name": "Molasses",
+     "type": "stain"
+    },
+    {
+     "name": "Saddle",
+     "type": "stain"
+    },
+    {
+     "name": "Brown Sugar",
+     "type": "stain"
+    },
+    {
+     "name": "Cannon Grey",
+     "type": "stain"
+    },
+    {
+     "name": "Kaffé",
+     "type": "stain"
+    },
+    {
+     "name": "Slate",
+     "type": "stain"
+    },
+    {
+     "name": "Peppercorn",
+     "type": "stain"
+    },
+    {
+     "name": "Daybreak",
+     "type": "stain"
+    },
+    {
+     "name": "Weathered Picket Fence",
+     "type": "specialty"
+    },
+    {
+     "name": "Weathered Concrete",
+     "type": "specialty"
+    },
+    {
+     "name": "Weathered River Rock",
+     "type": "specialty"
+    },
+    {
+     "name": "Weathered Bourbon",
+     "type": "specialty"
+    },
+    {
+     "name": "Translucent Limestone",
+     "type": "specialty"
+    },
+    {
+     "name": "Translucent Monument Grey",
+     "type": "specialty"
+    },
+    {
+     "name": "Translucent Driftwood",
+     "type": "specialty"
+    },
+    {
+     "name": "Hearthstone",
+     "type": "paint"
+    },
+    {
+     "name": "Vanilla Smoke",
+     "type": "paint"
+    },
+    {
+     "name": "Muted Moss",
+     "type": "paint"
+    },
+    {
+     "name": "Blue Tide",
+     "type": "paint"
+    }
+   ],
+   "nomenclature": "Not captured from KraftMaid spec book in this pass. ProKitchen news references \"2026Q1KraftMaidVantage-SpecBook\". Sister brand Masterpiece (same Cabinetworks platform) uses W{width}{height} (W1836L), B{width}{BUTT for butt doors} (B30BUTT), U{width}{depth}{height} utility/tall (U302490BUTT), LS36 lazy susan, WC wall corner; option suffixes like .FH, -CH (change height), -VTK; codes APC (all plywood 1/2\" ends), APFC (3/4\" furniture plywood ends), HFEB (1/2\" finished ends), RD/ID (reduce/increase depth).",
+   "dims": "Not captured from KraftMaid spec book; see Merillat/Masterpiece entry for the shared Cabinetworks spec conventions (12\" deep walls, 24\" deep bases, 34 1/2\" base height, talls 84/87/90/93/96\").",
+   "sources": [
+    "https://www.kraftmaid.com/products/door-styles/",
+    "https://izhgqk.files.cmp.optimizely.com/download/assets/KraftMaid_Vantage_Kitchen_Guidebook_Rugby.pdf/e18541c2bb4111f08eeaaef7ee74a2a4",
+    "https://www.prokitchensoftware.com/prokitchen-news/kraftmaid-vantage-9/",
+    "https://prokitchensoftware.com/prokitchen-news/kraftmaid-3",
+    "https://loweslaunch.kraftmaid.com/?p=4056",
+    "https://www.businesswire.com/news/home/20260211207090/en"
+   ],
+   "notes": "Door list is the full 209-entry kraftmaid.com catalog (Oct 2026), deduped by page slug (Full/Half and Framed/Frameless/Inset variants are separate entries, as KraftMaid lists them). Construction category derived from each page's Frame Shape / Overlay / Door Frame / Panel Style fields plus description; \"other\" covers Reverse Raised, Reeded, V-Groove and slab-with-applied-molding. Vantage membership from the 2024 Vantage guidebook door page. Deleted styles (ProKitchen): Argonne, Barnet Crafted, Belmont Square, Camby, Courtney, Evana, Fox Chase Roman, Grandview Roman, Halden, Hanley Square, Harper, Judson, Larken, Layden, Lincoln, Lockeford, Mandolay, Northbrook, Polarcrest, Sheridan, Sydney White, Tennyson. Per-door species is not reliable from the site (swatch list is series-wide), so material is only filled when the description states it."
+  },
+  {
+   "id": "merillat",
+   "name": "Merillat (incl. Masterpiece)",
+   "parent": "Cabinetworks Group",
+   "tier": "stock (Basics, Classic) / semi-custom (Autograph value semi-custom, Masterpiece semi-custom)",
+   "soldAt": [
+    "dealers",
+    "lumberyards/builder channel"
+   ],
+   "lines": [
+    {
+     "name": "Merillat Basics",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Ships in 2 weeks or less. 3/8\" end panels, natural woodgrain laminate interiors, 1.5\" x .75\" solid wood face frame, 1/2\" engineered wood drawers (upgrade to hardwood dovetail), 3/4-extension side-mount guides (75 lb), 3/4\" shelves. 5 doors."
+    },
+    {
+     "name": "Merillat Classic",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Ships in 2 weeks or less. 3/8\" engineered wood laminated sides, 3/4\" laminated engineered shelves, 1/2\" engineered I-beam, 1/2\" engineered drawer box w/ 3/4-ext side-mount guides, 6-way soft-close hinges. Species: Maple, Oak, painted. 12 doors."
+    },
+    {
+     "name": "Merillat Autograph",
+     "frame": "framed",
+     "overlay": [
+      "half",
+      "full"
+     ],
+     "notes": "Value semi-custom; ships in 3 weeks or less. Species Cherry, Maple, Oak, Hickory (new), EverCore (painted). New door Derian. 13 doors. (Replaces former Merillat Masterpiece positioning in Merillat lineup; Masterpiece now has its own site.)"
+    },
+    {
+     "name": "Masterpiece",
+     "frame": "framed",
+     "overlay": [
+      "half",
+      "full"
+     ],
+     "notes": "Semi-custom \"our very best\". Box: 1/2\" natural birch vinyl-clad ends/bottom/ceiling, 3/8\" back, 3/4\" solid hardwood face frame, full-depth I-beam, 3/4\" solid wood dovetail drawers (4\" std, 7\"/10\" deep) on full-extension soft-close 90 lb runners; APC/APFC all-plywood options. Shares KraftMaid-family finishes (Frost, Dove White, Serenity, Wicker, Shortbread...)."
+    }
+   ],
+   "doors": [
+    {
+     "name": "Adler",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "flat",
+     "material": "Cherry, EverCore® (painted), Maple",
+     "notes": "Full Overlay; drawer front: Slab; A sleek slab door featuring refined grain directionality for a sophisticated, contemporary aesthetic."
+    },
+    {
+     "name": "Bassett",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Maple, Oak",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; An elevated Shaker door with refined eased edges and a subtle beveled interior. A timeless expression of modern sophistication."
+    },
+    {
+     "name": "Bayard",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Maple",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A subtle interior edge detail on the 3\" frame lends a graceful, transitional character to this classic Shaker-style design."
+    },
+    {
+     "name": "Brimley",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A clean Shaker door with distinct inner and outer profile edging for added interest."
+    },
+    {
+     "name": "Collins",
+     "lines": [
+      "Merillat Basics"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Partial Overlay; drawer front: Slab; Create a timeless yet versatile look with Collins. Available in six appealing finishes, it lends itself to on-trend, two-tone kitchen designs."
+    },
+    {
+     "name": "Colony",
+     "lines": [
+      "Merillat Basics"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Partial Overlay; drawer front: Decorative; Uniquely suited for a variety of design aesthetics, the Colony door style complements both traditional and modern spaces."
+    },
+    {
+     "name": "Colton",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "flat",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: Slab; A clean, minimal slab design creating a modern, crisp feel in any setting."
+    },
+    {
+     "name": "Derian",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "slimshaker",
+     "material": "Cherry, Maple",
+     "notes": "Full Overlay; drawer front: 5-Piece; Modern minimalism meets refined character. This narrow Shaker style delivers a sleek, versatile look with just enough detail to add warmth and individuality."
+    },
+    {
+     "name": "Ford (Full Overlay)",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "raised",
+     "material": "Cherry, EverCore® (painted), Hickory, Maple, Oak",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; Gently softened frame edges complement the more defined cove detail, highlighting the raised center panel of this timeless, enduring style."
+    },
+    {
+     "name": "Ford (Half Overlay)",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "raised",
+     "material": "Cherry, EverCore® (painted), Hickory, Maple, Oak",
+     "notes": "Half Overlay; drawer front: 5-Piece/Slab; Gently softened frame edges complement the more defined cove detail, highlighting the raised center panel of this timeless, enduring style."
+    },
+    {
+     "name": "Fox Harbor",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "raised",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A Transitional door, featuring a raised center panel to complement diverse designs."
+    },
+    {
+     "name": "Gates",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Hickory, Maple, Oak",
+     "notes": "Half Overlay; drawer front: 5-Piece/Slab; Start with a classic Shaker-style design featuring a recessed center panel, then elevate it with a finely carved edge profile for added depth and refinement."
+    },
+    {
+     "name": "Glenrock",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A wide-framed, Mission-like door designed for versatile, timeless aesthetics."
+    },
+    {
+     "name": "Lee (Full Overlay)",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Hickory, Maple, Oak",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; Versatile, timeless, and beautifully clean-lined, this quintessential Shakerstyle door complements traditional, transitional, and contemporary kitchens alike."
+    },
+    {
+     "name": "Lee (Half Overlay)",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Hickory, Maple, Oak",
+     "notes": "Full Overlay; Half Overlay; drawer front: 5-Piece/Slab; Versatile, timeless, and beautifully clean-lined, this quintessential Shakerstyle door complements traditional, transitional, and contemporary kitchens alike."
+    },
+    {
+     "name": "Marlin",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Partial Overlay; drawer front: 5-Piece/Slab; A versatile Shaker look, adding interest and possibilities to any space."
+    },
+    {
+     "name": "McDurmon (Full Overlay)",
+     "lines": [
+      "Merillat Basics"
+     ],
+     "kind": "shaker",
+     "material": "laminate",
+     "notes": "Full Overlay; drawer front: Slab; The five-piece, laminate-wrapped door of McDurmon combines a modern look with lasting durability and easy maintenance."
+    },
+    {
+     "name": "McDurmon (Partial Overlay)",
+     "lines": [
+      "Merillat Basics"
+     ],
+     "kind": "shaker",
+     "material": "laminate",
+     "notes": "Partial Overlay; drawer front: Slab; The five-piece, laminate-wrapped door of McDurmon combines a modern look with lasting durability and easy maintenance."
+    },
+    {
+     "name": "McHenry",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "raised",
+     "material": "Cherry, EverCore® (painted), Hickory, Maple, Oak",
+     "notes": "Full Overlay; drawer front: 5-Piece/Decorative; An elegant ogee profile accentuates the solid wood raised center panel, lending this door a distinguished and enduring appeal."
+    },
+    {
+     "name": "Murphy",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "slimshaker",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A narrow Shaker style, radiating modern elegance."
+    },
+    {
+     "name": "Portrait",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Oak, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A perennial favorite, perfectly suited for a wide range of spaces, styles, and visions."
+    },
+    {
+     "name": "Ralston",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Decorative; A Shaker-style door with exceptional detailing that suits both modern and traditional spaces."
+    },
+    {
+     "name": "Ross",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Maple",
+     "notes": "Full Overlay; drawer front: 5-Piece/Decorative; Three-inch rails and stiles frame a recessed center panel, while eased edges lend a softened, contemporary refinement."
+    },
+    {
+     "name": "Seneca Ridge",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "raised",
+     "material": "Maple, Oak, Painted (Classic only)",
+     "notes": "Partial Overlay; drawer front: Decorative; A traditional partial overlay door with a raised center panel for added dimension."
+    },
+    {
+     "name": "Spring Valley",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Oak, Painted (Classic only)",
+     "notes": "Partial Overlay; drawer front: Decorative; A classically styled partial overlay door, as timeless as it is beautiful."
+    },
+    {
+     "name": "Sullivan",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "mitered",
+     "material": "Cherry, Maple",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A generous stepped profile beautifully frames the recessed center panel, giving this mitered door a refined architectural presence."
+    },
+    {
+     "name": "Tolani",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Painted (Classic only)",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A clean and airy profile that offers straight lines and understated sophistication."
+    },
+    {
+     "name": "Tyler",
+     "lines": [
+      "Merillat Autograph"
+     ],
+     "kind": "shaker",
+     "material": "Cherry, EverCore® (painted), Maple",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; Wide 3\" stiles and rails create a balanced, transitional look inspired by classic Shaker design, seamlessly suited to both traditional and contemporary kitchens."
+    },
+    {
+     "name": "Vance",
+     "lines": [
+      "Merillat Classic"
+     ],
+     "kind": "shaker",
+     "material": "Laminate",
+     "notes": "Full Overlay; drawer front: 5-Piece/Slab; A wrapped laminate Shaker-style door, known for durability and good looks."
+    },
+    {
+     "name": "Wesley",
+     "lines": [
+      "Merillat Basics"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; drawer front: Slab; With its sleek, simple styling and superb value, the Wesley full overlay door instantly upgrades the look of any kitchen."
+    },
+    {
+     "name": "Atticus",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Bolton",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Bowie",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Burton",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "beadboard",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Beaded"
+    },
+    {
+     "name": "Cimmaron",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Raised"
+    },
+    {
+     "name": "Coleson",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Epic",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "flat",
+     "material": "",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Erickson Full",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Erickson Half",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Fairlane Arch",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Fairlane Square",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fallon",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "flat",
+     "material": "veneer panel, solid wood",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Fox Court Square Full",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Fox Court Square Half",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Gallina",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Ganon Square Full",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Ganon Square Half",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hallie",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3 1/2\" rails and 3 1/2\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Hurley",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Jade",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "mitered",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Jennings",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "Knoxville",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Martel Half",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Maxum",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "flat",
+     "material": "thermofoil, high-gloss foil",
+     "notes": "Full Overlay; door frame: Slab stiles\"; panel: Slab"
+    },
+    {
+     "name": "Mesa",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "quartersawn oak",
+     "notes": "Full Overlay; door frame: 2 1/4\" rails and 2 1/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Montresano",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Rathbun",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Full Overlay; door frame: 2 3/8\" rails and 2 3/8\" stiles; panel: Raised"
+    },
+    {
+     "name": "Riverside",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 5/8\" rails and 2 5/8\" stiles; panel: Raised"
+    },
+    {
+     "name": "Rockwell",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Sawyer",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "mitered",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Sylvan",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/4\" rails and 2 3/4\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Townley Arch",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "cathedral/arch",
+     "material": "",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised; arched (Roman) top rail"
+    },
+    {
+     "name": "Townley Square",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "solid wood",
+     "notes": "Half Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Raised"
+    },
+    {
+     "name": "Turner",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Recessed"
+    },
+    {
+     "name": "Vega",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "raised",
+     "material": "",
+     "notes": "Full Overlay; door frame: 3\" rails and 3\" stiles; panel: Raised"
+    },
+    {
+     "name": "barton",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "daniel",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    },
+    {
+     "name": "karlson",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    },
+    {
+     "name": "martel full",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "veneer panel",
+     "notes": "Full Overlay; door frame: 2 3/16\" rails and 2 3/16\" stiles; panel: Recessed"
+    },
+    {
+     "name": "tate",
+     "lines": [
+      "Masterpiece"
+     ],
+     "kind": "shaker",
+     "material": "",
+     "notes": "Full Overlay; panel: Recessed"
+    }
+   ],
+   "finishes": [
+    {
+     "name": "Bonsai",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Canvas",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Carbon",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Cottage",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Dove White",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Evergreen",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Greyloft",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Harbor",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Midnight",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Moonshine",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Onyx",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Pebble Grey",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Warm White",
+     "type": "paint (Autograph)"
+    },
+    {
+     "name": "Barley",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Brown Sugar",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Cannon Grey",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Cognac",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Honey Spice",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Husk",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Molasses",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Natural",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Praline",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Slate",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Translucent Monument Grey",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Wicker",
+     "type": "stain (Autograph)"
+    },
+    {
+     "name": "Bluff",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Charcoal",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Chiffon",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Cotton",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Nightfall",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Olive",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Shale",
+     "type": "paint (Classic)"
+    },
+    {
+     "name": "Basalt",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "Boardwalk",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "Dusk",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "Kodiak",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "Pecan",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "Prairie",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "Steel Grey",
+     "type": "stain (Classic)"
+    },
+    {
+     "name": "White",
+     "type": "laminate (Classic/Basics)"
+    },
+    {
+     "name": "Grey",
+     "type": "laminate (Classic/Basics)"
+    },
+    {
+     "name": "Twilight",
+     "type": "stain (Basics)"
+    }
+   ],
+   "nomenclature": "Masterpiece 2025 spec guide: wall W{width}{height}[R|L] (W1836L, W3018BUTT, W2448R); base B{width}[R|L|BUTT] (B18L, B30BUTT); utility/tall U{width}{depth}{height} (U302490BUTT); LS36 lazy susan; WC wall corner (WC31819); BBC base blind corner; option codes: APC (all plywood 1/2\" ends), APFC (3/4\" furniture plywood ends), HFEB/FPEB finished ends, CW/CH/ID/RD (change width/height, increase/reduce depth), FBC flush back, TWR top wide rail, RTK/RTKP recessed toe kick, VTK, MI matching interior, .FO/.SR suffixes. Merillat Basics/Classic/Autograph spec books not pulled.",
+   "dims": "Masterpiece spec: wall cabinets 12\" deep (widths 12-48\" in diagonal table), bases 24\" deep, base height 34 1/2\" (e.g., base microwave 34 1/2\" H), tall cabinets 84/87/90/93/96\" tall at 12/18/21/24\" depths; cabinet depth excludes doors/drawer fronts; std drawer box 4\" high.",
+   "sources": [
+    "https://www.merillat.com/door-styles/",
+    "https://www.merillat.com/finishes/",
+    "https://www.merillat.com/merillat-classic/",
+    "https://www.merillat.com/merillat-basics/",
+    "https://www.merillat.com/merillat-autograph/",
+    "https://www.merillat.com/beauty-meets-intention-new-merillat-autograph-products-are-designed-for-whats-next/",
+    "https://masterpiececabinets.com/browse-cabinets-products/door-styles/",
+    "https://cabinetworks.widen.net/content/t1hgd9ryqm/original/2025-masterpiece-spec-guide.pdf"
+   ],
+   "notes": "Merillat doors complete per merillat.com (30). Masterpiece doors from masterpiececabinets.com (~40; names taken from URL slug, e.g. \"Erickson Full\"). Many Masterpiece descriptions match KraftMaid 400 Designer Series doors (same parent). Masterpiece finishes not listed separately."
+  },
+  {
+   "id": "diamond",
+   "name": "Diamond",
+   "parent": "MasterBrand",
+   "tier": "semi-custom",
+   "soldAt": [
+    "dealers",
+    "Lowe's (Diamond at Lowe's / Diamond NOW historically; not verified this pass)"
+   ],
+   "lines": [
+    {
+     "name": "Diamond Vibe",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Entry semi-custom series (\"Smart Style. Smart Budget.\"), most popular styles/finishes."
+    },
+    {
+     "name": "Diamond Distinction",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Mid series: more finishes, door styles, storage."
+    },
+    {
+     "name": "Diamond Edge",
+     "frame": "framed",
+     "overlay": [
+      "full",
+      "inset"
+     ],
+     "notes": "Most premium series; all-plywood construction, specialty finishes, custom sizing; inset doors (Bluffton Inset, Gunther Inset, Murphy Inset, Karis/Langley/Shona Full+Inset)."
+    },
+    {
+     "name": "Diamond Full Access",
+     "frame": "frameless",
+     "overlay": [
+      "full"
+     ],
+     "notes": "Frameless (full access) series shown as a Series filter on diamondcabinets.com; frameless designation inferred from name."
+    }
+   ],
+   "doors": [
+    {
+     "name": "Adair",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: 5 piece; The mitered styling of Adair adds just the right touch to make it an ideal choice for someone wanting an extra touch of style."
+    },
+    {
+     "name": "Bluffton",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Oak, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Boasting a transitional look, the Bluffton door style is a versatile option for any home."
+    },
+    {
+     "name": "Boynton",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Quartersawn White Oak, PureStyle",
+     "notes": "overlay: Full; shape: Square; Boynton brings a new classic option in door styles to the Diamond portfolio. A transitional look that can lean traditional when needed, this neo Shaker style is on-trend with today’s consumer demands."
+    },
+    {
+     "name": "Breman",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Oak, Quartersawn White Oak, Rustic Hickory, PureStyle, MDF",
+     "notes": "overlay: Full; shape: Square; Breman's wide rail shaker style and clean lines provide the basis for a variety of decorating tastes."
+    },
+    {
+     "name": "Bryant",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Oak, Quartersawn White Oak, Rustic Hickory, PureStyle, MDF",
+     "notes": "overlay: Full; shape: Square; Bryant is the quintessential Shaker style, providing the ultimate in contemporary looks with its clean lines."
+    },
+    {
+     "name": "Colson",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Oak, Quartersawn White Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: 5 piece; This shaker-inspired door style features an inside stepped profile creating a beautiful picture frame effect. The refined detail bridges traditional and contemporary aesthetics."
+    },
+    {
+     "name": "Farrah",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Oak, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Farrah's simple style creates the perfect cabinet backdrop for any room in the home! Add your personal touch with an array of wood species and finish combinations."
+    },
+    {
+     "name": "Gradon",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Vibe"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Oak",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; Gradon cabinet door style's inviting and on-trend style will fit seamlessly into any home."
+    },
+    {
+     "name": "Hebron",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Vibe"
+     ],
+     "kind": "raised",
+     "material": "Maple, Hardwood, Cherry, Oak",
+     "notes": "overlay: Partial; shape: Square; Offering a classic look, the Hebron raised center panel cabinet door is the perfect choice."
+    },
+    {
+     "name": "Hoyt",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Hardwood, Cherry, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; Hoyt's contemporary mitered cabinet door brings a modern twist on the classic shaker style. With a sleek 3/4\" stile and rail profile, it offers durability and a clean aesthetic making it the perfect choice for any modern"
+    },
+    {
+     "name": "Kenora",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; This on-trend door style works well with a variety of design preferences and has the perfect amount of detail."
+    },
+    {
+     "name": "Lawford",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; This transitional full overlay door with a slab drawer creates a sophisticated look, fitting nicely in any room of the home."
+    },
+    {
+     "name": "Livingston",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Vibe"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, PureStyle",
+     "notes": "overlay: Partial; shape: Square; Livingston brings a new classic option in door styles to the Diamond portfolio. A transitional look that can lean traditional when needed, this neo Shaker style is on-trend with today’s consumer demands."
+    },
+    {
+     "name": "Loren",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "flat",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Laminate, MDF",
+     "notes": "overlay: Full; shape: Slab; A modern, contemporary aesthetic is achieved with the Loren slab door style."
+    },
+    {
+     "name": "Neilson",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Vibe"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; This transitional partial overlay door with a slab drawer creates a sophisticated look, fitting nicely in any room of the home."
+    },
+    {
+     "name": "Wendell",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access",
+      "Diamond Vibe"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Hardwood, Cherry, Walnut, Rustic Alder, Oak, Quartersawn White Oak, Rustic Hickory, PureStyle",
+     "notes": "overlay: Full; shape: Square; Featuring tailored, subtle details to provide just the right amount of visual interest, the Wendell door style is a perfect choice for nearly any design preference. When Wendell is ordered in PureStyle™, the construction"
+    },
+    {
+     "name": "Westburke",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Vibe"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Rustic Hickory, PureStyle",
+     "notes": "overlay: Partial; shape: Square; Westburke fits right into the ever-popular Shaker style that is one of today's hottest trends in cabinetry."
+    },
+    {
+     "name": "Bryant Narrow Rail",
+     "lines": [
+      "Diamond Distinction"
+     ],
+     "kind": "slimshaker",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Rustic Hickory, MDF",
+     "notes": "overlay: Full; shape: 5 piece narrow rail; Bryant is the quintessential Shaker style, providing the ultimate in contemporary looks with its clean lines."
+    },
+    {
+     "name": "Caldera",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak, MDF",
+     "notes": "overlay: Full; shape: Square; Caldera's recessed center panel, 3\" door rail, and chamfered inside profile give it a notably classic, yet updated, appeal."
+    },
+    {
+     "name": "Camilla",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry",
+     "notes": "overlay: Full; shape: 5 piece; panel type not stated on site; The distinctive styling of the Camilla door style adds a rich look of detail in any room."
+    },
+    {
+     "name": "Davis",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: Square; The modern lines of a transitional style, paired with a graceful raised panel for just the right touch of tradition, make the Davis cabinet door an easy choice. Beautiful on its own or when paired with its partner, flat "
+    },
+    {
+     "name": "Graniti",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; A contemporary, Textured Laminate slab cabinet door, Graniti is designed to weather ever-changing trends and a lifetime of everyday trials. You'll feel right at home as your space embodies a sleek, modern motif."
+    },
+    {
+     "name": "Gunther",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; Gunther is a warm and inviting flat panel cabinet door design that works well in casual settings."
+    },
+    {
+     "name": "Julien",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry",
+     "notes": "overlay: Full; shape: Square; Combining the best of both worlds, Julien Shaker style cabinet doors feature meticulous craftsmanship and minimalist design. The flat panel, full overlay cabinet doors feature wide rails and simple profile details, insid"
+    },
+    {
+     "name": "LaGrange",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; LaGrange portrays a provincial appeal with its elegant sculpting, while also accommodating relaxed, aged finishes. Using our special hinges, you can easily create a faux inset door for some added (and affordable) Europea"
+    },
+    {
+     "name": "Leeton",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; With Leeton, it's all about the subtle details. This transitional style responds to current trends with 2 1/2\" rails and a beaded, recessed center panel."
+    },
+    {
+     "name": "Liberty",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "beadboard",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Liberty’s beadboard doors can easily create a cottage or coastal look in your space. Maple provides a comforting warmth, while Cherry* gives a more classic look. *Available on Edge"
+    },
+    {
+     "name": "Murphy",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Simple classic styling allows this transitional door to match any decor."
+    },
+    {
+     "name": "Paterson",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: Square; The elegant raised panels of the Paterson cabinet door style create a look of sophistication in any room of the house."
+    },
+    {
+     "name": "Rayne",
+     "lines": [
+      "Diamond Distinction"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Rustic Hickory",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; Simple classic styling allows Rayne to be a transitional style that goes with any décor."
+    },
+    {
+     "name": "Tranter",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; Tranter clean-cut slab cabinet doors bring modern styling to the forefront in a textured horizontal wood grain laminate."
+    },
+    {
+     "name": "Wells",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Edge",
+      "Diamond Full Access"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; The modern lines and flexibility of Wells exemplify the ultra popular transitional door style. This flat panel cabinet door is beautiful on its own or when paired with its partner, raised panel style, Davis."
+    },
+    {
+     "name": "Wixom",
+     "lines": [
+      "Diamond Distinction",
+      "Diamond Full Access"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; Wixom modern slab cabinet doors in high gloss laminate make it simple to create a contemporary look that is as fashion forward as it is affordable."
+    },
+    {
+     "name": "Worthen",
+     "lines": [
+      "Diamond Distinction"
+     ],
+     "kind": "other",
+     "material": "PureStyle",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Rustic with a modern twist defines the transitional beauty of Worthen Laminate cabinet doors. Use them to create a room with rustic warmth, or as a unique design detail in a more modern space."
+    },
+    {
+     "name": "Allister",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: 5 piece; panel type not stated on site; The distinctive styling of the Allister door style adds a rich look of detail in any room."
+    },
+    {
+     "name": "Bluffton Inset",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "inset",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Inset; shape: Inset; Boasting a transitional look, the Bluffton Inset door style is a versatile option for any home."
+    },
+    {
+     "name": "Gunther Inset",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "inset",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Inset; shape: Inset Slab; A simple, yet inviting flat inset panel cabinet door that works for a variety of style preferences."
+    },
+    {
+     "name": "Holland",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: 5 piece; For those seeking the sophisticated harmony of modern-traditional styling, this cabinet style delivers. Holland's raised center panel provides a seamless blend of classic appeal and casual elegance, perfect for any home."
+    },
+    {
+     "name": "Karis",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full, Inset; shape: Square; The clean lines and Shaker style of the Karis are always on trend."
+    },
+    {
+     "name": "Langley",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full, Inset; shape: Square; panel type not stated on site; Interesting details and subtle sculpting give the Langley door style a tailored look."
+    },
+    {
+     "name": "Sumner",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "flat",
+     "material": "Maple",
+     "notes": "overlay: ?; shape: Slab"
+    },
+    {
+     "name": "Miller",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Miller's sleek, flat surface provides a clean, contemporary look. Its solid-wood construction allows for an optional outer edge profile, transforming an ultra-modern aesthetic into a soft, transitional space. Ask your de"
+    },
+    {
+     "name": "Murphy Inset",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "inset",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Inset; shape: Inset; Simple classic styling allows this transitional door to match any decor."
+    },
+    {
+     "name": "Shona",
+     "lines": [
+      "Diamond Edge"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Walnut, Rustic Alder, Quartersawn White Oak",
+     "notes": "overlay: Full, Inset; shape: Square; panel type not stated on site; The versatile Shona door style includes all the right details for a polished appearance."
+    }
+   ],
+   "finishes": [
+    {
+     "name": "Foxhall Green",
+     "type": "paint"
+    },
+    {
+     "name": "Tropic",
+     "type": "paint"
+    },
+    {
+     "name": "Black",
+     "type": "paint"
+    },
+    {
+     "name": "White",
+     "type": "paint"
+    },
+    {
+     "name": "Brightest White",
+     "type": "paint"
+    },
+    {
+     "name": "Regatta",
+     "type": "paint"
+    },
+    {
+     "name": "Cloud",
+     "type": "paint"
+    },
+    {
+     "name": "Coconut",
+     "type": "paint"
+    },
+    {
+     "name": "Steam",
+     "type": "paint"
+    },
+    {
+     "name": "Marcona",
+     "type": "paint"
+    },
+    {
+     "name": "Retreat",
+     "type": "paint"
+    },
+    {
+     "name": "Icy Avalanche",
+     "type": "paint"
+    },
+    {
+     "name": "Ashwood",
+     "type": "paint"
+    },
+    {
+     "name": "Clayton",
+     "type": "paint"
+    },
+    {
+     "name": "Icy Avalanche Linea Nightfall",
+     "type": "paint"
+    },
+    {
+     "name": "High Gloss White",
+     "type": "paint"
+    },
+    {
+     "name": "Seal",
+     "type": "stain"
+    },
+    {
+     "name": "Cattail",
+     "type": "stain"
+    },
+    {
+     "name": "Tundra",
+     "type": "stain"
+    },
+    {
+     "name": "Chocolate",
+     "type": "stain"
+    },
+    {
+     "name": "Natural",
+     "type": "stain"
+    },
+    {
+     "name": "Grainstone",
+     "type": "stain"
+    },
+    {
+     "name": "Sahara",
+     "type": "stain"
+    },
+    {
+     "name": "Morel",
+     "type": "stain"
+    },
+    {
+     "name": "Titanium",
+     "type": "stain"
+    },
+    {
+     "name": "Thatch",
+     "type": "stain"
+    },
+    {
+     "name": "Colt",
+     "type": "stain"
+    },
+    {
+     "name": "Coastline",
+     "type": "stain"
+    },
+    {
+     "name": "Buckskin",
+     "type": "stain"
+    },
+    {
+     "name": "Boardwalk",
+     "type": "stain"
+    },
+    {
+     "name": "Kanga",
+     "type": "stain"
+    },
+    {
+     "name": "Light",
+     "type": "stain"
+    },
+    {
+     "name": "Elk",
+     "type": "stain"
+    },
+    {
+     "name": "Gunstock",
+     "type": "stain"
+    },
+    {
+     "name": "Arctic",
+     "type": "stain"
+    },
+    {
+     "name": "Wharf",
+     "type": "stain"
+    },
+    {
+     "name": "Antler",
+     "type": "stain"
+    },
+    {
+     "name": "Obsidian",
+     "type": "stain"
+    },
+    {
+     "name": "Amaretto Creme Penned",
+     "type": "glaze (penned)"
+    },
+    {
+     "name": "Charcoal Penned",
+     "type": "glaze (penned)"
+    },
+    {
+     "name": "Grey Stone Penned",
+     "type": "glaze (penned)"
+    },
+    {
+     "name": "Toasted Almond Penned",
+     "type": "glaze (penned)"
+    }
+   ],
+   "nomenclature": "Not captured (Diamond spec book not pulled).",
+   "dims": "Not captured.",
+   "sources": [
+    "https://www.diamondcabinets.com/products",
+    "https://www.diamondcabinets.com/WebData/Catalog/ProductService.svc/GetSdkProductsByFilters",
+    "https://www.diamondcabinets.com/products/finishes",
+    "https://www.diamondcabinets.com/products/bryant"
+   ],
+   "notes": "44 doors from the diamondcabinets.com product API (East region default). Materials = wood types offered on each door's page (Hardwood = paint-grade hardwood, PureStyle = thermofoil-type, MDF, Specialty Laminate). Finishes list is the Distinction series set; paint=Color, stain=Woodtone per site 'Browse By'. Diamond NOW / Diamond at Lowe's lines NOT researched."
+  },
+  {
+   "id": "schrock",
+   "name": "Schrock",
+   "parent": "MasterBrand",
+   "tier": "semi-custom",
+   "soldAt": [
+    "dealers"
+   ],
+   "lines": [
+    {
+     "name": "Schrock Entra",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Series filter on schrock.com"
+    },
+    {
+     "name": "Schrock Trademark",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Series filter on schrock.com"
+    },
+    {
+     "name": "Schrock Boutique",
+     "frame": "framed",
+     "overlay": [
+      "full",
+      "inset"
+     ],
+     "notes": "Series filter on schrock.com"
+    },
+    {
+     "name": "Schrock Full Access",
+     "frame": "frameless",
+     "overlay": [
+      "full"
+     ],
+     "notes": "frameless inferred from name"
+    }
+   ],
+   "doors": [
+    {
+     "name": "Belton",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Boasting a transitional look, the Belton door style is a versatile option for any home."
+    },
+    {
+     "name": "Benner",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Walnut, Quartersawn White Oak, PureStyle",
+     "notes": "overlay: Full; shape: Square; Benner brings a new classic option in door styles to the Schrock portfolio. A transitional look that can lean traditional when needed, this neo Shaker style is on-trend with today’s consumer demands."
+    },
+    {
+     "name": "Carmichael",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: 5 piece; This shaker-inspired door style features an inside stepped profile creating a beautiful picture frame effect. The refined detail bridges traditional and contemporary aesthetics."
+    },
+    {
+     "name": "Elston",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak, Rustic Hickory, PureStyle, MDF",
+     "notes": "overlay: Full; shape: Square; Elston's wide rail shaker style and clean lines provide the basis for a variety of decorating tastes."
+    },
+    {
+     "name": "Francesca",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Francesca's simple style creates the perfect cabinet backdrop for any room in the home! Add your personal touch with an array of wood species and finish combinations."
+    },
+    {
+     "name": "Galvyn",
+     "lines": [
+      "Schrock Entra",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Oak",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; Galvyn cabinet door style's inviting and on-trend style will fit seamlessly into any home."
+    },
+    {
+     "name": "Harwell",
+     "lines": [
+      "Schrock Entra",
+      "Schrock Trademark"
+     ],
+     "kind": "raised",
+     "material": "Maple, Hardwood, Cherry, Oak",
+     "notes": "overlay: Partial; shape: Square; Offering a classic look, the Harwell raised center panel cabinet door is the perfect choice."
+    },
+    {
+     "name": "Hawkins",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Hardwood, Cherry, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; Hawkins contemporary mitered cabinet door brings a modern twist on the classic shaker style. With a sleek 3/4\" stile and rail profile, it offers durability and a clean aesthetic making it the perfect choice for any moder"
+    },
+    {
+     "name": "Ingalis",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak, Rustic Hickory, PureStyle, MDF",
+     "notes": "overlay: Full; shape: Square; Ingalis is the quintessential Shaker style, providing the ultimate in contemporary looks with its clean lines."
+    },
+    {
+     "name": "Kayes",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; This on-trend door style works well with a variety of design preferences and has the perfect amount of detail."
+    },
+    {
+     "name": "Kittrel",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: 5 piece; The mitered styling of Kittrel adds just the right touch to make it an ideal choice for someone wanting an extra touch of style."
+    },
+    {
+     "name": "Lainey",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; This transitional full overlay door with a slab drawer creates a sophisticated look, fitting nicely in any room of the home."
+    },
+    {
+     "name": "Larisa",
+     "lines": [
+      "Schrock Entra",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, PureStyle",
+     "notes": "overlay: Partial; shape: Square; Larisa brings a new classic option in door styles to the Schrock portfolio. A transitional look that can lean traditional when needed, this neo Shaker style is on-trend with today’s consumer demands."
+    },
+    {
+     "name": "Lormand",
+     "lines": [
+      "Schrock Entra",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Rustic Hickory, PureStyle",
+     "notes": "overlay: Partial; shape: Square; Lormand fits right into the ever-popular Shaker style that is one of today's hottest trends in cabinetry."
+    },
+    {
+     "name": "Natcher",
+     "lines": [
+      "Schrock Entra",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Hardwood, Cherry",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; This transitional partial overlay door with a slab drawer creates a sophisticated look, fitting nicely in any room of the home."
+    },
+    {
+     "name": "Rivali",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "flat",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Walnut, Laminate, MDF",
+     "notes": "overlay: Full; shape: Slab; A modern, contemporary aesthetic is achieved with the Rivali slab door style."
+    },
+    {
+     "name": "Willet",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Entra",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Hardwood, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak, Rustic Hickory, PureStyle",
+     "notes": "overlay: Full; shape: Square; Featuring tailored, subtle details to provide just the right amount of visual interest, the Willet door style is a perfect choice for nearly any design preference. When Willet is ordered in PureStyle™, the construction c"
+    },
+    {
+     "name": "Aspen",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; Aspen modern slab cabinet doors in high gloss laminate make it simple to create a contemporary look that is as fashion forward as it is affordable."
+    },
+    {
+     "name": "Brantley",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Brantley portrays a provincial appeal with its elegant sculpting, while also accommodating relaxed, aged finishes. Using our special hinges, you can easily create a faux inset door for some added (and affordable) Europea"
+    },
+    {
+     "name": "Campbell",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: Square; The modern lines of a transitional style, paired with a graceful raised panel for just the right touch of tradition, make the Campbell cabinet door an easy choice. Beautiful on its own or when paired with its partner, fl"
+    },
+    {
+     "name": "Cresson",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry",
+     "notes": "overlay: Full; shape: 5 piece; panel type not stated on site; The distinctive styling of the Cresson door style adds a rich look of detail in any room."
+    },
+    {
+     "name": "Denton",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak, MDF",
+     "notes": "overlay: Full; shape: Square; Denton's recessed center panel, 3\" door rail, and chamfered inside profile give it a notably classic, yet updated, appeal."
+    },
+    {
+     "name": "Derazi",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; Derazi clean-cut slab cabinet doors bring modern styling to the forefront in a textured horizontal wood grain laminate."
+    },
+    {
+     "name": "Gallio",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; A contemporary, Textured Laminate slab cabinet door, Gallio is designed to weather ever-changing trends and a lifetime of everyday trials. You'll feel right at home as your space embodies a sleek, modern motif."
+    },
+    {
+     "name": "Garrett",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; Garrett is a warm and inviting flat panel cabinet door design that works well in casual settings."
+    },
+    {
+     "name": "Herra",
+     "lines": [
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "PureStyle",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Rustic with a modern twist defines the transitional beauty of Herra Laminate cabinet doors. Use them to create a room with rustic warmth, or as a unique design detail in a more modern space."
+    },
+    {
+     "name": "Ingalis Narrow Rail",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "slimshaker",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Rustic Hickory, MDF",
+     "notes": "overlay: Full; shape: 5 Piece Narrow Rail; Ingalis is the quintessential Shaker style, providing the ultimate in contemporary looks with its clean lines."
+    },
+    {
+     "name": "Jarret",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry",
+     "notes": "overlay: Full; shape: Square; Combining the best of both worlds, Jarret Shaker style cabinet doors feature meticulous craftsmanship and minimalist design. The flat panel, full overlay cabinet doors feature wide rails and simple profile details, insid"
+    },
+    {
+     "name": "Kennedy",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; The modern lines and flexibility of Kennedy exemplify the ultra popular transitional door style. This flat panel cabinet door is beautiful on its own or when paired with its partner, raised panel style, Campbell."
+    },
+    {
+     "name": "Manning",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Walnut, Quartersawn White Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Simple classic styling allows this transitional door to match any decor."
+    },
+    {
+     "name": "Plymouth",
+     "lines": [
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Rustic Hickory",
+     "notes": "overlay: Full; shape: Square; The elegant raised panels of the Plymouth cabinet door style create a look of sophistication in any room of the house."
+    },
+    {
+     "name": "Racine",
+     "lines": [
+      "Schrock Trademark"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Oak, Rustic Hickory",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; Simple classic styling allows Racine to be a transitional style that goes with any décor."
+    },
+    {
+     "name": "Seaton",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; With Seaton, it's all about the subtle details. This transitional style responds to current trends with 2 1/2\" rails and a beaded, recessed center panel."
+    },
+    {
+     "name": "Whittaker",
+     "lines": [
+      "Schrock Boutique",
+      "Schrock Full Access",
+      "Schrock Trademark"
+     ],
+     "kind": "beadboard",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; Whittaker’s beadboard doors can easily create a cottage or coastal look in your space. Maple provides a comforting warmth, while Cherry* gives a more classic look. *Available on Boutique"
+    },
+    {
+     "name": "Aldridge",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "mitered",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: 5 piece; This handsome wide-rail mitered door style features a routed edge within its profile, creating a sophisticated faux-inset look with a matching mitered drawer front."
+    },
+    {
+     "name": "Belton Inset",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "inset",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Inset; shape: Inset; Boasting a transitional look, the Belton inset door style is a versatile option for any home."
+    },
+    {
+     "name": "Garrett Inset",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "inset",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Inset; shape: Inset Slab; A simple, yet inviting flat panel inset cabinet door that works for a variety of style preferences."
+    },
+    {
+     "name": "Hogan",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "raised",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: 5 piece; For those seeking the sophisticated harmony of modern-traditional styling, this cabinet style delivers. Hogan's raised center panel provides a seamless blend of classic appeal and casual elegance, perfect for any home."
+    },
+    {
+     "name": "Kirkwood",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "shaker",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full, Inset; shape: Square; The clean lines and Shaker style of the Kirkwood are always on trend."
+    },
+    {
+     "name": "Lorrina",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full, Inset; shape: Square; panel type not stated on site; Interesting details and subtle sculpting give the Lorrina door style a tailored look."
+    },
+    {
+     "name": "Maitland",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Maitland's sleek, flat surface provides a clean, contemporary look. Its solid-wood construction allows for an optional outer edge profile, transforming an ultra-modern aesthetic into a soft, transitional space. Ask your "
+    },
+    {
+     "name": "Manning Inset",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "inset",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Inset; shape: Inset; Simple classic styling allows this transitional door to match any decor."
+    },
+    {
+     "name": "Shaydon",
+     "lines": [
+      "Schrock Boutique"
+     ],
+     "kind": "other",
+     "material": "Maple, Cherry, Rustic Alder, Walnut, Quartersawn White Oak",
+     "notes": "overlay: Full, Inset; shape: Square; panel type not stated on site; The versatile Shaydon door style includes all the right details for a polished appearance."
+    }
+   ],
+   "finishes": [
+    {
+     "name": "Clayton",
+     "type": "paint"
+    },
+    {
+     "name": "Ashwood",
+     "type": "paint"
+    },
+    {
+     "name": "Tropic",
+     "type": "paint"
+    },
+    {
+     "name": "White",
+     "type": "paint"
+    },
+    {
+     "name": "Cloud",
+     "type": "paint"
+    },
+    {
+     "name": "Steam",
+     "type": "paint"
+    },
+    {
+     "name": "Black",
+     "type": "paint"
+    },
+    {
+     "name": "Regatta",
+     "type": "paint"
+    },
+    {
+     "name": "Marcona",
+     "type": "paint"
+    },
+    {
+     "name": "Retreat",
+     "type": "paint"
+    },
+    {
+     "name": "Coconut",
+     "type": "paint"
+    },
+    {
+     "name": "Icy Avalanche",
+     "type": "paint"
+    },
+    {
+     "name": "Chocolate",
+     "type": "stain"
+    },
+    {
+     "name": "Coastline",
+     "type": "stain"
+    },
+    {
+     "name": "Kanga",
+     "type": "stain"
+    },
+    {
+     "name": "Natural",
+     "type": "stain"
+    },
+    {
+     "name": "Morel",
+     "type": "stain"
+    },
+    {
+     "name": "Grainstone",
+     "type": "stain"
+    },
+    {
+     "name": "Buckskin",
+     "type": "stain"
+    },
+    {
+     "name": "Thatch",
+     "type": "stain"
+    },
+    {
+     "name": "Titanium",
+     "type": "stain"
+    },
+    {
+     "name": "Sahara",
+     "type": "stain"
+    },
+    {
+     "name": "Colt",
+     "type": "stain"
+    }
+   ],
+   "nomenclature": "Not captured.",
+   "dims": "Not captured.",
+   "sources": [
+    "https://www.schrock.com/products",
+    "https://www.schrock.com/WebData/Catalog/ProductService.svc/GetSdkProductsByFilters"
+   ],
+   "notes": "Doors from schrock.com product API; series construction details not verified. Finishes = Entra series set."
+  },
+  {
+   "id": "midcontinent",
+   "name": "Mid Continent",
+   "parent": "MasterBrand",
+   "tier": "semi-custom (builder-focused)",
+   "soldAt": [
+    "dealers",
+    "builders"
+   ],
+   "lines": [
+    {
+     "name": "Mid Continent Signature",
+     "frame": "framed",
+     "overlay": [
+      "partial",
+      "full"
+     ],
+     "notes": "Series filter on midcontinentcabinetry.com"
+    },
+    {
+     "name": "Mid Continent Pivot",
+     "frame": "frameless?",
+     "overlay": [
+      "full"
+     ],
+     "notes": "Series filter on site; construction not verified"
+    }
+   ],
+   "doors": [
+    {
+     "name": "Albany",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; Albany modern slab cabinet doors in high gloss laminate make it easy to create a modern look that is both fashionable and affordable."
+    },
+    {
+     "name": "Berkley FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Berkley FO brings a new classic option in door styles to the MidContinent portfolio. A transitional look that can lean traditional when needed, this neo Shaker style is on-trend with today’s consumer demands."
+    },
+    {
+     "name": "Berkley PO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Partial; shape: Square; Berkley PO brings a new classic option in door styles to the MidContinent portfolio. A transitional look that can lean traditional when needed, this neo Shaker style is on-trend with today’s consumer demands."
+    },
+    {
+     "name": "Brawny FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Brawny FO's clean lines and wide rail shaker style provide the basis for a wide variety of decorating styles."
+    },
+    {
+     "name": "Celina",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: 5 piece; panel type not stated on site; The distinctive styling of the Celina door style adds a rich look of detail in any room."
+    },
+    {
+     "name": "Corbin",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: 5 piece; This shaker-inspired door style features an inside stepped profile creating a beautiful picture frame effect. The refined detail bridges traditional and contemporary aesthetics."
+    },
+    {
+     "name": "Danielson",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Danielson's recessed center panel, 3\" door rail, and chamfered inside profile give it a notably classic, yet updated, appeal."
+    },
+    {
+     "name": "Dapper FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "mitered",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; The Dapper door style is ideal for practically any design taste, thanks to it's subtle details that add just the appropriate amount of visual appeal. Dapper is built with mitered joinery on the doors and drawer fronts wh"
+    },
+    {
+     "name": "Dayton",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; Dayton clean-cut slab cabinet doors bring modern styling to the forefront in a textured horizontal wood grain laminate."
+    },
+    {
+     "name": "Detailed FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; This stylish transitional full overlay door with a slab drawer looks great in any room of the home."
+    },
+    {
+     "name": "Detailed PO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; This stylish transitional partial overlay door with a slab drawer looks great in any room of the home."
+    },
+    {
+     "name": "Garland",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "raised",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; The modern lines and flexibility of Garland exemplify the ultra popular transitional door style. This flat panel cabinet door is beautiful on its own or when paired with its partner, raised panel style, Healy."
+    },
+    {
+     "name": "Gilmore",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "flat",
+     "material": "Specialty Laminate",
+     "notes": "overlay: Full; shape: Slab; A contemporary, Textured Laminate slab cabinet door, Gilmore is designed to weather ever-changing trends and a lifetime of everyday trials. You'll feel right at home as your space embodies a sleek, modern design."
+    },
+    {
+     "name": "Glyndon",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Glyndon is a simple, yet inviting flat panel cabinet door that works for a variety of style preferences."
+    },
+    {
+     "name": "Healy",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "raised",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; The modern lines of a transitional style, paired with a graceful raised panel for just the right touch of tradition, make the Healy cabinet door an easy choice. Beautiful on its own or when paired with its partner, flat "
+    },
+    {
+     "name": "Henning",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "PureStyle",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; The transitional appeal of Henning Laminate cabinet doors is rustic with a modern twist. Use them to provide a touch of rustic warmth to a place or as a distinctive style choice in a modern setting."
+    },
+    {
+     "name": "Henri",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "mitered",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Henri's contemporary mitered cabinet door brings a modern twist on the classic shaker style. With a sleek 3/4\" stile and rail profile, it offers durability and a clean aesthetic making it the perfect choice for any moder"
+    },
+    {
+     "name": "Jasper",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Combining the best of both worlds, Jasper Shaker style cabinet doors feature meticulous craftsmanship and minimalist design. The flat panel, full overlay cabinet doors feature wide rails and simple profile details, insid"
+    },
+    {
+     "name": "Paquette",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Paquette portrays a provincial appeal with its elegant sculpting, while also accommodating relaxed, aged finishes. Using our special hinges, you can easily create a faux inset door for some added (and affordable) Europea"
+    },
+    {
+     "name": "Payson",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "raised",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; The elegant raised panels of the Pason cabinet door style create a look of sophistication in any room of the house."
+    },
+    {
+     "name": "Perry",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; This trendy door style Perry has just the right amount of detail and complements a wide variety of design preferences."
+    },
+    {
+     "name": "Sanford",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; It's all about the minute details with Sanford. With its beaded, recessed center panel and 2 1/2\" rails, this transitional style responds to current trends."
+    },
+    {
+     "name": "Simple FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; Simple FO is the ideal Shaker style, providing the ultimate in contemporary looks with its clean lines."
+    },
+    {
+     "name": "Simple FO Narrow Rail",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "slimshaker",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: 5 piece narrow rail; Simple FO Narrow Rail is the ideal Shaker style, providing the ultimate in contemporary looks with its clean lines."
+    },
+    {
+     "name": "Simple PO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "shaker",
+     "material": "Maple",
+     "notes": "overlay: Partial; shape: Square; Simple PO fits right into the ever-popular Shaker style that is one of today's hottest trends in cabinetry."
+    },
+    {
+     "name": "Slab FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "flat",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Slab; The Slab FO slab door style achieves a modern, contemporary feel."
+    },
+    {
+     "name": "Slim FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Slim FO creates the perfect cabinet backdrop for any room in the home! Add your own unique touch with a variety of wood species and finish combinations."
+    },
+    {
+     "name": "Slim PO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; Slim PO cabinet door style's inviting and on-trend style will fit seamlessly into any home."
+    },
+    {
+     "name": "Stevenson FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "mitered",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: 5 piece; Stevenson FO is a great option for someone looking to add a little more elegance thanks to its mitered styling, which is the perfect finishing touch."
+    },
+    {
+     "name": "Traditional FO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Boasting a classic, timeless design, the Traditional FO door style is a versatile option for any home."
+    },
+    {
+     "name": "Traditional PO",
+     "lines": [
+      "Mid Continent Pivot",
+      "Mid Continent Signature"
+     ],
+     "kind": "raised",
+     "material": "Maple",
+     "notes": "overlay: Partial; shape: Square; Offering a classic look, the Traditional PO raised center panel cabinet door is the perfect choice."
+    },
+    {
+     "name": "Windsor",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "beadboard",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; With Windsor's beadboard doors, you can quickly give your room a cottage or coastal feel. Cherry has a more traditional appearance, while Maple offers a cozy warmth."
+    },
+    {
+     "name": "Witten FO",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Full; shape: Square; panel type not stated on site; Simple classic styling allows this transitional door to match any decor."
+    },
+    {
+     "name": "Witten PO",
+     "lines": [
+      "Mid Continent Signature"
+     ],
+     "kind": "other",
+     "material": "Maple",
+     "notes": "overlay: Partial; shape: Square; panel type not stated on site; Simple classic styling allows Witten PO to be a transitional style that goes with any décor."
+    }
+   ],
+   "finishes": [
+    {
+     "name": "Black",
+     "type": "paint"
+    },
+    {
+     "name": "White",
+     "type": "paint"
+    },
+    {
+     "name": "Coconut",
+     "type": "paint"
+    },
+    {
+     "name": "Marcona",
+     "type": "paint"
+    },
+    {
+     "name": "Foxhall Green",
+     "type": "paint"
+    },
+    {
+     "name": "Icy Avalanche",
+     "type": "paint"
+    },
+    {
+     "name": "Brightest White",
+     "type": "paint"
+    },
+    {
+     "name": "Steam",
+     "type": "paint"
+    },
+    {
+     "name": "Cloud",
+     "type": "paint"
+    },
+    {
+     "name": "Tropic",
+     "type": "paint"
+    },
+    {
+     "name": "Regatta",
+     "type": "paint"
+    },
+    {
+     "name": "Retreat",
+     "type": "paint"
+    },
+    {
+     "name": "Clayton",
+     "type": "paint"
+    },
+    {
+     "name": "Ashwood",
+     "type": "paint"
+    },
+    {
+     "name": "Icy Avalanche Linea Nightfall",
+     "type": "paint"
+    },
+    {
+     "name": "High Gloss White",
+     "type": "paint"
+    },
+    {
+     "name": "Seal",
+     "type": "stain"
+    },
+    {
+     "name": "Boardwalk",
+     "type": "stain"
+    },
+    {
+     "name": "Cattail",
+     "type": "stain"
+    },
+    {
+     "name": "Tundra",
+     "type": "stain"
+    },
+    {
+     "name": "Buckskin",
+     "type": "stain"
+    },
+    {
+     "name": "Chocolate",
+     "type": "stain"
+    },
+    {
+     "name": "Coastline",
+     "type": "stain"
+    },
+    {
+     "name": "Titanium",
+     "type": "stain"
+    },
+    {
+     "name": "Sahara",
+     "type": "stain"
+    },
+    {
+     "name": "Morel",
+     "type": "stain"
+    },
+    {
+     "name": "Kanga",
+     "type": "stain"
+    },
+    {
+     "name": "Grainstone",
+     "type": "stain"
+    },
+    {
+     "name": "Colt",
+     "type": "stain"
+    },
+    {
+     "name": "Natural",
+     "type": "stain"
+    },
+    {
+     "name": "Thatch",
+     "type": "stain"
+    },
+    {
+     "name": "Light",
+     "type": "stain"
+    },
+    {
+     "name": "Elk",
+     "type": "stain"
+    },
+    {
+     "name": "Gunstock",
+     "type": "stain"
+    },
+    {
+     "name": "Antler",
+     "type": "stain"
+    },
+    {
+     "name": "Arctic",
+     "type": "stain"
+    },
+    {
+     "name": "Wharf",
+     "type": "stain"
+    },
+    {
+     "name": "Obsidian",
+     "type": "stain"
+    }
+   ],
+   "nomenclature": "Not captured.",
+   "dims": "Not captured.",
+   "sources": [
+    "https://www.midcontinentcabinetry.com/products",
+    "https://www.midcontinentcabinetry.com/WebData/Catalog/ProductService.svc/GetSdkProductsByFilters"
+   ],
+   "notes": "Doors from site product API; finishes = Signature series set; construction per series not verified."
+  }
+ ],
+ "meta": {
+  "generated": "2026-10-23",
+  "coverage_gaps": [
+   "American Woodmark/Timberlake/Shenandoah/Waypoint/Hampton Bay",
+   "Wellborn",
+   "Aristokraft",
+   "Decora",
+   "Homecrest",
+   "Thomasville",
+   "Fabuwood",
+   "Wolf",
+   "Omega/Dynasty",
+   "Medallion",
+   "Diamond NOW / Diamond at Lowe's"
+  ],
+  "kind_method": "derived from manufacturer-stated panel/shape fields and description text; review \"other\" entries"
+ }
+}

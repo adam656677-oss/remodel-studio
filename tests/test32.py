@@ -1,0 +1,18 @@
+from h import *
+with app(1400,900) as (pg,errs):
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(400); pg.keyboard.press('f'); pg.wait_for_timeout(300)
+    pg.evaluate("()=>window.__app.setTool('chimney')"); pg.wait_for_timeout(200); click_w(pg,-14,150); pg.wait_for_timeout(300)
+    pg.evaluate("()=>{const a=window.__app;const p=a.get();a.commit({...p,chimneys:p.chimneys.map(c=>({...c,rot:270}))})}"); pg.wait_for_timeout(200)
+    pg.evaluate("()=>window.__app.setTool('skylight')"); pg.wait_for_timeout(200); click_w(pg,360,90); click_w(pg,120,90); pg.wait_for_timeout(300)
+    P=pg.evaluate("()=>{const p=window.__app.get();return {ch:p.chimneys,sk:p.skylights,need:chimneyNeed(p,p.chimneys[0]).need,geo:p.skylights.map(s=>!!skyGeo(p,s))}}"); print(P)
+    pg.screenshot(path=str(OUT/'t32_plan.png'))
+    print('checks',pg.evaluate("()=>{const out=[];regChecks(window.__app.get(),(...a)=>out.push(a.slice(0,3).map(x=>typeof x==='object'?x.code:x).join(' | ')));return out}"))
+    print('takeoff',pg.evaluate("()=>takeoff(window.__app.get(),{waste:0.1}).filter(r=>/Fireplace|Skylight/.test(r.cat)).map(r=>r.item+' '+r.qty+' '+r.unit)"))
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1800)
+    pg.evaluate("()=>{const st=window.__view3d;const b=new THREE.Box3().setFromObject(st.model);const c=b.getCenter(new THREE.Vector3());st.camera.position.set(c.x-38,c.y+22,c.z-30);st.controls.target.copy(c);st.controls.update();st.render();}"); pg.wait_for_timeout(500)
+    pg.screenshot(path=str(OUT/'t32_3d.png'))
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(800)
+    S=pg.evaluate("()=>buildSheets(window.__app.get()).map(s=>s.no+' '+s.title)"); print(S)
+    svg=pg.evaluate("()=>sheetToSVGString(buildSheets(window.__app.get()).find(s=>/Exterior elev/.test(s.title)))")
+    pg2=pg.context.new_page(); pg2.set_viewport_size({'width':1700,'height':1080}); pg2.set_content('<body style="margin:0;background:#fff">'+svg.replace('<svg','<svg style="width:1700px;height:auto"',1)+'</body>'); pg2.wait_for_timeout(300); pg2.screenshot(path=str(OUT/'t32_elev.png')); pg2.close()
+    print(errs or 'no errors')

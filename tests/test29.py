@@ -1,0 +1,27 @@
+from h import *
+DXF=open('t.dxf').read()
+with app() as (pg,errs):
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(400)
+    r=pg.evaluate("(t)=>{const r=parseDXF(t);return {n:r.ents.length,u:r.units,types:r.ents.map(e=>e.shape)}}",DXF); print('parse',r)
+    # import through the menu dialog
+    pg.get_by_role('button',name='File').click(); pg.wait_for_timeout(200); pg.get_by_text('Import DXF drawing…').click(); pg.wait_for_timeout(300)
+    pg.get_by_label('Turn parallel line pairs into walls (CAD-to-walls)').check()
+    w0=pg.evaluate("()=>window.__app.get().walls.length")
+    pg.set_input_files('#dxf-file',files=[{'name':'t.dxf','mimeType':'application/dxf','buffer':DXF.encode()}]); pg.wait_for_timeout(400)
+    print(pg.locator('.modal .msg').inner_text())
+    P=pg.evaluate("()=>{const p=window.__app.get();return {walls:p.walls.length,cad:p.cad.length,annos:(p.annos||[]).filter(a=>a.text.includes('SHED')).length,layers:p.layers.map(l=>l.name),neww:p.walls.slice(-1)[0]}}")
+    print('walls before',w0,P)
+    pg.get_by_role('button',name='Done').click(); pg.wait_for_timeout(200); pg.keyboard.press('f'); pg.wait_for_timeout(300)
+    pg.screenshot(path=str(OUT/'t29_dxf.png'))
+    # revisions + schedules
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(800)
+    pg.get_by_role('button',name='Add revision').click(); pg.wait_for_timeout(200)
+    pg.get_by_label('Revision description').first.fill('Permit set, added rear porch'); pg.wait_for_timeout(200)
+    pg.get_by_role('button',name='Add revision').click(); pg.get_by_label('Revision description').nth(1).fill('Owner changes to kitchen'); pg.wait_for_timeout(300)
+    print('revs',pg.evaluate("()=>window.__app.get().info.revisions"))
+    S=pg.evaluate("()=>buildSheets(window.__app.get()).map(s=>s.no+' '+s.title)"); print(S)
+    sch=pg.evaluate("()=>{const s=buildSheets(window.__app.get()).find(s=>s.no==='A6.1');return s.items.filter(i=>i.text).map(i=>i.text).slice(0,80)}"); print(sch)
+    print('room rows',pg.evaluate("()=>roomFinishRows(window.__app.get()).slice(0,4)"))
+    print('fx rows',pg.evaluate("()=>fixtureRows(window.__app.get()).slice(0,6)"))
+    pg.screenshot(path=str(OUT/'t29_sheets.png'))
+    print(errs or 'no errors')

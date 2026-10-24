@@ -1,0 +1,3123 @@
+{
+ "_meta": {
+  "compiled": "2026-10-23",
+  "legend": {
+   "verified": "seen on manufacturer page/data or cited doc this session",
+   "unverified-general-knowledge": "well-known real item NOT re-verified this session; confirm before relying on it"
+  },
+  "energyStarV7": {
+   "Southern": {
+    "U": "<=0.32",
+    "SHGC": "<=0.23"
+   },
+   "South-Central": {
+    "U": "<=0.28",
+    "SHGC": "<=0.23"
+   },
+   "North-Central": {
+    "U": "<=0.25"
+   },
+   "Northern": {
+    "U": "<=0.22",
+    "SHGC": ">=0.17 (prescriptive)"
+   },
+   "note": "Forest, MS is in the ENERGY STAR Southern zone. Source: Andersen ES 7.0 summary.",
+   "source": "https://andersenwindows.com/for-professionals/pro-views/energy-star-7-update"
+  }
+ },
+ "windows": [
+  {
+   "brand": "Andersen",
+   "status": "verified",
+   "series": [
+    {
+     "name": "100 Series",
+     "frame": "Fibrex composite (interior and exterior)",
+     "ops": [
+      "casement",
+      "awning",
+      "gliding",
+      "single-hung",
+      "double-hung",
+      "picture",
+      "specialty"
+     ]
+    },
+    {
+     "name": "200 Series",
+     "frame": "Wood core, Perma-Shield vinyl-clad exterior",
+     "ops": [
+      "double-hung (Tilt-Wash)",
+      "gliding",
+      "picture"
+     ],
+     "notes": "Most popular styles and sizes only"
+    },
+    {
+     "name": "400 Series",
+     "frame": "Wood, Perma-Shield vinyl-clad exterior",
+     "ops": [
+      "double-hung (Tilt-Wash)",
+      "casement",
+      "awning",
+      "gliding",
+      "picture",
+      "bay/bow",
+      "specialty"
+     ],
+     "notes": "Best-selling line"
+    },
+    {
+     "name": "A-Series",
+     "frame": "Wood interiors; fiberglass and composite exteriors",
+     "ops": [
+      "double-hung",
+      "casement",
+      "awning",
+      "picture",
+      "specialty"
+     ],
+     "notes": "11 exterior colors, 12 interior finishes"
+    },
+    {
+     "name": "E-Series",
+     "frame": "Wood interior, aluminum-clad exterior (aluminum not stated on page)",
+     "ops": [
+      "awning",
+      "bay/bow",
+      "casement",
+      "double-hung",
+      "gliding",
+      "picture"
+     ],
+     "notes": "50 standard exterior colors"
+    },
+    {
+     "name": "Andersen Aluminum",
+     "frame": "All aluminum",
+     "ops": [],
+     "notes": "Sold for the Southwest"
+    }
+   ],
+   "sizeNaming": "Unit code = product prefix + width digits + height digits, read as feet/inches. TW2846 = Tilt-Wash, about 2'8\" wide x 4'6\" tall. Width confirmed: '28' = 2'-8 7/8\" frame width, minimum rough opening 2'-9 5/8\" to 2'-10 1/8\". The height digits follow the same pattern but were not confirmed in the printed table.",
+   "notes": "Ops lists come from Andersen series pages, whose menus mix in other series; confirm each type. U-factor/SHGC not collected.",
+   "sources": [
+    "https://www.andersenwindows.com/windows-and-doors/series/100-series/",
+    "https://www.andersenwindows.com/windows-and-doors/series/400-series/",
+    "https://www.andersenwindows.com/windows-and-doors/series/a-series/",
+    "https://www.andersenwindows.com/windows-and-doors/series/e-series/",
+    "https://detroitmi.gov/sites/detroitmi.localhost/files/hdc-submitted-materials/2024-11/andersen%20sizing-windows--400series-tilt-washhungfull-frame_0.pdf"
+   ]
+  },
+  {
+   "brand": "Pella",
+   "status": "verified (lines/materials); ops are site-wide menu",
+   "series": [
+    {
+     "name": "Pella 250 Series",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Encompass by Pella",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Pella Lifestyle Series",
+     "frame": "wood (aluminum-clad exterior)"
+    },
+    {
+     "name": "Pella Impervia",
+     "frame": "fiberglass"
+    },
+    {
+     "name": "Pella Reserve Traditional",
+     "frame": "aluminum-clad wood or all wood"
+    },
+    {
+     "name": "Pella Reserve Contemporary",
+     "frame": "wood, 20 exterior colors"
+    },
+    {
+     "name": "Pella Vista Series",
+     "frame": "aluminum (new)"
+    }
+   ],
+   "opsAll": [
+    "casement",
+    "awning",
+    "double-hung",
+    "single-hung",
+    "picture",
+    "sliding",
+    "pass-through",
+    "bay",
+    "bow"
+   ],
+   "sizeNaming": "Not collected. Pella sells mostly made-to-order sizes.",
+   "notes": "pella.com blocks automated fetch. Per-line ops, Architect Series and Hurricane Shield not confirmed. 'Lifestyle = clad wood' comes from general knowledge.",
+   "sources": [
+    "https://www.pella.com/shop/windows/reserve/traditional/picture-windows/"
+   ]
+  },
+  {
+   "brand": "Marvin",
+   "status": "verified",
+   "series": [
+    {
+     "name": "Ultimate",
+     "frame": "Natural wood interior, extruded aluminum exterior",
+     "ops": [
+      "casement",
+      "double-hung",
+      "awning",
+      "glider",
+      "picture",
+      "specialty and more"
+     ]
+    },
+    {
+     "name": "Elevate",
+     "frame": "Natural wood interior, Ultrex fiberglass exterior",
+     "ops": [
+      "casement",
+      "double-hung",
+      "awning",
+      "picture"
+     ]
+    },
+    {
+     "name": "Essential",
+     "frame": "Ultrex fiberglass inside and out",
+     "ops": [
+      "double-hung",
+      "casement",
+      "awning",
+      "glider",
+      "picture/direct glaze"
+     ]
+    },
+    {
+     "name": "Modern",
+     "frame": "Aluminum interior, high-density fiberglass exterior",
+     "ops": [
+      "awning",
+      "casement",
+      "direct glaze"
+     ]
+    },
+    {
+     "name": "Vivid",
+     "frame": "Ultrex fiberglass exterior",
+     "ops": [
+      "casement",
+      "direct glaze"
+     ]
+    }
+   ],
+   "marvinWindowTypes": [
+    "awning",
+    "bay and bow",
+    "casement",
+    "corner",
+    "double hung",
+    "glider",
+    "picture/direct glaze",
+    "single hung",
+    "specialty shapes"
+   ],
+   "notes": "Ops per collection are partial (taken from page captions).",
+   "sizeNaming": "Not collected",
+   "sources": [
+    "https://www.marvin.com/collections"
+   ]
+  },
+  {
+   "brand": "JELD-WEN",
+   "status": "verified via third-party summary",
+   "series": [
+    {
+     "name": "Premium Vinyl (V-4500)",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Builders Vinyl (V-2500)",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Premium Atlantic Vinyl",
+     "frame": "vinyl",
+     "ops": [
+      "single-hung",
+      "awning",
+      "casement",
+      "sliding",
+      "fixed"
+     ]
+    },
+    {
+     "name": "DF Hybrid Vinyl",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Brickmould Vinyl",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Flat Casing Vinyl",
+     "frame": "vinyl"
+    },
+    {
+     "name": "Siteline Clad-Wood",
+     "frame": "clad wood"
+    },
+    {
+     "name": "EpicVue Clad-Wood",
+     "frame": "clad wood"
+    },
+    {
+     "name": "W-2500 Clad-Wood",
+     "frame": "clad wood"
+    },
+    {
+     "name": "W-5500 Clad-Wood",
+     "frame": "clad wood"
+    },
+    {
+     "name": "Custom Wood",
+     "frame": "wood"
+    },
+    {
+     "name": "Auraline Composite",
+     "frame": "composite"
+    },
+    {
+     "name": "Builders Atlantic Aluminum",
+     "frame": "aluminum"
+    }
+   ],
+   "notes": "jeld-wen.com blocks automated fetch. Ops per line mostly unknown.",
+   "sizeNaming": "Not collected",
+   "sources": [
+    "https://www.fixr.com/resources/all-about-jeld-wen-windows"
+   ]
+  },
+  {
+   "brand": "Simonton",
+   "status": "verified",
+   "frame": "vinyl (all lines)",
+   "series": [
+    {
+     "name": "5500"
+    },
+    {
+     "name": "ComfortSmart"
+    },
+    {
+     "name": "5050"
+    },
+    {
+     "name": "HarborLight"
+    },
+    {
+     "name": "StormBreaker Plus (impact/hurricane)"
+    },
+    {
+     "name": "6150"
+    },
+    {
+     "name": "6200"
+    },
+    {
+     "name": "6550"
+    },
+    {
+     "name": "Brickmould 300"
+    },
+    {
+     "name": "Brickmould 600"
+    },
+    {
+     "name": "Contractor"
+    },
+    {
+     "name": "DaylightMax"
+    },
+    {
+     "name": "Madeira"
+    },
+    {
+     "name": "Premium"
+    },
+    {
+     "name": "Pro"
+    }
+   ],
+   "ops": [
+    "double hung",
+    "single hung",
+    "sliding",
+    "casement",
+    "awning",
+    "bay",
+    "bow",
+    "picture",
+    "garden",
+    "specialty shapes"
+   ],
+   "notes": "Product offerings vary by ZIP. 5500 Collection: 9 exterior and 8 interior colors.",
+   "sizeNaming": "Not collected",
+   "sources": [
+    "https://www.simonton.com/windows/"
+   ]
+  },
+  {
+   "brand": "Ply Gem",
+   "status": "verified",
+   "series": [
+    {
+     "name": "1100 Series",
+     "market": "new construction"
+    },
+    {
+     "name": "1500 Series",
+     "market": "new construction"
+    },
+    {
+     "name": "3700 Series",
+     "market": "new construction"
+    },
+    {
+     "name": "4700 Series",
+     "market": "new construction"
+    },
+    {
+     "name": "4800 Series",
+     "market": "new construction"
+    },
+    {
+     "name": "5000 Series",
+     "market": "new construction"
+    },
+    {
+     "name": "Classic Series",
+     "market": "new construction"
+    },
+    {
+     "name": "MIRA Series (aluminum-clad)",
+     "market": "new construction"
+    },
+    {
+     "name": "East Premium Series",
+     "market": "replacement"
+    },
+    {
+     "name": "East Pro Series",
+     "market": "replacement"
+    },
+    {
+     "name": "East 2000 Series",
+     "market": "replacement"
+    },
+    {
+     "name": "East 5100 Series",
+     "market": "replacement"
+    },
+    {
+     "name": "West Pro Series 200",
+     "market": "new construction and replacement"
+    },
+    {
+     "name": "West Pro Series 700",
+     "market": "new construction and replacement"
+    },
+    {
+     "name": "West 400 Series",
+     "market": "new construction and replacement"
+    }
+   ],
+   "materials": [
+    "vinyl",
+    "aluminum-clad",
+    "aluminum"
+   ],
+   "ops": [
+    "single hung",
+    "double hung",
+    "horizontal slider",
+    "casement",
+    "awning",
+    "picture",
+    "geometric",
+    "bay/bow",
+    "garden"
+   ],
+   "notes": "MITER (Cornerstone Building Brands) not researched. Ply Gem's site no longer lists numbered 'MITER' series.",
+   "sizeNaming": "Not collected",
+   "sources": [
+    "https://www.plygem.com/windows/products/"
+   ]
+  }
+ ],
+ "extDoors": [
+  {
+   "brand": "Therma-Tru",
+   "status": "verified",
+   "collections": [
+    {
+     "name": "Classic-Craft",
+     "material": "fiberglass (premium)",
+     "notes": "The page now features curated collections Artíssa, Founders and Visionary. Older sub-collections (American Style, Canvas, Mahogany, Oak, Rustic) were not seen on the page."
+    },
+    {
+     "name": "Fiber-Classic",
+     "material": "fiberglass",
+     "texture": "Mahogany or Oak wood-grain"
+    },
+    {
+     "name": "Smooth-Star",
+     "material": "fiberglass",
+     "texture": "smooth, paintable"
+    },
+    {
+     "name": "Pulse",
+     "material": "fiberglass",
+     "style": "contemporary"
+    },
+    {
+     "name": "Profiles and Traditions",
+     "material": "steel"
+    },
+    {
+     "name": "Benchmark Collection",
+     "notes": "Sold only at Lowe's"
+    },
+    {
+     "name": "Veris Collection"
+    }
+   ],
+   "sources": [
+    "https://www.thermatru.com/explore-products/door-collections/",
+    "https://www.thermatru.com/"
+   ]
+  },
+  {
+   "brand": "Masonite",
+   "status": "verified",
+   "collections": [
+    {
+     "name": "Belleville Smooth",
+     "material": "fiberglass",
+     "styles": [
+      "Hollister",
+      "flush",
+      "square",
+      "Cheyenne plank",
+      "6-panel"
+     ]
+    },
+    {
+     "name": "Belleville Mahogany Textured",
+     "material": "fiberglass"
+    },
+    {
+     "name": "Belleville Oak Textured",
+     "material": "fiberglass"
+    },
+    {
+     "name": "Heritage Series Winslow (Smooth / Fir Textured)",
+     "material": "fiberglass"
+    },
+    {
+     "name": "VistaGrande (Smooth / Fir Textured)",
+     "material": "fiberglass flush-glazed"
+    },
+    {
+     "name": "Masonite HD Steel",
+     "material": "steel, primed"
+    },
+    {
+     "name": "Sta-Tru HD Steel",
+     "material": "steel, pre-painted white"
+    },
+    {
+     "name": "Masonite Utility Steel",
+     "material": "steel"
+    },
+    {
+     "name": "Performance Door System Plus+",
+     "notes": "Current marketed system"
+    }
+   ],
+   "glassStyles": [
+    "Alston",
+    "Chelsea",
+    "Chord",
+    "Cross Reed",
+    "Cruz",
+    "Cuzco",
+    "Element",
+    "Focus",
+    "Frontier",
+    "Georgian",
+    "Heartland",
+    "Iron Springs",
+    "Kordella",
+    "Madrid",
+    "Naples",
+    "Optimus",
+    "Panama",
+    "Pearl",
+    "Pergola",
+    "Quattro",
+    "Rozet",
+    "Sonnet",
+    "Tanglewood",
+    "Ventata",
+    "Zavalla"
+   ],
+   "sizes": {
+    "heights": [
+     "6'8\"",
+     "7'0\"",
+     "8'0\""
+    ],
+    "widths": [
+     "2'0\"",
+     "2'6\"",
+     "2'8\"",
+     "2'10\"",
+     "3'0\"",
+     "3'6\" (some)"
+    ],
+    "sideliteWidths": [
+     "10\"",
+     "12\"",
+     "14\""
+    ]
+   },
+   "notes": "Masonite is now owned by Owens Corning (Owens Corning footer on masonite.com). Collection names come from a 2022 BWI stock catalog.",
+   "sources": [
+    "https://www.kuikenbrothers.com/wp-content/uploads/BWI-Exterior-Door-Stock-Catalog_Masonite-Doors-2022_lr.pdf",
+    "https://www.masonite.com/"
+   ]
+  },
+  {
+   "brand": "JELD-WEN",
+   "status": "verified via catalog summary",
+   "collections": [
+    {
+     "name": "Custom Wood",
+     "material": "wood"
+    },
+    {
+     "name": "Authentic Wood",
+     "material": "wood veneer over engineered core",
+     "species": [
+      "Mahogany",
+      "Knotty Alder",
+      "Hemlock"
+     ]
+    },
+    {
+     "name": "Aurora Custom Fiberglass",
+     "material": "fiberglass"
+    },
+    {
+     "name": "Architectural Fiberglass",
+     "material": "fiberglass, wood-grain"
+    },
+    {
+     "name": "Design-Pro Fiberglass",
+     "material": "fiberglass",
+     "texture": "Mahogany or Oak grain"
+    },
+    {
+     "name": "Smooth-Pro Fiberglass",
+     "material": "fiberglass, smooth"
+    },
+    {
+     "name": "FiberLast Engineered Composite",
+     "material": "composite"
+    },
+    {
+     "name": "Steel",
+     "material": "galvanized steel"
+    }
+   ],
+   "sources": [
+    "https://pdf.archiexpo.com/pdf/jeld-wen/door-collections/2706-126271.html"
+   ]
+  },
+  {
+   "brand": "Pella",
+   "status": "verified (menu)",
+   "types": [
+    "clad wood with glass",
+    "solid clad wood",
+    "solid fiberglass",
+    "fiberglass with glass",
+    "solid steel",
+    "aluminum-clad wood (new)"
+   ],
+   "notes": "Named entry-door lines were not collected.",
+   "sources": [
+    "https://www.pella.com/shop/windows/reserve/traditional/picture-windows/"
+   ]
+  }
+ ],
+ "intDoors": [
+  {
+   "brand": "Masonite",
+   "status": "verified",
+   "styles": [
+    {
+     "name": "Logan",
+     "panels": "2 panel (shaker)"
+    },
+    {
+     "name": "Lincoln Park",
+     "panels": "1 panel (shaker)"
+    },
+    {
+     "name": "Livingston",
+     "panels": "3 panel"
+    },
+    {
+     "name": "Riverside",
+     "panels": "5 panel horizontal/equal"
+    },
+    {
+     "name": "Cheyenne",
+     "panels": "2 panel camber-top plank"
+    },
+    {
+     "name": "Winslow",
+     "panels": "3 panel"
+    },
+    {
+     "name": "Berkley"
+    },
+    {
+     "name": "Melrose Flush",
+     "panels": "flush with embossed lines"
+    },
+    {
+     "name": "2 Panel Roman"
+    },
+    {
+     "name": "2 Panel Arch-Top",
+     "notes": "textured only"
+    },
+    {
+     "name": "2 Panel Square"
+    },
+    {
+     "name": "4 Panel"
+    },
+    {
+     "name": "6 Panel (smooth or textured)"
+    },
+    {
+     "name": "Flush"
+    }
+   ],
+   "material": "molded wood-composite / MDF facings; hollow core or solid core",
+   "sizes": {
+    "heights": [
+     "6'8\" (80\")",
+     "7'0\" (84\")",
+     "8'0\" (96\")"
+    ],
+    "thickness": [
+     "1-3/8\"",
+     "1-3/4\""
+    ],
+    "passageWidths": "12\" to 36\""
+   },
+   "otherLines": [
+    "DuraStyle Wood (stile and rail)",
+    "barn door kits",
+    "French",
+    "bifold"
+   ],
+   "sources": [
+    "https://www.masonite.com/doors/interior-doors",
+    "https://www.kuikenbrothers.com/wp-content/uploads/BWI_2022-Interior-Molded-Door_Masonite-Doors_lr.pdf",
+    "https://www.mtnviewbuilders.com/wp-content/uploads/2023/11/Masonite-Interior-Door-Catalog.pdf"
+   ]
+  },
+  {
+   "brand": "JELD-WEN",
+   "status": "verified",
+   "styles": [
+    {
+     "name": "Birkdale",
+     "sticking": "Craftsman"
+    },
+    {
+     "name": "Caiman",
+     "sticking": "Cove & Bead"
+    },
+    {
+     "name": "Camden",
+     "sticking": "Cove & Bead, textured"
+    },
+    {
+     "name": "Carrara",
+     "sticking": "Cove & Bead"
+    },
+    {
+     "name": "Colonist",
+     "sticking": "Cove & Bead"
+    },
+    {
+     "name": "Conmore",
+     "sticking": "Stepped"
+    },
+    {
+     "name": "Craftsman III",
+     "sticking": "Craftsman"
+    },
+    {
+     "name": "Madison",
+     "sticking": "Craftsman"
+    },
+    {
+     "name": "Monroe",
+     "sticking": "Craftsman"
+    },
+    {
+     "name": "Rockport",
+     "sticking": "Cove & Bead"
+    },
+    {
+     "name": "Santa Fe",
+     "sticking": "Ovolo"
+    }
+   ],
+   "material": "molded wood composite; hollow core, ProCore solid core (20-min), Solid Mineral core (45/60-min)",
+   "sizes": {
+    "heights": [
+     "6'8\"",
+     "7'0\"",
+     "8'0\""
+    ],
+    "thickness": [
+     "1-3/8\"",
+     "1-3/4\""
+    ]
+   },
+   "sources": [
+    "https://cmd-jeld-wen.s3.us-east-2.amazonaws.com/assets/documents/2115803578.pdf"
+   ]
+  }
+ ],
+ "roofing": [
+  {
+   "brand": "GAF",
+   "lines": [
+    {
+     "name": "Timberline HDZ",
+     "type": "architectural",
+     "status": "verified (third-party roofer pages; gaf.com blocks fetch)",
+     "colors": [
+      "Charcoal",
+      "Pewter Gray",
+      "Weathered Wood",
+      "Barkwood",
+      "Hickory",
+      "Mission Brown",
+      "Shakewood",
+      "Slate",
+      "Hunter Green"
+     ],
+     "regionalColors": [
+      "Birchwood",
+      "Biscayne Blue",
+      "Copper Canyon",
+      "Driftwood",
+      "Fox Hollow Gray",
+      "Golden Amber",
+      "Oyster Gray",
+      "Patriot Red",
+      "Sunset Brick",
+      "Williamsburg Slate"
+     ],
+     "boldDefinitionCollection2026": [
+      "Chestnut Valley",
+      "Cliffside",
+      "Midnight Mesa",
+      "Sierra Sand"
+     ]
+    },
+    {
+     "name": "Timberline UHDZ",
+     "type": "architectural (ultra-dimensional)",
+     "colors": [],
+     "notes": "About 6 colors, names not verified"
+    },
+    {
+     "name": "Timberline NS",
+     "type": "architectural",
+     "colors": []
+    },
+    {
+     "name": "Camelot II",
+     "type": "designer slate look",
+     "colors": []
+    },
+    {
+     "name": "Grand Sequoia",
+     "type": "designer shake look",
+     "colors": []
+    },
+    {
+     "name": "Slateline",
+     "type": "designer slate",
+     "colors": []
+    },
+    {
+     "name": "Royal Sovereign",
+     "type": "3-tab",
+     "colors": [
+      "Charcoal",
+      "Weathered Gray"
+     ]
+    }
+   ],
+   "sources": [
+    "https://johnbealroofing.com/roof-report/gaf-timberline-hdz-colors-guide",
+    "https://theroofingbrief.com/gaf-shingle-colors/",
+    "https://www.gaf.com/en-us/about-us/news-press-releases/2026/introducing-new-bold-definition-color-collection-for-best-selling-timberline-hdz-shingles"
+   ]
+  },
+  {
+   "brand": "Owens Corning",
+   "status": "verified (OC public shingle widget)",
+   "lines": [
+    {
+     "name": "TruDefinition Duration",
+     "type": "architectural",
+     "colors": [
+      "Brownwood",
+      "Desert Rose",
+      "Driftwood",
+      "Estate Gray",
+      "Onyx Black",
+      "Sierra Gray",
+      "Slatestone Gray",
+      "Teak",
+      "Williamsburg Gray"
+     ]
+    },
+    {
+     "name": "TruDefinition Oakridge",
+     "type": "architectural",
+     "colors": [
+      "Brownwood",
+      "Desert Tan",
+      "Driftwood",
+      "Estate Gray",
+      "Onyx Black",
+      "Teak",
+      "Williamsburg Gray"
+     ]
+    },
+    {
+     "name": "TruDefinition Duration Designer",
+     "type": "architectural, designer colors",
+     "colors": [
+      "Aged Copper",
+      "Bourbon",
+      "Merlot",
+      "Pacific Wave",
+      "Sand Dune",
+      "Summer Harvest"
+     ]
+    },
+    {
+     "name": "TruDefinition Duration FLEX",
+     "type": "architectural, SBS polymer modified",
+     "colors": [
+      "Sand Dune",
+      "Storm Cloud",
+      "Summer Harvest"
+     ]
+    },
+    {
+     "name": "TruDefinition Duration STORM",
+     "type": "architectural, impact resistant",
+     "colors": [
+      "Antique Silver",
+      "Brownwood",
+      "Desert Tan",
+      "Driftwood",
+      "Estate Gray",
+      "Onyx Black",
+      "Teak"
+     ]
+    },
+    {
+     "name": "Supreme",
+     "type": "3-tab",
+     "colors": [
+      "Autumn Brown",
+      "Brownwood",
+      "Desert Tan",
+      "Driftwood",
+      "Estate Gray",
+      "Onyx Black",
+      "Shasta White",
+      "Teak"
+     ]
+    }
+   ],
+   "notes": "Widget lists may be filtered by zone. Other colors (e.g., Quarry Gray) may exist regionally.",
+   "sources": [
+    "https://owenscorning.com/en-us/public_widgets/shingle/trudefinition-duration",
+    "https://owenscorning.com/en-us/public_widgets/shingle/trudefinition-oakridge"
+   ]
+  },
+  {
+   "brand": "CertainTeed",
+   "status": "verified (certainteed.com product data)",
+   "lines": [
+    {
+     "name": "Landmark",
+     "type": "architectural",
+     "colors": [
+      "Weathered Wood",
+      "Moire Black",
+      "Heather Blend",
+      "Georgetown Gray",
+      "Burnt Sienna",
+      "Resawn Shake",
+      "Colonial Slate",
+      "Driftwood",
+      "Silver Birch",
+      "Pewter",
+      "Charcoal Black",
+      "Thunderstorm Gray",
+      "Cobblestone Gray",
+      "Mojave Tan",
+      "Granite Gray",
+      "Black Walnut",
+      "Sunrise Cedar",
+      "Painted Desert",
+      "Terra Cotta"
+     ]
+    },
+    {
+     "name": "Landmark Pro",
+     "type": "architectural, Max Def colors",
+     "colors": [
+      "Max Def Weathered Wood",
+      "Max Def Moire Black",
+      "Max Def Georgetown Gray",
+      "Max Def Pewterwood",
+      "Max Def Driftwood",
+      "Max Def Resawn Shake",
+      "Max Def Heather Blend",
+      "Max Def Burnt Sienna",
+      "Max Def Colonial Slate",
+      "Max Def Charcoal Black",
+      "Max Def Granite Gray",
+      "Max Def Cobblestone Gray",
+      "Max Def Mojave Tan",
+      "Max Def Black Walnut",
+      "Max Def Birchwood",
+      "Max Def Coastal Blue",
+      "Max Def Espresso",
+      "Max Def Evergreen",
+      "Max Def Pewter",
+      "Max Def Prairie Wood",
+      "Max Def Red Oak",
+      "Max Def Shenandoah"
+     ]
+    },
+    {
+     "name": "Landmark Premium",
+     "type": "architectural",
+     "colors": [
+      "Max Def Burnt Sienna",
+      "Max Def Driftwood",
+      "Max Def Georgetown Gray",
+      "Max Def Heather Blend",
+      "Max Def Moire Black",
+      "Max Def Weathered Wood"
+     ]
+    },
+    {
+     "name": "XT 25",
+     "type": "3-tab",
+     "colors": [
+      "Burnt Sienna",
+      "Dove Gray",
+      "Georgetown Gray",
+      "Moire Black",
+      "Timber Blend",
+      "Weathered Wood"
+     ]
+    },
+    {
+     "name": "Presidential Shake",
+     "type": "luxury shake look",
+     "colors": [
+      "Aged Bark",
+      "Autumn Blend",
+      "Charcoal Black",
+      "Country Gray",
+      "Shadow Gray",
+      "Weathered Wood"
+     ]
+    },
+    {
+     "name": "Grand Manor",
+     "type": "luxury slate look",
+     "colors": [
+      "Black Pearl",
+      "Brownstone",
+      "Chestnut",
+      "Colonial Slate",
+      "Gatehouse Slate",
+      "Georgian Brick",
+      "Sherwood Forest",
+      "Stonegate Gray",
+      "Weathered Wood"
+     ]
+    }
+   ],
+   "notes": "Some colors appear only on Landmark AR (algae-resistant) SKUs.",
+   "sources": [
+    "https://www.certainteed.com/products/residential-roofing-products/landmark",
+    "https://www.certainteed.com/products/residential-roofing-products/landmark-pro"
+   ]
+  },
+  {
+   "brand": "Atlas",
+   "status": "verified (atlasroofing.com page text)",
+   "lines": [
+    {
+     "name": "Pinnacle Pristine",
+     "type": "architectural",
+     "colors": [
+      "Black Shadow",
+      "Burnt Hickory",
+      "Coastal Granite",
+      "Copper Canyon",
+      "Hearthstone",
+      "Heatherblend",
+      "Majestic Shake",
+      "Midnight Lake",
+      "Morning Harvest",
+      "Oyster Shell",
+      "Pewter",
+      "Rustic Highland",
+      "Summer Storm",
+      "Sunset",
+      "Tan Mist",
+      "Weathered Shadow",
+      "Weathered Wood",
+      "Woodland Green"
+     ]
+    },
+    {
+     "name": "StormMaster Shake",
+     "type": "impact-resistant architectural",
+     "colors": [
+      "Aspen Grove",
+      "Black Shadow",
+      "Copper Canyon",
+      "Grand Teton",
+      "Midnight Lake",
+      "Moonlight Beach",
+      "Morning Harvest",
+      "Pewter",
+      "Weathered Wood"
+     ]
+    },
+    {
+     "name": "ProLAM",
+     "type": "architectural (value)",
+     "colors": [
+      "Black Shadow",
+      "Desert Shake",
+      "Hearthstone",
+      "Hickory",
+      "Morning Harvest",
+      "Pewter",
+      "Weathered Shadow",
+      "Weathered Wood"
+     ]
+    },
+    {
+     "name": "Briarwood Pro",
+     "type": "architectural",
+     "colors": [
+      "Blackstone",
+      "Copper Canyon",
+      "Granite",
+      "Midnight Lake",
+      "Summer Storm"
+     ]
+    },
+    {
+     "name": "Pinnacle Sun",
+     "type": "architectural"
+    },
+    {
+     "name": "Pinnacle Impact",
+     "type": "impact-resistant"
+    },
+    {
+     "name": "Castlebrook",
+     "type": "architectural"
+    }
+   ],
+   "notes": "Colors were parsed from page text with color-family filter words removed. 'Chestnut' was ambiguous and left out.",
+   "sources": [
+    "https://www.atlasroofing.com/products/roof-shingles/pinnacle-pristine-shingles",
+    "https://www.atlasroofing.com/products/roof-shingles/stormmaster-shake-shingles",
+    "https://www.atlasroofing.com/products/roof-shingles/prolam-shingles"
+   ]
+  },
+  {
+   "brand": "IKO",
+   "status": "partially verified (iko.com image alt text)",
+   "lines": [
+    {
+     "name": "Dynasty",
+     "type": "architectural (performance)",
+     "colors": [
+      "Granite Black",
+      "Glacier",
+      "Summit Grey",
+      "Shadow Brown",
+      "Cornerstone",
+      "Weatherwood",
+      "Atlantic Blue",
+      "Emerald Green",
+      "Monaco Red",
+      "Blackstone"
+     ]
+    },
+    {
+     "name": "Cambridge",
+     "type": "architectural",
+     "colors": [
+      "Driftwood",
+      "Weatherwood"
+     ]
+    },
+    {
+     "name": "Cambridge Cool Colors",
+     "type": "architectural, cool roof",
+     "colors": [
+      "Weatherwood",
+      "Harvard",
+      "Arctic"
+     ]
+    },
+    {
+     "name": "Nordic",
+     "type": "architectural (performance)",
+     "colors": [
+      "Granite Black",
+      "Glacier",
+      "Summit Grey",
+      "Shadow Brown"
+     ]
+    },
+    {
+     "name": "Dynasty Cool Plus",
+     "colors": [
+      "Dual Brown"
+     ]
+    },
+    {
+     "name": "Royal Estate"
+    },
+    {
+     "name": "Crowne Slate"
+    },
+    {
+     "name": "Armourshake"
+    },
+    {
+     "name": "Marathon",
+     "type": "3-tab"
+    }
+   ],
+   "notes": "Full color lists are behind a ZIP gate. 'Cornerstone' and 'Weatherwood' were split from one alt-text string.",
+   "sources": [
+    "https://www.iko.com/na/shingles-by-color",
+    "https://www.iko.com/na/product/dynasty/"
+   ]
+  },
+  {
+   "brand": "TAMKO",
+   "status": "verified (tamko.com color URLs)",
+   "lines": [
+    {
+     "name": "Heritage",
+     "type": "architectural",
+     "colors": [
+      "Antique Slate",
+      "Olde English Pewter",
+      "Oxford Grey",
+      "Rustic Black",
+      "Rustic Cedar",
+      "Rustic Hickory",
+      "Rustic Redwood",
+      "Rustic Slate",
+      "Shadow Grey",
+      "Virginia Slate",
+      "Weathered Wood"
+     ]
+    },
+    {
+     "name": "Titan XT",
+     "type": "architectural",
+     "colors": []
+    },
+    {
+     "name": "StormFighter FLEX",
+     "type": "impact-resistant",
+     "colors": []
+    },
+    {
+     "name": "HailGuard",
+     "type": "impact-resistant (new)",
+     "colors": []
+    },
+    {
+     "name": "Elite Glass-Seal",
+     "type": "3-tab",
+     "colors": [
+      "Shadow Grey"
+     ]
+    }
+   ],
+   "notes": "Colors vary by region and are ZIP-gated.",
+   "sources": [
+    "https://tamko.com/all-shingle-colors/heritage-series-oxford-grey",
+    "https://www.tamko.com/residential/shingles"
+   ]
+  }
+ ],
+ "siding": [
+  {
+   "brand": "James Hardie",
+   "material": "fiber cement",
+   "status": "verified",
+   "products": [
+    {
+     "name": "HardiePlank lap siding",
+     "textures": [
+      "Select Cedarmill",
+      "Smooth",
+      "Beaded Select Cedarmill",
+      "Beaded Smooth",
+      "Custom Colonial Roughsawn",
+      "Custom Colonial Smooth"
+     ],
+     "dims": {
+      "status": "unverified-general-knowledge",
+      "widths_in": [
+       5.25,
+       6.25,
+       7.25,
+       8.25,
+       9.25,
+       12
+      ],
+      "length": "12 ft",
+      "thickness": "5/16 in"
+     }
+    },
+    {
+     "name": "HardiePanel vertical siding",
+     "textures": [
+      "Select Cedarmill",
+      "Sierra 8",
+      "Smooth",
+      "Stucco"
+     ]
+    },
+    {
+     "name": "HardieShingle siding",
+     "profiles": [
+      "Straight Edge Panel",
+      "Staggered Edge Panel"
+     ]
+    },
+    {
+     "name": "HardieTrim boards",
+     "textures": [
+      "Smooth",
+      "Rustic Grain",
+      "Roughsawn"
+     ]
+    }
+   ],
+   "colorCollections": {
+    "Statement Collection (ColorPlus)": [
+     "Arctic White",
+     "Aged Pewter",
+     "Cobble Stone",
+     "Evening Blue",
+     "Iron Gray",
+     "Light Mist",
+     "Pearl Gray"
+    ],
+    "Dream Collection (examples seen)": [
+     "Cameo Ivory",
+     "Dark Greige",
+     "Gray Shadow",
+     "Nocturne Blue",
+     "Snowflake White",
+     "Summer White"
+    ]
+   },
+   "notes": "Dream Collection is US only; the full list was not collected. Statement colors appear as Home Depot SKUs (7.25 in x 144 in).",
+   "sources": [
+    "https://www.jameshardie.com/products/hardieplank-lap-siding",
+    "https://www.jameshardie.com/statement-collection-colors/",
+    "https://www.jameshardie.com/dream-collection-colors/"
+   ]
+  },
+  {
+   "brand": "LP SmartSide",
+   "material": "engineered wood",
+   "status": "verified",
+   "products": [
+    {
+     "name": "Lap Siding",
+     "textures": [
+      "Cedar",
+      "Brushed Smooth"
+     ]
+    },
+    {
+     "name": "Nickel Gap"
+    },
+    {
+     "name": "Shake Lap"
+    },
+    {
+     "name": "Panel & Vertical"
+    },
+    {
+     "name": "Trim & Fascia"
+    },
+    {
+     "name": "Soffit"
+    }
+   ],
+   "colorCollections": {
+    "ExpertFinish (16)": [
+     "Snowscape White",
+     "Redwood Red",
+     "Prairie Clay",
+     "Quarry Gray",
+     "Sand Dunes",
+     "Marshland Moss",
+     "Timberland Suede",
+     "Tundra Gray",
+     "Desert Stone",
+     "Summit Blue",
+     "Canyon Brown",
+     "Cavern Steel",
+     "Terra Brown",
+     "Rapids Blue",
+     "Shoreline Cream",
+     "Abyss Black"
+    ]
+   },
+   "notes": "Sand Dunes is LP's 2026 Color of the Year. The 38/76 Series widths were not collected. The color sheet is from 2022, so confirm the current list.",
+   "sources": [
+    "https://lpcorp.com/products/siding-trim/products/lap-siding",
+    "https://www.lumbermens-inc.com/wp-content/uploads/2022/04/lp-smartside-expertfinish-colors-sales-sheet.pdf"
+   ]
+  },
+  {
+   "brand": "Ply Gem / Mastic / Variform",
+   "material": "vinyl",
+   "status": "verified (names only)",
+   "products": [
+    {
+     "name": "Ply Gem Performance Collection",
+     "profiles": [
+      "Lap",
+      "Shake & Shingle",
+      "Vertical"
+     ]
+    },
+    {
+     "name": "Mastic vinyl siding"
+    },
+    {
+     "name": "Variform vinyl siding"
+    }
+   ],
+   "stoneVeneerProfiles": [
+    "Canyon Ledge",
+    "Cascade Ledge",
+    "Cut Cobble",
+    "Shadow Ledge",
+    "Fieldstone",
+    "Manorstone"
+   ],
+   "notes": "Colors not collected",
+   "sources": [
+    "https://www.plygem.com/windows/products/"
+   ]
+  },
+  {
+   "brand": "Royal",
+   "material": "vinyl",
+   "notes": "Not researched"
+  },
+  {
+   "brand": "CertainTeed vinyl (Monogram etc.)",
+   "material": "vinyl",
+   "notes": "Not researched"
+  }
+ ],
+ "flooring": [
+  {
+   "brand": "LifeProof (Home Depot)",
+   "status": "unverified-general-knowledge",
+   "types": [
+    "rigid core LVP"
+   ],
+   "collections": [
+    "Sterling Oak",
+    "Seasoned Wood"
+   ],
+   "notes": "Not verified this session"
+  },
+  {
+   "brand": "Pergo",
+   "status": "unverified-general-knowledge",
+   "types": [
+    "laminate",
+    "LVP"
+   ],
+   "collections": [
+    "Outlast+"
+   ],
+   "notes": "Not verified this session"
+  },
+  {
+   "brand": "COREtec",
+   "status": "unverified-general-knowledge",
+   "types": [
+    "rigid core LVP"
+   ],
+   "collections": [
+    "COREtec Plus",
+    "COREtec Pro Plus"
+   ],
+   "notes": "Not verified this session"
+  },
+  {
+   "brand": "Shaw",
+   "status": "unverified-general-knowledge",
+   "types": [
+    "LVP",
+    "carpet",
+    "hardwood",
+    "laminate"
+   ],
+   "collections": [
+    "Floorte"
+   ],
+   "notes": "Not verified this session"
+  },
+  {
+   "brand": "Mohawk",
+   "status": "unverified-general-knowledge",
+   "types": [
+    "laminate",
+    "LVP",
+    "carpet"
+   ],
+   "collections": [
+    "RevWood"
+   ],
+   "notes": "Not verified this session"
+  },
+  {
+   "brand": "Armstrong",
+   "status": "unverified-general-knowledge",
+   "types": [
+    "vinyl",
+    "LVT"
+   ],
+   "collections": [],
+   "notes": "Not verified this session"
+  }
+ ],
+ "countertops": [
+  {
+   "brand": "Silestone",
+   "material": "quartz / hybrid mineral",
+   "status": "unverified-general-knowledge",
+   "colors": [
+    "Eternal Calacatta Gold",
+    "Calacatta Gold",
+    "Miami White",
+    "Charcoal Soapstone",
+    "Eternal Marquina",
+    "White Storm"
+   ]
+  },
+  {
+   "brand": "Caesarstone",
+   "material": "quartz / mineral",
+   "status": "unverified-general-knowledge",
+   "colors": [
+    "Calacatta Nuvo",
+    "Empira White",
+    "Statuario Maximus",
+    "Pure White",
+    "Frosty Carrina",
+    "Fresh Concrete"
+   ]
+  },
+  {
+   "brand": "Cambria",
+   "material": "quartz",
+   "status": "unverified-general-knowledge",
+   "colors": [
+    "Brittanicca",
+    "Skara Brae",
+    "Torquay",
+    "Swanbridge",
+    "Ella"
+   ]
+  },
+  {
+   "brand": "MSI (Q Quartz)",
+   "material": "quartz",
+   "status": "unverified-general-knowledge",
+   "colors": [
+    "Calacatta Laza",
+    "Carrara Marmi",
+    "Calacatta Classique",
+    "Frost White",
+    "Arctic White"
+   ],
+   "notes": "msisurfaces.com responds to plain curl; scrape it next"
+  },
+  {
+   "brand": "Formica",
+   "material": "laminate (180fx etc.)",
+   "status": "unverified-general-knowledge",
+   "colors": [
+    "Calacatta Marble (180fx)"
+   ]
+  },
+  {
+   "brand": "Wilsonart",
+   "material": "laminate / solid surface / quartz",
+   "status": "unverified-general-knowledge",
+   "colors": [
+    "Calcutta Marble"
+   ]
+  }
+ ],
+ "plumbing": [
+  {
+   "brand": "Kohler",
+   "status": "unverified-general-knowledge",
+   "collections": [
+    {
+     "name": "Cimarron",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Highline",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Wellworth",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Santa Rosa",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Memoirs",
+     "types": [
+      "toilet",
+      "sink",
+      "faucet"
+     ]
+    }
+   ]
+  },
+  {
+   "brand": "Moen",
+   "status": "unverified-general-knowledge",
+   "collections": [
+    {
+     "name": "Arbor",
+     "types": [
+      "kitchen/bath faucet"
+     ]
+    },
+    {
+     "name": "Align",
+     "types": [
+      "kitchen/bath faucet"
+     ]
+    },
+    {
+     "name": "Brantford",
+     "types": [
+      "kitchen/bath faucet"
+     ]
+    },
+    {
+     "name": "Adler",
+     "types": [
+      "kitchen/bath faucet"
+     ]
+    },
+    {
+     "name": "Genta",
+     "types": [
+      "kitchen/bath faucet"
+     ]
+    }
+   ]
+  },
+  {
+   "brand": "Delta",
+   "status": "unverified-general-knowledge",
+   "collections": [
+    {
+     "name": "Trinsic",
+     "types": [
+      "faucet"
+     ]
+    },
+    {
+     "name": "Cassidy",
+     "types": [
+      "faucet"
+     ]
+    },
+    {
+     "name": "Leland",
+     "types": [
+      "faucet"
+     ]
+    },
+    {
+     "name": "Essa",
+     "types": [
+      "faucet"
+     ]
+    },
+    {
+     "name": "Windemere",
+     "types": [
+      "faucet"
+     ]
+    }
+   ]
+  },
+  {
+   "brand": "American Standard",
+   "status": "unverified-general-knowledge",
+   "collections": [
+    {
+     "name": "Cadet",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Champion",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Studio",
+     "types": [
+      "toilet",
+      "tub",
+      "faucet"
+     ]
+    }
+   ]
+  },
+  {
+   "brand": "Gerber",
+   "status": "unverified-general-knowledge",
+   "collections": [
+    {
+     "name": "Viper",
+     "types": [
+      "toilet"
+     ]
+    },
+    {
+     "name": "Maxwell",
+     "types": [
+      "toilet"
+     ]
+    }
+   ]
+  },
+  {
+   "brand": "Pfister",
+   "status": "unverified-general-knowledge",
+   "collections": [
+    {
+     "name": "Pasadena",
+     "types": [
+      "faucet"
+     ]
+    },
+    {
+     "name": "Ladera",
+     "types": [
+      "faucet"
+     ]
+    }
+   ]
+  }
+ ],
+ "plumbingNotes": {
+  "status": "unverified-general-knowledge",
+  "toiletRoughIn": "12 in from finished wall to flange center is standard; 10 in and 14 in exist",
+  "toiletClearance": "IPC/IRC: 15 in minimum from centerline to wall or obstruction; 21 in clear in front (IRC)",
+  "adaToilet": "ADA: 16-18 in from centerline to side wall; seat height 17-19 in"
+ },
+ "appliances": {
+  "status": "unverified-general-knowledge",
+  "notes": "US industry-standard nominal sizes, not verified per brand this session. Brands to cover: GE / GE Profile / Café, Whirlpool, KitchenAid, Frigidaire / Frigidaire Gallery, LG, Samsung, Bosch, Maytag. Confirm exact dimensions on each model's spec sheet.",
+  "standards": [
+   {
+    "type": "range (freestanding/slide-in)",
+    "widths": [
+     30,
+     36
+    ],
+    "height_in": 36,
+    "depth_in": "about 25-28 incl. handles; slide-in sits flush with 25 in counter"
+   },
+   {
+    "type": "cooktop",
+    "widths": [
+     30,
+     36
+    ]
+   },
+   {
+    "type": "wall oven",
+    "widths": [
+     27,
+     30
+    ]
+   },
+   {
+    "type": "dishwasher",
+    "widths": [
+     18,
+     24
+    ],
+    "height_in": "34-35 (fits under 36 in counter)",
+    "depth_in": 24
+   },
+   {
+    "type": "refrigerator",
+    "widths": [
+     30,
+     33,
+     36
+    ],
+    "notes": "Standard depth about 30-36 in; counter depth about 24-30 in (case depth about 24 in)",
+    "height_in": "about 66-71"
+   },
+   {
+    "type": "over-the-range microwave",
+    "widths": [
+     30
+    ],
+    "notes": "About 16-17 in tall, 15-16 in deep. Typical 66 in from floor to top; 13+ in above cooktop per mfr"
+   },
+   {
+    "type": "range hood",
+    "widths": [
+     30,
+     36
+    ]
+   }
+  ],
+  "brands": [
+   "GE",
+   "GE Profile",
+   "Café",
+   "Whirlpool",
+   "KitchenAid",
+   "Frigidaire",
+   "Frigidaire Gallery",
+   "LG",
+   "Samsung",
+   "Bosch",
+   "Maytag"
+  ]
+ },
+ "paint": [
+  {
+   "brand": "Sherwin-Williams",
+   "colors": [
+    {
+     "name": "Agreeable Gray",
+     "code": "SW 7029",
+     "hex": "#d1cbc1",
+     "rgb": [
+      209,
+      203,
+      193
+     ],
+     "lrv": 60.4,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Repose Gray",
+     "code": "SW 7015",
+     "hex": "#ccc9c0",
+     "rgb": [
+      204,
+      201,
+      192
+     ],
+     "lrv": 58.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Alabaster",
+     "code": "SW 7008",
+     "hex": "#edeae0",
+     "rgb": [
+      237,
+      234,
+      224
+     ],
+     "lrv": 82.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Pure White",
+     "code": "SW 7005",
+     "hex": "#edece6",
+     "rgb": [
+      237,
+      236,
+      230
+     ],
+     "lrv": 84.0,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Extra White",
+     "code": "SW 7006",
+     "hex": "#eeefea",
+     "rgb": [
+      238,
+      239,
+      234
+     ],
+     "lrv": 85.9,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Snowbound",
+     "code": "SW 7004",
+     "hex": "#edeae5",
+     "rgb": [
+      237,
+      234,
+      229
+     ],
+     "lrv": 82.8,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Accessible Beige",
+     "code": "SW 7036",
+     "hex": "#d1c7b8",
+     "rgb": [
+      209,
+      199,
+      184
+     ],
+     "lrv": 57.7,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Sea Salt",
+     "code": "SW 6204",
+     "hex": "#cdd2ca",
+     "rgb": [
+      205,
+      210,
+      202
+     ],
+     "lrv": 63.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Naval",
+     "code": "SW 6244",
+     "hex": "#2f3d4c",
+     "rgb": [
+      47,
+      61,
+      76
+     ],
+     "lrv": 4.5,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Tricorn Black",
+     "code": "SW 6258",
+     "hex": "#2f2f30",
+     "rgb": [
+      47,
+      47,
+      48
+     ],
+     "lrv": 2.8,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Iron Ore",
+     "code": "SW 7069",
+     "hex": "#434341",
+     "rgb": [
+      67,
+      67,
+      65
+     ],
+     "lrv": 5.5,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Urbane Bronze",
+     "code": "SW 7048",
+     "hex": "#54504a",
+     "rgb": [
+      84,
+      80,
+      74
+     ],
+     "lrv": 8.1,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Mindful Gray",
+     "code": "SW 7016",
+     "hex": "#bcb7ad",
+     "rgb": [
+      188,
+      183,
+      173
+     ],
+     "lrv": 47.7,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Dorian Gray",
+     "code": "SW 7017",
+     "hex": "#aca79e",
+     "rgb": [
+      172,
+      167,
+      158
+     ],
+     "lrv": 38.7,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Worldly Gray",
+     "code": "SW 7043",
+     "hex": "#cec6bb",
+     "rgb": [
+      206,
+      198,
+      187
+     ],
+     "lrv": 57.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Evergreen Fog",
+     "code": "SW 9130",
+     "hex": "#95978a",
+     "rgb": [
+      149,
+      151,
+      138
+     ],
+     "lrv": 30.4,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Greek Villa",
+     "code": "SW 7551",
+     "hex": "#f0ece2",
+     "rgb": [
+      240,
+      236,
+      226
+     ],
+     "lrv": 84.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Shoji White",
+     "code": "SW 7042",
+     "hex": "#e6dfd3",
+     "rgb": [
+      230,
+      223,
+      211
+     ],
+     "lrv": 74.3,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Creamy",
+     "code": "SW 7012",
+     "hex": "#efe8db",
+     "rgb": [
+      239,
+      232,
+      219
+     ],
+     "lrv": 81.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Origami White",
+     "code": "SW 7636",
+     "hex": "#e5e2da",
+     "rgb": [
+      229,
+      226,
+      218
+     ],
+     "lrv": 76.0,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Peppercorn",
+     "code": "SW 7674",
+     "hex": "#585858",
+     "rgb": [
+      88,
+      88,
+      88
+     ],
+     "lrv": 9.7,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Gauntlet Gray",
+     "code": "SW 7019",
+     "hex": "#78736e",
+     "rgb": [
+      120,
+      115,
+      110
+     ],
+     "lrv": 17.4,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Rainwashed",
+     "code": "SW 6211",
+     "hex": "#c2cdc5",
+     "rgb": [
+      194,
+      205,
+      197
+     ],
+     "lrv": 59.1,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Pewter Green",
+     "code": "SW 6208",
+     "hex": "#5e6259",
+     "rgb": [
+      94,
+      98,
+      89
+     ],
+     "lrv": 11.8,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Oyster Bay",
+     "code": "SW 6206",
+     "hex": "#aeb3a9",
+     "rgb": [
+      174,
+      179,
+      169
+     ],
+     "lrv": 44.1,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Retreat",
+     "code": "SW 6207",
+     "hex": "#7a8076",
+     "rgb": [
+      122,
+      128,
+      118
+     ],
+     "lrv": 20.9,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Comfort Gray",
+     "code": "SW 6205",
+     "hex": "#bec3bb",
+     "rgb": [
+      190,
+      195,
+      187
+     ],
+     "lrv": 53.8,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Silver Strand",
+     "code": "SW 7057",
+     "hex": "#c8cbc4",
+     "rgb": [
+      200,
+      203,
+      196
+     ],
+     "lrv": 59.0,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Passive",
+     "code": "SW 7064",
+     "hex": "#cbccc9",
+     "rgb": [
+      203,
+      204,
+      201
+     ],
+     "lrv": 59.9,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Light French Gray",
+     "code": "SW 0055",
+     "hex": "#c2c0bb",
+     "rgb": [
+      194,
+      192,
+      187
+     ],
+     "lrv": 52.6,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Colonnade Gray",
+     "code": "SW 7641",
+     "hex": "#c6c0b6",
+     "rgb": [
+      198,
+      192,
+      182
+     ],
+     "lrv": 53.0,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Balanced Beige",
+     "code": "SW 7037",
+     "hex": "#c0b2a2",
+     "rgb": [
+      192,
+      178,
+      162
+     ],
+     "lrv": 45.6,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Kilim Beige",
+     "code": "SW 6106",
+     "hex": "#d7c5ae",
+     "rgb": [
+      215,
+      197,
+      174
+     ],
+     "lrv": 57.2,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Dover White",
+     "code": "SW 6385",
+     "hex": "#f0eadc",
+     "rgb": [
+      240,
+      234,
+      220
+     ],
+     "lrv": 82.5,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Westhighland White",
+     "code": "SW 7566",
+     "hex": "#f3eee3",
+     "rgb": [
+      243,
+      238,
+      227
+     ],
+     "lrv": 85.8,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Alpaca",
+     "code": "SW 7022",
+     "hex": "#ccc5bd",
+     "rgb": [
+      204,
+      197,
+      189
+     ],
+     "lrv": 56.5,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Popular Gray",
+     "code": "SW 6071",
+     "hex": "#d4ccc3",
+     "rgb": [
+      212,
+      204,
+      195
+     ],
+     "lrv": 61.1,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Upward",
+     "code": "SW 6239",
+     "hex": "#bfc9d0",
+     "rgb": [
+      191,
+      201,
+      208
+     ],
+     "lrv": 57.4,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Cyberspace",
+     "code": "SW 7076",
+     "hex": "#44484d",
+     "rgb": [
+      68,
+      72,
+      77
+     ],
+     "lrv": 6.4,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "High Reflective White",
+     "code": "SW 7757",
+     "hex": "#f7f7f1",
+     "rgb": [
+      247,
+      247,
+      241
+     ],
+     "lrv": 92.7,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    },
+    {
+     "name": "Neutral Ground",
+     "code": "SW 7568",
+     "hex": "#e2daca",
+     "rgb": [
+      226,
+      218,
+      202
+     ],
+     "lrv": 70.5,
+     "source": "prism-api.sherwin-williams.com/v1/colors/sherwin (official SW color API)"
+    }
+   ],
+   "sources": [
+    "https://prism-api.sherwin-williams.com/v1/colors/sherwin?lng=en-US"
+   ]
+  },
+  {
+   "brand": "Benjamin Moore",
+   "colors": [
+    {
+     "name": "White Dove",
+     "code": "OC-17",
+     "hex": "#efeee5",
+     "rgb": [
+      239,
+      238,
+      229
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-17"
+    },
+    {
+     "name": "Chantilly Lace",
+     "code": "OC-65",
+     "hex": "#f4f6f1",
+     "rgb": [
+      244,
+      246,
+      241
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-65"
+    },
+    {
+     "name": "Simply White",
+     "code": "OC-117",
+     "hex": "#f6f6ed",
+     "rgb": [
+      246,
+      246,
+      237
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-117"
+    },
+    {
+     "name": "Swiss Coffee",
+     "code": "OC-45",
+     "hex": "#eeece1",
+     "rgb": [
+      238,
+      236,
+      225
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-45"
+    },
+    {
+     "name": "Pale Oak",
+     "code": "OC-20",
+     "hex": "#ddd9ce",
+     "rgb": [
+      221,
+      217,
+      206
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-20"
+    },
+    {
+     "name": "Revere Pewter",
+     "code": "HC-172",
+     "hex": "#cbc6b8",
+     "rgb": [
+      203,
+      198,
+      184
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-172"
+    },
+    {
+     "name": "Edgecomb Gray",
+     "code": "HC-173",
+     "hex": "#d9d3c4",
+     "rgb": [
+      217,
+      211,
+      196
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-173"
+    },
+    {
+     "name": "Hale Navy",
+     "code": "HC-154",
+     "hex": "#434b56",
+     "rgb": [
+      67,
+      75,
+      86
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-154"
+    },
+    {
+     "name": "Classic Gray",
+     "code": "OC-23",
+     "hex": "#e3e0d7",
+     "rgb": [
+      227,
+      224,
+      215
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-23"
+    },
+    {
+     "name": "Balboa Mist",
+     "code": "OC-27",
+     "hex": "#dad6cc",
+     "rgb": [
+      218,
+      214,
+      204
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-27"
+    },
+    {
+     "name": "Gray Owl",
+     "code": "OC-52",
+     "hex": "#d3d4cc",
+     "rgb": [
+      211,
+      212,
+      204
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-52"
+    },
+    {
+     "name": "Stonington Gray",
+     "code": "HC-170",
+     "hex": "#cacbc5",
+     "rgb": [
+      202,
+      203,
+      197
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-170"
+    },
+    {
+     "name": "Kendall Charcoal",
+     "code": "HC-166",
+     "hex": "#676662",
+     "rgb": [
+      103,
+      102,
+      98
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-166"
+    },
+    {
+     "name": "Wrought Iron",
+     "code": "2124-10",
+     "hex": "#494a4b",
+     "rgb": [
+      73,
+      74,
+      75
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2124-10"
+    },
+    {
+     "name": "Black Beauty",
+     "code": "2128-10",
+     "hex": "#393736",
+     "rgb": [
+      57,
+      55,
+      54
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2128-10"
+    },
+    {
+     "name": "Chelsea Gray",
+     "code": "HC-168",
+     "hex": "#86847c",
+     "rgb": [
+      134,
+      132,
+      124
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-168"
+    },
+    {
+     "name": "Coventry Gray",
+     "code": "HC-169",
+     "hex": "#b8bab6",
+     "rgb": [
+      184,
+      186,
+      182
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-169"
+    },
+    {
+     "name": "Manchester Tan",
+     "code": "HC-81",
+     "hex": "#dbd2bc",
+     "rgb": [
+      219,
+      210,
+      188
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-81"
+    },
+    {
+     "name": "Shaker Beige",
+     "code": "HC-45",
+     "hex": "#d1c2a7",
+     "rgb": [
+      209,
+      194,
+      167
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-45"
+    },
+    {
+     "name": "Decorator's White",
+     "code": "OC-149",
+     "hex": "#ebedea",
+     "rgb": [
+      235,
+      237,
+      234
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-149"
+    },
+    {
+     "name": "Cloud White",
+     "code": "OC-130",
+     "hex": "#f2f1e6",
+     "rgb": [
+      242,
+      241,
+      230
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-130"
+    },
+    {
+     "name": "Silver Satin",
+     "code": "OC-26",
+     "hex": "#e3e2da",
+     "rgb": [
+      227,
+      226,
+      218
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-26"
+    },
+    {
+     "name": "Collingwood",
+     "code": "OC-28",
+     "hex": "#d3cec4",
+     "rgb": [
+      211,
+      206,
+      196
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-28"
+    },
+    {
+     "name": "Wickham Gray",
+     "code": "HC-171",
+     "hex": "#d4d8d2",
+     "rgb": [
+      212,
+      216,
+      210
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-171"
+    },
+    {
+     "name": "Van Courtland Blue",
+     "code": "HC-145",
+     "hex": "#86989e",
+     "rgb": [
+      134,
+      152,
+      158
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-145"
+    },
+    {
+     "name": "Newburyport Blue",
+     "code": "HC-155",
+     "hex": "#465566",
+     "rgb": [
+      70,
+      85,
+      102
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-155"
+    },
+    {
+     "name": "Saybrook Sage",
+     "code": "HC-114",
+     "hex": "#b1b7a2",
+     "rgb": [
+      177,
+      183,
+      162
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-114"
+    },
+    {
+     "name": "October Mist",
+     "code": "1495",
+     "hex": "#b6b8a5",
+     "rgb": [
+      182,
+      184,
+      165
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/1495"
+    },
+    {
+     "name": "Palladian Blue",
+     "code": "HC-144",
+     "hex": "#c1d1c9",
+     "rgb": [
+      193,
+      209,
+      201
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-144"
+    },
+    {
+     "name": "Quiet Moments",
+     "code": "1563",
+     "hex": "#c7cfc8",
+     "rgb": [
+      199,
+      207,
+      200
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/1563"
+    },
+    {
+     "name": "Boothbay Gray",
+     "code": "HC-165",
+     "hex": "#aab2b0",
+     "rgb": [
+      170,
+      178,
+      176
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-165"
+    },
+    {
+     "name": "Gentleman's Gray",
+     "code": "2062-20",
+     "hex": "#304656",
+     "rgb": [
+      48,
+      70,
+      86
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2062-20"
+    },
+    {
+     "name": "Aegean Teal",
+     "code": "2136-40",
+     "hex": "#6f898b",
+     "rgb": [
+      111,
+      137,
+      139
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2136-40"
+    },
+    {
+     "name": "Raccoon Fur",
+     "code": "2126-20",
+     "hex": "#464a4d",
+     "rgb": [
+      70,
+      74,
+      77
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2126-20"
+    },
+    {
+     "name": "Iron Mountain",
+     "code": "2134-30",
+     "hex": "#575553",
+     "rgb": [
+      87,
+      85,
+      83
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2134-30"
+    },
+    {
+     "name": "Thunder",
+     "code": "AF-685",
+     "hex": "#bdb8ad",
+     "rgb": [
+      189,
+      184,
+      173
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/AF-685"
+    },
+    {
+     "name": "First Light",
+     "code": "2102-70",
+     "hex": "#efe2de",
+     "rgb": [
+      239,
+      226,
+      222
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2102-70"
+    },
+    {
+     "name": "Blue Note",
+     "code": "2129-30",
+     "hex": "#404b54",
+     "rgb": [
+      64,
+      75,
+      84
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/2129-30"
+    },
+    {
+     "name": "Cushing Green",
+     "code": "HC-125",
+     "hex": "#687666",
+     "rgb": [
+      104,
+      118,
+      102
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-125"
+    },
+    {
+     "name": "Pashmina",
+     "code": "AF-100",
+     "hex": "#bbb2a1",
+     "rgb": [
+      187,
+      178,
+      161
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/AF-100"
+    },
+    {
+     "name": "Wythe Blue",
+     "code": "HC-143",
+     "hex": "#aabeb4",
+     "rgb": [
+      170,
+      190,
+      180
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-143"
+    },
+    {
+     "name": "Kingsport Gray",
+     "code": "HC-86",
+     "hex": "#948674",
+     "rgb": [
+      148,
+      134,
+      116
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/HC-86"
+    },
+    {
+     "name": "Ballet White",
+     "code": "OC-9",
+     "hex": "#e5e0d0",
+     "rgb": [
+      229,
+      224,
+      208
+     ],
+     "source": "https://www.benjaminmoore.com/en-us/paint-colors/color/OC-9"
+    }
+   ],
+   "sources": [
+    "https://www.benjaminmoore.com/en-us/paint-colors/color/{number}"
+   ]
+  },
+  {
+   "brand": "Behr",
+   "colors": [
+    {
+     "name": "SWISS COFFEE",
+     "code": "12",
+     "hex": "#f1ede0",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "ULTRA PURE WHITE",
+     "code": "1850",
+     "hex": "#f8f8f3",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "POLAR BEAR",
+     "code": "75",
+     "hex": "#f5f4ec",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "BLANK CANVAS",
+     "code": "DC-003",
+     "hex": "#f1ede1",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "SILVER DROP",
+     "code": "790C-2",
+     "hex": "#dddacf",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "CRACKED PEPPER",
+     "code": "PPU18-01",
+     "hex": "#4f5152",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "WHISPER WHITE",
+     "code": "HDC-MD-08",
+     "hex": "#f4f3ea",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "PENCIL POINT",
+     "code": "PPU18-02",
+     "hex": "#595d61",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "BROADWAY",
+     "code": "PPU18-20",
+     "hex": "#434442",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "GRACEFUL GRAY",
+     "code": "PPU18-12",
+     "hex": "#beb6ac",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "LIGHT FRENCH GRAY",
+     "code": "720E-2",
+     "hex": "#c9cfcc",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "ASHWOOD",
+     "code": "720D-4",
+     "hex": "#a59d8e",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "SCULPTOR CLAY",
+     "code": "PPU5-08",
+     "hex": "#ccc3b4",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "WHEAT BREAD",
+     "code": "720C-3",
+     "hex": "#cdc4b7",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "NATURAL GRAY",
+     "code": "PPU18-10",
+     "hex": "#c4c0bb",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "SILKY WHITE",
+     "code": "PPU7-12",
+     "hex": "#eeebe2",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "TOASTY GRAY",
+     "code": "N320-2",
+     "hex": "#d1ccc0",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "SMOKY WHITE",
+     "code": "BWC-13",
+     "hex": "#e9e4da",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "OFF WHITE",
+     "code": "73",
+     "hex": "#e7e2d2",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "HIDDEN SAPPHIRE",
+     "code": "HDC-WR14-7",
+     "hex": "#445771",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "STARLESS NIGHT",
+     "code": "PPU14-20",
+     "hex": "#3e4855",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "DARK CAVERN",
+     "code": "790F-7",
+     "hex": "#55504d",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "VERY NAVY",
+     "code": "M500-7",
+     "hex": "#3a4859",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "BLUEPRINT",
+     "code": "S470-5",
+     "hex": "#60818e",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "DOLPHIN FIN",
+     "code": "790C-3",
+     "hex": "#cccac1",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "ELUSIVE BLUE",
+     "code": "T15-8",
+     "hex": "#b1c7d0",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "RUSTIC TAUPE",
+     "code": "N200-4",
+     "hex": "#a69c91",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "EVEN BETTER BEIGE",
+     "code": "DC-010",
+     "hex": "#d4caba",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "CLASSIC SILVER",
+     "code": "PPU18-11",
+     "hex": "#b9b9b4",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "CAMPFIRE ASH",
+     "code": "N320-1",
+     "hex": "#ddd9ce",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "MINED COAL",
+     "code": "PPU18-18",
+     "hex": "#6c6b65",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "CAMEO WHITE",
+     "code": "MQ3-32",
+     "hex": "#ebe8e2",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "BURNISHED CLAY",
+     "code": "PPU18-09",
+     "hex": "#d2ccc4",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "BACK TO NATURE",
+     "code": "S340-4",
+     "hex": "#bdb98f",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "COMPOSED",
+     "code": "MQ6-45",
+     "hex": "#bbc8b2",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "JUNGLE CAMOUFLAGE",
+     "code": "N350-4",
+     "hex": "#aaa794",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "HAZELNUT CREAM",
+     "code": "750C-2",
+     "hex": "#e6dfcf",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "LUNAR SURFACE",
+     "code": "N460-3",
+     "hex": "#b6b9b6",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "RUMORS",
+     "code": "MQ1-15",
+     "hex": "#744245",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "BREEZEWAY",
+     "code": "MQ3-21",
+     "hex": "#ccd8cf",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    },
+    {
+     "name": "HIDDEN GEM",
+     "code": "N430-6A",
+     "hex": "#596d69",
+     "source": "behr.com/mainService/services/colornx/all.js (official Behr color data)"
+    }
+   ],
+   "sources": [
+    "https://www.behr.com/mainService/services/colornx/all.js"
+   ]
+  }
+ ]
+}

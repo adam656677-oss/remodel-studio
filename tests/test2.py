@@ -1,0 +1,30 @@
+exec(open('test.py').read().split("with sync_playwright() as p:")[0])
+with sync_playwright() as p:
+    b = p.chromium.launch(args=['--use-angle=swiftshader','--enable-unsafe-swiftshader','--ignore-gpu-blocklist'])
+    pg = b.new_page(viewport={'width':1400,'height':860})
+    errs=[]; pg.on('pageerror', lambda e: errs.append(str(e)))
+    def route(r):
+        u=r.request.url
+        for k,f in MAP.items():
+            if u.endswith(k): return r.fulfill(path=str(f), content_type='application/javascript')
+        if 'fonts.g' in u: return r.abort()
+        if u.startswith('http://app.local'): return r.fulfill(body=page_html, content_type='text/html')
+        return r.continue_()
+    pg.route('**/*', route)
+    pg.goto('http://app.local/'); pg.wait_for_timeout(800)
+    pg.get_by_role('button', name='Copy exterior walls up').click(); pg.wait_for_timeout(300)
+    # add hip roof to level 2 via panel, stair on level 1 via JS-free route: switch level, place stair
+    pg.get_by_role('button', name='Roof this level').click(); pg.wait_for_timeout(300)
+    pg.select_option('#f-st', 'hip'); pg.wait_for_timeout(300)
+    pg.select_option('#level-pick', index=0); pg.wait_for_timeout(300)
+    pg.keyboard.press('s')
+    bb = pg.locator('svg.plan').bounding_box()
+    pg.mouse.click(bb['x']+bb['width']*0.35, bb['y']+bb['height']*0.60); pg.wait_for_timeout(400)
+    pg.screenshot(path=str(OUT/'stair_panel.png'))
+    pg.select_option('#level-pick', index=1); pg.wait_for_timeout(300)
+    pg.get_by_role('button', name='Cut at level').click(); pg.wait_for_timeout(600)
+    pg.screenshot(path=str(OUT/'twostory.png'))
+    pg.get_by_role('button', name='Show roof', exact=True).click(); pg.wait_for_timeout(600)
+    pg.screenshot(path=str(OUT/'twostory_noroof.png'))
+    print(errs or 'no page errors')
+    b.close()

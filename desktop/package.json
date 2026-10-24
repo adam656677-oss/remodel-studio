@@ -1,0 +1,61 @@
+{
+  "name": "remodel-studio",
+  "productName": "Remodel Studio",
+  "version": "1.4.0",
+  "description": "Remodel Studio - home design, remodel planning, estimating and plan sets",
+  "author": "Adam",
+  "main": "main.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.adam.remodelstudio",
+    "productName": "Remodel Studio",
+    "copyright": "Personal use",
+    "files": [
+      "main.js",
+      "preload.js",
+      "app/**/*",
+      "build/icon.png"
+    ],
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Remodel Studio",
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "artifactName": "Remodel Studio Setup ${version}.exe"
+    },
+    "fileAssociations": [
+      {
+        "ext": "rsp",
+        "name": "RemodelStudioProject",
+        "description": "Remodel Studio project",
+        "icon": "build/file.ico",
+        "role": "Editor"
+      }
+    ],
+    "asar": false
+  }
+}

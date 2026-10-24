@@ -1,0 +1,26 @@
+from h import *
+with app(1400,1000) as (pg,errs):
+    J=pg.evaluate("()=>{const J=jobSchedule(window.__app.get());return {rows:J.rows.map(r=>[r.id,r.s.toISOString().slice(0,10),r.e.toISOString().slice(0,10),r.days,r.h]),wd:J.workdays,total:Math.round(J.est.total)}}"); print(J)
+    pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(500); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(600)
+    pg.fill('#js-start','2026-11-02'); pg.wait_for_timeout(400)
+    pg.screenshot(path=str(OUT/'t34_sched.png'),full_page=True)
+    # versions
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(400)
+    pg.get_by_role('button',name='File').click(); pg.get_by_text('Versions…').click(); pg.wait_for_timeout(400)
+    pg.get_by_label('Version name').fill('Original layout'); pg.get_by_role('button',name='Save this version').click(); pg.wait_for_timeout(600)
+    pg.get_by_role('button',name='Close').click()
+    pg.evaluate("()=>{const a=window.__app;const p=a.get();a.commit({...p,rooms:p.rooms.slice(1)})}"); pg.wait_for_timeout(300)
+    pg.get_by_role('button',name='File').click(); pg.get_by_text('Versions…').click(); pg.wait_for_timeout(600)
+    pg.screenshot(path=str(OUT/'t34_versions.png'))
+    pg.get_by_role('button',name='Restore').click(); pg.wait_for_timeout(400); print('rooms after restore',pg.evaluate("()=>window.__app.get().rooms.length"))
+    # blocks: select bath walls + fixtures
+    pg.evaluate("()=>{const p=window.__app.get();const items=[...p.walls.filter(w=>w.id==='wc'||w.id==='wd').map(w=>({kind:'wall',id:w.id})),...p.fixtures.filter(f=>['toilet','lav','tub'].includes(f.type)).map(f=>({kind:'fixture',id:f.id}))];window.__app.setSel({kind:'multi',items})}"); pg.wait_for_timeout(300)
+    pg.get_by_role('button',name='Edit').click(); pg.get_by_text('Save selection as block…').click(); pg.wait_for_timeout(300)
+    pg.get_by_label('Block name').fill('Hall bath'); pg.get_by_role('button',name='Save selection as block').click(); pg.wait_for_timeout(300)
+    pg.get_by_role('button',name='Place').last.click(); pg.wait_for_timeout(300)
+    n0=pg.evaluate("()=>{const p=window.__app.get();return [p.walls.length,p.fixtures.length,p.openings.length]}")
+    pg.keyboard.press('f'); pg.wait_for_timeout(300); click_w(pg,120,120); pg.wait_for_timeout(300)
+    n1=pg.evaluate("()=>{const p=window.__app.get();return [p.walls.length,p.fixtures.length,p.openings.length]}"); print('before/after place',n0,n1)
+    pg.keyboard.press('Escape'); pg.keyboard.press('f'); pg.wait_for_timeout(400); pg.screenshot(path=str(OUT/'t34_block.png'))
+    pg.keyboard.press('Escape'); pg.wait_for_timeout(100); pg.mouse.click(700,500); pg.keyboard.press('Shift+/'); pg.wait_for_timeout(400); pg.screenshot(path=str(OUT/'t34_keys.png'))
+    print(errs or 'no errors')
