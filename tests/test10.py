@@ -44,12 +44,12 @@ with sync_playwright() as p:
     pg.fill('#lib-q','navy'); pg.wait_for_timeout(300)
     pg.locator('.libitem').first.get_by_role('button',name='House siding').click(); pg.wait_for_timeout(500)
     pg.screenshot(path=str(OUT/'lib3.png'))
-    pg.get_by_role('button', name='3D', exact=True).click(); pg.wait_for_timeout(1500); pg.screenshot(path=str(OUT/'lib4.png')); pg.get_by_role('button',name='Show roof').click(); pg.wait_for_timeout(800); pg.screenshot(path=str(OUT/'lib5.png'))
-    pg.get_by_role('button', name='Materials', exact=True).click(); pg.wait_for_timeout(800)
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1500); pg.screenshot(path=str(OUT/'lib4.png')); pg.get_by_role('button',name='Show roof').click(); pg.wait_for_timeout(800); pg.screenshot(path=str(OUT/'lib5.png'))
+    pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(800)
     t=pg.locator('.matview').inner_text(); import re
     for cat in ['Trim and molding','Paint','Doors and windows','Fixtures and cabinets','Flooring']:
         i=t.lower().find(cat.lower()); print('==',t[i:i+600].replace('\n',' | ')[:600])
-    pg.get_by_role('button', name='Sheets', exact=True).click(); pg.wait_for_timeout(800)
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(800)
     with pg.expect_download(timeout=30000) as dl:
         pg.get_by_role('button', name='Download PDF', exact=False).click()
     dl.value.save_as(str(OUT/'lib.pdf'))

@@ -17,7 +17,7 @@ with sync_playwright() as p:
         return r.continue_()
     pg.route('**/*', route)
     pg.goto('http://app.local/'); pg.wait_for_timeout(800)
-    pg.get_by_role('button', name='Plan', exact=True).first.click(); pg.wait_for_timeout(300)
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(300)
     raw=pg.evaluate("localStorage.getItem('remodel-studio:project')")
     pr=json.loads(raw)
     for w in pr['walls']: w['status']='existing'
@@ -27,7 +27,7 @@ with sync_playwright() as p:
     pr['walls'].append({**pr['walls'][-1],'id':'wnew','x1':96,'y1':0,'x2':96,'y2':120,'status':'new','kind':'interior','thick':4.5,'bearing':False})
     pr.setdefault('sheet',{})['lot']={'w':1200,'d':1800,'front':360,'left':300}
     pg.evaluate("s=>localStorage.setItem('remodel-studio:project',s)", json.dumps(pr)); pg.reload(); pg.wait_for_timeout(900)
-    pg.get_by_role('button', name='Sheets', exact=True).click(); pg.wait_for_timeout(600)
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(600)
     print([t for t in pg.locator('.sheetbtn').all_inner_texts()])
     with pg.expect_download(timeout=20000) as dl:
         pg.get_by_role('button', name='Download PDF', exact=False).click()

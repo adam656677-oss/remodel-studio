@@ -22,7 +22,7 @@ with app() as (pg,errs):
     print('steps',[(round(s['x']),round(s['y']),round(s['a'],2),s.get('deck'),s['landing']) for s in P.get('steps',[])])
     print('checks',pg.evaluate("()=>runChecks(window.__app.get()).filter(i=>/R31|R40|R50|R317/.test(i.rule&&i.rule.code||'')).map(i=>i.rule.code+' '+i.title)"))
     pg.screenshot(path=str(OUT/'t21_plan.png'))
-    pg.get_by_role('button',name='3D',exact=True).click(); pg.wait_for_timeout(1500)
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1500)
     pg.screenshot(path=str(OUT/'t21_3d.png'))
     rows=pg.evaluate("()=>takeoff(window.__app.get()).filter(r=>/Foundation|Decks/.test(r.cat)).map(r=>r.cat+': '+r.item+' '+r.qty+' '+r.unit)")
     print('\n'.join(rows))

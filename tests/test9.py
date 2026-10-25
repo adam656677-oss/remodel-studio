@@ -14,7 +14,7 @@ with sync_playwright() as p:
         return r.continue_()
     pg.route('**/*', route)
     pg.goto('http://app.local/'); pg.wait_for_timeout(900)
-    pg.get_by_role('button', name='Plan', exact=True).first.click(); pg.wait_for_timeout(300)
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(300)
     n0=len(pg.evaluate("JSON.parse(localStorage.getItem('remodel-studio:project')).walls"))
     pg.keyboard.press('w'); pg.wait_for_timeout(100)
     # choose wall type (focus select) then draw

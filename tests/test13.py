@@ -13,7 +13,7 @@ with sync_playwright() as p:
         return r.continue_()
     pg.route('**/*', route)
     pg.goto('http://app.local/'); pg.wait_for_timeout(1000)
-    pg.get_by_role('button', name='3D', exact=True).click(); pg.wait_for_timeout(800)
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(800)
     pg.get_by_role('button', name='Walk through').click(); pg.wait_for_timeout(600)
     pg.screenshot(path=str(OUT/'walk1.png'))
     pg.keyboard.down('ArrowLeft'); pg.wait_for_timeout(900); pg.keyboard.up('ArrowLeft')

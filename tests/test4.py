@@ -13,7 +13,7 @@ with sync_playwright() as p:
         return r.continue_()
     pg.route('**/*', route)
     pg.goto('http://app.local/'); pg.wait_for_timeout(800)
-    pg.get_by_role('button', name='Sheets', exact=True).click(); pg.wait_for_timeout(500)
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(500)
     pg.select_option('#sheet-pick', '1'); pg.wait_for_timeout(300)
     pg.screenshot(path=str(OUT/'sheets_mobile.png')); print(errs or 'ok')
     b.close()

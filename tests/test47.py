@@ -5,7 +5,7 @@ with app() as (pg,errs):
       const rows=takeoff(p,{waste:.1});return {label:vendorLabel(cab),style:cab.style,color:cab.color,roof:rows.filter(r=>/Selected: GAF/.test(r.note)).length,win:rows.filter(r=>/Andersen/.test(r.note)).length,cabrow:rows.filter(r=>/KraftMaid/.test(r.note)).length,brands:VENDOR_CABS.length};}""")
     print(r)
     pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(500)
-    pg.locator('.mattabs button', has_text='Selections').click(); pg.wait_for_timeout(400)
+    pg.get_by_role('tab', name='Selections', exact=True).click(); pg.wait_for_timeout(400)
     pg.select_option('#sl-pb','Sherwin-Williams'); pg.wait_for_timeout(300)
     first=pg.evaluate("()=>window.__app.get().rooms[0].id")
     opts=pg.evaluate(f"()=>[...document.querySelector('#pc-w-{first}').options].map(o=>o.value).slice(1,3)")

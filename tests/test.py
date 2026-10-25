@@ -66,7 +66,7 @@ with sync_playwright() as p:
         n = pg.evaluate("()=>JSON.parse(localStorage.getItem('remodel-studio:project')||'{}').walls?.length")
         print('walls after undo x2', n)
         # 3D only
-        pg.get_by_role('button', name='3D', exact=True).click()
+        pg.evaluate("()=>window.__app.setMode('3d')")
         pg.wait_for_timeout(800)
         pg.screenshot(path=str(OUT/f'3d_{scheme}.png'))
         pg.get_by_role('button', name='Show roof', exact=True).click()

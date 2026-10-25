@@ -1,7 +1,7 @@
 from h import *
 with app(1400,1000) as (pg,errs):
     J=pg.evaluate("()=>{const J=jobSchedule(window.__app.get());return {rows:J.rows.map(r=>[r.id,r.s.toISOString().slice(0,10),r.e.toISOString().slice(0,10),r.days,r.h]),wd:J.workdays,total:Math.round(J.est.total)}}"); print(J)
-    pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(500); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(600)
+    pg.evaluate("()=>window.__app.setMode('build')"); pg.wait_for_timeout(500); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(600)
     pg.fill('#js-start','2026-11-02'); pg.wait_for_timeout(400)
     pg.screenshot(path=str(OUT/'t34_sched.png'),full_page=True)
     # versions

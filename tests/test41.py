@@ -14,7 +14,7 @@ with app(1400,900) as (pg,errs):
     print(pg.evaluate("()=>takeoff(window.__app.get(),{waste:0.1}).filter(r=>/Plumbing|HVAC/.test(r.cat)).map(r=>r.item+' '+r.qty+r.unit)"))
     pg.evaluate("()=>window.__app.setMode('systems')"); pg.wait_for_timeout(400); pg.get_by_role('tab',name='Electrical service').click(); pg.wait_for_timeout(400); pg.screenshot(path=str(OUT/'t41_panel.png'),full_page=True)
     sheet(pg,'E0.1','t41_sheet.png')
-    pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(400); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(400)
+    pg.evaluate("()=>window.__app.setMode('build')"); pg.wait_for_timeout(400); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(400)
     with pg.expect_download(timeout=30000) as dl: pg.get_by_role('button',name='Proposal PDF').click()
     d=dl.value; d.save_as(str(OUT/'t41_proposal.pdf')); print('pdf',d.suggested_filename)
     pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1500); pg.get_by_role('button',name='Show roof').click(); pg.wait_for_timeout(1000)

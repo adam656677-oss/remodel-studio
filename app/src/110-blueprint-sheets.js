@@ -350,7 +350,7 @@ const safeName=s=>(s||'house').replace(/[^\w\- ]+/g,'').trim()||'house';
 
 /* ---- sheets screen ---- */
 function SheetsView({p,commit}){
-  const [tab,setTab]=useState(()=>{try{return localStorage.getItem('remodel-studio:shtab')||'plans';}catch(e){return 'plans';}});
+  const [tab,setTab]=useState(()=>{if(window.__rsSheetNo)return 'plans';try{return localStorage.getItem('remodel-studio:shtab')||'plans';}catch(e){return 'plans';}});
   const pick=t=>{setTab(t);try{localStorage.setItem('remodel-studio:shtab',t);}catch(e){}};
   const tabs=html`<div className="seg shtabs" role="tablist">${[['plans','Plan set'],['present','Board presentation']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
   if(tab==='present')return html`<div className="shwrap">${tabs}<${PresentationView} p=${p} commit=${commit}/></div>`;
@@ -358,7 +358,8 @@ function SheetsView({p,commit}){
 }
 function PlanSetView({p,commit}){
   const sheets=useMemo(()=>buildSheets(p),[p]);
-  const [idx,setIdx]=useState(0); const [zoom,setZoom]=useState(1); const [busy,setBusy]=useState(false); const [msg,setMsg]=useState(null);
+  const [idx,setIdx]=useState(()=>{const n=window.__rsSheetNo;window.__rsSheetNo=null;const i=n?sheets.findIndex(s=>s.no===n):-1;return i>=0?i:0;}); const [zoom,setZoom]=useState(1);
+  useEffect(()=>{const f=e=>{const i=sheets.findIndex(s=>s.no===e.detail);if(i>=0)setIdx(i);};window.addEventListener('rs-sheet',f);return ()=>window.removeEventListener('rs-sheet',f);},[sheets]); const [busy,setBusy]=useState(false); const [msg,setMsg]=useState(null);
   const cur=sheets[Math.min(idx,sheets.length-1)];
   const sh=p.sheet||{}; const info=p.info||{};
   const setSheet=patch=>commit({...p,sheet:{...sh,...patch}}); const setInfo=patch=>commit({...p,info:{...info,...patch}});

@@ -12,7 +12,7 @@ def cam(pg,pos,tgt):
 if __name__=='__main__':
   with app() as (pg,errs):
     setup(pg)
-    pg.get_by_role('button',name='3D',exact=True).click(); pg.wait_for_timeout(1500)
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1500)
     cam(pg,[10,14,-38],[20,0,10]); pg.screenshot(path=str(OUT/'t21_front.png'))
     cam(pg,[50,8,-20],[25,2,5]); pg.screenshot(path=str(OUT/'t21_front2.png'))
     print(errs or 'no errors')

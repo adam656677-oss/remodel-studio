@@ -22,7 +22,7 @@ with sync_playwright() as p:
     pr['views']=[{'id':'v1','name':'Front yard','pos':[-15,12,50],'tgt':[20,4,14],'fov':45,'walk':None},{'id':'v2','name':'Kitchen','pos':[0,0,0],'walk':{'x':120,'y':260,'yaw':3.14,'pitch':0,'level':pr['levels'][0]['id']}}]
     pg.evaluate("s=>localStorage.setItem('remodel-studio:project',s)", json.dumps(pr)); pg.reload(); pg.wait_for_timeout(1000)
     pg.locator('#option-pick').select_option('__new'); pg.wait_for_timeout(300)
-    pg.get_by_role('button', name='Sheets', exact=True).click(); pg.wait_for_timeout(400)
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(400)
     pg.get_by_role('tab', name='Board presentation').click(); pg.wait_for_timeout(300)
     pg.fill('#pr-by','Adam, Public Works Director')
     pg.get_by_role('button',name='Preview the cover image').click(); pg.wait_for_timeout(3000)

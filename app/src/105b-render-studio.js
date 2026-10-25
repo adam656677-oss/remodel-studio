@@ -54,7 +54,7 @@ function RenderStudio({p,sun,onClose}){
       const minute=o.sky==='golden'?goldenMinute(p,sun.date):sun.min;const sv=sunVector3(p,sun.date,minute);const night=o.sky==='dusk'||o.sky==='night';
       const glb=setup.glb.buffer.slice(setup.glb.byteOffset,setup.glb.byteOffset+setup.glb.byteLength);
       j.h=await E.create(cv,{glb,width:W,height:H,sky:sv.alt<=0&&(o.sky==='day'||o.sky==='golden')?'dusk':o.sky,sunDir:sv.v,camera:{pos:cam.pos,target:cam.target,fov:camFov(cam,W,H),fStop:o.dof?4:22},
-        lights:o.lights||night?renderLights(p):[],lightLevel:o.level,ev:o.ev,autoExposure:o.auto,denoise:o.smooth,groundY:siteZ(p)*IN*0.3048,bounces:o.q>=700?8:6,tiles:W*H>2.5e6?3:2});
+        lights:o.lights||night?renderLights(p,o.scene||null):[],lightLevel:o.level,ev:o.ev,autoExposure:o.auto,denoise:o.smooth,groundY:siteZ(p)*IN*0.3048,bounces:o.q>=700?8:6,tiles:W*H>2.5e6?3:2});
       commit2({render:{smooth:o.smooth,auto:o.auto,cam:o.cam,size:o.size,q:o.q,sky:o.sky,lights:o.lights,level:o.level,ev:o.ev}});
       j.t0=performance.now();setState({phase:'run',n:0,t:0,msg:null});
       const tick=()=>{if(j.stopped||job.current!==j)return;const t1=performance.now();let n=j.h.samples;while(performance.now()-t1<40&&n<o.q){n=j.h.step(1);}
@@ -82,6 +82,7 @@ function RenderStudio({p,sun,onClose}){
         <${Field} label="Light and sky" id="rs-sky"><${Sel} id="rs-sky" value=${o.sky} onChange=${v=>up({sky:v})} options=${RS_SKY}/><//>
         <p className="note">${o.sky==='day'?`Sun on ${sun.date} at ${Math.floor(sun.min/60)}:${String(sun.min%60).padStart(2,'0')} (set it with Sun in the 3D view).`:o.sky==='golden'?'Low warm sun about an hour before sunset.':o.sky==='overcast'?'Even light, no hard shadows; good for interiors and materials.':'Fixtures from the electrical plan light the rooms.'}</p>
         <label className="check"><input type="checkbox" checked=${o.lights||o.sky==='dusk'||o.sky==='night'} disabled=${o.sky==='dusk'||o.sky==='night'} onChange=${e=>up({lights:e.target.checked})}/> Lights on (${(()=>{const L=renderLights(p);return L.length&&L[0].auto?'no fixtures drawn yet, so one ceiling light per room':L.length+' fixtures from the electrical plan';})()})</label>
+        ${(o.lights||o.sky==='dusk'||o.sky==='night')&&((p.settings&&p.settings.lightScenes)||[]).length?html`<${Field} label="Lighting scene" id="rs-sc"><${Sel} id="rs-sc" value=${o.scene||''} onChange=${v=>up({scene:v||null})} options=${[['','All lights at full'],...p.settings.lightScenes.map(s=>[s.id,s.name])]}/><//>`:null}
         ${(o.lights||o.sky==='dusk'||o.sky==='night')?html`<${Field} label="Light brightness" id="rs-lv"><input id="rs-lv" type="range" min="0.25" max="4" step="0.25" value=${o.level} onInput=${e=>up({level:+e.target.value})}/><span className="mono">${o.level}x</span><//>`:null}
         <label className="check"><input type="checkbox" checked=${o.auto} onChange=${e=>up({auto:e.target.checked})}/> Auto exposure (like a camera)</label>
         <${Field} label=${o.auto?'Brighter or darker':'Exposure'} id="rs-ev"><input id="rs-ev" type="range" min="-3" max="3" step="0.25" value=${o.ev} onInput=${e=>exposure(+e.target.value)}/><span className="mono">${o.ev>0?'+':''}${o.ev} EV</span><//>

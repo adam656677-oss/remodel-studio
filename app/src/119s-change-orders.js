@@ -3,7 +3,7 @@
 // with the price difference; each change order records them, resets the baseline and prints for signature.
 function estSnapshot(p){const E=estimateOf(p);const prices=p.prices||{};const rows={};for(const r of E.rows){const k=r.key.replace(/\|(new|demo)$/,'');const pr=prices[k]??r.price;const key=r.cat+'|'+r.item+'|'+r.unit;
   const R=rows[key]=rows[key]||{cat:r.cat,item:r.item,unit:r.unit,qty:0,price:pr};R.qty+=r.qty;if(pr!=null)R.price=pr;}
-  return {date:new Date().toISOString().slice(0,10),total:Math.round(E.total),mat:Math.round(E.mat),labor:Math.round(E.laborCost),rows};}
+  return {date:localDate(),total:Math.round(E.total),mat:Math.round(E.mat),labor:Math.round(E.laborCost),rows};}
 function contractOf(p){return p.contract||null;}
 function changeDiff(p){const C=contractOf(p);if(!C)return null;const base=C.current||C.baseline;const now=estSnapshot(p);const lines=[];
   const keys=new Set([...Object.keys(base.rows),...Object.keys(now.rows)]);
@@ -23,10 +23,12 @@ async function changeOrderPDF(p,co){await loadJsPDF();const {jsPDF}=window.jspdf
   return d;}
 function ChangeOrders({p,commit}){const C=contractOf(p);const D=useMemo(()=>{try{return changeDiff(p);}catch(e){return null;}},[p]);const [desc,setDesc]=useState('');const [days,setDays]=useState('');const [msg,setMsg]=useState(null);
   const $=v=>(v<0?'−':'')+'$'+Math.abs(Math.round(v)).toLocaleString('en-US');
-  const lock=()=>{const s=estSnapshot(p);commit({...p,contract:{baseline:s,current:s,changeOrders:[],signed:s.date}});};
-  const make=()=>{const no=(C.changeOrders||[]).length+1;const co={no,date:new Date().toISOString().slice(0,10),desc:desc.trim()||'Changes to the work as listed.',lines:D.lines,was:D.was,now:D.now,delta:D.delta,days:parseInt(days)||0,status:'pending'};
-    commit({...p,contract:{...C,current:D.snap,changeOrders:[...(C.changeOrders||[]),co]}});setDesc('');setDays('');setMsg(`Change order #${no} recorded. Print it for signatures.`);};
-  const setCO=(no,patch)=>commit({...p,contract:{...C,changeOrders:C.changeOrders.map(c=>c.no===no?{...c,...patch}:c)}});
+  const lock=()=>{const s=estSnapshot(p);const ms=modelSnap(p);commit({...p,contract:{baseline:s,current:s,changeOrders:[],signed:s.date,model:ms,modelCur:ms}});};
+  const make=()=>{const no=(C.changeOrders||[]).length+1;const ms=modelSnap(p);const changed=modelDiff(C.modelCur||C.model,ms);const rev=nextRevNo(p);
+    const co={no,rev,date:localDate(),desc:desc.trim()||'Changes to the work as listed.',lines:D.lines,was:D.was,now:D.now,delta:D.delta,days:parseInt(days)||0,status:'pending',changed};
+    const revs=(p.info&&p.info.revisions)||[];const revRow={no:rev,date:new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}),desc:`Change order ${no}: ${co.desc}`,co:no};
+    commit({...p,info:{...(p.info||{}),revisions:[...revs,revRow]},contract:{...C,current:D.snap,modelCur:ms,changeOrders:[...(C.changeOrders||[]),co]}});setDesc('');setDays('');setMsg(`Change order #${no} recorded as revision ${rev}${changed.length?`; ${changed.length} changed part${changed.length===1?' is':'s are'} clouded on the plan sheets`:''}. Print it for signatures.`);};
+  const setCO=(no,patch)=>{const revs=((p.info&&p.info.revisions)||[]).map(r=>r.co===no&&patch.status?{...r,desc:r.desc.replace(/ \((void|signed)\)$/,'')+(patch.status==='void'?' (void)':patch.status==='signed'?' (signed)':'')}:r);commit({...p,info:{...(p.info||{}),revisions:revs},contract:{...C,changeOrders:C.changeOrders.map(c=>c.no===no?{...c,...patch}:c)}});};
   const print=async co=>{try{const d=await changeOrderPDF(p,co);setMsg((await saveFile(safeName(p.name)+` change order ${co.no}.pdf`,d.output('blob'))).t);}catch(e){setMsg(e.message);}};
   if(!C)return html`<section className="sec co"><h3>Contract and change orders</h3><p className="note">When the client signs the proposal, lock the contract here. Changes you make to the model after that show as a change order with the price difference.</p><button className="btn primary" onClick=${lock}>Lock the contract at today's estimate</button></section>`;
   const signedSum=(C.changeOrders||[]).filter(c=>c.status==='signed').reduce((s,c)=>s+c.delta,0);

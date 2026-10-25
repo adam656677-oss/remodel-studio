@@ -21,7 +21,7 @@ with sync_playwright() as p:
         pg.get_by_role('button', name='Copy exterior walls up').click(); pg.wait_for_timeout(300)
         pg.get_by_role('button', name='Roof this level').click(); pg.wait_for_timeout(200)
         pg.select_option('#f-st', 'hip'); pg.wait_for_timeout(200)
-    pg.get_by_role('button', name='Sheets', exact=True).click(); pg.wait_for_timeout(500)
+    pg.evaluate("()=>window.__app.setMode('sheets')"); pg.wait_for_timeout(500)
     pg.select_option('#sh-paper', paper); pg.wait_for_timeout(300)
     pg.fill('#sh-addr','123 Oak St, Forest, MS'); pg.locator('#sh-addr').blur(); pg.fill('#sh-client','Friend'); pg.locator('#sh-client').blur(); pg.wait_for_timeout(200)
     btns = pg.locator('.sheetbtn')

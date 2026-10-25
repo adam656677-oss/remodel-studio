@@ -1,0 +1,102 @@
+/* ======================= Ctrl+K: find any command, place any catalog item, ask the project questions ======================= */
+// Works offline. Questions are answered from the model itself (counts, lengths, areas, cost, issues), and simple
+// commands run directly ("select all wall cabinets", "move the island 6 in left"). If a local AI (Ollama) is running
+// on this computer, anything else can be asked of it with a summary of the project; nothing leaves the computer.
+const sing=w=>w.replace(/ies$/,'y').replace(/(ch|sh|x|s)es$/,'$1').replace(/s$/,'');
+const qWords=s=>String(s||'').toLowerCase().replace(/[^a-z0-9.#\-\s]/g,' ').split(/\s+/).filter(Boolean).map(sing);
+const Q_STOP=new Set(['the','a','an','all','my','of','in','on','for','to','and','with','this','that','there','is','are','do','i','have','we','what','how','many','much','number','count','total','me','show','find','select','where','which']);
+function thingsOf(p){const out=[];
+  for(const f of (p.fixtures||[])){const it=f.lib&&LIB_BY_ID[f.lib];const m=it&&it.appl;const t=FIXTURES[f.type]||{};
+    const extra=isCab(f)?(f.type==='wallcab'?'wall cabinet upper':f.type==='tall'?'tall cabinet pantry':f.type==='island'?'island cabinet':f.type==='vanity'?'vanity cabinet':f.type==='filler'?'filler':'base cabinet lower'):'';
+    out.push({kind:'fixture',o:f,level:f.level,x:f.x,y:f.y,name:fxLabel(f),text:[fxLabel(f),t.label,t.cat,it&&it.cat,it&&it.sub,m&&m.brand,m&&m.model,m&&m.type,extra,f.type,(()=>{try{return isCab(f)?cabCode(p,f):'';}catch(e){return '';}})()].filter(Boolean).join(' ')});}
+  for(const d of (p.elec||[])){const t=ELEC[d.type]||{};out.push({kind:'elec',o:d,level:d.level,x:d.x,y:d.y,name:t.label||d.type,text:[t.label,t.cat,d.type,LUMENS[d.type]?'light fixture':'',/recept|gfci|outlet/i.test(d.type+(t.label||''))?'outlet receptacle plug':''].filter(Boolean).join(' ')});}
+  const marks=openingMarks(p);for(const o of p.openings){const c=openingCenter(p,o);if(!c)continue;out.push({kind:'opening',o,level:c.w.level,x:c.x,y:c.y,name:(marks[o.id]||'')+' '+o.type,text:[o.type,marks[o.id],o.dtype,o.operation,o.style].filter(Boolean).join(' ')});}
+  for(const r of p.rooms){const c=polyLabelPt(r.pts);out.push({kind:'room',o:r,level:r.level,x:c[0],y:c[1],name:r.name,text:[r.name,r.use,'room'].join(' ')});}
+  for(const w of p.walls)out.push({kind:'wall',o:w,level:w.level,x:(w.x1+w.x2)/2,y:(w.y1+w.y2)/2,name:'wall',text:['wall',w.kind,w.bearing?'bearing':''].join(' ')});
+  return out;}
+function scopeOf(p,s){// "in the kitchen", "on the second floor"
+  s=String(s||'').trim().replace(/^the\s+/,'');if(!s)return null;const lv=p.levels.find(l=>l.name.toLowerCase()===s||l.name.toLowerCase().startsWith(s));if(lv)return {level:lv};
+  const r=p.rooms.find(r=>r.name.toLowerCase()===s)||p.rooms.find(r=>r.name.toLowerCase().includes(s))||p.rooms.find(r=>(r.use||'')===sing(s));return r?{room:r}:null;}
+function matchThings(p,subject,scope){const ws=qWords(subject).filter(w=>!Q_STOP.has(w));if(!ws.length)return [];
+  return thingsOf(p).filter(t=>{if(t.o.status==='demolish')return false;const tw=qWords(t.text);if(!ws.every(w=>tw.some(x=>x===w||x.startsWith(w))))return false;
+    if(scope&&scope.level&&t.level!==scope.level.id)return false;if(scope&&scope.room&&!(t.level===scope.room.level&&inPoly(t.x,t.y,scope.room.pts))&&!(t.kind==='room'&&t.o.id===scope.room.id))return false;return true;});}
+const DIRV={left:[-1,0],right:[1,0],up:[0,-1],down:[0,1],north:[0,-1],south:[0,1],east:[1,0],west:[-1,0]};
+// returns {text, items?, act?:{label,run}} or null
+function answerQuery(raw,ctx){const {p}=ctx;const q=raw.trim().toLowerCase().replace(/\?+$/,'');if(q.length<3)return null;let m;
+  const split=s=>{const k=s.search(/\s(in|on)\s(the\s)?/);return k>0?[s.slice(0,k),s.slice(k).replace(/^\s(in|on)\s/,'')]:[s,''];};
+  const listOf=items=>items.slice(0,12).map(t=>t.name.trim()).join(', ')+(items.length>12?` and ${items.length-12} more`:'');
+  const selAct=items=>items.length?{label:`Select ${items.length===1?'it':'them'} in Design`,run:()=>{let it=items.filter(t=>t.kind!=='room'||items.length===1);if(!it.length)it=items;const lv=it[0].level;ctx.setLevelId(lv);ctx.setMode('design');setTimeout(()=>ctx.setSel(it.length===1?{kind:it[0].kind,id:it[0].o.id}:{kind:'multi',items:it.filter(t=>t.level===lv).map(t=>({kind:t.kind,id:t.o.id}))}),60);}}:null;
+  if((m=/^move\s+(?:the\s+)?(.+?)\s+([\d.\/' "-]+?)\s*(in|inch|inches|ft|feet|foot)?\s+(left|right|up|down|north|south|east|west|forward|back|backward)$/.exec(q))){
+    const subj=m[1];const amt=parseLen(m[2].trim()+(m[3]?(/^f/.test(m[3])?"'":'"'):''),'in');if(amt==null||!isFinite(amt))return {text:'I could not read that distance. Try "move the island 6 in left".'};
+    let t=null;if(/^(it|this|that|selected|selection|the selection)$/.test(subj)){const o=findObj(p,ctx.sel);if(o&&typeof o.x==='number')t={kind:ctx.sel.kind,o};}else{const ms=matchThings(p,subj,null).filter(t=>typeof t.o.x==='number'&&t.kind!=='room');const sid=ctx.sel&&ctx.sel.id;t=ms.find(x=>x.o.id===sid)||ms.find(x=>x.level===ctx.lv.id)||ms[0];}
+    if(!t)return {text:`Nothing called "${subj}" to move. Select it first and say "move it 6 in left".`};
+    let v;if(m[4]==='forward'||/^back/.test(m[4])){const fr=t.kind==='fixture'?fxFront(t.o):{x:0,y:1};const s=m[4]==='forward'?1:-1;v=[fr.x*s,fr.y*s];}else v=DIRV[m[4]];
+    return {text:`Move ${t.name||fxLabel(t.o)} ${fmtLen(amt)} ${m[4]}.`,act:{label:'Move it',run:()=>{ctx.commit(moveItems(p,[{kind:t.kind,id:t.o.id}],v[0]*amt,v[1]*amt));ctx.setSel({kind:t.kind,id:t.o.id});ctx.say&&ctx.say(`Moved ${fmtLen(amt)} ${m[4]}.`);}},auto:true};}
+  if((m=/^(?:set|make|change)\s+(?:all\s+)?(?:the\s+)?lights?\s+(?:(?:in|on)\s+(?:the\s+)?(.+?)\s+)?to\s+(\d{4})\s*k?$/.exec(q))){const sc=m[1]?scopeOf(p,m[1]):null;const K=+m[2];const ds=(p.elec||[]).filter(d=>LUMENS[d.type]&&(!sc||(sc.level?d.level===sc.level.id:(d.level===sc.room.level&&inPoly(d.x,d.y,sc.room.pts)))));
+    return {text:`Set ${ds.length} light${ds.length===1?'':'s'}${sc?' in '+(sc.room?sc.room.name:sc.level.name):''} to ${K} K.`,act:ds.length?{label:'Apply',run:()=>ctx.commit({...p,elec:p.elec.map(d=>ds.includes(d)?{...d,kelvin:K}:d)})}:null};}
+  if((m=/^(?:select|find|show me|show|where is|where are|highlight)\s+(?:all\s+)?(?:the\s+)?(.+)$/.exec(q))){const [subj,sc]=split(m[1]);const items=matchThings(p,subj,scopeOf(p,sc));if(!items.length)return null;
+    return {text:`${items.length} match${items.length===1?'':'es'}: ${listOf(items)}.`,items,act:selAct(items)};}
+  if((m=/(?:area|square feet|sq ?ft|how big)\s*(?:of|is)?\s*(?:the\s+)?(.*)$/.exec(q))){const s=(m[1]||'').trim();const sc=s&&!/^(house|home|floor|building|plan|everything)$/.test(s)?scopeOf(p,s):null;
+    if(sc&&sc.room){const a=polyArea(sc.room.pts)/144;return {text:`${sc.room.name}: ${Math.round(a)} square feet.`};}
+    const lv=sc&&sc.level;const rs=p.rooms.filter(r=>!lv||r.level===lv.id);const a=rs.reduce((t,r)=>t+polyArea(r.pts)/144,0);return {text:`${Math.round(a)} square feet in ${rs.length} rooms${lv?' on '+lv.name:''}.`};}
+  if((m=/(?:linear feet|linear ft|\blf\b|how long|length|(?<!square )feet)\s+(?:of|is|are)?\s*(?:the\s+)?(.+)$/.exec(q))){const [subj,sc]=split(m[1]);if(/counter/.test(subj)){const fx=(p.fixtures||[]).filter(f=>COUNTERTOP.has(f.type)&&f.status!=='demolish');const lf=fx.reduce((s,f)=>s+f.w,0)/12;return {text:`About ${lf.toFixed(1)} linear feet of countertop over ${fx.length} base cabinets and appliances.`};}
+    const items=matchThings(p,subj,scopeOf(p,sc)).filter(t=>t.kind==='fixture'||t.kind==='wall');if(!items.length)return null;const L=items.reduce((s,t)=>s+(t.kind==='wall'?wlen(t.o):t.o.w),0)/12;
+    return {text:`${L.toFixed(1)} linear feet across ${items.length} ${items.length===1?'item':'items'}.`,items,act:selAct(items)};}
+  if((m=/^(?:how many|count|number of|how much)\s+(.+)$/.exec(q))||(m=/^(.+?)\s+count$/.exec(q))){const [subj,sc]=split(m[1]);const scope=scopeOf(p,sc);
+    if(/^(errors?|issues?|problems?|warnings?)/.test(subj)){const I=runChecks(p);const e=I.filter(i=>i.sev==='error'),w=I.filter(i=>i.sev==='warn');return {text:`${e.length} errors and ${w.length} warnings. ${e.slice(0,5).map(i=>'• '+i.title).join(' ')}`,act:{label:'Open the Check page',run:()=>ctx.setMode('check')}};}
+    if(/^(money|does it cost|will it cost|cost|is it)/.test(subj))return answerQuery('what does it cost',ctx);
+    const items=matchThings(p,subj,scope);if(!items.length)return {text:`I found no "${subj.trim()}"${sc?' '+sc.trim():''} in the model.`};
+    return {text:`${items.length} ${subj.trim()}${scope?' in '+(scope.room?scope.room.name:scope.level.name):''}: ${listOf(items)}.`,items,act:selAct(items)};}
+  if(/(^| )(cost|price|estimate|budget|how much will|what will it cost|what does it cost)( |$)/.test(q)){let E;try{E=estimateOf(p);}catch(e){return null;}const money=v=>'$'+Math.round(v).toLocaleString();
+    return {text:`Estimate total ${money(E.total)}: materials ${money(E.mat)}, labor ${money(E.laborCost)}${E.unpriced?`, with ${E.unpriced} items not priced yet`:''}${E.perSF?` (${money(E.perSF)} per square foot)`:''}.`,act:{label:'Open the estimate',run:()=>ctx.setMode('materials')}};}
+  if(/^(errors?|issues?|problems?|code issues|what fails|what is wrong|what's wrong)/.test(q)){const I=runChecks(p);const e=I.filter(i=>i.sev==='error');return {text:`${e.length} errors: ${e.slice(0,6).map(i=>i.title).join('; ')||'none'}.`,act:{label:'Open the Check page',run:()=>ctx.setMode('check')}};}
+  return null;}
+function projectSummary(p){const lines=[];const L=id=>lvlOf(p,id)?.name||'';lines.push(`Project: ${p.name}. Code: ${p.settings?.code==='ibc'?'2021 IBC':'2021 IRC'}${p.settings?.ada!==false?', 2010 ADA checks on':''}.`);
+  for(const lv of sortedLevels(p)){const rs=p.rooms.filter(r=>r.level===lv.id);lines.push(`${lv.name} (ceiling ${fmtLen(lv.height)}): `+rs.map(r=>`${r.name} ${Math.round(polyArea(r.pts)/144)} sf${r.finish?', floor '+r.finish:''}`).join('; '));}
+  const cnt={};for(const f of (p.fixtures||[]).filter(f=>f.status!=='demolish')){const k=fxLabel(f)+' ('+L(f.level)+')';cnt[k]=(cnt[k]||0)+1;}lines.push('Placed items: '+Object.entries(cnt).slice(0,80).map(([k,n])=>n>1?`${n} × ${k}`:k).join('; '));
+  const ec={};for(const d of (p.elec||[])){const k=(ELEC[d.type]||{}).label||d.type;ec[k]=(ec[k]||0)+1;}if(Object.keys(ec).length)lines.push('Electrical: '+Object.entries(ec).map(([k,n])=>`${n} ${k}`).join(', '));
+  lines.push(`Openings: ${p.openings.filter(o=>o.type==='door').length} doors, ${p.openings.filter(o=>o.type==='window').length} windows.`);
+  try{const E=estimateOf(p);lines.push(`Estimate: total $${Math.round(E.total).toLocaleString()} (materials $${Math.round(E.mat).toLocaleString()}, labor $${Math.round(E.laborCost).toLocaleString()}).`);}catch(e){}
+  try{const I=runChecks(p);lines.push(`Checks: ${I.filter(i=>i.sev==='error').length} errors, ${I.filter(i=>i.sev==='warn').length} warnings. Errors: `+I.filter(i=>i.sev==='error').slice(0,12).map(i=>i.title+(i.rule?` (${i.rule.set} ${i.rule.code})`:'')).join('; '));}catch(e){}
+  return lines.join('\n').slice(0,6000);}
+const OLLAMA='http://127.0.0.1:11434';
+async function ollamaModels(){try{const c=new AbortController();const t=setTimeout(()=>c.abort(),900);const r=await fetch(OLLAMA+'/api/tags',{signal:c.signal});clearTimeout(t);if(!r.ok)return null;const j=await r.json();return (j.models||[]).map(m=>m.name);}catch(e){return null;}}
+async function ollamaAsk(model,p,question){const prompt=`You are the assistant inside Remodel Studio, a remodel design program. Answer the question briefly and plainly using the project facts. Lengths are in feet and inches. If the facts do not answer it, say what is missing.\n\nPROJECT FACTS\n${projectSummary(p)}\n\nQUESTION\n${question}`;
+  const r=await fetch(OLLAMA+'/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model,prompt,stream:false,options:{temperature:0.2}})});if(!r.ok)throw new Error('The local AI answered '+r.status);const j=await r.json();return (j.response||'').trim();}
+function paletteCommands(ctx){const C=[];const add=(label,run,kw='',hint='')=>C.push({label,run,kw,hint});
+  for(const w of WORKFLOWS)for(const [k,l] of w.pages)add(`Go to ${w.label}${w.pages.length>1?' › '+l:''}`,()=>ctx.setMode(k),w.title+' '+l,'Page');
+  add('Save',()=>ctx.doSave(),'file','Ctrl+S');add('Open a project…',()=>ctx.doOpen(),'file','Ctrl+O');add('New project…',()=>ctx.setDlg('new'),'file');add('Save as…',()=>ctx.setDlg('saveas'),'file');add('Backups…',()=>ctx.setDlg('backups'),'restore autosave');add('Versions…',()=>ctx.setDlg('versions'),'history restore');
+  add('Undo',ctx.doUndo,'','Ctrl+Z');add('Redo',ctx.doRedo,'','Ctrl+Y');
+  const dl=[['roofwiz','Roof wizard','truss rafter pitch'],['joists','Floor and ceiling joists','framing i-joist truss'],['wallframe','Wall framing and cut list','studs header'],['wallrm','Remove or open a wall','beam bearing'],['styleswap','Change cabinet door style and finish','swap'],['slab','Countertop slab layout','stone quartz granite seam'],['lessons','Lessons','learn tutorial'],['pano','360° panorama','render'],['video','Walk-through video','render'],['photomatch','Photo match','render overlay photo'],['ifc','Export IFC for Revit or Archicad','bim export'],['storeprices','Store prices','lowes home depot price list'],['dxf','Import DWG or DXF','cad'],['obj','Import 3D model','obj glb stl'],['vendors','Import vendor catalog',''],['keys','Keyboard shortcuts','help'],['blocks','Blocks','symbols'],['scanwalls','Walls from a scan or plan photo','lidar point cloud trace auto'],['binder','Homeowner binder','handover manual warranty pdf']];
+  for(const [k,l,kw] of dl)add(l+'…',()=>ctx.setDlg(k),kw,'Dialog');
+  add('Render studio…',ctx.openRender,'photoreal image','Dialog');add('AR view and 3D export…',ctx.openExport,'usdz glb stl','Dialog');
+  for(const id of [...TOOLS.map(t=>t[0]),...Object.keys(XTOOLS)]){const ti=toolInfo(id);if(ti)add('Tool: '+ti.label,()=>{ctx.setMode('design');ctx.setTool(id);},'draw place '+id,ti.key||'Tool');}
+  for(const [k,l] of SCHED_TYPES)add('Schedule: '+l,()=>{window.__rsSched=k;ctx.setMode('schedules');setTimeout(()=>window.dispatchEvent(new CustomEvent('rs-sched',{detail:k})),60);},'table list','Documents');
+  for(const lv of sortedLevels(ctx.p))add('Level: '+lv.name,()=>ctx.setLevelId(lv.id),'floor story','Level');
+  return C;}
+function scoreText(t,ws,kw=''){const s=t.toLowerCase(),k=String(kw).toLowerCase();let sc=0;for(const w of ws){const i=s.indexOf(w);if(i<0){if(k.includes(w)){sc+=0.5;continue;}return -1;}sc+=i===0?3:/\W/.test(s[i-1]||' ')?2:1;}return sc;}
+function CommandPalette({ctx,onClose}){const [q,setQ]=useState('');const [i,setI]=useState(0);const [ai,setAi]=useState(false);const [aiOut,setAiOut]=useState(null);const [busy,setBusy]=useState(false);const inp=useRef(null);
+  const [model,setModelS]=useState(()=>{try{return localStorage.getItem('remodel-studio:ollama-model')||'';}catch(e){return '';}});const setModel=v=>{setModelS(v);try{localStorage.setItem('remodel-studio:ollama-model',v);}catch(e){}};
+  const [aiOn,setAiOnS]=useState(()=>{try{return localStorage.getItem('remodel-studio:ollama-on')==='1';}catch(e){return false;}});const setAiOn=v=>{setAiOnS(v);try{localStorage.setItem('remodel-studio:ollama-on',v?'1':'0');}catch(e){}};
+  useEffect(()=>{inp.current&&inp.current.focus();},[]);useEffect(()=>{if(!aiOn){setAi(false);return;}let live=true;setAi(null);ollamaModels().then(ms=>{if(live)setAi(ms);});return ()=>{live=false;};},[aiOn]);
+  const cmds=useMemo(()=>paletteCommands(ctx),[ctx.p]);
+  const ws=q.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const ans=useMemo(()=>{try{return answerQuery(q,ctx);}catch(e){console.error(e);return null;}},[q,ctx.p,ctx.sel]);
+  const hits=useMemo(()=>{if(!ws.length)return cmds.slice(0,12).map(c=>({...c,kind:'cmd'}));
+    const a=cmds.map(c=>({...c,kind:'cmd',sc:scoreText(c.label,ws,c.kw)})).filter(c=>c.sc>=0).sort((x,y)=>y.sc-x.sc).slice(0,10);
+    const lib=ws.join('').length>=2?LIB.map(x=>({x,sc:scoreText(libCode(x)+' '+x.label+' '+(x.sub||'')+' '+x.cat,ws)})).filter(r=>r.sc>=0).sort((a,b)=>b.sc-a.sc).slice(0,8).map(({x})=>({kind:'lib',label:'Place: '+x.label,hint:x.cat,run:()=>{const a=libActions(x,{p:ctx.p,sel:ctx.sel,commit:ctx.commit,setTool:ctx.setTool,setFixtureType:ctx.setFixtureType||(()=>{}),setWallPreset:ctx.setWallPreset||(()=>{}),setOpenPreset:ctx.setOpenPreset||(()=>{}),setMode:ctx.setMode,say:ctx.say}).find(a=>a.primary);ctx.setMode('design');if(a)a.run();}})):[];
+    return [...a,...lib];},[q,cmds]);
+  const rows=[...(ans&&ans.act?[{kind:'ans',label:ans.act.label,run:ans.act.run,hint:'Answer'}]:[]),...hits,...(ai&&ai.length&&q.trim().length>3?[{kind:'ai',label:`Ask the local AI (${model&&ai.includes(model)?model:ai[0]}): "${q.trim()}"`,hint:'Ollama'}]:[])];
+  useEffect(()=>setI(0),[q]);
+  const askAI=async()=>{const m=model&&ai.includes(model)?model:ai[0];setBusy(true);setAiOut(null);try{const t=await ollamaAsk(m,ctx.p,q.trim());setAiOut({q:q.trim(),t,m});}catch(e){setAiOut({q:q.trim(),t:'The local AI did not answer: '+(e.message||e),m});}setBusy(false);};
+  const run=r=>{if(!r)return;if(r.kind==='ai'){askAI();return;}onClose();setTimeout(()=>r.run(),0);};
+  const kd=e=>{if(e.key==='Escape'){e.preventDefault();onClose();}else if(e.key==='ArrowDown'){e.preventDefault();setI(x=>Math.min(rows.length-1,x+1));}else if(e.key==='ArrowUp'){e.preventDefault();setI(x=>Math.max(0,x-1));}else if(e.key==='Enter'){e.preventDefault();run(rows[i]);}};
+  return html`<div className="modal-bg cmdk-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="cmdk-box" role="dialog" aria-label="Search or ask">
+    <div className="cmdk-in">${I.search}<input ref=${inp} className="inp" placeholder='Find a command or item, or ask: "how many base cabinets in the kitchen", "move the island 6 in left"' aria-label="Search or ask" value=${q} onInput=${e=>setQ(e.target.value)} onKeyDown=${kd}/><kbd>Esc</kbd></div>
+    ${ans?html`<div className="cmdk-ans" role="status"><b>Answer</b><p>${ans.text}</p></div>`:null}
+    ${busy?html`<div className="cmdk-ans"><b>Local AI</b><p>Thinking…</p></div>`:aiOut?html`<div className="cmdk-ans ai"><b>${aiOut.m}</b><p>${aiOut.t}</p><button className="btn small" onClick=${()=>navigator.clipboard&&navigator.clipboard.writeText(aiOut.t)}>Copy</button></div>`:null}
+    <div className="cmdk-list" role="listbox">${rows.map((r,k)=>html`<button key=${k} role="option" aria-selected=${k===i} className=${'cmdk-row'+(k===i?' on':'')+' k-'+r.kind} onMouseEnter=${()=>setI(k)} onClick=${()=>run(r)}><span>${r.label}</span>${r.hint?html`<small>${r.hint}</small>`:null}</button>`)}
+      ${!rows.length&&!ans?html`<p className="note">Nothing found. Try a tool name, a catalog code like B36, a page, or a question.</p>`:null}</div>
+    <footer className="cmdk-foot"><span>↑ ↓ to move · Enter to run</span><span className="grow"></span>${ai===false?html`<button className="linkbtn" onClick=${()=>setAiOn(true)} title="Ollama is a free program that runs an AI model on this computer. Turn this on if you have it installed.">Use a local AI (Ollama)…</button>`:ai===null?html`<span>Looking for a local AI…</span>`:ai&&ai.length?html`<label>Local AI <select className="inp" value=${model&&ai.includes(model)?model:ai[0]} onChange=${e=>setModel(e.target.value)}>${ai.map(m=>html`<option key=${m} value=${m}>${m}</option>`)}</select></label>`
+      :html`<span title="Install Ollama (free) and pull a model such as llama3.2 to ask open questions. It runs on this computer only.">Ollama is not running. Start it, then reopen this box.</span> <button className="linkbtn" onClick=${()=>setAiOn(false)}>Turn off</button>`}</footer>
+  </div></div>`;}

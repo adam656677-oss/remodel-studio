@@ -1,4 +1,5 @@
 /* ======================= object and tool registry ======================= */
+const localDate=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);};
 // Building parts added after the first release (decks, steps, columns, railings, dormers, CAD lines and so on)
 // register here once. The plan, 3D, inspector, sheets, elevations, materials, estimate and code checks all
 // read this registry, so a new part only has to describe itself.

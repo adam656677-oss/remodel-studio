@@ -5,7 +5,9 @@ with app(1600,1000,mode=None) as (pg,errs):
     pg.wait_for_timeout(1200); assert pg.locator('.designer').count()==1, 'designer is the default on wide screens'
     pg.evaluate(KITCHEN_JS); pg.wait_for_timeout(600)
     for m in ['View','Place','Report','Design','Draw','Dimensions','Render','Window','Help']: assert pg.locator('#dz-menu-'+m.lower()).count()==1, m
-    assert pg.locator('.dz-cad .dz-tool').count()>=20, 'CAD toolbar'
+    assert pg.locator('.dz-menubar').count()==0 and pg.locator('header.top #dz-menu-view').count()==1, 'one menu bar'
+    pg.click('.rb-tabs button:has-text("Draw")'); pg.wait_for_timeout(200); assert pg.locator('.rb-body .rb-btn').count()>=10, 'ribbon drawing tools'
+    pg.click('.rb-tabs button:has-text("Home")'); pg.wait_for_timeout(200)
     # catalog: dropdown, categories, CODE > Description rows, preview picture
     pg.select_option('#dz-cat','Bedroom'); pg.click('.dz-cat:has-text("Beds")'); pg.wait_for_timeout(200)
     rows=pg.locator('.dz-item'); assert rows.count()>50; t=rows.first.inner_text(); print('row',t); assert '>' in t
@@ -37,5 +39,5 @@ with app(1600,1000,mode=None) as (pg,errs):
     pg.screenshot(path=str(OUT/'t63.png'))
     # layout persists across a reload
     pg.reload(); pg.wait_for_timeout(1500); assert pg.locator('.dz-pane').count()==1 and pg.locator('.designer').count()==1
-    pg.click('header .seg button:has-text("Split")'); pg.wait_for_timeout(500); assert pg.locator('.designer').count()==0 and pg.locator('.rail').count()==1
+    pg.evaluate("()=>window.__app.setMode('split')"); pg.wait_for_timeout(500); assert pg.locator('.designer').count()==0 and pg.locator('.rail').count()==1
     print('errors',errs[:3]); assert not errs; print('PASS')

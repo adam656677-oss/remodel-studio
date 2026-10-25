@@ -13,14 +13,14 @@ with sync_playwright() as p:
         return r.continue_()
     pg.route('**/*', route)
     pg.goto('http://app.local/'); pg.wait_for_timeout(1000)
-    pg.get_by_role('button', name='Plan', exact=True).click(); pg.wait_for_timeout(400)
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(400)
     pr=lambda: json.loads(pg.evaluate("localStorage.getItem('remodel-studio:project')"))
     def W(x,y):
         v=pg.evaluate("(()=>{const v=window.__planView.view;const r=window.__planView.svg.current.getBoundingClientRect();return [v.s,v.tx,v.ty,r.left,r.top]})()")
         return (v[3]+x*v[0]+v[1], v[4]+y*v[0]+v[2])
     q=pr(); orig={r['name']:r['pts'] for r in q['rooms']}; print('orig bedroom1', orig.get('Bedroom 1'), 'bath', orig.get('Bath'))
     pg.evaluate("s=>localStorage.setItem('remodel-studio:project',s)", json.dumps({**q,'rooms':[]})); pg.reload(); pg.wait_for_timeout(900)
-    pg.get_by_role('button', name='Plan', exact=True).click(); pg.wait_for_timeout(300)
+    pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(300)
     pg.keyboard.press('r')
     for (x,y) in [(360,80),(420,210),(120,80),(300,300)]:
         sx,sy=W(x,y); pg.mouse.move(sx,sy); pg.mouse.click(sx,sy); pg.wait_for_timeout(250); pg.keyboard.press('Escape'); pg.keyboard.press('r')

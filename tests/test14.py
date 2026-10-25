@@ -15,7 +15,7 @@ with sync_playwright() as p:
     pg.route('**/*', route)
     pg.goto('http://app.local/'); pg.wait_for_timeout(1000)
     pg.locator('#option-pick').select_option('__new'); pg.wait_for_timeout(400)
-    pg.get_by_role('button', name='Materials', exact=True).click(); pg.wait_for_timeout(500)
+    pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(500)
     # price a few things
     for inp,v in list(zip(pg.locator('.priceinp').all()[:6],['4.25','8.9','15.5','3.1','42','12'])): inp.fill(v)
     pg.get_by_role('tab', name='Estimate and labor').click(); pg.wait_for_timeout(600)

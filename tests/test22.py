@@ -11,7 +11,7 @@ with app() as (pg,errs):
     pg.wait_for_timeout(500)
     P=pg.evaluate("()=>window.__app.get().roofs.map(r=>[r.style,r.ridge,r.x,r.y,r.w,r.h])"); print('roofs',P)
     pg.screenshot(path=str(OUT/'t22_plan.png'))
-    pg.get_by_role('button',name='3D',exact=True).click(); pg.wait_for_timeout(1500)
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1500)
     cam(pg,[70,40,-40],[25,0,14]); pg.screenshot(path=str(OUT/'t22_3d.png'))
     cam(pg,[10,10,-34],[20,4,10]); pg.screenshot(path=str(OUT/'t22_porch.png'))
     # styles

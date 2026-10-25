@@ -376,8 +376,9 @@ function PlanView(props){
   const regEls=layer2=>objKinds(layer2).flatMap(k=>{const d=OBJ[k];if(!d.svg||hiddenKinds.has(k))return [];return objsOn(p,k,lv.id).map(o=>html`<g key=${o.id} className=${o.status==='demolish'?'reg-demo':''}>${d.svg(p,lv,o,S,view,selHas(o.id))}</g>`);});
   const regUnder=regEls('under'), regOver=regEls('over');
   // selection handles
-  const markerPts=[];{const seen={};for(const i of issues){if(!i.pt||i.level!==lv.id)continue;const key=Math.round(i.pt.x/6)+','+Math.round(i.pt.y/6);const n=seen[key]=(seen[key]||0)+1;const [sx,sy]=S(i.pt.x,i.pt.y);const isRoom=i.target&&i.target.kind==='room';markerPts.push({i,x:sx+(isRoom?0:14)+(n-1)*18,y:sy-(isRoom?30:14)});}}
-  const markers=markerPts.map(m=>html`<g key=${'is'+m.i.id} className=${'iss iss-'+m.i.sev}><title>${m.i.title}</title><circle cx=${m.x} cy=${m.y} r="8.5"/><text x=${m.x} y=${m.y+4} textAnchor="middle">!</text></g>`);
+  const markerPts=[];{const seen={};for(const i of issues){if(!i.pt||i.level!==lv.id||i.sev==='tip')continue;const key=Math.round(i.pt.x/6)+','+Math.round(i.pt.y/6);const n=seen[key]=(seen[key]||0)+1;const [sx,sy]=S(i.pt.x,i.pt.y);const isRoom=i.target&&i.target.kind==='room';const dot=i.sev!=='error';markerPts.push({i,x:sx+(isRoom?0:(dot?9:14))+(n-1)*(dot?11:18),y:sy-(isRoom?30:(dot?9:14))});}}
+  const markers=markerPts.map(m=>m.i.sev==='error'?html`<g key=${'is'+m.i.id} className=${'iss iss-'+m.i.sev}><title>${m.i.title}</title><circle cx=${m.x} cy=${m.y} r="8.5"/><text x=${m.x} y=${m.y+4} textAnchor="middle">!</text></g>`
+    :html`<g key=${'is'+m.i.id} className=${'iss iss-dot iss-'+m.i.sev}><title>${m.i.title}</title><circle cx=${m.x} cy=${m.y} r="9" fill="transparent" stroke="none"/><circle cx=${m.x} cy=${m.y} r="4"/></g>`);
   const handles=[];
   if(sel&&sel.kind==='wall'){const w=walls.find(w=>w.id===sel.id);if(w)for(const [k,x,y] of [['a',w.x1,w.y1],['b',w.x2,w.y2]]){const [sx,sy]=S(x,y);handles.push(html`<circle key=${k} cx=${sx} cy=${sy} r="6" className="handle"/>`);}}
   if(sel&&sel.kind==='room'){const r=rooms.find(r=>r.id===sel.id);if(r)r.pts.forEach((q,i)=>{const [sx,sy]=S(q[0],q[1]);handles.push(html`<circle key=${'v'+i} cx=${sx} cy=${sy} r="5" className="handle"/>`);});}

@@ -6,6 +6,6 @@ with app(1500,950) as (pg,errs):
     for k,v in r.items(): print(k); [print('  ',x) for x in v]
     ids=[x.split()[0] for x in r['rows']]
     assert 'ctr' in ids and 'inspI' in ids
-    pg.evaluate("()=>window.__app.setMode('materials')"); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(600)
+    pg.evaluate("()=>window.__app.setMode('build')"); pg.wait_for_timeout(300); pg.get_by_role('tab',name='Job schedule').click(); pg.wait_for_timeout(600)
     assert pg.get_by_text('Order dates for long-lead items').count()==1
     print('errors',errs[:3]); assert not errs; print('PASS')

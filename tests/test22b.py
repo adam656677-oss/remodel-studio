@@ -9,6 +9,6 @@ with app() as (pg,errs):
       p.openings=p.openings.filter(o=>o.wall!=='wr');
       p.roofs=autoRoof(p,L,{style:st,pitch:6,overhang:12});a.commit(p);}""",st)
     pg.wait_for_timeout(500)
-    pg.get_by_role('button',name='3D',exact=True).click(); pg.wait_for_timeout(1500)
+    pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1500)
     cam(pg,[95,45,-30],[30,0,14]); pg.screenshot(path=str(OUT/f"t22b_{st}.png"),clip={"x":60,"y":50,"width":1040,"height":800}); cam(pg,[30,95,14.5],[30,0,14]); pg.screenshot(path=str(OUT/f"t22b_top_{st}.png"),clip={"x":60,"y":50,"width":1040,"height":800})
     print(errs or 'no errors')

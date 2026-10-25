@@ -140,14 +140,15 @@ function matchPrices(rows,list){
   return res;
 }
 
+const MAT_EXTRA=[];// [id,label,Component]
 function MaterialsView({p,commit}){
   const [tab,setTab]=useState(()=>{try{return localStorage.getItem('remodel-studio:mattab')||'list';}catch(e){return 'list';}});
   const pick=t=>{setTab(t);try{localStorage.setItem('remodel-studio:mattab',t);}catch(e){}};
-  const tabs=html`<div className="seg mattabs" role="tablist">${[['list',"Builder's list"],['estimate','Estimate and labor'],['shop','Shopping list'],['selections','Selections'],['cabinets','Cabinet order'],['schedule','Job schedule']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
+  const tabs=html`<div className="seg mattabs" role="tablist">${[['list',"Builder's list"],['estimate','Estimate and labor'],['shop','Shopping list'],['selections','Selections'],...MAT_EXTRA.map(x=>[x[0],x[1]]),['cabinets','Cabinet order']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
   if(tab==='selections')return html`<div className="matview"><div className="matinner">${tabs}<${SelectionsView} p=${p} commit=${commit}/></div></div>`;
   if(tab==='cabinets')return html`<div className="matview"><div className="matinner">${tabs}<${CabinetOrderView} p=${p} commit=${commit}/></div></div>`;
   if(tab==='shop')return html`<div className="matview"><div className="matinner">${tabs}<${ShoppingView} p=${p} commit=${commit}/></div></div>`;
-  if(tab==='schedule')return html`<div className="matview"><div className="matinner">${tabs}<${ScheduleView} p=${p} commit=${commit}/></div></div>`;
+  {const X=MAT_EXTRA.find(x=>x[0]===tab);if(X)return html`<div className="matview"><div className="matinner">${tabs}<${X[2]} p=${p} commit=${commit}/></div></div>`;}
   if(tab==='estimate')return html`<div className="matview"><div className="matinner">${tabs}<${EstimateView} p=${p} commit=${commit}/></div></div>`;
   return html`<${MaterialsList} p=${p} commit=${commit} tabs=${tabs}/>`;
 }
