@@ -40,4 +40,4 @@ function ChangeOrders({p,commit}){const C=contractOf(p);const D=useMemo(()=>{try
       <td><select className="inp" value=${co.status} onChange=${e=>setCO(co.no,{status:e.target.value})} aria-label=${'Status of change order '+co.no}><option value="pending">Waiting for signature</option><option value="signed">Signed</option><option value="void">Void</option></select></td><td><button className="btn small" onClick=${()=>print(co)}>PDF</button></td></tr>`)}</tbody></table>`:null}
     ${msg?html`<p className="note">${msg}</p>`:null}<p className="note"><button className="linkbtn" onClick=${()=>{if(confirmClear())commit({...p,contract:null});}}>Unlock the contract</button></p></section>`;}
 function confirmClear(){return true;}
-{const _EV=EstimateView;EstimateView=function(props){return html`<${_EV} ...${props}/><${ChangeOrders} ...${props}/>`;};}
+MAT_EXTRA.push(['co','Change orders',ChangeOrders]);

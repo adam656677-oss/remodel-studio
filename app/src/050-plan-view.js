@@ -30,10 +30,11 @@ function PlanView(props){
     let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const add=(x,y)=>{x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);};
     for(const w of walls){add(w.x1,w.y1);add(w.x2,w.y2);} for(const r of p.rooms.filter(r=>r.level===lv.id)) for(const q of r.pts) add(q[0],q[1]);
     for(const r of p.roofs.filter(r=>r.level===lv.id)){add(r.x-r.overhang,r.y-r.overhang);add(r.x+r.w+r.overhang,r.y+r.h+r.overhang);}
-    for(const k of objKinds())for(const o of objsOn(p,k,lv.id))for(const q of regPts(p,k,o))add(q.x,q.y);
+    // the building fits the view; site work (lot, drive, plants) only when the Landscape view asks for it or there is no building
+    if(x0>x1||(props.filter&&props.filter.site))for(const k of objKinds())for(const o of objsOn(p,k,lv.id))for(const q of regPts(p,k,o))add(q.x,q.y);
     if(x0>x1){x0=-60;y0=-60;x1=480;y1=360;}
     const el=svgRef.current;if(!el)return;const R=el.getBoundingClientRect();const W=R.width||size.w,H=R.height||size.h;
-    const pad=70; const s=Math.min((W-pad*2)/Math.max(1,x1-x0),(H-pad*2)/Math.max(1,y1-y0));
+    const pad=Math.max(16,Math.min(70,Math.min(W,H)*0.07)); const s=Math.min((W-pad*2)/Math.max(1,x1-x0),(H-pad*2)/Math.max(1,y1-y0));
     const sc=Math.max(0.15,Math.min(8,s)); setView({s:sc,tx:W/2-(x0+x1)/2*sc,ty:H/2-(y0+y1)/2*sc});
   }
   useEffect(()=>{const t=setTimeout(fit,30);return ()=>clearTimeout(t);},[fitToken,lv.id]);
@@ -425,7 +426,7 @@ function PlanView(props){
     note:html`<b>Note:</b> click where the note goes, then type it in the panel. Notes print on the plans.`,
   };
   const cur=tool==='select'?(drag.current&&drag.current.type==='pan'?'grabbing':'default'):'crosshair';
-  return html`<div className="pane">
+  return html`<div className="pane" data-tool=${tool}>
     <svg ref=${svgRef} tabIndex="0" className="plan" style=${{cursor:cur}} onPointerDown=${onDown} onPointerMove=${onMove} onPointerUp=${onUp} onPointerCancel=${onUp}
       onPointerLeave=${()=>setCursor(c=>tool==='select'?null:c)} onDoubleClick=${()=>{if(tool==='wall'||tool==='room'||tool==='shape'||(XT&&XT.mode==='chain'))finishChain();}} onContextMenu=${e=>e.preventDefault()}>
       <g>${gl}</g><g>${roomEls}</g>${under&&under.u?html`<image href=${under.u.url} x=${S(under.u.x,under.u.y)[0]} y=${S(under.u.x,under.u.y)[1]} width=${under.u.w*under.u.scale*view.s} height=${under.u.h*under.u.scale*view.s} opacity=${under.u.opacity} preserveAspectRatio="none" transform=${under.u.rot?`rotate(${under.u.rot} ${S(under.u.x,under.u.y)[0]} ${S(under.u.x,under.u.y)[1]})`:undefined} style=${{pointerEvents:'none'}}/>`:null}${under&&under.slice?html`<image href=${under.slice.url} x=${S(under.slice.x,under.slice.y)[0]} y=${S(under.slice.x,under.slice.y)[1]} width=${under.slice.w*view.s} height=${under.slice.h*view.s} preserveAspectRatio="none" style=${{pointerEvents:'none'}}/>`:null}<g>${SH.ghost?ghostEls:null}</g><g>${stairEls}</g><g>${SH.fixtures?fixEls:null}</g><g>${regUnder}</g><g>${draftSVG({...p,elec:[],dims:SH.dims?(p.dims||[]).filter(d=>layerOn(p,d.layer||'L-DIM')):[],annos:SH.notes?(p.annos||[]).filter(n=>layerOn(p,n.layer||'L-TEXT')):[]},lv,S,view,sel)}</g>${showElec&&SH.elec!==false?html`<g>${elecEls}</g>`:null}<g>${wallEls}</g><g>${opEls}</g><g>${regOver}</g><g>${SH.roof?roofEls:null}</g><g>${SH.overlay?SH.overlay(p,lv,S,view):null}</g><g>${SH.roomLabels?roomLabels:null}</g><g>${SH.wallDims?dimEls:null}</g><g>${SH.issues?markers:null}</g><g>${drafts}</g><g>${typeof fixGhost!=='undefined'?fixGhost:null}</g><g>${handles}</g>

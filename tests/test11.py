@@ -15,7 +15,7 @@ with sync_playwright() as p:
     pg.add_init_script('''window.claude={use:async(n)=>{if(n!=='sample')return null;const f=async()=>({text:'ok'});f.limits=async()=>({images:{maxCount:4}});
       f.json=async(prompt,opts)=>{await new Promise(r=>setTimeout(r,200));return {summary:'Living room wall with a 6-panel door and a double-hung window.',inside:true,trim:{base:'t-base-1',casing:'t-casing-11',crown:null,chair:null,wainscot:null},door:{style:'panel6',type:'swing'},window:{operation:'double-hung',grilles:false},ceiling:null,wallFinish:'paint',floor:'hardwood',siding:null,roofing:null,colors:{walls:'#b2b9a0',trim:'#f7f7f3',door:'#8a5a35'},confidence:{trim:'medium',finishes:'high'},notes:['Baseboard looks about 3-1/4 in tall']};};return f;}};''')
     pg.goto('http://app.local/'); pg.wait_for_timeout(1000)
-    pg.evaluate("()=>window.__app.setMode('capture')"); pg.wait_for_timeout(400)
+    pg.evaluate("()=>window.__app.setMode('capture')"); pg.wait_for_timeout(400); pg.get_by_role('tab',name='Measure from photos').click(); pg.wait_for_timeout(300)
     pg.set_input_files('#pm-add','wall.jpg'); pg.wait_for_timeout(1500)
     svg=pg.locator('.pmsvg'); bb=svg.bounding_box(); print('svg',bb)
     S=lambda q:(bb['x']+q[0]/1600*bb['width'], bb['y']+q[1]/1100*bb['height'])

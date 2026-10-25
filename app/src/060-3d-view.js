@@ -24,13 +24,14 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener?.('change',themeSync);
     const mo=new MutationObserver(themeSync); mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     themeSync();
-    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
+    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,themeSync,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
     window.__view3d=S.current;
     return ()=>{ro.disconnect();mo.disconnect();mq.removeEventListener?.('change',themeSync);controls.dispose();renderer.dispose();renderer.domElement.remove();if(window.__view3d===S.current)window.__view3d=null;};
   },[]);
 
-  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,sel,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(tint&&typeof tint3D==='function'){try{tint3D(st.model,p,tint);}catch(e){console.error(e);}}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
-    applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[tint,p,levelId,sel,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
+  const selRef=useRef(sel);selRef.current=sel;useEffect(()=>{const st=S.current;if(!st||!st.model)return;highlight3D(st.model,sel);st.render();},[sel]);
+  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,null,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(tint&&typeof tint3D==='function'){try{tint3D(st.model,p,tint);}catch(e){console.error(e);}}highlight3D(st.model,selRef.current);if(st.themeSync){const bg=cssVar('--sky');if(!st.scene.background||'#'+st.scene.background.getHexString()!==bg.toLowerCase())st.themeSync();}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
+    applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[tint,p,levelId,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
   useEffect(()=>{const st=S.current;if(st&&fitToken&&!st.walk.on){fit3d(st);st.render();}},[fitToken]);
   useEffect(()=>{const st=S.current;if(!st)return;applyClip(st,clip,p);st.render();},[clip]);
 
@@ -139,6 +140,9 @@ const SIDING_COLOR={vinyl:0xeeeae0,fibercement:0xb9c3c9,brick:0x9a4b35,wood:0xc9
 const ROOF_COLOR={asphalt:0x4a4f57,metal:0x6b7d86,tile:0xa5553a};
 const FLOOR_COLOR={carpet:0xb8ad9c,lvp:0xb89a74,hardwood:0xa8774a,tile:0xd8d6cf,concrete:0xb9b7b0};
 const ratioColor=r=>r==null?0xcfcfcf:r>1?0xd9534f:r>0.85?0xe0a43a:0x4caf6a;
+// selection highlight without a rebuild: swap materials on the meshes tagged with the selected part
+let _hlMat=null;function highlight3D(model,sel){if(!model)return;const ids=new Set(sel?(sel.kind==='multi'?sel.items.map(i=>i.id):[sel.id]):[]);if(!_hlMat)_hlMat=new THREE.MeshStandardMaterial({color:cssVar('--accent'),roughness:.6});
+  model.traverse(o=>{if(!o.isMesh)return;if(o.userData.origMat){o.material=o.userData.origMat;delete o.userData.origMat;}const t=o.userData.tag;if(t&&t.id&&ids.has(t.id)){o.userData.origMat=o.material;o.material=_hlMat;}});}
 function buildModel(st,p,levelId,sel,opts={}){
   const {cutaway=true,showRoof=true,struct=null,layer='both'}=opts;
   const g=st.model; while(g.children.length){const c=g.children.pop();c.geometry&&c.geometry.dispose();}
@@ -218,14 +222,14 @@ function buildModel(st,p,levelId,sel,opts={}){
         addCeiling3D(p,lv,r,add,std,std('ceil-'+cc,cc,{side:THREE.DoubleSide,roughness:.95,emissive:new THREE.Color(cc).multiplyScalar(opts.interior?0.28:0.08)}));
         const [lx,ly]=polyLabelPt(r.pts);const a=polyArea(r.pts)/144;const L=new THREE.PointLight(roomLightColor(p,r),0.3+Math.min(0.3,a/900),Math.max(18,Math.sqrt(a)*2.2),1.4);L.position.set(lx*IN,(e0+lv.height-14)*IN,ly*IN);g.add(L);}
     }
-    for(const s of p.stairs.filter(s=>s.level===lv.id))stair3D(p,lv,s,add,std,sel,mSel);
+    for(const s of p.stairs.filter(s=>s.level===lv.id)){CUR_TAG={kind:'stair',id:s.id};stair3D(p,lv,s,add,std,sel,mSel);}CUR_TAG=null;
     for(const s of [].filter(s=>s.level===lv.id)){
       const si=stairInfo(p,s); const ry=-Math.atan2(si.d.y,si.d.x); const isSel=sel&&sel.id===s.id;
       for(let i=0;i<si.treads;i++){const h=(i+1)*si.riserH;const along=i*s.tread+s.tread/2;add(new THREE.BoxGeometry(s.tread*IN,h*IN,s.width*IN),isSel?mSel:mStair,(s.x+si.d.x*along)*IN,(e0+h/2)*IN,(s.y+si.d.y*along)*IN,ry);}
     }
     if(typeof addFixtures3D==='function')addFixtures3D(p,lv,add,std,sel,mSel);CUR_TAG=null;
     if(!struct)addTrim3D(p,lv,ws.filter(w=>w.status!=='demolish'),add,std);
-    addShapes3D(p,lv,add,std,sel,mSel);addRamps3D(p,lv,add,std,sel,mSel);
+    addShapes3D(p,lv,add,std,sel,mSel);addRamps3D(p,lv,add,std,sel,mSel);CUR_TAG=null;
     {const ctx=reg3DCtx(add,std,sel,mSel,layer,struct,opts,p,lv,g);for(const k of objKinds()){const d=OBJ[k];if(!d.add3D||(d.roofish&&!showRoof))continue;for(const o of objsOn(p,k,lv.id))if(inLayer(o.status||'new',layer)){CUR_TAG={kind:k,id:o.id};try{d.add3D(p,lv,o,ctx);}catch(e){console.error(k,e);}}}}CUR_TAG=null;if(!struct)addElec3D(p,lv,add,std,sel,mSel);
     if(showRoof) for(const r of p.roofs.filter(r=>r.level===lv.id)){CUR_TAG={kind:'roof',id:r.id};
       const top=roofTop(p,r); const b=roofBuild(r,top); const isSel=sel&&sel.id===r.id; const cov=rafterOf(r).cover||'asphalt';

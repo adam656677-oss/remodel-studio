@@ -2,7 +2,7 @@
 const MY_KEY='remodel-studio:myitems';
 function loadMyItems(){try{return JSON.parse(localStorage.getItem(MY_KEY)||'[]');}catch(e){return [];}}
 function saveMyItems(l){try{localStorage.setItem(MY_KEY,JSON.stringify(l));return true;}catch(e){return false;}}
-function registerLibItem(x){const i=LIB.findIndex(y=>y.id===x.id);if(i>=0)LIB.splice(i,1,x);else LIB.push(x);LIB_BY_ID[x.id]=x;if(x.cat&&!LIB_CATS.includes(x.cat)){if(x.cat==='My items')LIB_CATS.unshift(x.cat);else LIB_CATS.push(x.cat);}}
+function registerLibItem(x){const old=LIB_BY_ID[x.id];if(old){const i=LIB.indexOf(old);if(i>=0)LIB[i]=x;else LIB.push(x);}else LIB.push(x);LIB_BY_ID[x.id]=x;if(x.cat&&!LIB_CATS.includes(x.cat)){if(x.cat==='My items')LIB_CATS.unshift(x.cat);else LIB_CATS.push(x.cat);}}
 for(const x of loadMyItems())try{registerLibItem(x);}catch(e){}
 // a library item carrying its customized object
 function draftFromLib(it){if(it.draft)return JSON.parse(JSON.stringify(it.draft));

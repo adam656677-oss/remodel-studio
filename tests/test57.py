@@ -26,7 +26,7 @@ with app(1500,950) as (pg,errs):
       return [[A.w,A.d,A.h,A.color],[B.w,B.d,B.h]].map(x=>x.map(v=>typeof v==='number'?Math.round(v):v));}""")
     print(m); assert m[0][:3]==[20,79,39] and m[0][3]=='#336699', m
     pg.evaluate("()=>window.__app.setMode('plan')")
-    pg.get_by_role('button',name='File').click(); pg.get_by_text('Import DWG or DXF drawing…').click(); pg.wait_for_timeout(300)
+    file_menu(pg,'Import','DWG or DXF drawing…')
     assert pg.get_by_text('Choose DWG or DXF file…').count()==1
     pg.locator('#dxf-file').set_input_files(files=[{'name':'t.dxf','mimeType':'application/dxf','buffer':DXF.encode()}]); pg.wait_for_timeout(600)
     pg.screenshot(path=str(OUT/'dxf_modal.png'))

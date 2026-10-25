@@ -65,7 +65,7 @@ function FieldView({p,commit,setSel,setMode}){const F=p.field||{};const meas=F.m
         <table className="mat fv-meas"><thead><tr><th>What</th><th className="num">Model</th><th>Field</th><th className="num">Difference</th></tr></thead><tbody>${items.map(it=>{const v=meas[it.k];const d=v!=null?v-it.model:null;return html`<tr key=${it.k} className=${d!=null&&Math.abs(d)>0.5?'off':''}><td>${it.label}</td><td className="num mono">${fmtLen(it.model)}</td>
           <td><${LenInput} id=${'fm-'+it.k} value=${v??''} onChange=${x=>setM(it.k,x>0?x:null)}/></td><td className="num mono">${d==null?'':Math.abs(d)<=0.5?'ok':(d>0?'+':'−')+fmtLen(Math.abs(d))}</td></tr>`;})}</tbody></table>
         <${Field} label="Room notes" id="fv-n"><textarea id="fv-n" className="inp" rows="2" value=${(F.notes||{})[room.id]||''} onChange=${e=>setF({notes:{...(F.notes||{}),[room.id]:e.target.value}})}></textarea><//>`:html`<p className="note">Draw rooms first (or use Room from measurements).</p>`}</section></div>`;}
-CAPTURE_EXTRA.push(['field','Field mode',FieldView]);
+CAPTURE_EXTRA.push(['field','Field notes',FieldView]);
 
 /* ---- trace a wall from a photo: pick the wall's four corners, then box its windows and doors ---- */
 function rectifyToCanvas(img,Hinv,Wpx,Hpx,L,Hin){const c=document.createElement('canvas');c.width=Wpx;c.height=Hpx;const g=c.getContext('2d');const src=document.createElement('canvas');src.width=img.naturalWidth;src.height=img.naturalHeight;const sg=src.getContext('2d');sg.drawImage(img,0,0);

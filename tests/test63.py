@@ -13,7 +13,8 @@ with app(1600,1000,mode=None) as (pg,errs):
     rows=pg.locator('.dz-item'); assert rows.count()>50; t=rows.first.inner_text(); print('row',t); assert '>' in t
     rows.nth(10).click(); pg.wait_for_selector('.dz-preview img',timeout=20000)
     # four panes, plan + 3d + elevation + exterior
-    pg.click('button[title="Four views"]'); pg.wait_for_timeout(1500); assert pg.locator('.dz-pane').count()==4
+    if not pg.evaluate("()=>document.querySelector('.ribbon').classList.contains('pinned')"): pg.click('.ribbon button:has-text("Pin open")'); pg.wait_for_timeout(200)
+    pg.click('.rb-tabs button:has-text("Home")'); pg.wait_for_timeout(200); pg.click('button[title="Four views"]'); pg.wait_for_timeout(1500); assert pg.locator('.dz-pane').count()==4
     vals=[pg.locator('.dz-vsel').nth(i).input_value() for i in range(4)]; print(vals)
     # picking a cabinet in an elevation selects it
     n=pg.locator('.dz-hit').count(); print('hits',n); assert n>=3

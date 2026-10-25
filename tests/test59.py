@@ -9,7 +9,7 @@ with app(1500,1000) as (pg,errs):
       return {url:c.toDataURL('image/png'),L,H,label:W.label,n:p.openings.length};}""")
     print(info['label'],info['L'],info['H'])
     pg.evaluate("()=>window.__app.setMode('capture')"); pg.wait_for_timeout(400)
-    pg.get_by_role('tab',name='Trace a wall from a photo').click(); pg.wait_for_timeout(300)
+    pg.get_by_role('tab',name='Make walls').click(); pg.wait_for_timeout(200); pg.get_by_role('tab',name='Trace an outside wall from a photo').click(); pg.wait_for_timeout(300)
     pg.locator('#fc-file').set_input_files(files=[{'name':'wall.png','mimeType':'image/png','buffer':base64.b64decode(info['url'].split(',')[1])}]); pg.wait_for_timeout(1200)
     box=pg.locator('canvas.fc-photo').bounding_box(); sc=box['width']/1200
     for (x,y) in [(100,700),(1100,650),(1080,250),(120,200)]: pg.mouse.click(box['x']+x*sc, box['y']+y*sc); pg.wait_for_timeout(100)
@@ -26,13 +26,13 @@ with app(1500,1000) as (pg,errs):
     w=ops[0]; assert w[0]=='window' and abs(w[2]-36)<2 and abs(w[3]-48)<2 and abs(w[4]-36)<2
     d=ops[1]; assert d[0]=='door' and abs(d[2]-36)<2 and abs(d[3]-80)<2
     # field mode
-    pg.get_by_role('tab',name='Field mode').click(); pg.wait_for_timeout(300)
+    pg.get_by_role('tab',name='Field notes').click(); pg.wait_for_timeout(300)
     pg.get_by_role('button',name='Punch item').click(); pg.wait_for_timeout(400)
     pg.mouse.move(700,500); pg.mouse.click(700,500); pg.wait_for_timeout(400)
     pg.locator('#fp-t').fill('Caulk tub surround'); pg.wait_for_timeout(200)
     pins=pg.evaluate("()=>window.__app.get().fieldpins"); print(pins); assert len(pins)==1 and pins[0]['cat']=='punch' and pins[0]['text']
     pg.screenshot(path=str(OUT/'pin_plan.png'))
-    pg.evaluate("()=>window.__app.setMode('capture')"); pg.wait_for_timeout(300); pg.get_by_role('tab',name='Field mode').click(); pg.wait_for_timeout(300)
+    pg.evaluate("()=>window.__app.setMode('capture')"); pg.wait_for_timeout(300); pg.get_by_role('tab',name='Field notes').click(); pg.wait_for_timeout(300)
     pg.locator('.fv-meas input').first.fill("13'-2\""); pg.keyboard.press('Tab'); pg.wait_for_timeout(300)
     pg.screenshot(path=str(OUT/'fieldmode.png'),full_page=True)
     csv=pg.evaluate("()=>punchCSV(window.__app.get())"); assert 'Caulk' in csv

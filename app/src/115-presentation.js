@@ -24,7 +24,7 @@ function renderSnapshot(p,{view=null,layer='proposed',w=1600,h=900,angle='aerial
   applyMetalEnv(st.model,R);R.render(scene,cam);const url=R.domElement.toDataURL('image/jpeg',0.9);
   st.model.traverse(o=>{if(o.geometry)o.geometry.dispose();});return url;
 }
-const PRES_DEFAULT={title:'',subtitle:'Remodel plan for board review',presenter:'',sections:{cover:true,beforeAfter:true,renders:true,views:true,options:true,plans:true,cost:true,code:true,structure:true},notes:''};
+const PRES_DEFAULT={title:'',subtitle:'Remodel plan for board review',presenter:'',sections:{cover:true,beforeAfter:true,renders:true,views:true,options:true,plans:true,cost:true,code:true,structure:true,finishes:true},notes:''};
 function presOf(p){return {...PRES_DEFAULT,...(p.present||{}),sections:{...PRES_DEFAULT.sections,...((p.present||{}).sections||{})}};}
 function hasExisting(p){return p.walls.some(w=>w.status==='existing'||w.status==='demolish');}
 async function buildPresentation(p,onProgress){
@@ -94,7 +94,7 @@ function PresentationView({p,commit}){
   const [busy,setBusy]=useState(null);const [msg,setMsg]=useState(null);const [preview,setPreview]=useState(null);
   const make=async()=>{setMsg(null);setBusy('Starting');try{const d=await buildPresentation(p,setBusy);setBusy('Saving');setMsg(await saveFile(safeName(p.name)+' presentation.pdf',d.output('blob')));}catch(e){console.error(e);setMsg({ok:false,t:'The presentation could not be made: '+(e.message||e)});}setBusy(null);};
   const peek=()=>{try{setPreview({a:renderSnapshot(p,{w:800,h:500,angle:hasExisting(p)?'dollhouse':'aerial'}),b:hasExisting(p)?renderSnapshot(p,{w:800,h:500,layer:'existing',angle:'dollhouse'}):null});}catch(e){setMsg({ok:false,t:'3D preview needs WebGL.'});}};
-  const S=[['cover','Cover with a street view, area, cost and code status'],['beforeAfter','Before and after (existing vs. proposed)'],['renders','Photoreal renders in the gallery (Render in the 3D view)'],['views','Your saved 3D views (save them from the 3D view)'],['options','Design options side by side'],['plans','Floor plans'],['cost','Planning estimate'],['code','Code and accessibility review'],['structure','Structure items that need attention']];
+  const S=[['cover','Cover with a street view, area, cost and code status'],['beforeAfter','Before and after (existing vs. proposed)'],['renders','Photoreal renders in the gallery (Render in the 3D view)'],['views','Your saved 3D views (save them from the 3D view)'],['options','Design options side by side'],['plans','Floor plans'],['cost','Planning estimate'],['code','Code and accessibility review'],['structure','Structure items that need attention'],['finishes','Finish board (cabinets, counters, floors, tile, paint, hardware)']];
   return html`<div className="matview"><div className="matinner presview">
     <div className="mathead"><div><h2>Board presentation</h2><p className="note">A widescreen PDF to show on a projector or hand out. It uses the active design option, your saved views, the estimate and the code check.</p></div></div>
     <div className="estgrid">

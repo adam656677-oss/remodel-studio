@@ -352,8 +352,9 @@ const safeName=s=>(s||'house').replace(/[^\w\- ]+/g,'').trim()||'house';
 function SheetsView({p,commit}){
   const [tab,setTab]=useState(()=>{if(window.__rsSheetNo)return 'plans';try{return localStorage.getItem('remodel-studio:shtab')||'plans';}catch(e){return 'plans';}});
   const pick=t=>{setTab(t);try{localStorage.setItem('remodel-studio:shtab',t);}catch(e){}};
-  const tabs=html`<div className="seg shtabs" role="tablist">${[['plans','Plan set'],['present','Board presentation']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
+  const tabs=html`<div className="seg shtabs" role="tablist">${[['plans','Plan set'],['present','Board presentation'],...(typeof SHEET_TABS!=='undefined'?SHEET_TABS.map(t=>[t[0],t[1]]):[])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
   if(tab==='present')return html`<div className="shwrap">${tabs}<${PresentationView} p=${p} commit=${commit}/></div>`;
+  const X=typeof SHEET_TABS!=='undefined'?SHEET_TABS.find(t=>t[0]===tab):null;if(X)return html`<div className="shwrap">${tabs}<${X[2]} p=${p} commit=${commit}/></div>`;
   return html`<div className="shwrap">${tabs}<${PlanSetView} p=${p} commit=${commit}/></div>`;
 }
 function PlanSetView({p,commit}){

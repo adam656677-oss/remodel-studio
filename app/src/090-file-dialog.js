@@ -18,7 +18,7 @@ function FileModal({p,onLoad,onClose}){
     ${msg?html`<div className=${'msg'+(msg.ok?'':' err')}>${msg.t}</div>`:null}
     <div className="sec" style=${{padding:'12px 0 0',borderBottom:0,borderTop:'1px solid var(--line)'}}>
       ${confirmNew?html`<p className="note">Start over? The current project is replaced. Copy it first if you want to keep it.</p>
-        <div className="row"><button className="btn danger" onClick=${()=>{onLoad(blankProject());onClose();}}>Start a blank project</button><button className="btn" onClick=${()=>{onLoad(sampleProject());onClose();}}>Load the sample house</button><button className="btn" onClick=${()=>setConfirmNew(false)}>Cancel</button></div>`
+        <div className="row"><button className="btn danger" onClick=${()=>{onLoad(newStandardProject());onClose();}}>Start a blank project</button><button className="btn" onClick=${()=>{onLoad(sampleProject());onClose();}}>Load the sample house</button><button className="btn" onClick=${()=>setConfirmNew(false)}>Cancel</button></div>`
       :html`<div className="row"><button className="btn" onClick=${()=>setConfirmNew(true)}>New project…</button><span className="spacer"></span><button className="btn" onClick=${onClose}>Done</button></div>`}
     </div></div></div>`;
 }

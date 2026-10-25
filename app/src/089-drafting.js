@@ -34,13 +34,13 @@ function cutShape(p,targetId,cutterId){const t=(p.shapes||[]).find(s=>s.id===tar
   const hole=shapeOutline(c);if(!hole.every(([x,y])=>inPoly(x,y,t.pts)))return null;
   const rest=(p.shapes||[]).filter(s=>s.id!==cutterId).map(s=>s.id===targetId?{...s,holes:[...(s.holes||[]),hole]}:s);return {...p,shapes:rest};}
 function addShapes3D(p,lv,add,std,sel,mSel){
-  for(const s of (p.shapes||[]).filter(s=>s.level===lv.id&&s.status!=='demolish')){const col=s.color?hexNum(s.color):0xd9d4c7;const mat=sel&&sel.id===s.id?mSel:std('shape-'+col,col,{roughness:.75});const z0=lv.elevation+(s.z||0);
+  for(const s of (p.shapes||[]).filter(s=>s.level===lv.id&&s.status!=='demolish')){CUR_TAG={kind:'shape',id:s.id};const col=s.color?hexNum(s.color):0xd9d4c7;const mat=sel&&sel.id===s.id?mSel:std('shape-'+col,col,{roughness:.75});const z0=lv.elevation+(s.z||0);
     if(s.kind==='round'){const g=new THREE.CylinderGeometry((s.dTop??s.d)/2*IN,s.d/2*IN,s.h*IN,40);add(g,mat,s.cx*IN,(z0+s.h/2)*IN,s.cy*IN);continue;}
     if((s.pts||[]).length<3)continue;const sh=new THREE.Shape(s.pts.map(q=>new THREE.Vector2(q[0]*IN,q[1]*IN)));for(const h of s.holes||[])sh.holes.push(new THREE.Path(h.map(q=>new THREE.Vector2(q[0]*IN,q[1]*IN))));
     const g=new THREE.ExtrudeGeometry(sh,{depth:s.h*IN,bevelEnabled:false});g.rotateX(Math.PI/2);add(g,mat,0,(z0+s.h)*IN,0);}
 }
 function addRamps3D(p,lv,add,std,sel,mSel){
-  for(const r of (p.ramps||[]).filter(r=>r.level===lv.id)){const ri=rampInfo(p,r);const isSel=sel&&sel.id===r.id;const col=(r.mat||'wood')==='concrete'?0xc9c6bd:0xa98a62;const m=isSel?mSel:std('ramp-'+col,col,{roughness:.85});const mr=std('rail',0x6d7378,{roughness:.4,metalness:.4});
+  for(const r of (p.ramps||[]).filter(r=>r.level===lv.id)){CUR_TAG={kind:'ramp',id:r.id};const ri=rampInfo(p,r);const isSel=sel&&sel.id===r.id;const col=(r.mat||'wood')==='concrete'?0xc9c6bd:0xa98a62;const m=isSel?mSel:std('ramp-'+col,col,{roughness:.85});const mr=std('rail',0x6d7378,{roughness:.4,metalness:.4});
     const top=lv.elevation;const ry=-Math.atan2(ri.d.y,ri.d.x);
     for(const pc of ri.pieces){const L=pc.s1-pc.s0;const mid=ri.P((pc.s0+pc.s1)/2,0);const zt=top-(pc.z0+pc.z1)/2;
       if(pc.kind==='landing'){add(new THREE.BoxGeometry(L*IN,4*IN,ri.width*IN),m,mid.x*IN,(zt-2)*IN,mid.y*IN,ry);if(zt-4>0.5){add(new THREE.BoxGeometry(L*IN,(zt-4)*IN,ri.width*IN),m,mid.x*IN,((zt-4)/2)*IN,mid.y*IN,ry);}}
@@ -51,7 +51,7 @@ function addRamps3D(p,lv,add,std,sel,mSel){
 }
 function addElec3D(p,lv,add,std,sel,mSel){
   const mW=std('elec-plate',0xf4f4f0,{roughness:.5});const mL=M('elec-light',()=>new THREE.MeshStandardMaterial({color:0xfffaf0,emissive:0xfff1d0,emissiveIntensity:0.6}));
-  for(const d of (p.elec||[]).filter(d=>d.level===lv.id&&d.status!=='demolish')){const e=ELEC[d.type];if(!e)continue;const isSel=sel&&sel.id===d.id;const a=-(d.rot||0)*Math.PI/180;
+  for(const d of (p.elec||[]).filter(d=>d.level===lv.id&&d.status!=='demolish')){const e=ELEC[d.type];if(!e)continue;CUR_TAG={kind:'elec',id:d.id};const isSel=sel&&sel.id===d.id;const a=-(d.rot||0)*Math.PI/180;
     if(e.mount==='wall'){const pw=d.type==='panel'?14:d.type==='exterior'||d.type==='sconce'?5:2.75,ph=d.type==='panel'?30:d.type==='exterior'||d.type==='sconce'?8:4.5;
       add(new THREE.BoxGeometry(0.6*IN,ph*IN,pw*IN),isSel?mSel:(isLight(d)?mL:mW),d.x*IN,(lv.elevation+d.h)*IN,d.y*IN,a,false);}
     else{const r=d.type==='fan'?24:d.type==='can'?3:d.type==='exhaust'?5:['smoke','co','combo'].includes(d.type)?3:6;const z=lv.elevation+lv.height-1;

@@ -19,7 +19,7 @@ with app(1600,1000,mode='design') as (pg,errs):
     assert pg.evaluate("()=>renderLights(window.__app.get()).some(L=>L.color&&Math.abs(L.color[2]-kelvinRGB(3000)[2])<1e-6)")
     # change orders
     pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(600)
-    if pg.get_by_role('tab',name='Estimate').count(): pg.get_by_role('tab',name='Estimate').click(); pg.wait_for_timeout(600)
+    pg.get_by_role('tab',name='Change orders',exact=True).click(); pg.wait_for_timeout(600)
     pg.click('button:has-text("Lock the contract")'); pg.wait_for_timeout(500)
     pg.evaluate("()=>{const p=window.__app.get();window.__app.commit({...p,fixtures:p.fixtures.filter(f=>f.type!=='dw')});}"); pg.wait_for_timeout(800)
     d=pg.evaluate("()=>{const D=changeDiff(window.__app.get());return [D.lines.length,D.delta]}"); print('diff',d)

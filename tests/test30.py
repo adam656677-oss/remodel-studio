@@ -1,7 +1,7 @@
 from h import *
 with app() as (pg,errs):
     pg.evaluate("()=>window.__app.setMode('capture')"); pg.wait_for_timeout(600)
-    pg.get_by_role('tab',name='Underlay',exact=False).click() if pg.get_by_role('tab',name='Underlay',exact=False).count() else pg.get_by_text('Underlay',exact=False).first.click()
+    pg.get_by_role('tab',name='Scans and plan images').click()
     pg.wait_for_timeout(300)
     pg.set_input_files('#ul-file','plan.pdf'); pg.wait_for_selector('#pdf-sc',timeout=30000)
     print(pg.locator('.capcard .msg').all_inner_texts())

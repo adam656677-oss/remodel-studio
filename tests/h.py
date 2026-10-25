@@ -41,3 +41,9 @@ def proj(pg):
     return pg.evaluate("()=>JSON.parse(localStorage.getItem('remodel-studio:project'))")
 def pick_tool(pg,tool_id):
     pg.evaluate("(id)=>window.__setTool&&window.__setTool(id)",tool_id); pg.wait_for_timeout(150)
+
+def file_menu(pg,sub,item):
+    """File > (Import|Export) > item, for the 2.2 submenus"""
+    pg.get_by_role('button',name='File').click(); pg.wait_for_timeout(200)
+    pg.locator('.menupop >> text='+sub).first.hover(); pg.wait_for_timeout(300)
+    pg.locator('.submenu >> text='+item).first.click(); pg.wait_for_timeout(300)

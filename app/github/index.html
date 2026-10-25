@@ -786,6 +786,57 @@ table.sched td .inp{min-width:70px;padding:2px 4px;font-size:12.5px}table.sched 
 .wp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:6px;margin-top:6px}.wp-grid img{width:100%;height:90px;object-fit:cover;border-radius:5px;display:block}.wp-card header{display:flex;align-items:center;gap:8px}.warnbox{border-left:3px solid var(--warn)}
 .matinner:has(.orders),.matinner:has(.schedview),.matview.schedview .matinner{max-width:min(1500px,100%)}.orders-t td select.inp{min-width:112px}.orders-t td:nth-child(2){min-width:150px}
 .dz-cbl{white-space:nowrap}
+/* ---------- 2.2 layout ---------- */
+.chrome-top .top{padding-block:3px;gap:8px}.chrome-top .brand{font-size:18px}.menus .btn{padding:3px 8px;font-size:13px}
+.wfbar{padding:0 12px 0 8px;gap:8px}.wf-tab{padding:5px 12px 5px 8px;font-size:13px}.wf-n{width:17px;height:17px;font-size:10.5px}
+.wf-tabs{gap:1px}.wf-pages{margin:0 8px 0 2px;align-self:center;border-radius:6px}.wf-pages button{padding:2px 9px;font-size:12px}
+.lvlsel{max-width:170px}#layer-pick{min-width:132px}#level-pick{min-width:110px}#option-pick{min-width:100px}
+.rb-tabs>button[role=tab]{padding:4px 11px}.ribbon.collapsed{position:relative;z-index:30}
+.ribbon.collapsed .rb-body{position:absolute;left:0;right:0;top:100%;background:var(--panel);border-bottom:1px solid var(--line);box-shadow:0 10px 24px rgba(0,0,0,.18)}
+.ribbon.open .rb-tabs{border-bottom-color:transparent}
+.rb-btn span{font-size:11.5px}.rb-gl{font-size:11px}.rb-btn{width:66px}
+/* panes: slim toolbars instead of floating chips */
+.designer .badgeplan,.designer .badge3d{display:none}
+.designer .pane .optbar,.designer .pane .corner{top:6px}.designer .pane .optbar{left:6px}.designer .pane .corner{right:6px}
+.designer .pane .optbar .chip,.designer .pane .corner .btn,.designer .pane .corner .chip,.designer .pane .v3tools .chip,.designer .pane .v3tools .btn,.designer .pane .optbar .btn{padding:2px 8px;font-size:11.5px;border-radius:5px;background:color-mix(in srgb,var(--panel) 88%,transparent)}
+.designer .pane .v3tools{bottom:6px;left:6px;gap:4px}.designer .pane .v3tools .inp,.designer .pane .optbar .inp{padding:2px 4px;font-size:11.5px}
+.designer .pane[data-tool="select"] .overlay .hint{display:none}
+.designer .pane .hint{padding:3px 8px;font-size:11.5px;border-radius:5px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.designer .pane .cmdbar{bottom:6px}.designer .pane .overlay{bottom:40px}
+/* one bottom strip */
+.designer{grid-template-rows:auto minmax(0,1fr) auto auto;grid-template-areas:"rb rb rb" "dock panes insp" "iss iss iss" "tabs tabs tabs"}
+.dz-tabs{padding:0 8px;min-height:30px;gap:0}.dz-tabs button{padding:5px 12px;font-size:12.5px}
+.dz-tabs .dz-status{display:inline-flex;gap:12px;align-items:center;margin-left:12px;font-size:12px;color:var(--ink-2);white-space:nowrap;border-left:1px solid var(--line);padding-left:12px}
+.dz-selname{max-width:180px;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:1500px){.dz-selname{display:none}}
+/* collapsible panel sections */
+.sec > h3{cursor:pointer;user-select:none;display:flex;align-items:center;gap:6px}.sec > h3::before{content:'▾';font-size:9px;color:var(--ink-2);transition:transform .12s}
+.sec[data-closed] > h3::before{transform:rotate(-90deg)}.sec[data-closed] > *:not(h3){display:none}.sec[data-closed]{padding-block:8px}
+.secfold{display:contents}
+.lvlsel{max-width:150px}#layer-pick{min-width:118px;max-width:130px}#level-pick{min-width:100px;max-width:130px}#option-pick{min-width:90px;max-width:120px}.wfbar .lvlsel{padding:3px 4px;font-size:12.5px}
+.dz-tabs{overflow:visible;display:flex;align-items:center}.dz-tabscroll{display:flex;overflow-x:auto;scrollbar-width:thin;min-width:0;flex:0 1 auto}.dz-tabs .grow{flex:1 0 8px}
+.dz-cbsel{max-width:130px}.dz-tabs .dz-status{flex:none}
+.matinner.wide{max-width:min(1500px,100%)}
+.dash-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:12px}.dash-head h2{margin:0 0 4px}
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.dash-card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-height:150px}
+.dash-card header{display:flex;align-items:center;justify-content:space-between}.dash-card h3{margin:0;font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-2)}.dash-card h4{margin:6px 0 2px;font-size:12px;color:var(--ink-2)}
+.dash-card.bad{border-color:color-mix(in srgb,var(--bad) 50%,var(--line))}.dash-card.ok h3::after{content:' ✓';color:var(--good)}
+.dash-big{font-size:26px;font-weight:700;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}.dash-big small{font-size:12px;font-weight:500;color:var(--ink-2)}.dash-big span{font-size:12.5px;font-weight:500;color:var(--ink-2);margin-left:auto}
+.dash-bar{height:8px;border-radius:4px;background:var(--chrome);overflow:hidden}.dash-bar i{display:block;height:100%;background:var(--accent)}
+.dash-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;font-size:13px}.dash-list li{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}.dash-list small{color:var(--ink-2)}.dash-list .linkbtn{border:0;background:none;padding:0;color:var(--accent);cursor:pointer;font:inherit;text-align:left}.dash-list li.bad b{color:var(--bad)}
+.dash-chips{display:flex;gap:4px;flex-wrap:wrap}.dash-foot{margin-top:14px;text-align:center}
+.subwrap{position:relative}.subwrap>button{width:100%}.subcar{margin-left:auto;color:var(--ink-2);font-size:10px}.subwrap.open>button{background:var(--accent-soft)}
+.menupop.submenu{min-width:240px;z-index:61;max-height:70vh;overflow-y:auto}
+.insp-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.insp-list li.open label{color:var(--bad)}
+.ck-wrap{display:grid;grid-template-rows:minmax(0,1fr) auto;min-height:0}.ck-extra{max-height:38vh;overflow:auto;border-top:1px solid var(--line);background:var(--panel)}.ck-extra .sec{border:0}
+.aging{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:6px 18px}.aging li{display:grid;grid-template-columns:14px 1fr;gap:8px;align-items:start;font-size:13px}.aging li .ck-dot{margin-top:5px}.ck-dot.good{background:var(--good)}
+tr.pick td{background:var(--accent-soft)}
+
+/* ---- 2.2: cut plan and finish board ---- */
+.cutopt .rw-stats{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 14px}.cutopt .rw-stats>div{display:flex;flex-direction:column;min-width:120px}.cutopt .rw-stats span{font-size:12px;color:var(--muted)}.cutopt .rw-stats b{font-size:20px}.cutopt .rw-stats small{color:var(--muted)}
+.cut-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}.cut-sheet{margin:0;background:var(--panel2,#fff);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center}.cut-sheet svg{max-width:100%;height:auto}.cut-sheet figcaption{font-size:12px;color:var(--muted);margin-top:6px}
+.fb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:12px 0 18px}.fb-tile{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel2,#fff)}.fb-tile img{display:block;width:100%;aspect-ratio:220/160;object-fit:cover}.fb-tile figcaption{padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px;position:relative}.fb-tile small{color:var(--accent,#1f5fbf);font-weight:600;letter-spacing:.04em;font-size:11px;text-transform:uppercase}.fb-tile b{font-size:14px}.fb-tile span{font-size:12px;color:var(--muted)}.fb-tile i{position:absolute;right:10px;top:10px;width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.2)}
 </style>
 </head>
 <body>
@@ -10171,10 +10222,11 @@ function PlanView(props){
     let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;const add=(x,y)=>{x0=Math.min(x0,x);y0=Math.min(y0,y);x1=Math.max(x1,x);y1=Math.max(y1,y);};
     for(const w of walls){add(w.x1,w.y1);add(w.x2,w.y2);} for(const r of p.rooms.filter(r=>r.level===lv.id)) for(const q of r.pts) add(q[0],q[1]);
     for(const r of p.roofs.filter(r=>r.level===lv.id)){add(r.x-r.overhang,r.y-r.overhang);add(r.x+r.w+r.overhang,r.y+r.h+r.overhang);}
-    for(const k of objKinds())for(const o of objsOn(p,k,lv.id))for(const q of regPts(p,k,o))add(q.x,q.y);
+    // the building fits the view; site work (lot, drive, plants) only when the Landscape view asks for it or there is no building
+    if(x0>x1||(props.filter&&props.filter.site))for(const k of objKinds())for(const o of objsOn(p,k,lv.id))for(const q of regPts(p,k,o))add(q.x,q.y);
     if(x0>x1){x0=-60;y0=-60;x1=480;y1=360;}
     const el=svgRef.current;if(!el)return;const R=el.getBoundingClientRect();const W=R.width||size.w,H=R.height||size.h;
-    const pad=70; const s=Math.min((W-pad*2)/Math.max(1,x1-x0),(H-pad*2)/Math.max(1,y1-y0));
+    const pad=Math.max(16,Math.min(70,Math.min(W,H)*0.07)); const s=Math.min((W-pad*2)/Math.max(1,x1-x0),(H-pad*2)/Math.max(1,y1-y0));
     const sc=Math.max(0.15,Math.min(8,s)); setView({s:sc,tx:W/2-(x0+x1)/2*sc,ty:H/2-(y0+y1)/2*sc});
   }
   useEffect(()=>{const t=setTimeout(fit,30);return ()=>clearTimeout(t);},[fitToken,lv.id]);
@@ -10566,7 +10618,7 @@ function PlanView(props){
     note:html`<b>Note:</b> click where the note goes, then type it in the panel. Notes print on the plans.`,
   };
   const cur=tool==='select'?(drag.current&&drag.current.type==='pan'?'grabbing':'default'):'crosshair';
-  return html`<div className="pane">
+  return html`<div className="pane" data-tool=${tool}>
     <svg ref=${svgRef} tabIndex="0" className="plan" style=${{cursor:cur}} onPointerDown=${onDown} onPointerMove=${onMove} onPointerUp=${onUp} onPointerCancel=${onUp}
       onPointerLeave=${()=>setCursor(c=>tool==='select'?null:c)} onDoubleClick=${()=>{if(tool==='wall'||tool==='room'||tool==='shape'||(XT&&XT.mode==='chain'))finishChain();}} onContextMenu=${e=>e.preventDefault()}>
       <g>${gl}</g><g>${roomEls}</g>${under&&under.u?html`<image href=${under.u.url} x=${S(under.u.x,under.u.y)[0]} y=${S(under.u.x,under.u.y)[1]} width=${under.u.w*under.u.scale*view.s} height=${under.u.h*under.u.scale*view.s} opacity=${under.u.opacity} preserveAspectRatio="none" transform=${under.u.rot?`rotate(${under.u.rot} ${S(under.u.x,under.u.y)[0]} ${S(under.u.x,under.u.y)[1]})`:undefined} style=${{pointerEvents:'none'}}/>`:null}${under&&under.slice?html`<image href=${under.slice.url} x=${S(under.slice.x,under.slice.y)[0]} y=${S(under.slice.x,under.slice.y)[1]} width=${under.slice.w*view.s} height=${under.slice.h*view.s} preserveAspectRatio="none" style=${{pointerEvents:'none'}}/>`:null}<g>${SH.ghost?ghostEls:null}</g><g>${stairEls}</g><g>${SH.fixtures?fixEls:null}</g><g>${regUnder}</g><g>${draftSVG({...p,elec:[],dims:SH.dims?(p.dims||[]).filter(d=>layerOn(p,d.layer||'L-DIM')):[],annos:SH.notes?(p.annos||[]).filter(n=>layerOn(p,n.layer||'L-TEXT')):[]},lv,S,view,sel)}</g>${showElec&&SH.elec!==false?html`<g>${elecEls}</g>`:null}<g>${wallEls}</g><g>${opEls}</g><g>${regOver}</g><g>${SH.roof?roofEls:null}</g><g>${SH.overlay?SH.overlay(p,lv,S,view):null}</g><g>${SH.roomLabels?roomLabels:null}</g><g>${SH.wallDims?dimEls:null}</g><g>${SH.issues?markers:null}</g><g>${drafts}</g><g>${typeof fixGhost!=='undefined'?fixGhost:null}</g><g>${handles}</g>
@@ -10610,13 +10662,14 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener?.('change',themeSync);
     const mo=new MutationObserver(themeSync); mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     themeSync();
-    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
+    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,themeSync,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
     window.__view3d=S.current;
     return ()=>{ro.disconnect();mo.disconnect();mq.removeEventListener?.('change',themeSync);controls.dispose();renderer.dispose();renderer.domElement.remove();if(window.__view3d===S.current)window.__view3d=null;};
   },[]);
 
-  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,sel,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(tint&&typeof tint3D==='function'){try{tint3D(st.model,p,tint);}catch(e){console.error(e);}}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
-    applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[tint,p,levelId,sel,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
+  const selRef=useRef(sel);selRef.current=sel;useEffect(()=>{const st=S.current;if(!st||!st.model)return;highlight3D(st.model,sel);st.render();},[sel]);
+  useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,null,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(tint&&typeof tint3D==='function'){try{tint3D(st.model,p,tint);}catch(e){console.error(e);}}highlight3D(st.model,selRef.current);if(st.themeSync){const bg=cssVar('--sky');if(!st.scene.background||'#'+st.scene.background.getHexString()!==bg.toLowerCase())st.themeSync();}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
+    applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[tint,p,levelId,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
   useEffect(()=>{const st=S.current;if(st&&fitToken&&!st.walk.on){fit3d(st);st.render();}},[fitToken]);
   useEffect(()=>{const st=S.current;if(!st)return;applyClip(st,clip,p);st.render();},[clip]);
 
@@ -10725,6 +10778,9 @@ const SIDING_COLOR={vinyl:0xeeeae0,fibercement:0xb9c3c9,brick:0x9a4b35,wood:0xc9
 const ROOF_COLOR={asphalt:0x4a4f57,metal:0x6b7d86,tile:0xa5553a};
 const FLOOR_COLOR={carpet:0xb8ad9c,lvp:0xb89a74,hardwood:0xa8774a,tile:0xd8d6cf,concrete:0xb9b7b0};
 const ratioColor=r=>r==null?0xcfcfcf:r>1?0xd9534f:r>0.85?0xe0a43a:0x4caf6a;
+// selection highlight without a rebuild: swap materials on the meshes tagged with the selected part
+let _hlMat=null;function highlight3D(model,sel){if(!model)return;const ids=new Set(sel?(sel.kind==='multi'?sel.items.map(i=>i.id):[sel.id]):[]);if(!_hlMat)_hlMat=new THREE.MeshStandardMaterial({color:cssVar('--accent'),roughness:.6});
+  model.traverse(o=>{if(!o.isMesh)return;if(o.userData.origMat){o.material=o.userData.origMat;delete o.userData.origMat;}const t=o.userData.tag;if(t&&t.id&&ids.has(t.id)){o.userData.origMat=o.material;o.material=_hlMat;}});}
 function buildModel(st,p,levelId,sel,opts={}){
   const {cutaway=true,showRoof=true,struct=null,layer='both'}=opts;
   const g=st.model; while(g.children.length){const c=g.children.pop();c.geometry&&c.geometry.dispose();}
@@ -10804,14 +10860,14 @@ function buildModel(st,p,levelId,sel,opts={}){
         addCeiling3D(p,lv,r,add,std,std('ceil-'+cc,cc,{side:THREE.DoubleSide,roughness:.95,emissive:new THREE.Color(cc).multiplyScalar(opts.interior?0.28:0.08)}));
         const [lx,ly]=polyLabelPt(r.pts);const a=polyArea(r.pts)/144;const L=new THREE.PointLight(roomLightColor(p,r),0.3+Math.min(0.3,a/900),Math.max(18,Math.sqrt(a)*2.2),1.4);L.position.set(lx*IN,(e0+lv.height-14)*IN,ly*IN);g.add(L);}
     }
-    for(const s of p.stairs.filter(s=>s.level===lv.id))stair3D(p,lv,s,add,std,sel,mSel);
+    for(const s of p.stairs.filter(s=>s.level===lv.id)){CUR_TAG={kind:'stair',id:s.id};stair3D(p,lv,s,add,std,sel,mSel);}CUR_TAG=null;
     for(const s of [].filter(s=>s.level===lv.id)){
       const si=stairInfo(p,s); const ry=-Math.atan2(si.d.y,si.d.x); const isSel=sel&&sel.id===s.id;
       for(let i=0;i<si.treads;i++){const h=(i+1)*si.riserH;const along=i*s.tread+s.tread/2;add(new THREE.BoxGeometry(s.tread*IN,h*IN,s.width*IN),isSel?mSel:mStair,(s.x+si.d.x*along)*IN,(e0+h/2)*IN,(s.y+si.d.y*along)*IN,ry);}
     }
     if(typeof addFixtures3D==='function')addFixtures3D(p,lv,add,std,sel,mSel);CUR_TAG=null;
     if(!struct)addTrim3D(p,lv,ws.filter(w=>w.status!=='demolish'),add,std);
-    addShapes3D(p,lv,add,std,sel,mSel);addRamps3D(p,lv,add,std,sel,mSel);
+    addShapes3D(p,lv,add,std,sel,mSel);addRamps3D(p,lv,add,std,sel,mSel);CUR_TAG=null;
     {const ctx=reg3DCtx(add,std,sel,mSel,layer,struct,opts,p,lv,g);for(const k of objKinds()){const d=OBJ[k];if(!d.add3D||(d.roofish&&!showRoof))continue;for(const o of objsOn(p,k,lv.id))if(inLayer(o.status||'new',layer)){CUR_TAG={kind:k,id:o.id};try{d.add3D(p,lv,o,ctx);}catch(e){console.error(k,e);}}}}CUR_TAG=null;if(!struct)addElec3D(p,lv,add,std,sel,mSel);
     if(showRoof) for(const r of p.roofs.filter(r=>r.level===lv.id)){CUR_TAG={kind:'roof',id:r.id};
       const top=roofTop(p,r); const b=roofBuild(r,top); const isSel=sel&&sel.id===r.id; const cov=rafterOf(r).cover||'asphalt';
@@ -12413,13 +12469,13 @@ function cutShape(p,targetId,cutterId){const t=(p.shapes||[]).find(s=>s.id===tar
   const hole=shapeOutline(c);if(!hole.every(([x,y])=>inPoly(x,y,t.pts)))return null;
   const rest=(p.shapes||[]).filter(s=>s.id!==cutterId).map(s=>s.id===targetId?{...s,holes:[...(s.holes||[]),hole]}:s);return {...p,shapes:rest};}
 function addShapes3D(p,lv,add,std,sel,mSel){
-  for(const s of (p.shapes||[]).filter(s=>s.level===lv.id&&s.status!=='demolish')){const col=s.color?hexNum(s.color):0xd9d4c7;const mat=sel&&sel.id===s.id?mSel:std('shape-'+col,col,{roughness:.75});const z0=lv.elevation+(s.z||0);
+  for(const s of (p.shapes||[]).filter(s=>s.level===lv.id&&s.status!=='demolish')){CUR_TAG={kind:'shape',id:s.id};const col=s.color?hexNum(s.color):0xd9d4c7;const mat=sel&&sel.id===s.id?mSel:std('shape-'+col,col,{roughness:.75});const z0=lv.elevation+(s.z||0);
     if(s.kind==='round'){const g=new THREE.CylinderGeometry((s.dTop??s.d)/2*IN,s.d/2*IN,s.h*IN,40);add(g,mat,s.cx*IN,(z0+s.h/2)*IN,s.cy*IN);continue;}
     if((s.pts||[]).length<3)continue;const sh=new THREE.Shape(s.pts.map(q=>new THREE.Vector2(q[0]*IN,q[1]*IN)));for(const h of s.holes||[])sh.holes.push(new THREE.Path(h.map(q=>new THREE.Vector2(q[0]*IN,q[1]*IN))));
     const g=new THREE.ExtrudeGeometry(sh,{depth:s.h*IN,bevelEnabled:false});g.rotateX(Math.PI/2);add(g,mat,0,(z0+s.h)*IN,0);}
 }
 function addRamps3D(p,lv,add,std,sel,mSel){
-  for(const r of (p.ramps||[]).filter(r=>r.level===lv.id)){const ri=rampInfo(p,r);const isSel=sel&&sel.id===r.id;const col=(r.mat||'wood')==='concrete'?0xc9c6bd:0xa98a62;const m=isSel?mSel:std('ramp-'+col,col,{roughness:.85});const mr=std('rail',0x6d7378,{roughness:.4,metalness:.4});
+  for(const r of (p.ramps||[]).filter(r=>r.level===lv.id)){CUR_TAG={kind:'ramp',id:r.id};const ri=rampInfo(p,r);const isSel=sel&&sel.id===r.id;const col=(r.mat||'wood')==='concrete'?0xc9c6bd:0xa98a62;const m=isSel?mSel:std('ramp-'+col,col,{roughness:.85});const mr=std('rail',0x6d7378,{roughness:.4,metalness:.4});
     const top=lv.elevation;const ry=-Math.atan2(ri.d.y,ri.d.x);
     for(const pc of ri.pieces){const L=pc.s1-pc.s0;const mid=ri.P((pc.s0+pc.s1)/2,0);const zt=top-(pc.z0+pc.z1)/2;
       if(pc.kind==='landing'){add(new THREE.BoxGeometry(L*IN,4*IN,ri.width*IN),m,mid.x*IN,(zt-2)*IN,mid.y*IN,ry);if(zt-4>0.5){add(new THREE.BoxGeometry(L*IN,(zt-4)*IN,ri.width*IN),m,mid.x*IN,((zt-4)/2)*IN,mid.y*IN,ry);}}
@@ -12430,7 +12486,7 @@ function addRamps3D(p,lv,add,std,sel,mSel){
 }
 function addElec3D(p,lv,add,std,sel,mSel){
   const mW=std('elec-plate',0xf4f4f0,{roughness:.5});const mL=M('elec-light',()=>new THREE.MeshStandardMaterial({color:0xfffaf0,emissive:0xfff1d0,emissiveIntensity:0.6}));
-  for(const d of (p.elec||[]).filter(d=>d.level===lv.id&&d.status!=='demolish')){const e=ELEC[d.type];if(!e)continue;const isSel=sel&&sel.id===d.id;const a=-(d.rot||0)*Math.PI/180;
+  for(const d of (p.elec||[]).filter(d=>d.level===lv.id&&d.status!=='demolish')){const e=ELEC[d.type];if(!e)continue;CUR_TAG={kind:'elec',id:d.id};const isSel=sel&&sel.id===d.id;const a=-(d.rot||0)*Math.PI/180;
     if(e.mount==='wall'){const pw=d.type==='panel'?14:d.type==='exterior'||d.type==='sconce'?5:2.75,ph=d.type==='panel'?30:d.type==='exterior'||d.type==='sconce'?8:4.5;
       add(new THREE.BoxGeometry(0.6*IN,ph*IN,pw*IN),isSel?mSel:(isLight(d)?mL:mW),d.x*IN,(lv.elevation+d.h)*IN,d.y*IN,a,false);}
     else{const r=d.type==='fan'?24:d.type==='can'?3:d.type==='exhaust'?5:['smoke','co','combo'].includes(d.type)?3:6;const z=lv.elevation+lv.height-1;
@@ -12516,7 +12572,7 @@ function FileModal({p,onLoad,onClose}){
     ${msg?html`<div className=${'msg'+(msg.ok?'':' err')}>${msg.t}</div>`:null}
     <div className="sec" style=${{padding:'12px 0 0',borderBottom:0,borderTop:'1px solid var(--line)'}}>
       ${confirmNew?html`<p className="note">Start over? The current project is replaced. Copy it first if you want to keep it.</p>
-        <div className="row"><button className="btn danger" onClick=${()=>{onLoad(blankProject());onClose();}}>Start a blank project</button><button className="btn" onClick=${()=>{onLoad(sampleProject());onClose();}}>Load the sample house</button><button className="btn" onClick=${()=>setConfirmNew(false)}>Cancel</button></div>`
+        <div className="row"><button className="btn danger" onClick=${()=>{onLoad(newStandardProject());onClose();}}>Start a blank project</button><button className="btn" onClick=${()=>{onLoad(sampleProject());onClose();}}>Load the sample house</button><button className="btn" onClick=${()=>setConfirmNew(false)}>Cancel</button></div>`
       :html`<div className="row"><button className="btn" onClick=${()=>setConfirmNew(true)}>New project…</button><span className="spacer"></span><button className="btn" onClick=${onClose}>Done</button></div>`}
     </div></div></div>`;
 }
@@ -13949,8 +14005,8 @@ const MAT_EXTRA=[];// [id,label,Component]
 function MaterialsView({p,commit}){
   const [tab,setTab]=useState(()=>{try{return localStorage.getItem('remodel-studio:mattab')||'list';}catch(e){return 'list';}});
   const pick=t=>{setTab(t);try{localStorage.setItem('remodel-studio:mattab',t);}catch(e){}};
-  const tabs=html`<div className="seg mattabs" role="tablist">${[['list',"Builder's list"],['estimate','Estimate and labor'],['shop','Shopping list'],['selections','Selections'],...MAT_EXTRA.map(x=>[x[0],x[1]]),['cabinets','Cabinet order']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
-  if(tab==='selections')return html`<div className="matview"><div className="matinner">${tabs}<${SelectionsView} p=${p} commit=${commit}/></div></div>`;
+  const tabs=html`<div className="seg mattabs" role="tablist">${[['list',"Builder's list"],['estimate','Estimate and labor'],...MAT_EXTRA.filter(x=>x[0]==='co').map(x=>[x[0],x[1]]),['shop','Shopping list'],['selections','Selections and orders'],...MAT_EXTRA.filter(x=>!['co','orders'].includes(x[0])).map(x=>[x[0],x[1]]),['cabinets','Cabinet order']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
+  if(tab==='selections'||tab==='orders')return html`<div className="matview"><div className="matinner wide">${tabs}<${SelectionsView} p=${p} commit=${commit}/><${OrdersView} p=${p} commit=${commit}/></div></div>`;
   if(tab==='cabinets')return html`<div className="matview"><div className="matinner">${tabs}<${CabinetOrderView} p=${p} commit=${commit}/></div></div>`;
   if(tab==='shop')return html`<div className="matview"><div className="matinner">${tabs}<${ShoppingView} p=${p} commit=${commit}/></div></div>`;
   {const X=MAT_EXTRA.find(x=>x[0]===tab);if(X)return html`<div className="matview"><div className="matinner">${tabs}<${X[2]} p=${p} commit=${commit}/></div></div>`;}
@@ -17043,14 +17099,14 @@ function questionsFor(kind,a){
 }
 function CaptureView({p,commit,sel,setSel,levelId,setLevelId,setMode,libCtx}){
   const pid=p.id||'default'; const assets=useAssets(pid);
-  const [tab,setTab]=useState('measure');
+  const [tab,setTab]=useState(()=>window.__rsCapTab||'photos');useEffect(()=>{window.__rsCapTab=null;},[]);
   return html`<div className="matview"><div className="matinner">
     <div className="mathead"><div><h2>Capture</h2><p className="note">Turn photos and tape measurements into the model. Photos and scans are kept in this browser only; the project file stores where they are pinned.</p></div></div>
-    <div className="seg" role="tablist">${[['measure','Measure, color and trim from photos'],['assistant','Photo assistant'],['room','Room from measurements'],['photos','Photos'],['underlay','Underlay and scans'],...CAPTURE_EXTRA.map(x=>[x[0],x[1]])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
+    <div className="seg" role="tablist">${[['photos','Photos'],['measure','Measure from photos'],['assistant','Photo assistant'],['underlay','Scans and plan images'],['walls','Make walls'],...CAPTURE_EXTRA.filter(x=>!['facade'].includes(x[0])).map(x=>[x[0],x[1]])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
     ${assets.err?html`<div className="msg err">${assets.err}</div>`:null}
     ${tab==='measure'?html`<${PhotoMeasure} p=${p} commit=${commit} sel=${sel} assets=${assets} libCtx=${libCtx}/>`:null}
     ${tab==='assistant'?html`<${PhotoAssistant} p=${p} commit=${commit} sel=${sel} levelId=${levelId} assets=${assets} setMode=${setMode} setSel=${setSel}/>`:null}
-    ${tab==='room'?html`<${RoomWizard} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel}/>`:null}
+    ${tab==='walls'?html`<${MakeWallsTab} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel} assets=${assets}/>`:null}
     ${tab==='photos'?html`<${PhotoGallery} p=${p} commit=${commit} sel=${sel} assets=${assets}/>`:null}
     ${tab==='underlay'?html`<${UnderlayPanel} p=${p} commit=${commit} levelId=${levelId} assets=${assets} setMode=${setMode}/>`:null}
     ${CAPTURE_EXTRA.filter(x=>x[0]===tab).map(x=>html`<${x[2]} key=${x[0]} p=${p} commit=${commit} sel=${sel} setSel=${setSel} levelId=${levelId} setMode=${setMode} assets=${assets}/>`)}
@@ -17285,6 +17341,13 @@ function useUnderlayImages(p,levelId){
   useEffect(()=>{let live=true;if(!cl){setSlice(null);setCloudPts(null);return;}assetGet(cl.asset).then(a=>{if(!live||!a)return;const pts=cloudToPlan({points:a.points},cl);setCloudPts({pts,colors:a.colors});const lv=lvlOf(p,cl.level);const e=(lv?lv.elevation:0);setSlice(cl.level===levelId?cloudSliceImage(pts,e+(cl.lo||12),e+(cl.hi||72)):null);}).catch(()=>{});return ()=>{live=false;};},[cl&&cl.asset,cl&&cl.scale,cl&&cl.up,cl&&cl.rot,cl&&cl.dx,cl&&cl.dy,cl&&cl.dz,cl&&cl.lo,cl&&cl.hi,cl&&cl.level,levelId]);
   return {u,slice,cloudPts};
 }
+
+// Make walls: three ways to get the existing walls into the model
+function MakeWallsTab({p,commit,levelId,setMode,setSel,assets}){const [way,setWay]=useState('tape');const X=CAPTURE_EXTRA.find(x=>x[0]==='facade');
+  return html`<div><div className="seg" role="tablist" style=${{marginBottom:'10px'}}>${[['tape','From tape measurements'],['scan','From a scan or plan image'],['facade','Trace an outside wall from a photo']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${way===k} className=${way===k?'on':''} onClick=${()=>setWay(k)}>${l}</button>`)}</div>
+    ${way==='tape'?html`<${RoomWizard} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel}/>`:null}
+    ${way==='scan'?html`<section className="sec"><h3>Walls from a scan or plan image</h3><p className="note">Load a .ply scan or a photo of the paper plan under Scans and plan images first, set its scale, then let the app find the walls.</p><button className="btn primary" onClick=${()=>openDialog('scanwalls')}>Find the walls…</button></section>`:null}
+    ${way==='facade'&&X?html`<${X[2]} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} assets=${assets}/>`:null}</div>`;}
 /* ======================= import an OBJ model (SketchUp, Blender, manufacturer downloads) as furniture or a fixture ======================= */
 FIXTURES.model={label:'Imported 3D model',cat:'Furniture',w:24,d:24,h:30,color:0xb8ad9a,free:true};
 const MODEL_CACHE={};
@@ -17383,7 +17446,7 @@ function FieldView({p,commit,setSel,setMode}){const F=p.field||{};const meas=F.m
         <table className="mat fv-meas"><thead><tr><th>What</th><th className="num">Model</th><th>Field</th><th className="num">Difference</th></tr></thead><tbody>${items.map(it=>{const v=meas[it.k];const d=v!=null?v-it.model:null;return html`<tr key=${it.k} className=${d!=null&&Math.abs(d)>0.5?'off':''}><td>${it.label}</td><td className="num mono">${fmtLen(it.model)}</td>
           <td><${LenInput} id=${'fm-'+it.k} value=${v??''} onChange=${x=>setM(it.k,x>0?x:null)}/></td><td className="num mono">${d==null?'':Math.abs(d)<=0.5?'ok':(d>0?'+':'−')+fmtLen(Math.abs(d))}</td></tr>`;})}</tbody></table>
         <${Field} label="Room notes" id="fv-n"><textarea id="fv-n" className="inp" rows="2" value=${(F.notes||{})[room.id]||''} onChange=${e=>setF({notes:{...(F.notes||{}),[room.id]:e.target.value}})}></textarea><//>`:html`<p className="note">Draw rooms first (or use Room from measurements).</p>`}</section></div>`;}
-CAPTURE_EXTRA.push(['field','Field mode',FieldView]);
+CAPTURE_EXTRA.push(['field','Field notes',FieldView]);
 
 /* ---- trace a wall from a photo: pick the wall's four corners, then box its windows and doors ---- */
 function rectifyToCanvas(img,Hinv,Wpx,Hpx,L,Hin){const c=document.createElement('canvas');c.width=Wpx;c.height=Hpx;const g=c.getContext('2d');const src=document.createElement('canvas');src.width=img.naturalWidth;src.height=img.naturalHeight;const sg=src.getContext('2d');sg.drawImage(img,0,0);
@@ -17951,8 +18014,9 @@ const safeName=s=>(s||'house').replace(/[^\w\- ]+/g,'').trim()||'house';
 function SheetsView({p,commit}){
   const [tab,setTab]=useState(()=>{if(window.__rsSheetNo)return 'plans';try{return localStorage.getItem('remodel-studio:shtab')||'plans';}catch(e){return 'plans';}});
   const pick=t=>{setTab(t);try{localStorage.setItem('remodel-studio:shtab',t);}catch(e){}};
-  const tabs=html`<div className="seg shtabs" role="tablist">${[['plans','Plan set'],['present','Board presentation']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
+  const tabs=html`<div className="seg shtabs" role="tablist">${[['plans','Plan set'],['present','Board presentation'],...(typeof SHEET_TABS!=='undefined'?SHEET_TABS.map(t=>[t[0],t[1]]):[])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>`;
   if(tab==='present')return html`<div className="shwrap">${tabs}<${PresentationView} p=${p} commit=${commit}/></div>`;
+  const X=typeof SHEET_TABS!=='undefined'?SHEET_TABS.find(t=>t[0]===tab):null;if(X)return html`<div className="shwrap">${tabs}<${X[2]} p=${p} commit=${commit}/></div>`;
   return html`<div className="shwrap">${tabs}<${PlanSetView} p=${p} commit=${commit}/></div>`;
 }
 function PlanSetView({p,commit}){
@@ -18650,7 +18714,7 @@ function renderSnapshot(p,{view=null,layer='proposed',w=1600,h=900,angle='aerial
   applyMetalEnv(st.model,R);R.render(scene,cam);const url=R.domElement.toDataURL('image/jpeg',0.9);
   st.model.traverse(o=>{if(o.geometry)o.geometry.dispose();});return url;
 }
-const PRES_DEFAULT={title:'',subtitle:'Remodel plan for board review',presenter:'',sections:{cover:true,beforeAfter:true,renders:true,views:true,options:true,plans:true,cost:true,code:true,structure:true},notes:''};
+const PRES_DEFAULT={title:'',subtitle:'Remodel plan for board review',presenter:'',sections:{cover:true,beforeAfter:true,renders:true,views:true,options:true,plans:true,cost:true,code:true,structure:true,finishes:true},notes:''};
 function presOf(p){return {...PRES_DEFAULT,...(p.present||{}),sections:{...PRES_DEFAULT.sections,...((p.present||{}).sections||{})}};}
 function hasExisting(p){return p.walls.some(w=>w.status==='existing'||w.status==='demolish');}
 async function buildPresentation(p,onProgress){
@@ -18720,7 +18784,7 @@ function PresentationView({p,commit}){
   const [busy,setBusy]=useState(null);const [msg,setMsg]=useState(null);const [preview,setPreview]=useState(null);
   const make=async()=>{setMsg(null);setBusy('Starting');try{const d=await buildPresentation(p,setBusy);setBusy('Saving');setMsg(await saveFile(safeName(p.name)+' presentation.pdf',d.output('blob')));}catch(e){console.error(e);setMsg({ok:false,t:'The presentation could not be made: '+(e.message||e)});}setBusy(null);};
   const peek=()=>{try{setPreview({a:renderSnapshot(p,{w:800,h:500,angle:hasExisting(p)?'dollhouse':'aerial'}),b:hasExisting(p)?renderSnapshot(p,{w:800,h:500,layer:'existing',angle:'dollhouse'}):null});}catch(e){setMsg({ok:false,t:'3D preview needs WebGL.'});}};
-  const S=[['cover','Cover with a street view, area, cost and code status'],['beforeAfter','Before and after (existing vs. proposed)'],['renders','Photoreal renders in the gallery (Render in the 3D view)'],['views','Your saved 3D views (save them from the 3D view)'],['options','Design options side by side'],['plans','Floor plans'],['cost','Planning estimate'],['code','Code and accessibility review'],['structure','Structure items that need attention']];
+  const S=[['cover','Cover with a street view, area, cost and code status'],['beforeAfter','Before and after (existing vs. proposed)'],['renders','Photoreal renders in the gallery (Render in the 3D view)'],['views','Your saved 3D views (save them from the 3D view)'],['options','Design options side by side'],['plans','Floor plans'],['cost','Planning estimate'],['code','Code and accessibility review'],['structure','Structure items that need attention'],['finishes','Finish board (cabinets, counters, floors, tile, paint, hardware)']];
   return html`<div className="matview"><div className="matinner presview">
     <div className="mathead"><div><h2>Board presentation</h2><p className="note">A widescreen PDF to show on a projector or hand out. It uses the active design option, your saved views, the estimate and the code check.</p></div></div>
     <div className="estgrid">
@@ -18983,12 +19047,14 @@ function rotatePart(p,sel){const o=findObj(p,sel);if(!o)return null;
 
 /* ---- the menu buttons ---- */
 function MenuButton({label,items,id}){
-  const [open,setOpen]=useState(false);const ref=useRef(null);
+  const [open,setOpen]=useState(false);const ref=useRef(null);const [sub,setSub]=useState(null);const [subRect,setSubRect]=useState(null);useEffect(()=>{if(!open)setSub(null);},[open]);
   useEffect(()=>{if(!open)return;const close=e=>{if(ref.current&&!ref.current.contains(e.target))setOpen(false);};const kd=e=>{if(e.key==='Escape')setOpen(false);};
     document.addEventListener('pointerdown',close);window.addEventListener('keydown',kd);return ()=>{document.removeEventListener('pointerdown',close);window.removeEventListener('keydown',kd);};},[open]);
   return html`<div className="menu" ref=${ref}>
     <button id=${id} className=${'btn'+(open?' on':'')} aria-haspopup="menu" aria-expanded=${open} onClick=${()=>setOpen(!open)}>${label} <span aria-hidden="true">▾</span></button>
-    ${open?html`<div className="menupop" role="menu">${items.map((it,i)=>it==='-'?html`<hr key=${i}/>`:html`<button key=${i} role="menuitem" disabled=${it.disabled} onClick=${()=>{setOpen(false);it.run();}}><span>${it.label}</span>${it.key?html`<kbd>${it.key}</kbd>`:null}</button>`)}</div>`:null}
+    ${open?html`<div className="menupop" role="menu">${items.map((it,i)=>it==='-'?html`<hr key=${i}/>`:it.sub?html`<div key=${i} className=${'subwrap'+(sub===i?' open':'')} onMouseEnter=${e=>{setSubRect(e.currentTarget.getBoundingClientRect());setSub(i);}}><button role="menuitem" aria-haspopup="menu" aria-expanded=${sub===i} onClick=${e=>{setSubRect(e.currentTarget.getBoundingClientRect());setSub(i);}}><span>${it.label}</span><span className="subcar" aria-hidden="true">▸</span></button></div>`
+      :html`<button key=${i} role="menuitem" disabled=${it.disabled} onMouseEnter=${()=>setSub(null)} onClick=${()=>{setOpen(false);it.run();}}><span>${it.label}</span>${it.key?html`<kbd>${it.key}</kbd>`:null}</button>`)}</div>`:null}
+    ${open&&sub!=null&&items[sub]&&items[sub].sub&&subRect?html`<div className="menupop submenu" role="menu" style=${{position:'fixed',left:Math.min(window.innerWidth-250,subRect.right+2)+'px',top:Math.min(window.innerHeight-40,subRect.top-6)+'px'}}>${items[sub].sub.map((s,j)=>s==='-'?html`<hr key=${j}/>`:html`<button key=${j} role="menuitem" disabled=${s.disabled} onClick=${()=>{setOpen(false);s.run();}}><span>${s.label}</span>${s.key?html`<kbd>${s.key}</kbd>`:null}</button>`)}</div>`:null}
   </div>`;
 }
 
@@ -19403,7 +19469,7 @@ function FixturePicEditor({p,o,up}){const hand=HANDED[o.type];
 const MY_KEY='remodel-studio:myitems';
 function loadMyItems(){try{return JSON.parse(localStorage.getItem(MY_KEY)||'[]');}catch(e){return [];}}
 function saveMyItems(l){try{localStorage.setItem(MY_KEY,JSON.stringify(l));return true;}catch(e){return false;}}
-function registerLibItem(x){const i=LIB.findIndex(y=>y.id===x.id);if(i>=0)LIB.splice(i,1,x);else LIB.push(x);LIB_BY_ID[x.id]=x;if(x.cat&&!LIB_CATS.includes(x.cat)){if(x.cat==='My items')LIB_CATS.unshift(x.cat);else LIB_CATS.push(x.cat);}}
+function registerLibItem(x){const old=LIB_BY_ID[x.id];if(old){const i=LIB.indexOf(old);if(i>=0)LIB[i]=x;else LIB.push(x);}else LIB.push(x);LIB_BY_ID[x.id]=x;if(x.cat&&!LIB_CATS.includes(x.cat)){if(x.cat==='My items')LIB_CATS.unshift(x.cat);else LIB_CATS.push(x.cat);}}
 for(const x of loadMyItems())try{registerLibItem(x);}catch(e){}
 // a library item carrying its customized object
 function draftFromLib(it){if(it.draft)return JSON.parse(JSON.stringify(it.draft));
@@ -19633,7 +19699,10 @@ function DesignerView({D}){
       ...['all','nodims','cab','ctr','arch','elec','plumb','furn','land','rfr','ffr','nkba'].map(k=>({label:'Plan shows: '+DZ_TABS.find(t=>t[0]===k)[1],run:()=>setTab(k)})),'-',{label:'Normal colors',run:()=>setColorBy(null),disabled:!colorBy},...COLOR_BY.map(c=>({label:'Color by '+c.label.toLowerCase(),run:()=>setColorBy(c.id)}))]],
     ['Place',[...archIds.map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})),'-',{label:'Roof wizard…',run:()=>D.setDlg('roofwiz')},{label:'Floor joists…',run:()=>D.setDlg('joists')},'-',{label:'Catalog item (from the left dock)…',run:()=>setDock(true)},
       ...['column','chimney','curvewall','deck','deckpoly','porch','steps','rail','skylight','dormer','plant','play','playarea','block','fieldpin'].filter(id=>toolInfo(id)).map(id=>({label:toolInfo(id).label,run:()=>pickTool(id)}))]],
-    ['Report',[{label:'Check page (code, NKBA, structure, clashes)',run:()=>D.setMode('check')},{label:'Schedules (doors, windows, cabinets, finishes…)',run:()=>D.setMode('schedules')},{label:'Selections and orders',run:()=>{try{localStorage.setItem('remodel-studio:mattab','orders');}catch(e){}D.setMode('materials');}},{label:'Budget vs actual',run:()=>{try{localStorage.setItem('remodel-studio:mattab','actual');}catch(e){}D.setMode('materials');}},{label:'Wall photos',run:()=>{try{localStorage.setItem('remodel-studio:buildtab','photos');}catch(e){}D.setMode('build');}},{label:'Homeowner binder…',run:()=>D.setDlg('binder')},'-',{label:'Materials and price report',run:()=>D.setMode('materials')},{label:'Change orders',run:()=>D.setMode('materials')},{label:'Lighting schedule and scenes',run:()=>D.setMode('systems')},{label:'Drain, vent and duct sizing',run:()=>D.setMode('systems')},{label:'Cabinet order and schedule',run:()=>D.setMode('materials')},{label:'Code and NKBA check',run:()=>{D.setPanel('checks');setInsp(true);D.setCollapsed(false);}},{label:'Job schedule and lead times',run:()=>{try{localStorage.setItem('remodel-studio:buildtab','schedule');}catch(e){}D.setMode('build');}},{label:'Store prices…',run:()=>D.setDlg('storeprices')}]],
+    ['Report',[{label:'Job dashboard',run:()=>D.setMode('dashboard')},'-',{label:'Check: code, NKBA, structure, clashes',run:()=>D.setMode('check')},{label:'Schedules: doors, windows, cabinets, finishes…',run:()=>D.setMode('schedules')},{label:'Plan set and presentation',run:()=>D.setMode('sheets')},'-',
+      ...[['list',"Builder's list"],['estimate','Estimate'],['co','Change orders'],['shop','Shopping list'],['selections','Selections and orders'],['actual','Budget vs actual'],['cabinets','Cabinet order']].map(([k,l])=>({label:'Cost: '+l,run:()=>{try{localStorage.setItem('remodel-studio:mattab',k);}catch(e){}D.setMode('materials');}})),'-',
+      ...[['schedule','Job schedule and order dates'],['field','Field notes and punch list'],['photos','Wall photos'],['binder','Homeowner binder']].map(([k,l])=>({label:'Build: '+l,run:()=>{try{localStorage.setItem('remodel-studio:buildtab',k);}catch(e){}D.setMode('build');}})),'-',
+      {label:'Systems: energy, loads, panel, plumbing, lighting',run:()=>D.setMode('systems')},{label:'Store prices…',run:()=>D.setDlg('storeprices')}]],
     ['Design',[{label:'Cabinet job settings (door, finish, species)…',run:()=>{D.setPanel('props');setSel(null);setInsp(true);D.setCollapsed(false);say('Job-wide cabinet settings are in the panel on the right when nothing is selected.');}},{label:'NKBA checks on or off',run:()=>{D.setPanel('checks');setInsp(true);D.setCollapsed(false);}},
       {label:'Lighting, energy and systems',run:()=>D.setMode('systems')},...LAYOUTS.map(([k,l])=>({label:'Layout: '+l,run:()=>{const room=(sel&&sel.kind==='room'&&p.rooms.find(r=>r.id===sel.id))||(selF&&p.rooms.find(r=>r.level===selF.level&&inPoly(selF.x,selF.y,r.pts)))||p.rooms.find(r=>r.level===lv.id&&(k==='bath5'?r.use==='bath':r.use==='kitchen'));if(!room){say('Select a room first.',false);return;}const r=layoutTemplate(p,room,k);if(r.n)commit(r.p);say(r.msg,!!r.n);}})),'-',{label:'Change door style and finish…',run:()=>D.setDlg('styleswap')},{label:'Countertop slab layout…',run:()=>D.setDlg('slab')},'-',{label:'Roof wizard…',run:()=>D.setDlg('roofwiz')},{label:'Floor framing (joists)…',run:()=>D.setDlg('joists')},{label:'Wall framing and cut list…',run:()=>D.setDlg('wallframe')},{label:'Show roof framing',run:()=>setTab('rfr')},{label:'Show floor framing',run:()=>setTab('ffr')},'-',{label:'Fill the cabinet run (cabinets and fillers)',disabled:!(selF&&isCab(selF)),run:()=>{const r=fillRun(p,selF);if(r.n)commit(r.p);say(r.msg,!!r.n);}},{label:'Under-cabinet lights for this level',run:()=>{const r=underCabLights(p,lv.id);if(r.n){commit(r.p);say(`Added ${r.n} under-cabinet light${r.n===1?'':'s'}.`);}else say('Every wall cabinet on this level already has an under-cabinet light, or there are no wall cabinets.',false);}},{label:'Remove or open a wall…',run:()=>D.setDlg('wallrm'),disabled:!(sel&&sel.kind==='wall')},{label:'Library and customize items',run:()=>{D.setPanel('library');setInsp(true);D.setCollapsed(false);}}]],
     ['Draw',cadIds.filter(id=>!/^op-|dim|meas/.test(id)).map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})).concat(['-'],cadIds.filter(id=>/^op-/.test(id)).map(id=>({label:toolInfo(id).label,key:toolInfo(id).key,run:()=>pickTool(id)})))],
@@ -19641,7 +19710,7 @@ function DesignerView({D}){
     ['Render',[{label:'Render studio…',run:D.openRender},{label:'Photo match…',run:()=>D.setDlg('photomatch')},{label:'360° panorama…',run:()=>D.setDlg('pano')},{label:'Walk-through video…',run:()=>D.setDlg('video')},{label:'Export 3D model…',run:D.openExport}]],
     ['Window',[{label:'One view',run:()=>{setLayout('1');setMaxed(null);}},{label:'Two views side by side',run:()=>{setLayout('2v');setMaxed(null);}},{label:'Two views stacked',run:()=>{setLayout('2h');setMaxed(null);}},{label:'Three views',run:()=>{setLayout('3');setMaxed(null);}},{label:'Four views',run:()=>{setLayout('4');setMaxed(null);}},'-',
       {label:'Project browser',run:()=>{setLeftS('browser');lsSet('left','browser');setDock(true);}},{label:'Catalog',run:()=>{setLeftS('catalog');lsSet('left','catalog');setDock(true);}},{label:(dock?'Hide':'Show')+' the left panel',run:()=>setDock(!dock)},{label:(insp?'Hide':'Show')+' properties panel',run:()=>setInsp(!insp)},{label:(issuesOpen?'Hide':'Show')+' issues panel',run:()=>setIssuesOpen(!issuesOpen)}]],
-    ['Help',[{label:'Lessons…',run:()=>D.setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>D.setDlg('keys')},{label:'How the Designer works',run:()=>say('Pick a catalog, then a category, then an item. Double-click it (or press Place) and click in the plan. Each pane has its own view list; click a pane to make it active. The tabs along the bottom change what the plans show.')}]]];
+    ['Help',[{label:'Lessons…',run:()=>D.setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>D.setDlg('keys')},{label:'My standards…',run:()=>D.setDlg('standards')},{label:'How the Designer works',run:()=>say('Pick a catalog, then a category, then an item. Double-click it (or press Place) and click in the plan. Each pane has its own view list; click a pane to make it active. The tabs along the bottom change what the plans show.')}]]];
   const o=findObj(p,sel);const selName=sel?(sel.kind==='multi'?`${sel.items.length} items`:(o&&(o.name||(FIXTURES[o.type]||{}).label||o.type))||sel.kind):'Nothing selected';
   const ti=toolInfo(tool);const nErr=D.issues.filter(i=>i.sev==='error').length,nWarn=D.issues.filter(i=>i.sev==='warn').length;
   const gridCls='dz-panes dz-l'+(maxed!=null?'1':layout);
@@ -19663,11 +19732,10 @@ function DesignerView({D}){
         <div className="dz-pb">${paneBody(v,i)}${tab==='legend'&&i===active?html`<${DZLegend} p=${shown} lv=${lv}/>`:null}${tab==='nkba'&&i===active?html`<${DZNkba} p=${p} commit=${commit} list=${nk} goTo=${D.goTo}/>`:null}${CB&&(v==='plan'||v==='3d')?html`<${ColorByLegend} p=${shown} lv=${lv} cb=${CB} onClose=${()=>setColorBy(null)}/>`:null}</div></section>`;})}</div>
     ${insp?html`<div className="dz-insp">${D.inspEl}</div>`:null}
     ${issuesOpen?html`<${IssuesDock} p=${p} issues=${D.issues} goTo=${D.goTo} onClose=${()=>setIssuesOpen(false)}/>`:null}
-    <div className="dz-tabs" role="tablist" aria-label="Plan display">${DZ_TABS.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>{if(k==='print'){D.setMode('sheets');return;}setTab(k);}}>${l}</button>`)}
+    <div className="dz-tabs" role="tablist" aria-label="Plan display"><div className="dz-tabscroll">${DZ_TABS.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>{if(k==='print'){D.setMode('sheets');return;}setTab(k);}}>${l}</button>`)}</div>
       <span className="grow"></span><label className="dz-cbl" htmlFor="dz-colorby">Color by</label><select id="dz-colorby" className="inp dz-cbsel" value=${colorBy||''} onChange=${e=>setColorBy(e.target.value||null)}><option value="">Normal</option>${COLOR_BY.map(c=>html`<option key=${c.id} value=${c.id}>${c.label}</option>`)}</select>
-      <button className=${'dz-issbtn'+(issuesOpen?' on':'')} onClick=${()=>setIssuesOpen(!issuesOpen)} aria-pressed=${issuesOpen}>Issues ${D.issues.filter(i=>i.sev==='error').length?html`<b className="bad">${D.issues.filter(i=>i.sev==='error').length}</b>`:null}</button></div>
-    <footer className="dz-status"><span><b>${ti?ti.label:tool}</b></span><span>${selName}</span><span>${lv.name}</span><span>${D.layer==='both'?'Existing + new':D.layer}</span><span>${(p.fixtures||[]).filter(f=>f.level===lv.id).length} items on this level</span>
-      <span className="grow"></span><button className=${'linkbtn '+(nErr?'bad':nWarn?'warn':'ok')} onClick=${()=>D.setMode('check')} title="Open the Check page">${nErr} errors · ${nWarn} warnings${nk.length?` · ${nk.length} NKBA`:''}</button></footer>
+      <button className=${'dz-issbtn'+(issuesOpen?' on':'')} onClick=${()=>setIssuesOpen(!issuesOpen)} aria-pressed=${issuesOpen}>Issues ${D.issues.filter(i=>i.sev==='error').length?html`<b className="bad">${D.issues.filter(i=>i.sev==='error').length}</b>`:null}</button>
+      <span className="dz-status"><span><b>${ti?ti.label:tool}</b></span><span className="dz-selname" title=${selName}>${selName}</span><button className=${'linkbtn '+(nErr?'bad':nWarn?'warn':'ok')} onClick=${()=>D.setMode('check')} title="Open the Check page">${nErr} errors · ${nWarn} warnings${nk.length?` · ${nk.length} NKBA`:''}</button></span></div>
   </div>`;}
 function DZLegend({p,lv}){const fx=(p.fixtures||[]).filter(f=>f.level===lv.id);const groups={};for(const f of fx){const it=f.lib&&LIB_BY_ID[f.lib];const k=it?(it.cat+' · '+(it.sub||'')):((FIXTURES[f.type]||{}).cat||'Other');const n=f.name||(FIXTURES[f.type]||{}).label||f.type;(groups[k]=groups[k]||{});groups[k][n]=(groups[k][n]||0)+1;}
   const el=(p.elec||[]).filter(d=>d.level===lv.id);const eg={};for(const d of el){const n=(ELEC[d.type]||{}).label||d.type;eg[n]=(eg[n]||0)+1;}
@@ -20214,11 +20282,10 @@ function lightingSchedule(p){const rows={};const roomOf=d=>(p.rooms.find(r=>r.le
 function lightingCSV(p){const q=s=>'"'+String(s).replace(/"/g,'""')+'"';return [['Mark','Fixture','Qty','Lumens','Kelvin','Watts (LED est.)','Dimmable','Switches','Rooms'].map(q).join(','),...lightingSchedule(p).map(r=>[r.mark,r.type,r.qty,r.lumens,r.kelvin,r.watts,r.dim?'yes':'no',r.sw,r.rooms].map(q).join(','))].join('\n');}
 function LightingSchedule({p,commit}){const rows=lightingSchedule(p);const groups=switchGroups(p);const [k,setK]=useState('3000');
   const setAll=()=>commit({...p,elec:(p.elec||[]).map(d=>LUMENS[d.type]?{...d,kelvin:+k}:d)});
-  return html`<section className="sec ls"><h3>Lighting schedule</h3>
-    ${rows.length?html`<div className="tablewrap"><table className="mat"><thead><tr><th>Mark</th><th>Fixture</th><th className="num">Qty</th><th className="num">Lumens</th><th>Color</th><th className="num">Watts</th><th>Dim</th><th>Switches</th><th>Rooms</th></tr></thead><tbody>
-      ${rows.map(r=>html`<tr key=${r.mark}><td className="mono"><b>${r.mark}</b></td><td>${r.type}</td><td className="num">${r.qty}</td><td className="num">${r.lumens}</td><td><span className="kswatch" style=${{background:'#'+kelvinHex(r.kelvin).toString(16).padStart(6,'0')}}></span> ${r.kelvin} K</td><td className="num">${r.watts}</td><td>${r.dim?'yes':''}</td><td className="mono">${r.sw}</td><td>${r.rooms}</td></tr>`)}</tbody></table></div>
+  return html`<section className="sec ls"><h3>Light color and marks</h3>
+    ${rows.length?html`<p className="note">${rows.length} fixture type${rows.length===1?'':'s'} (marks ${rows.map(r=>r.mark).join(', ')}). The full lighting schedule with quantities, lumens and switches is in Documents › Schedules › Lighting, where it can be edited.</p>
       <div className="row"><label>Set every light to <select className="inp" value=${k} onChange=${e=>setK(e.target.value)} aria-label="Color temperature for every light">${KELVINS.map(([v,l])=>html`<option key=${v} value=${v}>${l}</option>`)}</select></label><button className="btn" onClick=${setAll}>Apply</button>
-        <button className="btn" onClick=${()=>saveFile(safeName(p.name)+'-lighting-schedule.csv',lightingCSV(p))}>Download CSV</button></div>`:html`<p className="note">No lights on the electrical plan yet.</p>`}
+        <button className="btn" onClick=${()=>{window.__rsSched='lighting';window.__app.setMode('schedules');setTimeout(()=>window.dispatchEvent(new CustomEvent('rs-sched',{detail:'lighting'})),60);}}>Open the lighting schedule</button></div>`:html`<p className="note">No lights on the electrical plan yet.</p>`}
     <h3>Switch groups</h3>${groups.length?html`<ul className="note insplist">${groups.map(g=>html`<li key=${g.id}><b>${g.label}</b> ${g.type} in ${g.room||'no room'}: ${g.lights.length?g.lights.map(l=>lightMark(p,l)).join(', '):'no lights linked'}${g.lights.length?` · about ${g.watts} W LED`:''}${g.dim?' · dimmer':''}</li>`)}</ul>`:html`<p className="note">No switches yet. Electrical › Link switches ties lights to the nearest switch.</p>`}</section>`;}
 {const _LT=LightingTab;LightingTab=function(props){return html`<${_LT} ...${props}/><${LightingSchedule} ...${props}/>`;};}
 // 3D view: room fill light takes the room's light color
@@ -20373,7 +20440,7 @@ function ChangeOrders({p,commit}){const C=contractOf(p);const D=useMemo(()=>{try
       <td><select className="inp" value=${co.status} onChange=${e=>setCO(co.no,{status:e.target.value})} aria-label=${'Status of change order '+co.no}><option value="pending">Waiting for signature</option><option value="signed">Signed</option><option value="void">Void</option></select></td><td><button className="btn small" onClick=${()=>print(co)}>PDF</button></td></tr>`)}</tbody></table>`:null}
     ${msg?html`<p className="note">${msg}</p>`:null}<p className="note"><button className="linkbtn" onClick=${()=>{if(confirmClear())commit({...p,contract:null});}}>Unlock the contract</button></p></section>`;}
 function confirmClear(){return true;}
-{const _EV=EstimateView;EstimateView=function(props){return html`<${_EV} ...${props}/><${ChangeOrders} ...${props}/>`;};}
+MAT_EXTRA.push(['co','Change orders',ChangeOrders]);
 /* ======================= lesson mode: guided exercises the app checks as you work ======================= */
 // Each lesson starts a practice project and lists steps; a step turns green when the model meets it.
 function practiceRoom(name,use,W,D,opts={}){const p=blankProject();p.name='Practice: '+name;const L=p.levels[0].id;p.settings.nkba={on:true,cooks:1};p.settings.ada=false;p.levels[0].framing={joist:'2x10',spacing:16,species:'syp2',dir:'auto',ceiling:'2x10',ceilingSpacing:16,foundation:'slab',girders:0};
@@ -20621,14 +20688,14 @@ const WORKFLOWS=[
   {id:'build',label:'Build',pages:[['build','Job']],title:'Job schedule, field notes and punch list, wall photos, homeowner binder'},
 ];
 const wfPages=(w,narrow)=>narrow&&w.narrowPages?w.narrowPages:w.pages;
-function wfOfMode(m){return WORKFLOWS.find(w=>w.pages.some(x=>x[0]===m)||(w.narrowPages||[]).some(x=>x[0]===m))||WORKFLOWS[1];}
+function wfOfMode(m){return WORKFLOWS.find(w=>w.pages.some(x=>x[0]===m)||(w.narrowPages||[]).some(x=>x[0]===m))||WORKFLOWS.find(w=>w.id==='design');}
 function WorkflowTabs({mode,setMode,narrow,nErr,nWarn}){const cur=wfOfMode(mode);
   const lastPage=w=>{let v=null;try{v=localStorage.getItem('remodel-studio:wf:'+w.id);}catch(e){}const pg=wfPages(w,narrow);return pg.some(x=>x[0]===v)?v:pg[0][0];};
   const go=(w,pageId)=>{const id=pageId||lastPage(w);try{localStorage.setItem('remodel-studio:wf:'+w.id,id);}catch(e){}setMode(id);};
   const pages=wfPages(cur,narrow);
-  return html`<div className="wf-tabs" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<button key=${w.id} role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
-      <span className="wf-n">${i+1}</span>${w.label}${w.id==='check'?html`${nErr?html`<span className="cnt bad">${nErr}</span>`:null}${nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}${!nErr&&!nWarn?html`<span className="cnt ok">✓</span>`:null}`:null}</button>`)}</div>
-    ${pages.length>1?html`<div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div>`:null}`;}
+  const pills=pages.length>1?html`<div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div>`:null;
+  return html`<div className="wf-tabs" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<${Fragment} key=${w.id}><button role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
+      <span className="wf-n">${i+1}</span>${w.label}${w.id==='check'?html`${nErr?html`<span className="cnt bad">${nErr}</span>`:null}${nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}${!nErr&&!nWarn?html`<span className="cnt ok">✓</span>`:null}`:null}</button>${cur.id===w.id?pills:null}<//>`)}</div>`;}
 
 /* ---------- issue categories ---------- */
 const ISSUE_CATS=['IRC','IBC','ADA','NKBA','Structure','Framing','Electrical','Plumbing','Appliances','Cabinets','Energy','Zoning','Landscape','Model'];
@@ -20752,17 +20819,23 @@ function ribbonSpec(R){const {D,p,lv,sel,selF,say,commit}=R;const T=id=>toolInfo
   ].map(([k,l,groups])=>[k,l,groups.map(([gl,items])=>[gl,items.filter(Boolean)]).filter(g=>g[1].length)]);}
 function Ribbon({R}){const tabs=ribbonSpec(R);const [tab,setTabS]=useState(()=>{try{return localStorage.getItem('remodel-studio:rb-tab')||'home';}catch(e){return 'home';}});const T=tabs.find(t=>t[0]===tab)||tabs[0];
   const [compact,setCompactS]=useState(()=>{try{return localStorage.getItem('remodel-studio:rb-compact')==='1';}catch(e){return false;}});
+  const [pinned,setPinnedS]=useState(()=>{try{return localStorage.getItem('remodel-studio:rb-pinned')==='1';}catch(e){return false;}});const setPinned=v=>{setPinnedS(v);try{localStorage.setItem('remodel-studio:rb-pinned',v?'1':'0');}catch(e){}};
+  const [open,setOpen]=useState(false);const rbRef=useRef(null);
+  useEffect(()=>{if(!open||pinned)return;const close=e=>{if(rbRef.current&&!rbRef.current.contains(e.target))setOpen(false);};const kd=e=>{if(e.key==='Escape')setOpen(false);};document.addEventListener('pointerdown',close);window.addEventListener('keydown',kd);return ()=>{document.removeEventListener('pointerdown',close);window.removeEventListener('keydown',kd);};},[open,pinned]);
   const setTab=k=>{setTabS(k);try{localStorage.setItem('remodel-studio:rb-tab',k);}catch(e){}};const setCompact=v=>{setCompactS(v);try{localStorage.setItem('remodel-studio:rb-compact',v?'1':'0');}catch(e){}};
   // jump to the tab that holds the current tool
   useEffect(()=>{if(!R.tool||R.tool==='select')return;const has=t=>t[2].some(g=>g[1].some(it=>it.t==='tool'&&it.id===R.tool));if(!has(T)){const t=tabs.find(has);if(t)setTab(t[0]);}},[R.tool]);
-  const btn=(it,i)=>{if(it.t==='tool'){const ti=toolInfo(it.id);return html`<button key=${it.id} className=${'rb-btn dz-tool'+(R.tool===it.id?' on':'')} aria-pressed=${R.tool===it.id} onClick=${()=>R.pickTool(it.id)} title=${ti.label+(ti.key?' ('+ti.key+')':'')}>${ti.icon}<span>${ti.short||ti.label}</span></button>`;}
+  const done=()=>{if(!pinned)setOpen(false);};
+  const btn=(it,i)=>{if(it.t==='tool'){const ti=toolInfo(it.id);return html`<button key=${it.id} className=${'rb-btn dz-tool'+(R.tool===it.id?' on':'')} aria-pressed=${R.tool===it.id} onClick=${()=>{R.pickTool(it.id);done();}} title=${ti.label+(ti.key?' ('+ti.key+')':'')}>${ti.icon}<span>${ti.short||ti.label}</span></button>`;}
     if(it.t==='menu')return html`<div key=${'m'+i} className="rb-menu"><${MenuButton} id=${'rb-'+it.label.replace(/\W+/g,'-').toLowerCase()} label=${html`<span className="rb-mi">${it.icon}<span>${it.label}</span></span>`} items=${it.items}/></div>`;
     if(it.t==='colorby')return html`<div key="cb" className="rb-colorby"><label htmlFor="rb-cb">Color the views by</label><select id="rb-cb" className="inp" value=${R.colorBy||''} onChange=${e=>R.setColorBy(e.target.value||null)}><option value="">Normal colors</option>${COLOR_BY.map(c=>html`<option key=${c.id} value=${c.id}>${c.label}</option>`)}</select></div>`;
-    return html`<button key=${it.label} className=${'rb-btn'+(it.on?' on':'')} aria-pressed=${it.on!=null?!!it.on:undefined} disabled=${it.disabled} onClick=${it.run} title=${it.title||it.label}>${it.icon}<span>${it.label}</span></button>`;};
-  return html`<div className=${'ribbon'+(compact?' compact':'')}>
-    <div className="rb-tabs" role="tablist" aria-label="Tool groups">${tabs.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${T[0]===k} className=${T[0]===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}<span className="grow"></span>
-      <button className="rb-compact" onClick=${()=>setCompact(!compact)} title=${compact?'Show button labels':'Icons only'}>${compact?'Show labels':'Icons only'}</button></div>
-    <div className="rb-body" role="toolbar" aria-label=${T[1]+' tools'}>${T[2].map(([gl,items])=>html`<div key=${gl} className="rb-group"><div className="rb-items">${items.map(btn)}</div><div className="rb-gl">${gl}</div></div>`)}</div></div>`;}
+    return html`<button key=${it.label} className=${'rb-btn'+(it.on?' on':'')} aria-pressed=${it.on!=null?!!it.on:undefined} disabled=${it.disabled} onClick=${()=>{it.run();if(it.on==null)done();}} title=${it.title||it.label}>${it.icon}<span>${it.label}</span></button>`;};
+  const showBody=pinned||open;
+  return html`<div ref=${rbRef} className=${'ribbon'+(compact?' compact':'')+(pinned?' pinned':' collapsed')+(showBody?' open':'')}>
+    <div className="rb-tabs" role="tablist" aria-label="Tool groups">${tabs.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${T[0]===k} className=${T[0]===k&&showBody?'on':''} onClick=${()=>{if(!pinned&&open&&T[0]===k){setOpen(false);return;}setTab(k);setOpen(true);}}>${l}</button>`)}<span className="grow"></span>
+      ${showBody?html`<button className="rb-compact" onClick=${()=>setCompact(!compact)} title=${compact?'Show button labels':'Icons only'}>${compact?'Show labels':'Icons only'}</button>`:null}
+      <button className="rb-compact" onClick=${()=>{setPinned(!pinned);setOpen(false);}} title=${pinned?'Collapse the toolbar to its tabs (more room to draw)':'Keep the toolbar open'}>${pinned?'Collapse':'Pin open'}</button></div>
+    ${showBody?html`<div className="rb-body" role="toolbar" aria-label=${T[1]+' tools'}>${T[2].map(([gl,items])=>html`<div key=${gl} className="rb-group"><div className="rb-items">${items.map(btn)}</div><div className="rb-gl">${gl}</div></div>`)}</div>`:null}</div>`;}
 /* ======================= interactive schedules (Archicad Interactive Schedule): edit in the table, the model follows ======================= */
 const SCHED_TYPES=[['doors','Doors'],['windows','Windows'],['cabinets','Cabinets'],['hardware','Cabinet hardware'],['appliances','Appliances'],['plumbing','Plumbing fixtures'],['rooms','Rooms and finishes'],['lighting','Lighting']];
 const roomFloor=r=>r.finish||(r.use==='bath'||r.use==='kitchen'||r.use==='laundry'?'tile':r.use==='garage'?'concrete':'lvp');
@@ -21133,7 +21206,9 @@ function paletteCommands(ctx){const C=[];const add=(label,run,kw='',hint='')=>C.
   for(const w of WORKFLOWS)for(const [k,l] of w.pages)add(`Go to ${w.label}${w.pages.length>1?' › '+l:''}`,()=>ctx.setMode(k),w.title+' '+l,'Page');
   add('Save',()=>ctx.doSave(),'file','Ctrl+S');add('Open a project…',()=>ctx.doOpen(),'file','Ctrl+O');add('New project…',()=>ctx.setDlg('new'),'file');add('Save as…',()=>ctx.setDlg('saveas'),'file');add('Backups…',()=>ctx.setDlg('backups'),'restore autosave');add('Versions…',()=>ctx.setDlg('versions'),'history restore');
   add('Undo',ctx.doUndo,'','Ctrl+Z');add('Redo',ctx.doRedo,'','Ctrl+Y');
-  const dl=[['roofwiz','Roof wizard','truss rafter pitch'],['joists','Floor and ceiling joists','framing i-joist truss'],['wallframe','Wall framing and cut list','studs header'],['wallrm','Remove or open a wall','beam bearing'],['styleswap','Change cabinet door style and finish','swap'],['slab','Countertop slab layout','stone quartz granite seam'],['lessons','Lessons','learn tutorial'],['pano','360° panorama','render'],['video','Walk-through video','render'],['photomatch','Photo match','render overlay photo'],['ifc','Export IFC for Revit or Archicad','bim export'],['storeprices','Store prices','lowes home depot price list'],['dxf','Import DWG or DXF','cad'],['obj','Import 3D model','obj glb stl'],['vendors','Import vendor catalog',''],['keys','Keyboard shortcuts','help'],['blocks','Blocks','symbols'],['scanwalls','Walls from a scan or plan photo','lidar point cloud trace auto'],['binder','Homeowner binder','handover manual warranty pdf']];
+  const dl=[['roofwiz','Roof wizard','truss rafter pitch'],['joists','Floor and ceiling joists','framing i-joist truss'],['wallframe','Wall framing and cut list','studs header'],['wallrm','Remove or open a wall','beam bearing'],['styleswap','Change cabinet door style and finish','swap'],['slab','Countertop slab layout','stone quartz granite seam'],['lessons','Lessons','learn tutorial'],['pano','360° panorama','render'],['video','Walk-through video','render'],['photomatch','Photo match','render overlay photo'],['ifc','Export IFC for Revit or Archicad','bim export'],['storeprices','Store prices','lowes home depot price list'],['dxf','Import DWG or DXF','cad'],['obj','Import 3D model','obj glb stl'],['vendors','Import vendor catalog',''],['keys','Keyboard shortcuts','help'],['blocks','Blocks','symbols'],['scanwalls','Walls from a scan or plan photo','lidar point cloud trace auto'],['binder','Homeowner binder','handover manual warranty pdf'],['standards','My standards','defaults selections brands']];
+  const go=(mode,key,tab)=>()=>{try{localStorage.setItem('remodel-studio:'+key,tab);}catch(e){}ctx.setMode(mode);};
+  for(const [m,k,t,l,kw] of [['materials','mattab','cuts','Cut plan for sheet goods','drywall plywood nest optimizer'],['materials','mattab','bids','Bids and quotes','subcontractor compare'],['materials','mattab','actual','Actual costs','receipts budget'],['materials','mattab','co','Change orders',''],['materials','mattab','selections','Selections and orders','track delivery'],['sheets','shtab','finishes','Finish board','samples cabinets counters paint'],['sheets','shtab','present','Board presentation','pdf deck'],['build','buildtab','inspections','Inspection prep','inspector checklist'],['build','buildtab','binder','Homeowner binder','handover'],['build','buildtab','photos','Wall photos','before drywall'],['dashboard','x','x','Job dashboard','home overview']])add(l,go(m,k,t),kw,'Page');
   for(const [k,l,kw] of dl)add(l+'…',()=>ctx.setDlg(k),kw,'Dialog');
   add('Render studio…',ctx.openRender,'photoreal image','Dialog');add('AR view and 3D export…',ctx.openExport,'usdz glb stl','Dialog');
   for(const id of [...TOOLS.map(t=>t[0]),...Object.keys(XTOOLS)]){const ti=toolInfo(id);if(ti)add('Tool: '+ti.label,()=>{ctx.setMode('design');ctx.setTool(id);},'draw place '+id,ti.key||'Tool');}
@@ -21264,7 +21339,7 @@ const ifcR=v=>{const x=Math.round(v*1e6)/1e6;return Number.isInteger(x)?x.toFixe
 const toM=v=>v*0.0254;
 function buildIFC(p,o={}){const W=ifcWriter();const A=W.add;const now=Math.floor(Date.now()/1000);
   const person=A(`IFCPERSON($,${ifcS(p.info&&p.info.designer||'')},$,$,$,$,$,$)`),org=A(`IFCORGANIZATION($,'Remodel Studio',$,$,$)`),po=A(`IFCPERSONANDORGANIZATION(${person},${org},$)`);
-  const app=A(`IFCAPPLICATION(${org},'2.1','Remodel Studio','RemodelStudio')`);const oh=A(`IFCOWNERHISTORY(${po},${app},$,.ADDED.,$,$,$,${now})`);
+  const app=A(`IFCAPPLICATION(${org},'2.2','Remodel Studio','RemodelStudio')`);const oh=A(`IFCOWNERHISTORY(${po},${app},$,.ADDED.,$,$,$,${now})`);
   const P3=(x,y,z)=>A(`IFCCARTESIANPOINT((${ifcR(x)},${ifcR(y)},${ifcR(z)}))`),P2=(x,y)=>A(`IFCCARTESIANPOINT((${ifcR(x)},${ifcR(y)}))`),D3=(x,y,z)=>A(`IFCDIRECTION((${ifcR(x)},${ifcR(y)},${ifcR(z)}))`),D2=(x,y)=>A(`IFCDIRECTION((${ifcR(x)},${ifcR(y)}))`);
   const O=P3(0,0,0),Z=D3(0,0,1),X=D3(1,0,0);const ax0=A(`IFCAXIS2PLACEMENT3D(${O},${Z},${X})`);
   const ctx=A(`IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.E-05,${ax0},$)`);
@@ -21376,7 +21451,7 @@ function OrdersView({p,commit}){const rows=useMemo(()=>trackRows(p),[p]);const [
         <td>${cell(r,'ordered','','date')}</td><td className="mono">${etaOf(r)}</td><td>${cell(r,'note','Note')}</td></tr>`;})}</tbody></table></div></section>`;})}
     <section className="sec"><h3>Purchase orders</h3>${Object.keys(byVendor).length?html`<p className="note">Approved items grouped by vendor. Print a purchase order and, if you like, mark them ordered today.</p>${Object.entries(byVendor).map(([v,list])=>html`<div key=${v} className="row po-row"><b>${v}</b><span>${list.length} item${list.length===1?'':'s'} · ${money0(list.reduce((s,r)=>s+(+(r.t.price??r.est)||0),0))}</span><span className="spacer"></span><button className="btn" onClick=${()=>printPO(v,list,false)}>PO PDF</button><button className="btn primary" onClick=${()=>printPO(v,list,true)}>PO PDF and mark ordered</button></div>`)}`
       :html`<p className="note">Set items to Approved and give them a vendor to make purchase orders.</p>`}${msg?html`<p className="note">${msg}</p>`:null}</section></div>`;}
-MAT_EXTRA.push(['orders','Selections and orders',OrdersView]);
+// shown on the Selections and orders tab together with the brand picks
 /* ======================= budget vs actual: receipts against the estimate ======================= */
 // Each receipt (date, store, amount, what it was for, optional photo of the slip) goes into a bucket that matches the
 // estimate: material categories from the builder's list, labor by trade, tax, dumpsters, permit and extras.
@@ -21611,6 +21686,300 @@ function ScenesPanel({p,commit}){const scenes=(p.settings&&p.settings.lightScene
       <table className="mat"><tbody>${gs.map(g=>{const v=s.levels[g.id]??1;return html`<tr key=${g.id}><td>${g.label}<div className="note">${g.names}</div></td><td><input type="range" min="0" max="1" step="0.05" value=${v} aria-label=${'Level for '+g.label+' in '+s.name} onInput=${e=>set(scenes.map(x=>x.id===s.id?{...x,levels:{...x.levels,[g.id]:+e.target.value}}:x))}/></td><td className="num mono">${Math.round(v*100)}%</td></tr>`;})}</tbody></table></div>`)}
     ${gs.length?html`<div className="row">${SCENE_PRESETS.map(pr=>html`<button key=${pr[0]} className="btn" onClick=${()=>add(pr)}>Add “${pr[1]}”</button>`)}</div>`:null}</section>`;}
 {const _LT=LightingTab;LightingTab=function(props){return html`<${_LT} ...${props}/><${ScenesPanel} ...${props}/>`;};}
+/* ======================= 2.2 layout: collapsible panel sections, auto-fit, resize handling, remembered ribbon state ======================= */
+// Panel sections fold by clicking their heading; the closed set is remembered by heading text.
+const SEC_CLOSED=(()=>{try{return new Set(JSON.parse(localStorage.getItem('remodel-studio:sec-closed')||'[]'));}catch(e){return new Set();}})();
+function secApply(root){if(!root)return;for(const h of root.querySelectorAll('.sec > h3')){const sec=h.parentElement;const key=(h.textContent||'').trim().replace(/\s*\(.*$/,'');if(!key)continue;
+    if(!h.dataset.fold){h.dataset.fold='1';h.addEventListener('click',e=>{if(e.target.closest('button,input,select,a'))return;const k=(h.textContent||'').trim().replace(/\s*\(.*$/,'');if(SEC_CLOSED.has(k))SEC_CLOSED.delete(k);else SEC_CLOSED.add(k);try{localStorage.setItem('remodel-studio:sec-closed',JSON.stringify([...SEC_CLOSED]));}catch(x){}secApply(root);});}
+    if(SEC_CLOSED.has(key))sec.setAttribute('data-closed','1');else sec.removeAttribute('data-closed');}}
+{const _I=Inspector;Inspector=function(props){const r=_I(props);return html`<${SecFolder} key="sf">${r}<//>`;};}
+function SecFolder({children}){const ref=useRef(null);useEffect(()=>{secApply(ref.current);});return html`<div ref=${ref} className="secfold">${children}</div>`;}
+// the designer fits its plan panes when they first show, when the layout changes and when the window is resized
+{const _DV=DesignerView;DesignerView=function({D}){const r=_DV({D});const first=useRef(true);
+  useEffect(()=>{const el=document.querySelector('.dz-panes');if(!el)return;let t=null,last=null;const ro=new ResizeObserver(es=>{const b=es[0].contentRect;const key=Math.round(b.width)+'x'+Math.round(b.height);if(key===last)return;last=key;clearTimeout(t);t=setTimeout(()=>{D.fitPlan();if(first.current){first.current=false;D.fit3();}},first.current?60:160);});ro.observe(el);return ()=>{ro.disconnect();clearTimeout(t);};},[]);
+  return r;};}
+/* ======================= job dashboard: the job at a glance, the first thing you see when a project opens ======================= */
+const dashMoney=v=>'$'+Math.round(v||0).toLocaleString('en-US');
+function dashData(p){const out={};try{const I=runChecks(p);out.err=I.filter(i=>i.sev==='error');out.warn=I.filter(i=>i.sev==='warn').length;}catch(e){out.err=[];out.warn=0;}
+  try{out.est=estimateOf(p);}catch(e){out.est=null;}
+  try{const J=jobSchedule(p);out.J=J;out.orders=orderDates(p,J).filter(o=>o.order).sort((a,b)=>a.order-b.order);}catch(e){out.J=null;out.orders=[];}
+  try{const B=budgetBuckets(p);const spent=(p.receipts||[]).reduce((s,r)=>s+(+r.amount||0),0);out.budget={total:B.list.reduce((s,b)=>s+b.budget,0),spent,cont:B.E?B.E.cont:0};}catch(e){out.budget=null;}
+  try{const T=trackRows(p);out.track={n:T.length,by:ORDER_ST.map(([k,l])=>[l,T.filter(r=>(r.t.status||'choosing')===k).length]),late:T.filter(r=>{const st=r.t.status||'choosing';if(['delivered','installed'].includes(st))return false;const eta=etaOf(r);return eta&&eta<localDate();})};}catch(e){out.track=null;}
+  const pins=(p.fieldpins||[]);out.punch=pins.filter(o=>o.cat==='punch'&&o.status!=='done');out.questions=pins.filter(o=>o.cat==='question');
+  out.co=((p.contract||{}).changeOrders||[]);out.photos=(p.wallphotos||[]).length;
+  out.rooms=p.rooms.length;out.area=Math.round(p.rooms.reduce((s,r)=>s+polyArea(r.pts)/144,0));out.cabs=(p.fixtures||[]).filter(f=>isCab(f)&&f.status!=='demolish').length;
+  out.phase=(()=>{if(!out.J)return null;const today=new Date();const cur=out.J.rows.find(r=>r.s<=today&&r.e>=today);const next=out.J.rows.find(r=>r.s>today);return {cur,next};})();
+  return out;}
+function DashCard({title,children,onOpen,openLabel='Open',cls=''}){return html`<section className=${'dash-card '+cls}><header><h3>${title}</h3>${onOpen?html`<button className="btn small" onClick=${onOpen}>${openLabel}</button>`:null}</header>${children}</section>`;}
+function DashboardView({p,commit,setMode,setSel,setLevelId,setDlg,recent,openRecent}){const D=useMemo(()=>dashData(p),[p]);
+  const goCost=tab=>{try{localStorage.setItem('remodel-studio:mattab',tab);}catch(e){}setMode('materials');};const goBuild=tab=>{try{localStorage.setItem('remodel-studio:buildtab',tab);}catch(e){}setMode('build');};
+  const info=p.info||{};const sched=D.J;const fmt=d=>d?d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}):'';
+  return html`<div className="matview dashview"><div className="matinner wide">
+    <div className="dash-head"><div><h2>${p.name}</h2><p className="note">${[info.address,info.client?'for '+info.client:'',`${D.rooms} rooms · ${D.area.toLocaleString()} sq ft · ${D.cabs} cabinets`].filter(Boolean).join(' · ')}</p></div>
+      <div className="row"><button className="btn primary" onClick=${()=>setMode('design')}>Open the design</button><button className="btn" onClick=${()=>setDlg('new')}>New or open a project…</button></div></div>
+    <div className="dash-grid">
+      <${DashCard} title="Checks" onOpen=${()=>setMode('check')} cls=${D.err.length?'bad':'ok'}><div className="dash-big">${D.err.length}<small>errors</small><span>${D.warn} warnings</span></div>
+        <ul className="dash-list">${D.err.slice(0,4).map(i=>html`<li key=${i.id}><button className="linkbtn" onClick=${()=>{if(i.level)setLevelId(i.level);setMode('design');if(i.target)setTimeout(()=>setSel(i.target),60);}}>${i.title}</button></li>`)}${!D.err.length?html`<li className="note">No errors. ${D.warn?D.warn+' warnings to review.':'Nothing to review.'}</li>`:null}</ul><//>
+      <${DashCard} title="Cost" onOpen=${()=>goCost('estimate')}>${D.est?html`<div className="dash-big">${dashMoney(D.est.total)}<small>estimate</small>${D.budget?html`<span>${dashMoney(D.budget.spent)} spent</span>`:null}</div>
+        ${D.budget?html`<div className="dash-bar"><i style=${{width:Math.min(100,D.budget.total?D.budget.spent/D.budget.total*100:0)+'%'}}></i></div><p className="note">${dashMoney(D.budget.total)} budget before markup · ${dashMoney(D.budget.cont)} contingency${D.est.unpriced?` · ${D.est.unpriced} items not priced`:''}</p>`:null}
+        ${D.co.length?html`<p className="note">${D.co.length} change order${D.co.length===1?'':'s'}, ${D.co.filter(c=>c.status==='pending').length} waiting for signature.</p>`:null}`:html`<p className="note">Draw walls to get an estimate.</p>`}<//>
+      <${DashCard} title="Schedule" onOpen=${()=>goBuild('schedule')}>${sched?html`<div className="dash-big">${fmt(sched.end)}<small>finish</small><span>${sched.workdays} workdays from ${fmt(sched.start)}</span></div>
+        ${D.phase&&D.phase.cur?html`<p><b>Now:</b> ${D.phase.cur.label} (through ${fmt(D.phase.cur.e)})</p>`:null}${D.phase&&D.phase.next?html`<p className="note"><b>Next:</b> ${D.phase.next.label}, ${fmt(D.phase.next.s)}</p>`:null}`:html`<p className="note">The schedule builds from the estimate's labor hours.</p>`}<//>
+      <${DashCard} title="Orders" onOpen=${()=>goCost('selections')}>${D.track?html`<div className="dash-chips">${D.track.by.filter(([l,n])=>n).map(([l,n])=>html`<span key=${l} className="chip">${l} <b>${n}</b></span>`)}</div>
+        ${D.track.late.length?html`<p className="note bad">${D.track.late.length} item${D.track.late.length===1?' is':'s are'} past the expected arrival date.</p>`:null}
+        <h4>Order by</h4><ul className="dash-list">${D.orders.slice(0,4).map(o=>html`<li key=${o.id} className=${o.late?'bad':''}><b>${fmtD(o.order)}</b> ${o.label}<small>${o.what}</small></li>`)}${!D.orders.length?html`<li className="note">No long-lead items yet.</li>`:null}</ul>`:null}<//>
+      <${DashCard} title="Field" onOpen=${()=>goBuild('field')}><div className="dash-big">${D.punch.length}<small>open punch items</small><span>${D.questions.length} questions · ${D.photos} wall photos</span></div>
+        <ul className="dash-list">${D.punch.slice(0,4).map(o=>html`<li key=${o.id}><button className="linkbtn" onClick=${()=>{setLevelId(o.level);setMode('design');setTimeout(()=>setSel({kind:'fieldpin',id:o.id}),60);}}>${o.text||'Punch item'}</button>${o.due?html`<small>due ${o.due}</small>`:null}</li>`)}</ul><//>
+      <${DashCard} title="Recent projects" onOpen=${()=>setDlg('open')} openLabel="Open…">${recent&&recent.length?html`<ul className="dash-list">${recent.slice(0,6).map(r=>html`<li key=${r.id||r.path}><button className="linkbtn" onClick=${()=>openRecent(r)}>${r.name}</button>${r.saved?html`<small>${new Date(r.saved).toLocaleDateString()}</small>`:null}</li>`)}</ul>`:html`<p className="note">Projects you save show here.</p>`}<//>
+    </div>
+    <p className="note dash-foot">Measure → Design → Check → Documents → Cost → Build. Press Ctrl+K anywhere to find a command or ask the project a question.</p>
+  </div></div>`;}
+WORKFLOWS.unshift({id:'home',label:'Home',pages:[['dashboard','Dashboard']],title:'The job at a glance'});
+/* ======================= 2.2 extras: my standards, water supply sizing, calendar export, inspection prep, bids, aging in place, voice notes ======================= */
+/* ---- My standards: defaults that every new project starts with ---- */
+const STD_KEY='remodel-studio:standards';
+function loadStandards(){try{return JSON.parse(localStorage.getItem(STD_KEY)||'null')||null;}catch(e){return null;}}
+function saveStandards(s){try{localStorage.setItem(STD_KEY,JSON.stringify(s));}catch(e){}}
+function standardsFrom(p){const s=p.settings||{};return {cab:s.cab||{},trim:s.trim||{},estimate:(({rates,markup,contingency,tax,dumpsterCost,selfLabor})=>({rates,markup,contingency,tax,dumpsterCost,selfLabor}))({...EST_DEFAULTS,...(p.estimate||{})}),
+  framing:(sortedLevels(p)[0]||{}).framing||{},energy:s.energy||{},nkba:s.nkba||{},ada:s.ada!==false,code:s.code||'irc',drawStd:s.drawStd||null,waste:s.waste??10,grid:s.grid||6,hwFinish:s.hwFinish||null,hwBrand:s.hwBrand||null,
+  selections:selOf(p),info:{designer:(p.info||{}).designer||''},savedAt:localDate()};}
+function applyStandards(p,S){if(!S)return p;const q={...p,settings:{...p.settings,cab:{...(S.cab||{})},trim:{...(S.trim||{})},energy:{...(S.energy||{})},nkba:{...(S.nkba||{})},ada:S.ada!==false,code:S.code||'irc',waste:S.waste??10,grid:S.grid||6,...(S.drawStd?{drawStd:S.drawStd}:{}),...(S.hwFinish?{hwFinish:S.hwFinish}:{}),...(S.hwBrand?{hwBrand:S.hwBrand}:{})},
+    estimate:{...(p.estimate||{}),...(S.estimate||{})},levels:p.levels.map(l=>({...l,framing:{...(S.framing||{}),...(l.framing||{})}})),info:{...(p.info||{}),designer:(p.info||{}).designer||(S.info||{}).designer||''}};
+  if(S.selections&&Object.keys(S.selections).length)q.settings={...q.settings,selections:{...(S.selections),...(selOf(p))}};return q;}
+// a new project the user starts gets their standards; the sample house, lesson rooms and picture previews do not
+function newStandardProject(){return applyStandards(blankProject(),loadStandards());}
+function StandardsModal({p,commit,onClose}){const [S,setS]=useState(loadStandards());const [msg,setMsg]=useState(null);
+  const lines=S?[['Cabinets',`${(CAB_STYLES.find(x=>x[0]===(S.cab.style||'shaker'))||['',''])[1]}, ${(CAB_FIN.find(x=>x[0]===(S.cab.finish||'white'))||['',''])[1]}, ${(CAB_LINES.find(x=>x[0]===(S.cab.line||'semi'))||['',''])[1]}${S.cab.vendor?', '+S.cab.vendor:''}`],
+    ['Trim',Object.entries(S.trim||{}).map(([k,v])=>(LIB_BY_ID[v]||{label:v}).label).join('; ')||'program defaults'],['Framing',`${S.framing.joist||'2x10'} floor joists at ${S.framing.spacing||16}", ${S.framing.ceiling||'2x6'} ceiling joists, ${S.framing.foundation||'crawl'}`],
+    ['Estimate',`${S.estimate.markup}% markup, ${S.estimate.contingency}% contingency, ${S.estimate.tax}% tax${S.estimate.selfLabor?', own labor':''}`],['Code',`${S.code==='ibc'?'2021 IBC':'2021 IRC'}${S.ada?', ADA checks on':''}${S.nkba&&S.nkba.on===false?'':', NKBA on'}`],['Energy',`Climate zone ${S.energy.zone||'3A'}`],['Saved',S.savedAt]]:[];
+  return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal" role="dialog" aria-label="My standards"><h2>My standards</h2>
+    <p className="note">Your defaults: cabinet line and finish, trim profiles, framing sizes, estimate rates and markup, code and energy settings, brand selections and hardware. Every new project starts with them, and you can apply them to any open project.</p>
+    ${S?html`<table className="mat"><tbody>${lines.map(([k,v])=>html`<tr key=${k}><td><b>${k}</b></td><td>${v}</td></tr>`)}</tbody></table>`:html`<p className="note">No standards saved yet. Set up a project the way you like it, then save it as your standards.</p>`}
+    ${msg?html`<p className="note">${msg}</p>`:null}
+    <div className="row"><button className="btn primary" onClick=${()=>{const s=standardsFrom(p);saveStandards(s);setS(s);setMsg("Saved this project's settings as your standards.");}}>Save this project's settings as my standards</button>
+      ${S?html`<button className="btn" onClick=${()=>{commit(applyStandards(p,S));setMsg('Applied to this project. Cabinets without their own style follow the new defaults.');}}>Apply my standards to this project</button><button className="btn danger" onClick=${()=>{try{localStorage.removeItem(STD_KEY);}catch(e){}setS(null);setMsg('Cleared.');}}>Clear</button>`:null}
+      <span className="spacer"></span><button className="btn" onClick=${onClose}>Close</button></div></div></div>`;}
+EXTRA_DIALOGS.standards=StandardsModal;
+
+/* ---- water supply sizing by branch (IRC P2903) and water heater sizing ---- */
+const SUPPLY_BRANCH=[[0.75,'1/2"'],[1.5,'1/2"'],[2.5,'3/4"'],[5,'3/4"'],[9,'3/4"'],[16,'1"'],[30,'1-1/4"'],[1e9,'1-1/2"']];// cumulative WSFU → branch size (P2903.7, 40-49 psi, short runs)
+function supplySizing(p){const fx=(p.fixtures||[]).filter(f=>f.status!=='demolish');const rooms=[];
+  for(const r of p.rooms){const list=[];for(const f of fx){if(f.level!==r.level||!inPoly(f.x,f.y,r.pts))continue;const t=f.type+' '+(FIXTURES[f.type]?.label||'')+' '+(f.name||'');const m=PLUMB.find(x=>x[1].test(t)&&!(x[0]==='cw'&&/dish/i.test(t)));if(m)list.push({k:m[0],label:m[2],wsfu:m[4],hot:m[0]!=='wc'&&m[0]!=='hb'});}
+    if(!list.length)continue;const wc=list.filter(x=>x.k==='wc').length,lav=list.filter(x=>x.k==='lav').length,ts=list.filter(x=>x.k==='tub'||x.k==='shower').length;const grp=Math.min(wc,lav,ts);
+    const wsfu=list.reduce((s,x)=>s+x.wsfu,0)-grp*(2.2+0.7+1.4-3.6);const hot=list.filter(x=>x.hot).reduce((s,x)=>s+x.wsfu*0.75,0);const cold=list.reduce((s,x)=>s+x.wsfu*(x.hot?0.75:1),0);
+    const size=w=>(SUPPLY_BRANCH.find(([lim])=>w<=lim)||SUPPLY_BRANCH[SUPPLY_BRANCH.length-1])[1];rooms.push({room:r,list,wsfu:Math.round(wsfu*10)/10,cold:size(cold),hot:size(hot),gpm:Math.round(gpmFor(wsfu)*10)/10});}
+  const P=plumbingCalc(p);const baths=Math.max(1,P.baths||0);const beds=p.rooms.filter(r=>r.use==='bedroom').length||2;const people=beds+1;
+  // first hour rating, DOE method: busiest hour = showers 20 gal each + shaving/hands + dishwasher share
+  const fhr=Math.round(people*20+(P.counts.dw?6:0)+(P.counts.cw?15:0)+8);const tank=fhr<=50?40:fhr<=65?50:fhr<=80?65:80;
+  const gpmPeak=Math.round((Math.min(baths,2)*2.0+(P.counts.ksink?1.5:0))*10)/10;const rise=70-(p.settings?.energy?.zone?({'1A':75,'2A':70,'3A':62,'4A':55,'5A':47}[p.settings.energy.zone]||55):62)+70-70;// 120°F set point minus ground water temp
+  const gw={'1A':75,'2A':70,'3A':62,'4A':55,'5A':47}[(p.settings&&p.settings.energy&&p.settings.energy.zone)||'3A']||62;
+  return {rooms,service:P.service,gpm:P.gpm,WSFU:P.WSFU,fhr,tank,people,gpmPeak,rise:120-gw,gw,tankless:gpmPeak>=5?'two units or a 199k BTU gas unit':gpmPeak>=3.5?'a 180–199k BTU gas unit':'a 150k BTU gas unit or 27 kW electric'};}
+function SupplySizingPanel({p}){const S=useMemo(()=>supplySizing(p),[p]);if(!S.rooms.length)return null;
+  return html`<section className="sec"><h3>Water supply branches (P2903) and water heater</h3>
+    <div className="tablewrap"><table className="mat"><thead><tr><th>Room</th><th>Fixtures</th><th className="num">WSFU</th><th className="num">Peak gpm</th><th>Cold branch</th><th>Hot branch</th></tr></thead><tbody>
+      ${S.rooms.map(r=>html`<tr key=${r.room.id}><td>${r.room.name}</td><td>${r.list.map(x=>x.label).join(', ')}</td><td className="num mono">${r.wsfu}</td><td className="num mono">${r.gpm}</td><td className="mono">${r.cold} PEX</td><td className="mono">${r.hot} PEX</td></tr>`)}</tbody></table></div>
+    <p className="note">Building: ${S.WSFU} WSFU, ${Math.round(S.gpm)} gpm peak, ${S.service} service and main (P2903.7 at 40–49 psi; upsize a step for runs over 60 ft or pressure under 40 psi). Runs to a single lavatory or toilet may be 3/8" PEX where the maker allows.</p>
+    <div className="rw-stats"><div><span>First-hour rating needed</span><b>${S.fhr} gal</b><small>${S.people} people, DOE method</small></div><div><span>Tank size</span><b>${S.tank} gal</b><small>gas or electric with that FHR</small></div><div><span>Tankless</span><b>${S.gpmPeak} gpm</b><small>at a ${S.rise}°F rise (${S.gw}°F ground water): ${S.tankless}</small></div></div></section>`;}
+SYS_EXTRA.plumb=[...(SYS_EXTRA.plumb||[]),SupplySizingPanel];
+
+/* ---- calendar export (.ics): job schedule, order-by dates, maintenance reminders ---- */
+function icsDate(d){const x=new Date(d);return x.getFullYear()+String(x.getMonth()+1).padStart(2,'0')+String(x.getDate()).padStart(2,'0');}
+function icsText(events,name){const esc=s=>String(s||'').replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/[,;]/g,m=>'\\'+m);const stamp=new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z';
+  const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Remodel Studio//EN','CALSCALE:GREGORIAN','X-WR-CALNAME:'+esc(name)];
+  for(const e of events){const end=new Date(e.end||e.start);end.setDate(end.getDate()+1);L.push('BEGIN:VEVENT','UID:'+e.uid+'@remodelstudio','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+icsDate(e.start),'DTEND;VALUE=DATE:'+icsDate(end),'SUMMARY:'+esc(e.title));if(e.desc)L.push('DESCRIPTION:'+esc(e.desc));if(e.rrule)L.push('RRULE:'+e.rrule);if(e.alarm)L.push('BEGIN:VALARM','TRIGGER:-P1D','ACTION:DISPLAY','DESCRIPTION:'+esc(e.title),'END:VALARM');L.push('END:VEVENT');}
+  L.push('END:VCALENDAR');return L.join('\r\n')+'\r\n';}
+function scheduleEvents(p){const J=jobSchedule(p);const ev=J.rows.map(r=>({uid:'ph-'+r.id+'-'+p.id,start:r.s,end:r.e,title:`${p.name}: ${r.label}`,desc:r.milestone?'Inspection or milestone':`${r.days} workday${r.days===1?'':'s'}, crew of ${r.crew||J.S.crew}`,alarm:!!r.milestone}));
+  for(const o of orderDates(p,J))if(o.order)ev.push({uid:'ord-'+o.id+'-'+p.id,start:o.order,title:`Order: ${o.label.replace(' (tracker)','')}`,desc:`${o.what}. Needed ${fmtD(o.need)}; ${o.days} workday lead time.`,alarm:true});return ev;}
+function maintenanceEvents(p){const d0=new Date();const ev=[];const add=(title,desc,rrule,offsetDays)=>{const s=new Date(d0);s.setDate(s.getDate()+offsetDays);ev.push({uid:'mt-'+title.replace(/\W+/g,'').slice(0,20)+'-'+p.id,start:s,title:`${p.name}: ${title}`,desc,rrule,alarm:true});};
+  add('Test smoke and CO alarms, GFCIs; check the HVAC filter','Monthly home check (IRC R314, R315).','FREQ=MONTHLY',30);add('Replace the HVAC filter','Every 1 to 3 months depending on the filter.','FREQ=MONTHLY;INTERVAL=2',60);
+  add('Clean the range hood filter; check under sinks; clean gutters','Twice a year.','FREQ=MONTHLY;INTERVAL=6',90);add('Yearly: smoke alarm batteries, flush the water heater, clean the dryer vent, re-caulk wet areas, HVAC service','Once a year.','FREQ=YEARLY',365);
+  for(const f of (p.fixtures||[])){const m=applOf&&applOf(f);const t=trackFor(p,'fx:'+f.id)||{};const inst=t.installed||t.delivered;if(m&&inst){const yrs=+(((p.binder||{}).warranty||{})['fx:'+f.id]??1);const x=new Date(inst+'T12:00:00');x.setFullYear(x.getFullYear()+yrs);x.setDate(x.getDate()-30);ev.push({uid:'wty-'+f.id,start:x,title:`Warranty ends in 30 days: ${m.brand} ${m.model}`,desc:'Check for problems before coverage ends.',alarm:true});}}
+  return ev;}
+function CalendarExportPanel({p}){const [msg,setMsg]=useState(null);const go=async(kind)=>{try{const ev=kind==='sched'?scheduleEvents(p):maintenanceEvents(p);const r=await saveFile(safeName(p.name)+(kind==='sched'?' schedule':' maintenance')+'.ics',icsText(ev,p.name+(kind==='sched'?' schedule':' maintenance')));setMsg(`${r.t} ${ev.length} events. Open the file to add them to your phone or Google Calendar.`);}catch(e){setMsg(e.message||String(e));}};
+  return html`<section className="sec"><h3>Put it on your calendar</h3><p className="note">An .ics file opens in Google Calendar, Outlook, iPhone and Android. The schedule file has every phase, inspection and order-by date with a reminder the day before; the maintenance file has the recurring reminders from the homeowner binder and appliance warranty end dates.</p>
+    <div className="row"><button className="btn primary" onClick=${()=>go('sched')}>Schedule and order dates (.ics)</button><button className="btn" onClick=${()=>go('maint')}>Maintenance reminders (.ics)</button></div>${msg?html`<p className="note">${msg}</p>`:null}</section>`;}
+{const _SV=ScheduleView;ScheduleView=function(props){return html`<${_SV} ...${props}/><${CalendarExportPanel} ...${props}/>`;};}
+
+/* ---- inspection prep by phase: what the inspector looks for, drawn from this model ---- */
+function inspectionPrep(p){const out=[];const L=(phase,items)=>out.push({phase,items});const fx=(p.fixtures||[]).filter(f=>f.status!=='demolish');const g=groundLevel(p);const fr=framingOf(g);let hs=[];try{hs=headerSchedule(p);}catch(e){}
+  let I=[];try{I=runChecks(p);}catch(e){}const err=(re)=>I.filter(i=>i.sev==='error'&&re.test(i.title+' '+(i.rule&&i.rule.code||''))).map(i=>'\u26a0 '+i.title);
+  const found=fr.foundation||'crawl';if(found!=='slab'||p.walls.some(w=>w.status==='new'&&w.kind==='exterior'))L('Footing and foundation',[`Footings below frost depth, ${found==='slab'?'thickened slab edge':'continuous footing'} sized for the soil (R403.1)`,'Rebar in place before the pour where required; anchor bolts laid out 6 ft o.c. and within 12 in of plate ends (R403.1.6)','Foundation vents or conditioned crawl (R408); crawlspace access 18 x 24 in (R408.4)','Grade sloped 6 in in the first 10 ft away from the house (R401.3)',...err(/footing|foundation|crawl/i)]);
+  L('Framing',[`Headers per the schedule: ${hs.slice(0,6).map(h=>h.mark+' '+h.header).join(', ')}${hs.length>6?'…':''} (R602.7)`,`Floor joists ${joistLabel(joistOpt(g))} at ${fr.spacing||16} in o.c. with rim and blocking; holes and notches within R502.8`,'Fire blocking at soffits, drops and tops of walls; draft stopping (R302.11)','Hurricane ties at every rafter or truss; truss layout matches the engineering (R802.11)','Stair geometry: risers 7-3/4 max, treads 10 min, 6 ft 8 in headroom (R311.7)','Egress windows in every bedroom: 5.7 sq ft clear, sill 44 in max (R310)',...err(/header|joist|rafter|stair|egress|span|beam/i)]);
+  L('Rough plumbing, electrical and mechanical',[`Drain, waste and vent sizes per the riser (P3005): building drain ${(()=>{try{return drainSizing(p).building;}catch(e){return '3 in';}})()}`,'Water test or air test on the DWV with the inspector watching (P2503.5)','Nail plates where pipes and cables are within 1-1/4 in of a stud face (P2603.2.1, E3802.1)','Receptacle spacing 12 ft, counters every 4 ft, GFCI and AFCI per E3902; smoke and CO alarms interconnected (R314, R315)','Bath fans vented outdoors; range hood over 400 cfm needs makeup air (M1503.6)','Dryer duct 35 ft max developed length with no screws (M1502)',...err(/outlet|recept|gfci|afci|drain|vent|duct|smoke/i)]);
+  L('Insulation',[`Walls R-${energyOf(p).wallCav}${energyOf(p).wallCi?' + R-'+energyOf(p).wallCi+' continuous':''}, ceiling R-${energyOf(p).ceil}, floor R-${energyOf(p).floor} (N1102.1.2)`,'Baffles at every eave bay; insulation in contact with the air barrier (N1102.4.1.1)','Air sealing at top plates, penetrations, windows and doors before drywall','Vapor retarder class per climate zone (R702.7)']);
+  L('Final',['Handrails 34–38 in, guards 36 in with a 4 in sphere rule (R311.7.8, R312)','Tempered glass at tubs, showers, doors and within 24 in of doors (R308.4)','Smoke and CO alarms working; GFCI and AFCI test; panel labeled (E3706.2)','Water heater T&P discharge to within 6 in of the floor; expansion tank if there is a check valve (P2804)','Address numbers visible from the street (R319); landings at exterior doors (R311.3)',...fx.filter(f=>applOf&&applOf(f)).map(f=>`${applOf(f).brand} ${applOf(f).model} installed with its listed clearances`).slice(0,4),...err(/landing|threshold|handrail|guard|tempered/i)]);
+  return out;}
+function InspectionPrepView({p,commit}){const P=useMemo(()=>inspectionPrep(p),[p]);const done=(p.settings&&p.settings.inspDone)||{};const key=(ph,it)=>ph+'|'+it;
+  const tick=(k,v)=>{const nd={...done};if(v)nd[k]=localDate();else delete nd[k];commit({...p,settings:{...(p.settings||{}),inspDone:nd}});};
+  return html`<div className="insp-prep"><div className="mathead"><div><h2>Inspection prep</h2><p className="note">What the inspector checks at each visit, with this job's own sizes filled in. Tick items as you verify them (saved with the project); print it and take it along. Items marked \u26a0 are open errors from the Check page.</p></div>
+      <div className="row"><button className="btn" onClick=${()=>window.print()}>Print</button></div></div>
+    ${P.map(ph=>html`<section key=${ph.phase} className="sec"><h3>${ph.phase} <small className="note">${ph.items.filter(it=>done[key(ph.phase,it)]).length} of ${ph.items.length}</small></h3><ul className="insp-list">${ph.items.map(it=>html`<li key=${it} className=${it.startsWith('\u26a0')?'open':''}><label className="chk"><input type="checkbox" checked=${!!done[key(ph.phase,it)]} onChange=${e=>tick(key(ph.phase,it),e.target.checked)}/> ${it}${done[key(ph.phase,it)]?html`<small className="note"> ${done[key(ph.phase,it)]}</small>`:null}</label></li>`)}</ul></section>`)}</div>`;}
+BUILD_TABS.push(['inspections','Inspection prep',InspectionPrepView]);
+
+/* ---- bid requests and bid comparison ---- */
+function scopeByTrade(p){let rows=[];try{rows=takeoff(p,{waste:(p.settings?.waste??10)/100});}catch(e){}const prices=p.prices||{};const by={};
+  for(const r of rows){const [t]=laborFor(r);if(!t)continue;const pr=prices[r.key.replace(/\|(new|demo)$/,'')]??r.price;(by[t]=by[t]||{t,label:TRADE_LABEL[t]||t,items:[],mat:0,hours:0}).items.push(r);if(pr!=null)by[t].mat+=pr*r.qty;by[t].hours+=laborFor(r)[1]||0;}
+  let E=null;try{E=estimateOf(p);}catch(e){}for(const k in by){const l=E&&E.labor.find(x=>x.t===k);by[k].labor=l?l.cost:0;by[k].hours=l?l.h:Math.round(by[k].hours);}
+  return Object.values(by).sort((a,b)=>TRADES.findIndex(x=>x[0]===a.t)-TRADES.findIndex(x=>x[0]===b.t));}
+async function bidRequestPDF(p,T){await loadJsPDF();const {jsPDF}=window.jspdf;const d=new jsPDF({unit:'in',format:'letter'});d.setLineWidth(0.01);const L=0.75;let y=0.9;const info=p.info||{};
+  d.setFont('helvetica','bold');d.setFontSize(16);d.text('REQUEST FOR BID',L,y);d.setFontSize(11);d.text(T.label,7.75,y,{align:'right'});y+=0.35;d.setFont('helvetica','normal');d.setFontSize(10);
+  for(const l of [`Job: ${p.name}${info.address?' · '+info.address:''}`,info.designer?`Contact: ${info.designer}`:'',`Date: ${new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'})}`,`Please bid labor${T.supply?' and materials':' only; materials listed are furnished by the owner unless you note otherwise'}.`])if(l){const ls=d.splitTextToSize(l,7);d.text(ls,L,y);y+=0.2*ls.length;}
+  y+=0.1;d.setFont('helvetica','bold');d.text('Scope of work',L,y);y+=0.22;d.setFont('helvetica','normal');
+  for(const s of (T.scope||'').split('\n').filter(Boolean)){const ls=d.splitTextToSize('• '+s,7);if(y+ls.length*0.18>10.3){d.addPage();y=0.9;}d.text(ls,L,y);y+=ls.length*0.18;}
+  y+=0.15;d.setFont('helvetica','bold');d.text('Quantities from the plan',L,y);d.text('Qty',6.6,y,{align:'right'});d.text('Unit',7.75,y,{align:'right'});y+=0.08;d.line(L,y,7.75,y);y+=0.2;d.setFont('helvetica','normal');d.setFontSize(9);
+  for(const r of T.items.slice(0,80)){if(y>10.3){d.addPage();y=0.9;}const ls=d.splitTextToSize(r.item,5.4);d.text(ls,L,y);d.text(String(Math.round(r.qty*10)/10),6.6,y,{align:'right'});d.text(r.unit,7.75,y,{align:'right'});y+=ls.length*0.17;}
+  y+=0.3;d.setFontSize(10);for(const l of ['Bid amount: $______________    Days to complete: ______    Start available: ____________','Include: license number, insurance certificate, and what is excluded.','Signature: _______________________________   Date: ______________']){if(y>10.3){d.addPage();y=0.9;}d.text(l,L,y);y+=0.3;}return d;}
+function BidsView({p,commit}){const trades=useMemo(()=>scopeByTrade(p),[p]);const B=p.bids||{};const [msg,setMsg]=useState(null);const [cur,setCur]=useState(trades[0]&&trades[0].t);const T=trades.find(x=>x.t===cur)||trades[0];
+  const bt=T?(B[T.t]||{}):{};const setB=patch=>commit({...p,bids:{...B,[T.t]:{...bt,...patch}}});const quotes=bt.quotes||[{},{},{}];const setQ=(i,patch)=>setB({quotes:quotes.map((q,j)=>j===i?{...q,...patch}:q)});
+  const defScope=T?[`${T.label} for the ${p.name} remodel as drawn.`,`Approximately ${T.hours} labor hours by the plan estimate.`,'Protect finished surfaces; clean up daily; haul your own debris.','Work to the 2021 IRC and the drawings; call for your own inspections.'].join('\n'):'';
+  const est=T?T.labor+(bt.supply?T.mat:0):0;const money=v=>v||v===0?'$'+Math.round(+v).toLocaleString():'';
+  if(!trades.length)return html`<p className="note">Draw the job first; bids are requested by trade from the builder's list.</p>`;
+  return html`<div><div className="mathead"><div><h2>Bids</h2><p className="note">One scope of work per trade from the builder's list. Send the bid request, then enter up to three quotes and compare them with the plan estimate.</p></div></div>
+    <div className="seg mattabs" role="tablist">${trades.map(x=>html`<button key=${x.t} role="tab" aria-selected=${T.t===x.t} className=${T.t===x.t?'on':''} onClick=${()=>setCur(x.t)}>${x.label}${(B[x.t]||{}).quotes&&(B[x.t].quotes||[]).some(q=>q.amount)?' ✓':''}</button>`)}</div>
+    <section className="sec"><h3>${T.label}: scope of work</h3><textarea className="inp" rows="5" key=${T.t} defaultValue=${bt.scope??defScope} onBlur=${e=>setB({scope:e.target.value})} aria-label="Scope of work"></textarea>
+      <label className="chk"><input type="checkbox" checked=${!!bt.supply} onChange=${e=>setB({supply:e.target.checked})}/> Bidder supplies materials too (${money(T.mat)} of materials on the list)</label>
+      <div className="row"><button className="btn primary" onClick=${async()=>{try{const d=await bidRequestPDF(p,{...T,scope:bt.scope??defScope,supply:bt.supply});setMsg((await saveFile(safeName(p.name)+' bid request '+safeName(T.label)+'.pdf',d.output('blob'))).t);}catch(e){setMsg(e.message);}}}>Bid request PDF</button><span className="note">${T.items.length} line items · plan estimate ${money(est)} (${T.hours} h labor${bt.supply?' + materials':''})</span></div></section>
+    <section className="sec"><h3>Quotes</h3><div className="tablewrap"><table className="mat"><thead><tr><th>Bidder</th><th className="num">Amount</th><th className="num">Days</th><th>Start</th><th>Notes</th><th className="num">vs estimate</th><th></th></tr></thead><tbody>
+      ${quotes.map((q,i)=>html`<tr key=${i} className=${bt.pick===i?'pick':''}><td><input className="inp" aria-label="Bidder" key=${T.t+i+'n'} defaultValue=${q.who||''} onBlur=${e=>setQ(i,{who:e.target.value})}/></td><td><input className="inp mono num" aria-label="Amount" key=${T.t+i+'a'} defaultValue=${q.amount??''} onBlur=${e=>setQ(i,{amount:e.target.value===''?null:+e.target.value.replace(/[$,]/g,'')})}/></td>
+        <td><input className="inp mono num" aria-label="Days" key=${T.t+i+'d'} defaultValue=${q.days??''} onBlur=${e=>setQ(i,{days:e.target.value===''?null:+e.target.value})}/></td><td><input className="inp" type="date" aria-label="Start" value=${q.start||''} onChange=${e=>setQ(i,{start:e.target.value})}/></td><td><input className="inp" aria-label="Notes" key=${T.t+i+'t'} defaultValue=${q.note||''} onBlur=${e=>setQ(i,{note:e.target.value})}/></td>
+        <td className=${'num mono '+(q.amount!=null&&q.amount>est?'bad':q.amount!=null?'ok':'')}>${q.amount!=null&&est?(q.amount>=est?'+':'−')+money(Math.abs(q.amount-est)):''}</td><td><button className=${'btn small'+(bt.pick===i?' primary':'')} onClick=${()=>setB({pick:bt.pick===i?null:i})}>${bt.pick===i?'Chosen':'Choose'}</button></td></tr>`)}</tbody></table></div>
+      <p className="note">The plan estimate for this trade is ${money(est)}. ${bt.pick!=null&&quotes[bt.pick]&&quotes[bt.pick].amount!=null?`Chosen bid: ${quotes[bt.pick].who||'bidder '+(bt.pick+1)} at ${money(quotes[bt.pick].amount)}.`:''}</p>${msg?html`<p className="note">${msg}</p>`:null}</section>
+    ${Object.keys(B).some(k=>(B[k].quotes||[]).some(q=>q.amount!=null))?html`<section className="sec"><h3>All trades</h3><table className="mat"><thead><tr><th>Trade</th><th className="num">Estimate</th><th className="num">Low bid</th><th className="num">Chosen</th></tr></thead><tbody>${trades.map(x=>{const b=B[x.t]||{};const qs=(b.quotes||[]).filter(q=>q.amount!=null);const e=x.labor+(b.supply?x.mat:0);const low=qs.length?Math.min(...qs.map(q=>q.amount)):null;const ch=b.pick!=null&&b.quotes&&b.quotes[b.pick]&&b.quotes[b.pick].amount;
+      return html`<tr key=${x.t}><td>${x.label}</td><td className="num mono">${money(e)}</td><td className="num mono">${low!=null?money(low):''}</td><td className="num mono">${ch!=null?money(ch):''}</td></tr>`;})}</tbody></table></section>`:null}</div>`;}
+MAT_EXTRA.push(['bids','Bids',BidsView]);
+
+/* ---- aging in place / universal design checklist (beyond the ADA checks) ---- */
+function agingChecks(p){const out=[];const fx=(p.fixtures||[]).filter(f=>f.status!=='demolish');const R=(ok,title,detail,sev='warn')=>out.push({ok,title,detail,sev});
+  const doors=p.openings.filter(o=>o.type==='door'&&o.status!=='demolish');const narrow=doors.filter(o=>o.width<32);R(!narrow.length,'Doors 32" clear or wider',narrow.length?`${narrow.length} door${narrow.length===1?'':'s'} under 32" (a 34" door gives 32" clear).`:'Every door gives a walker or chair room.');
+  const lever=doors.every(o=>{try{return /lever/i.test(hwName(doorSpec(p,o)));}catch(e){return true;}});R(lever,'Lever handles on every door','Levers work with a closed fist or an elbow.');
+  const showers=fx.filter(f=>f.type==='shower'||f.type==='rollin');R(!showers.length||showers.some(f=>f.type==='rollin'||(f.w>=60&&f.d>=36)),'Zero-threshold or 60 x 36 shower','A curbless shower with a fold-down seat and a hand-held spray on a slide bar.');
+  const baths=p.rooms.filter(r=>r.use==='bath');R(baths.some(r=>p.levels[0].id===r.level)||!baths.length,'A full bath on the entry level','One bedroom and a full bath on the main floor let someone stay home after surgery or a fall.');
+  const beds=p.rooms.filter(r=>r.use==='bedroom');R(beds.some(r=>r.level===groundLevel(p).id)||!beds.length,'A bedroom on the entry level','');
+  const stairs=(p.stairs||[]);R(!stairs.length||stairs.every(s=>(s.width||36)>=36),'Stairs 36" wide with handrails both sides','Room for a future stair lift (most need 30" clear) and two rails.');
+  const ext=doors.filter(o=>(p.walls.find(w=>w.id===o.wall)||{}).kind==='exterior');R(ext.some(o=>(o.threshold||0.5)<=0.5),'One step-free entry with a 1/2" threshold or less','A covered entry with a 5 x 5 ft landing, a bench and lighting; a ramp at 1:12 or gentler if there are steps.');
+  const grab=fx.filter(f=>f.type==='grabbar').length;const wc=fx.filter(f=>f.type==='toilet').length;R(grab>=wc*2||!wc,'Grab bars (or blocking for them) at every toilet and shower','Blocking 33"–36" above the floor in the wall framing costs almost nothing now; see Typical details sheet D1.1.');
+  const cans=(p.elec||[]).filter(d=>LUMENS[d.type]&&d.status!=='demolish');const kitchens=p.rooms.filter(r=>r.use==='kitchen');const kLights=cans.filter(d=>kitchens.some(r=>r.level===d.level&&inPoly(d.x,d.y,r.pts)));R(!kitchens.length||kLights.length>=3,'Bright, even kitchen lighting with task lights under the wall cabinets','Older eyes need two to three times the light; 3000–3500 K, high CRI, no glare.');
+  const sw=(p.elec||[]).filter(d=>['switch','switch3','dimmer'].includes(d.type));R(sw.every(d=>(d.elev||48)<=48),'Switches 48" or lower, outlets 18" or higher','Reachable from a seated position; rocker switches.');
+  const dcab=fx.filter(f=>isCab(f)&&/drawer/i.test(cabLayout(f)||''));const base=fx.filter(f=>f.type==='base');R(!base.length||dcab.length>=Math.ceil(base.length/2),'Drawers instead of doors in base cabinets','Pull-outs and drawers avoid kneeling and reaching; D-pulls instead of knobs.');
+  const counters=fx.filter(f=>COUNTERTOP.has(f.type)&&f.h&&f.h<=34);R(!kitchens.length||counters.length>0,'One lower work surface (30–34")','A seated prep spot; also the ADA 804.3 item.');
+  const ovens=fx.filter(f=>applOf&&applOf(f)&&applOf(f).type==='wall oven');R(!ovens.length||ovens.every(f=>true),'Side-opening or wall oven at counter height, and a landing beside it','No bending over an open door with a hot pan.');
+  R(p.rooms.every(r=>!['bath','kitchen','laundry'].includes(r.use)||['tile','lvp','concrete'].includes(roomFloor(r))),'Slip-resistant, low-glare flooring; no thresholds between rooms','Matte tile (DCOF 0.42+), LVP or cork; avoid rugs.');
+  return out;}
+function AgingPanel({p}){const list=useMemo(()=>agingChecks(p),[p]);const ok=list.filter(x=>x.ok).length;
+  return html`<section className="sec"><h3>Aging in place (universal design)</h3><p className="note">${ok} of ${list.length} met. These go beyond the code and ADA checks: they are what keeps a house livable through a knee replacement, a walker or a wheelchair.</p>
+    <ul className="aging">${list.map(x=>html`<li key=${x.title} className=${x.ok?'ok':'todo'}><span className="ck-dot ${x.ok?'good':'warn'}"></span><div><b>${x.title}</b>${x.detail?html`<div className="note">${x.detail}</div>`:null}</div></li>`)}</ul></section>`;}
+{const _CV=CheckView;CheckView=function(props){const r=_CV(props);return html`<div className="ck-wrap">${r}<div className="ck-extra"><${AgingPanel} p=${props.p}/></div></div>`;};}
+
+/* ---- voice notes: dictate a field pin's note with the browser's speech recognition ---- */
+function VoiceButton({onText,lang='en-US'}){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;const [on,setOn]=useState(false);const rec=useRef(null);if(!SR)return null;
+  const start=()=>{if(on){rec.current&&rec.current.stop();return;}const r=new SR();r.lang=lang;r.interimResults=false;r.maxAlternatives=1;r.onresult=e=>{const t=e.results[0][0].transcript;onText(t);};r.onend=()=>setOn(false);r.onerror=()=>setOn(false);rec.current=r;r.start();setOn(true);};
+  return html`<button className=${'btn small'+(on?' primary':'')} onClick=${start} title="Dictate (uses the browser's speech recognition)">${on?'Listening… tap to stop':'🎤 Dictate'}</button>`;}
+{const old=OBJ.fieldpin&&OBJ.fieldpin.panel;if(old)OBJ.fieldpin.panel=(o,ctx)=>html`${old(o,ctx)}<div className="sec"><${VoiceButton} onText=${t=>ctx.up({text:((o.text||'')+' '+t).trim()})}/><span className="note"> Speak the note; it is added to the text above.</span></div>`;}
+{const old=OBJ.wallphoto&&OBJ.wallphoto.panel;if(old)OBJ.wallphoto.panel=(o,ctx)=>html`${old(o,ctx)}<div className="sec"><${VoiceButton} onText=${t=>ctx.up({note:((o.note||'')+' '+t).trim()})}/></div>`;}
+/* ======================= sheet-goods cut optimizer: nest the builder's list onto 4x8 and 4x12 sheets with a cut diagram ======================= */
+// Pieces come from the plan: drywall by wall and ceiling (full-height strips), subfloor and sheathing by area strips,
+// backer board by tile zones, plywood for shop-built items you add by hand. Guillotine nesting (shelf by shelf), kerf 1/8".
+const SHEETS={dw412:{label:'1/2" drywall 4 x 12',w:48,h:144,cat:'Drywall'},dw48:{label:'1/2" drywall 4 x 8',w:48,h:96,cat:'Drywall'},ply48:{label:'3/4" plywood 4 x 8',w:48,h:96,cat:'Plywood'},osb48:{label:'7/16" OSB 4 x 8',w:48,h:96,cat:'Sheathing'},sub48:{label:'3/4" T&G subfloor 4 x 8',w:48,h:96,cat:'Floor framing'},cbu35:{label:'1/2" cement board 3 x 5',w:36,h:60,cat:'Tile'}};
+function cutPiecesFromModel(p,dwLen=144){const out=[];const add=(sheet,w,h,label,n=1,rot=true)=>{for(let i=0;i<n;i++)out.push({sheet,w:Math.round(w*8)/8,h:Math.round(h*8)/8,label,rot});};
+  for(const lv of sortedLevels(p)){const H=lv.height;
+    for(const w of p.walls.filter(w=>w.level===lv.id&&w.status!=='demolish'&&w.status!=='existing')){const L=wlen(w);const sides=w.kind==='exterior'?1:2;const opsA=p.openings.filter(o=>o.wall===w.id).reduce((s,o)=>s+o.width*o.height,0);
+      // horizontal 4-ft courses, full-length strips cut from 12s; openings reduce count a little
+      const courses=Math.ceil(H/48);let rem=L*(1-Math.min(0.5,opsA/(L*H||1)));for(let c=0;c<courses;c++){const h=Math.min(48,H-c*48);let x=0;while(x<rem-0.5){const len=Math.min(dwLen,rem-x);add('dw412',h,len,`${w.kind==='exterior'?'Ext':'Int'} wall ${fmtLen(L)} course ${c+1}`,sides,false);x+=len;}}}
+    for(const r of p.rooms.filter(r=>r.level===lv.id)){const xs=r.pts.map(q=>q[0]),ys=r.pts.map(q=>q[1]);const W=Math.max(...xs)-Math.min(...xs),D=Math.max(...ys)-Math.min(...ys);const [a,b]=W>=D?[W,D]:[D,W];
+      for(let y=0;y<b;y+=48){const h=Math.min(48,b-y);for(let x=0;x<a;x+=dwLen)add('dw412',h,Math.min(dwLen,a-x),`${r.name} ceiling`,1,false);}
+      const fin=roomFloor(r);const first=groundLevel(p).id===lv.id;const fr=framingOf(lv);if(!(first&&fr.foundation==='slab')){for(let y=0;y<b;y+=48){const h=Math.min(48,b-y);for(let x=0;x<a;x+=96)add('sub48',h,Math.min(96,a-x),`${r.name} subfloor`,1,false);}}
+      if(fin==='tile'||fin==='porcelain'||fin==='stone'){for(let y=0;y<b;y+=36){const h=Math.min(36,b-y);for(let x=0;x<a;x+=60)add('cbu35',h,Math.min(60,a-x),`${r.name} floor backer`,1,true);}}
+      try{for(const z of tileZones(p,r)){const zw=(z.s1-z.s0)||0,zh=(z.z1-z.z0)||0;if(zw>0&&zh>0)for(let y=0;y<zh;y+=36){const h=Math.min(36,zh-y);for(let x=0;x<zw;x+=60)add('cbu35',h,Math.min(60,zw-x),`${r.name} ${z.kind||'tile'} backer`,1,true);}}}catch(e){}}
+    for(const w of p.walls.filter(w=>w.level===lv.id&&w.kind==='exterior'&&w.status!=='demolish'&&w.status!=='existing')){const L=wlen(w);for(let x=0;x<L;x+=48)for(let z=0;z<H;z+=96)add('osb48',Math.min(48,L-x),Math.min(96,H-z),`Sheathing ${fmtLen(L)} wall`,1,true);}}
+  for(const c of (p.cutExtra||[]))add(c.sheet||'ply48',+c.w||0,+c.h||0,c.label||'Custom piece',+c.n||1,c.rot!==false);
+  return out.filter(x=>x.w>0&&x.h>0);}
+// shelf nesting: sort by height, fill rows across the sheet, rotate a piece if it fits better
+function nestSheets(pieces,S,kerf=0.125){const P=pieces.map(x=>({...x})).sort((a,b)=>Math.max(b.w,b.h)-Math.max(a.w,a.h));const sheets=[];
+  for(const pc of P){let placed=false;for(const sh of sheets){if(tryPlace(sh,pc,S,kerf)){placed=true;break;}}if(!placed){const sh={shelves:[],used:0,pieces:[]};if(!tryPlace(sh,pc,S,kerf)){pc.tooBig=true;sheets.push({shelves:[],used:0,pieces:[{...pc,x:0,y:0,bad:true}]});}else sheets.push(sh);}}
+  return sheets;}
+function tryPlace(sh,pc,S,kerf){const fits=(w,h)=>w<=S.w+1e-6&&h<=S.h+1e-6;const opts=[[pc.w,pc.h]];if(pc.rot!==false)opts.push([pc.h,pc.w]);
+  for(const shelf of sh.shelves){for(const [w,h] of opts){if(h<=shelf.h&&shelf.x+w<=S.w+1e-6&&fits(w,h)){sh.pieces.push({...pc,x:shelf.x,y:shelf.y,w,h});shelf.x+=w+kerf;return true;}}}
+  for(const [w,h] of opts){if(fits(w,h)&&sh.used+h<=S.h+1e-6){const shelf={y:sh.used,h,x:0};sh.shelves.push(shelf);sh.pieces.push({...pc,x:0,y:shelf.y,w,h});shelf.x=w+kerf;sh.used+=h+kerf;return true;}}return false;}
+function CutSheetSVG({S,sheet,i}){const sc=Math.min(260/S.w,420/S.h);const used=sheet.pieces.reduce((s,q)=>s+q.w*q.h,0)/(S.w*S.h);
+  return html`<figure className="cut-sheet"><svg viewBox=${`0 0 ${S.w} ${S.h}`} width=${S.w*sc} height=${S.h*sc} aria-label=${`Sheet ${i+1}`}><rect x="0" y="0" width=${S.w} height=${S.h} fill="#f5efe2" stroke="#444" strokeWidth="0.6"/>
+      ${sheet.pieces.map((q,j)=>html`<g key=${j}><rect x=${q.x} y=${q.y} width=${q.w} height=${q.h} fill=${q.bad?'#f7c6c6':['#cfe2f3','#d9ead3','#fde9c9','#e4d6f5','#d0ecea'][j%5]} stroke="#333" strokeWidth="0.4"/><text x=${q.x+q.w/2} y=${q.y+q.h/2} fontSize=${Math.max(2.4,Math.min(5,q.w/8))} textAnchor="middle" dominantBaseline="middle" fill="#222">${fmtLen(q.w)} × ${fmtLen(q.h)}</text></g>`)}</svg>
+    <figcaption>Sheet ${i+1} · ${Math.round(used*100)}% used</figcaption></figure>`;}
+function CutOptimizerView({p,commit}){const [alt,setAlt]=useState(false);const pieces=useMemo(()=>cutPiecesFromModel(p,alt?96:144),[p,alt]);const kinds=[...new Set(pieces.map(x=>x.sheet))];const [kind,setKind]=useState(kinds[0]||'dw412');
+  const S=SHEETS[kind]||SHEETS.dw412;const Suse=kind==='dw412'&&alt?SHEETS.dw48:S;const list=useMemo(()=>pieces.filter(x=>x.sheet===kind),[pieces,kind]);const sheets=useMemo(()=>nestSheets(list,Suse),[list,Suse]);
+  const area=list.reduce((s,q)=>s+q.w*q.h,0);const yieldPct=sheets.length?Math.round(area/(sheets.length*Suse.w*Suse.h)*100):0;const extra=p.cutExtra||[];const setExtra=l=>commit({...p,cutExtra:l});
+  const csv=()=>{const q=s=>'"'+String(s).replace(/"/g,'""')+'"';return [['Sheet','Piece','Width','Height','X','Y'].map(q).join(','),...sheets.flatMap((sh,i)=>sh.pieces.map(pc=>[i+1,pc.label,pc.w,pc.h,pc.x,pc.y].map(q).join(',')))].join('\n');};
+  return html`<div className="cutopt"><div className="mathead"><div><h2>Sheet-goods cut plan</h2><p className="note">Drywall, subfloor, sheathing and backer board from the plan, plus any plywood pieces you add (shelves, cabinet boxes, built-ins). Shelf-cut nesting with a 1/8" kerf. Full sheets of a material you buy by the sheet anyway are counted, not drawn.</p></div>
+      <div className="row"><label>Material <select className="inp" value=${kind} onChange=${e=>setKind(e.target.value)}>${Object.entries(SHEETS).map(([k,v])=>html`<option key=${k} value=${k}>${v.label}${kinds.includes(k)?'':' (none)'}</option>`)}</select></label>${kind==='dw412'?html`<label className="chk"><input type="checkbox" checked=${alt} onChange=${e=>setAlt(e.target.checked)}/> Use 4 x 8 sheets instead</label>`:null}
+        <button className="btn" onClick=${async()=>{const r=await saveFile(safeName(p.name)+'-cutlist-'+kind+'.csv',csv());if(!r.ok)alert(r.t);}}>Cut list CSV</button></div></div>
+    <div className="rw-stats"><div><span>Pieces</span><b>${list.length}</b></div><div><span>Sheets of ${Suse.label}</span><b>${sheets.length}</b></div><div><span>Yield</span><b>${yieldPct}%</b><small>${Math.round(area/144)} sq ft of pieces</small></div><div><span>Waste</span><b>${sheets.length?Math.round((sheets.length*Suse.w*Suse.h-area)/144):0} sq ft</b></div></div>
+    <section className="sec"><h3>Your own pieces (plywood, shelves, boxes)</h3><table className="mat"><thead><tr><th>Label</th><th>Sheet</th><th className="num">Width</th><th className="num">Height</th><th className="num">Qty</th><th>Grain fixed</th><th></th></tr></thead><tbody>
+      ${extra.map((c,i)=>html`<tr key=${c.id||i}><td><input className="inp" defaultValue=${c.label||''} onBlur=${e=>setExtra(extra.map((x,j)=>j===i?{...x,label:e.target.value}:x))} aria-label="Label"/></td><td><select className="inp" value=${c.sheet||'ply48'} onChange=${e=>setExtra(extra.map((x,j)=>j===i?{...x,sheet:e.target.value}:x))} aria-label="Sheet">${Object.entries(SHEETS).map(([k,v])=>html`<option key=${k} value=${k}>${v.label}</option>`)}</select></td>
+        <td><${LenInput} id=${'cx-w'+(c.id||i)} value=${c.w||0} onChange=${v=>setExtra(extra.map((x,j)=>j===i?{...x,w:v}:x))}/></td><td><${LenInput} id=${'cx-h'+(c.id||i)} value=${c.h||0} onChange=${v=>setExtra(extra.map((x,j)=>j===i?{...x,h:v}:x))}/></td><td><input className="inp mono num" style=${{width:'4em'}} defaultValue=${c.n||1} onBlur=${e=>setExtra(extra.map((x,j)=>j===i?{...x,n:+e.target.value||1}:x))} aria-label="Quantity"/></td>
+        <td><input type="checkbox" checked=${c.rot===false} onChange=${e=>setExtra(extra.map((x,j)=>j===i?{...x,rot:!e.target.checked}:x))} aria-label="Grain fixed, do not rotate"/></td><td><button className="btn small danger" onClick=${()=>setExtra(extra.filter((x,j)=>j!==i))}>✕</button></td></tr>`)}</tbody></table>
+      <button className="btn" onClick=${()=>setExtra([...extra,{id:uid("cx"),label:"Shelf",sheet:"ply48",w:11.25,h:30,n:4}])}>Add a piece</button></section>
+    <div className="cut-grid">${sheets.slice(0,40).map((sh,i)=>html`<${CutSheetSVG} key=${i} S=${Suse} sheet=${sh} i=${i}/>`)}${sheets.length>40?html`<p className="note">${sheets.length-40} more sheets not drawn.</p>`:null}${!sheets.length?html`<p className="note">Nothing to cut from this material.</p>`:null}</div></div>`;}
+MAT_EXTRA.push(['cuts','Cut plan',CutOptimizerView]);
+/* ======================= finish board: one page of the job's cabinets, counters, floors, tile, paint and hardware ======================= */
+const SHEET_TABS=[];
+const hex6=h=>typeof h==='number'?'#'+h.toString(16).padStart(6,'0'):(h||'#cccccc');
+// a swatch picture for finishes that have no floor texture: cabinet door, counter slab, tile field, paint chip, hardware pull
+const _fbCache={};
+function finishChip(kind,key,hex,w=220,h=160){const id=[kind,key,hex,w,h].join('|');if(_fbCache[id])return _fbCache[id];const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');const col=hex6(hex);
+  const sh=(f)=>{const n=parseInt(col.slice(1),16);const r=Math.min(255,Math.round(((n>>16)&255)*f)),gg=Math.min(255,Math.round(((n>>8)&255)*f)),b=Math.min(255,Math.round((n&255)*f));return `rgb(${r},${gg},${b})`;};
+  g.fillStyle=col;g.fillRect(0,0,w,h);
+  if(kind==='cab'){const m=Math.round(w*0.12);g.strokeStyle=sh(0.82);g.lineWidth=2;if(key==='shaker'||key==='inset'||key==='beadboard'){g.fillStyle=sh(0.95);g.fillRect(m,m,w-2*m,h-2*m);g.strokeRect(m,m,w-2*m,h-2*m);g.strokeStyle=sh(1.08);g.beginPath();g.moveTo(m,m);g.lineTo(w-m,m);g.stroke();if(key==='beadboard'){g.strokeStyle=sh(0.9);for(let x=m+12;x<w-m;x+=12){g.beginPath();g.moveTo(x,m);g.lineTo(x,h-m);g.stroke();}}}
+    else if(key==='raised'){g.fillStyle=sh(0.93);g.fillRect(m,m,w-2*m,h-2*m);g.strokeRect(m,m,w-2*m,h-2*m);g.fillStyle=col;g.fillRect(m+10,m+10,w-2*m-20,h-2*m-20);g.strokeRect(m+10,m+10,w-2*m-20,h-2*m-20);}
+    else if(key==='louver'){g.strokeStyle=sh(0.85);for(let y=m;y<h-m;y+=10){g.beginPath();g.moveTo(m,y);g.lineTo(w-m,y);g.stroke();}}
+    else{g.strokeStyle=sh(0.9);g.beginPath();g.moveTo(0,h-1);g.lineTo(w,h-1);g.stroke();}}
+  else if(kind==='counter'){const R=rng(key.length*7+3);if(key==='granite'){for(let i=0;i<900;i++){g.fillStyle=`rgba(${R()<0.5?'255,255,255':'0,0,0'},${0.08+R()*0.25})`;g.fillRect(R()*w,R()*h,1+R()*3,1+R()*3);}}
+    else if(key==='marble'||key==='quartz'){g.strokeStyle=key==='marble'?'rgba(90,90,100,.35)':'rgba(120,120,120,.12)';g.lineWidth=key==='marble'?1.6:1;for(let i=0;i<(key==='marble'?5:3);i++){g.beginPath();let x=R()*w,y=0;g.moveTo(x,y);while(y<h){x+=(R()-0.5)*40;y+=18;g.lineTo(x,y);}g.stroke();}if(key==='quartz')for(let i=0;i<500;i++){g.fillStyle=`rgba(255,255,255,${R()*0.3})`;g.fillRect(R()*w,R()*h,1.5,1.5);}}
+    else if(key==='butcher'){g.strokeStyle=sh(0.82);g.lineWidth=1.2;for(let x=0;x<w;x+=Math.round(w/8)){g.beginPath();g.moveTo(x,0);g.lineTo(x,h);g.stroke();}g.strokeStyle=sh(0.9);for(let i=0;i<30;i++){g.beginPath();g.moveTo(R()*w,R()*h);g.lineTo(R()*w,R()*h);g.stroke();}}
+    else if(key==='concrete'){for(let i=0;i<300;i++){g.fillStyle=`rgba(0,0,0,${R()*0.12})`;g.beginPath();g.arc(R()*w,R()*h,1+R()*6,0,7);g.fill();}}
+    g.fillStyle='rgba(0,0,0,.18)';g.fillRect(0,h-8,w,8);}
+  else if(kind==='tile'){const m=TILE_MATS.find(t=>t[0]===key)||TILE_MATS[0];const tw=Math.max(6,m[3]*8),th=Math.max(6,m[2]*8);g.fillStyle='#d8d4cc';g.fillRect(0,0,w,h);g.fillStyle=col;let row=0;for(let y=0;y<h;y+=th+2,row++){const off=key==='subway'&&row%2?tw/2:0;for(let x=-tw+off;x<w;x+=tw+2)g.fillRect(x,y,tw,th);}}
+  else if(kind==='paint'){g.fillStyle='rgba(255,255,255,.35)';g.fillRect(0,h-26,w,26);g.fillStyle='#333';g.font='12px sans-serif';g.fillText(col.toUpperCase(),8,h-9);}
+  else if(kind==='hw'){g.fillStyle='#f4f2ee';g.fillRect(0,0,w,h);g.fillStyle=col;g.strokeStyle=sh(0.7);g.lineWidth=1.5;const cx=w/2,cy=h/2;
+    if(key==='knob'){g.beginPath();g.arc(cx,cy,18,0,7);g.fill();g.stroke();g.beginPath();g.arc(cx,cy,10,0,7);g.fillStyle=sh(1.15);g.fill();}
+    else if(key==='cup'){g.beginPath();g.moveTo(cx-40,cy-6);g.quadraticCurveTo(cx,cy+34,cx+40,cy-6);g.closePath();g.fill();g.stroke();g.beginPath();g.arc(cx+60,cy,9,0,7);g.fill();g.stroke();}
+    else if(key==='edge'){g.fillRect(cx-50,cy-4,100,8);g.strokeRect(cx-50,cy-4,100,8);g.fillRect(cx-50,cy-16,100,4);}
+    else if(key==='none'){g.fillStyle='#777';g.font='13px sans-serif';g.fillText('Push to open',cx-38,cy+4);}
+    else{g.fillRect(cx-60,cy-5,120,10);g.strokeRect(cx-60,cy-5,120,10);g.fillRect(cx-50,cy+5,8,12);g.fillRect(cx+42,cy+5,8,12);}}
+  return (_fbCache[id]=c.toDataURL('image/png'));}
+function finishBoard(p){const out=[];const S=selOf(p);const cab=cabStyle(p,{});
+  const cf=CAB_FIN.find(x=>x[0]===cab.finish)||CAB_FIN[0];const cs=CAB_STYLES.find(x=>x[0]===cab.style)||CAB_STYLES[0];
+  if((p.fixtures||[]).some(f=>isCab(f)&&f.status!=='demolish'))out.push({group:'Cabinets',title:`${cs[1]} doors, ${cab.color?'custom color':cf[1].toLowerCase()}`,sub:[cab.frame==='frameless'?'Frameless':'Framed',(CAB_LINES.find(x=>x[0]===cab.line)||['',cab.line])[1],(typeof vendorLabel==='function'?vendorLabel(cab):'')].filter(Boolean).join(' · '),img:finishChip('cab',cab.style,cab.color||cf[2]),hex:hex6(cab.color||cf[2])});
+  const ct=counterSet(p);const cm=COUNTER_MATS.find(x=>x[0]===ct.mat)||COUNTER_MATS[0];
+  if((p.fixtures||[]).some(f=>isCab(f)&&f.status!=='demolish'&&COUNTERTOP.has(f.type)))out.push({group:'Countertops',title:cm[1]+(ct.color?', custom color':''),sub:`${ct.thick}" ${ct.edge} edge · ${ct.splash==='full'?'full-height splash':ct.splash?ct.splash+'" splash':'no splash'}${(S.countertops||{}).brand?' · '+S.countertops.brand:''}`,img:finishChip('counter',ct.mat,ct.color||cm[2]),hex:hex6(ct.color||cm[2])});
+  const floors={};for(const r of p.rooms){const k=roomFloor(r);const L=FLOOR_LIB[k];if(!L)continue;const hx=r.floorColor||L[2];const id=k+'|'+hx;(floors[id]=floors[id]||{k,L,hx,rooms:[]}).rooms.push(r.name);}
+  for(const f of Object.values(floors))out.push({group:'Flooring',title:f.L[0],sub:f.rooms.join(', '),img:finishSwatch('floor',f.k,typeof f.hx==='string'?hexNum(f.hx):f.hx,220,160,48),hex:hex6(f.hx)});
+  const tiles={};for(const r of p.rooms){let zs=[];try{zs=tileZones(p,r);}catch(e){}if(!zs.length)continue;const T=tileOf(r);for(const z of zs){const mat=z.mat||T.mat;const m=TILE_MATS.find(t=>t[0]===mat)||TILE_MATS[0];const hx=T.color||m[4];const id=mat+'|'+hx;const e=(tiles[id]=tiles[id]||{mat,m,hx,where:new Set()});e.where.add(`${r.name} ${z.kind==='wains'?'wainscot':z.kind==='surround'?'tub surround':z.kind||'splash'}`);}}
+  for(const t of Object.values(tiles))out.push({group:'Tile',title:t.m[1],sub:[...t.where].join(', '),img:finishChip('tile',t.mat,t.hx),hex:hex6(t.hx)});
+  const paints={};for(const r of p.rooms){const name=(r.paint&&r.paint.wall)||null;const hx=r.wallColor||null;if(!name&&!hx)continue;const id=(name||'')+'|'+(hx||'');(paints[id]=paints[id]||{name,hx,rooms:[]}).rooms.push(r.name);}
+  for(const q of Object.values(paints))out.push({group:'Paint',title:q.name||'Wall color '+hex6(q.hx),sub:`${S.paintBrand?S.paintBrand+' · ':''}${q.rooms.join(', ')}`,img:finishChip('paint',q.name||'x',q.hx||'#f4f1ea'),hex:hex6(q.hx||'#f4f1ea')});
+  const wf={};for(const r of p.rooms){const k=r.wallFinish||'paint';if(k==='paint')continue;(wf[k]=wf[k]||[]).push(r.name);}
+  for(const [k,rooms] of Object.entries(wf)){const L=WALL_FIN[k];if(L)out.push({group:'Wall finish',title:L[0],sub:rooms.join(', '),img:finishSwatch('wallfin',k,0xf1efe8,220,160,48),hex:'#f1efe8'});}
+  if(out.some(x=>x.group==='Cabinets')){const hw=CAB_HW.find(x=>x[0]===cab.hw)||CAB_HW[0];const hf=HW_FIN.find(x=>x[0]===cab.hwFin)||HW_FIN[0];out.push({group:'Hardware',title:`${hw[1]}, ${hf[1].toLowerCase()}`,sub:(p.settings&&p.settings.hwBrand)||'',img:finishChip('hw',cab.hw,hf[2]),hex:hex6(hf[2])});}
+  for(const x of (p.finishExtra||[]))out.push({group:x.group||'Other',title:x.title||'',sub:x.sub||'',img:finishChip('paint','x',x.hex||'#dddddd'),hex:hex6(x.hex||'#dddddd'),custom:true});
+  return out;}
+async function finishBoardPDF(p){await loadJsPDF();const {jsPDF}=window.jspdf;const W=11,H=8.5;const d=new jsPDF({orientation:'landscape',unit:'in',format:'letter'});const B=finishBoard(p);
+  d.setFillColor('#1f5fbf');d.rect(0,0,0.15,H,'F');d.setFont('helvetica','bold');d.setFontSize(22);d.setTextColor('#111111');d.text('Finish board',0.55,0.75);d.setFont('helvetica','normal');d.setFontSize(11);d.setTextColor('#555555');d.text(`${p.name}${p.info?.address?' · '+p.info.address:''}${p.info?.client?' · '+p.info.client:''}`,0.55,1.05);
+  const cols=B.length>8?4:B.length>3?3:Math.max(1,B.length);const rows=Math.ceil(B.length/cols)||1;const gx=0.55,gy=1.4,gw=W-0.55-0.45,gh=H-1.4-0.6;const cw=(gw-(cols-1)*0.25)/cols,ch=Math.min(2.6,(gh-(rows-1)*0.25)/rows);const ih=Math.max(0.6,ch-0.72);
+  B.forEach((x,i)=>{const c=i%cols,r=Math.floor(i/cols);const X=gx+c*(cw+0.25),Y=gy+r*(ch+0.25);try{d.addImage(x.img,'PNG',X,Y,cw,ih);}catch(e){d.setFillColor(x.hex);d.rect(X,Y,cw,ih,'F');}d.setDrawColor('#bbbbbb');d.setLineWidth(0.01);d.rect(X,Y,cw,ih);
+    d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor('#1f5fbf');d.text(x.group.toUpperCase(),X,Y+ih+0.2);d.setFontSize(10.5);d.setTextColor('#111111');d.text(d.splitTextToSize(x.title,cw)[0],X,Y+ih+0.4);d.setFont('helvetica','normal');d.setFontSize(8.5);d.setTextColor('#555555');d.text(d.splitTextToSize(x.sub||'',cw).slice(0,2),X,Y+ih+0.58);});
+  d.setFontSize(8);d.setTextColor('#777777');d.text(`Colors are screen approximations; confirm with physical samples. ${localDate()}`,0.55,H-0.3);d.setProperties({title:p.name+' finish board',creator:'Remodel Studio'});return d;}
+function FinishBoardView({p,commit}){const B=useMemo(()=>finishBoard(p),[p]);const [busy,setBusy]=useState(false);const extra=p.finishExtra||[];const setExtra=l=>commit({...p,finishExtra:l});
+  return html`<div className="matview"><div className="matinner wide finishboard"><div className="mathead"><div><h2>Finish board</h2><p className="note">Every finish the model carries, on one page: cabinets, counters, floors, tile, paint and hardware. Change them where they live (cabinet and room panels, Selections) and this follows. Add anything else below, like a fabric or a light fixture finish.</p></div>
+      <div className="row"><button className="btn primary" disabled=${busy} onClick=${async()=>{setBusy(true);try{const d=await finishBoardPDF(p);const r=await saveFile(safeName(p.name)+'-finish-board.pdf',d.output('blob'));if(!r.ok)alert(r.t);}catch(e){console.error(e);alert('Could not make the PDF: '+e.message);}setBusy(false);}}>${busy?'Making…':'Finish board PDF'}</button></div></div>
+    ${B.length?html`<div className="fb-grid">${B.map((x,i)=>html`<figure key=${i} className="fb-tile"><img src=${x.img} alt=${x.title}/><figcaption><small>${x.group}</small><b>${x.title}</b><span>${x.sub}</span><i style=${{background:x.hex}}></i></figcaption></figure>`)}</div>`:html`<p className="note">Draw rooms and cabinets, then pick finishes, and they show here.</p>`}
+    <section className="sec"><h3>Extra samples</h3><table className="mat"><thead><tr><th>Group</th><th>Name</th><th>Where / note</th><th>Color</th><th></th></tr></thead><tbody>${extra.map((x,i)=>html`<tr key=${x.id||i}><td><input className="inp" defaultValue=${x.group||''} onBlur=${e=>setExtra(extra.map((y,j)=>j===i?{...y,group:e.target.value}:y))} aria-label="Group"/></td><td><input className="inp" defaultValue=${x.title||''} onBlur=${e=>setExtra(extra.map((y,j)=>j===i?{...y,title:e.target.value}:y))} aria-label="Name"/></td><td><input className="inp" defaultValue=${x.sub||''} onBlur=${e=>setExtra(extra.map((y,j)=>j===i?{...y,sub:e.target.value}:y))} aria-label="Note"/></td><td><input type="color" value=${x.hex||'#dddddd'} onChange=${e=>setExtra(extra.map((y,j)=>j===i?{...y,hex:e.target.value}:y))} aria-label="Color"/></td><td><button className="btn small danger" onClick=${()=>setExtra(extra.filter((y,j)=>j!==i))}>✕</button></td></tr>`)}</tbody></table>
+      <button className="btn" onClick=${()=>setExtra([...extra,{id:uid('fx'),group:'Lighting',title:'Pendant finish',sub:'Over the island',hex:'#c8a45a'}])}>Add a sample</button></section></div></div>`;}
+SHEET_TABS.push(['finishes','Finish board',FinishBoardView]);
+// presentation page: appended after the deck is built
+{const _bp=buildPresentation;buildPresentation=async function(p,onProgress){const d=await _bp(p,onProgress);const P=presOf(p);if(!P.sections.finishes)return d;const B=finishBoard(p);if(!B.length)return d;
+  const W=13.333,H=7.5;d.addPage([W,H],'landscape');d.setFillColor('#1f5fbf');d.rect(0,0,0.18,H,'F');d.setFont('helvetica','bold');d.setFontSize(24);d.setTextColor('#111111');d.text('Finish board',0.6,0.75);d.setFont('helvetica','normal');d.setFontSize(12);d.setTextColor('#555555');d.text('Cabinets, counters, floors, tile, paint and hardware',0.6,1.08);
+  const cols=B.length>8?5:B.length>4?4:Math.max(1,B.length);const rows=Math.ceil(B.length/cols);const gx=0.6,gy=1.45,gw=W-1.1,gh=H-1.45-0.7;const cw=(gw-(cols-1)*0.25)/cols,ch=Math.min(2.7,(gh-(rows-1)*0.2)/rows);const ih=Math.max(0.6,ch-0.7);
+  B.forEach((x,i)=>{const c=i%cols,r=Math.floor(i/cols);const X=gx+c*(cw+0.25),Y=gy+r*(ch+0.2);try{d.addImage(x.img,'PNG',X,Y,cw,ih);}catch(e){}d.setDrawColor('#cccccc');d.setLineWidth(0.01);d.rect(X,Y,cw,ih);d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor('#1f5fbf');d.text(x.group.toUpperCase(),X,Y+ih+0.2);d.setFontSize(10.5);d.setTextColor('#111111');d.text(d.splitTextToSize(x.title,cw)[0],X,Y+ih+0.4);d.setFont('helvetica','normal');d.setFontSize(8.5);d.setTextColor('#555555');d.text(d.splitTextToSize(x.sub||'',cw).slice(0,2),X,Y+ih+0.58);});
+  d.setFontSize(9);d.setTextColor('#777777');d.text((P.title||p.name||'Remodel plan')+(p.info?.address?'  ·  '+p.info.address:''),0.6,H-0.35);d.text(String(d.getNumberOfPages()),W-0.5,H-0.35,{align:'right'});return d;};}
 /* ======================= app ======================= */
 function App(){
   const narrow=window.matchMedia('(max-width: 820px)').matches;
@@ -21638,17 +22007,19 @@ function App(){
   const load=q=>{undo.current.push(project);redo.current=[];setProject(q);setSel(null);setLevelId(q.levels[0].id);setFitPlan(x=>x+1);setFit3(x=>x+1);};
   // ---- file state ----
   const [cmpOpt,setCmpOpt]=useState(null);useEffect(()=>{loadModels(project.id);},[project.id]);
-  const [dlg,setDlg]=useState(null);const [cmdk,setCmdk]=useState(false);const [custIt,setCustIt]=useState(null);useEffect(()=>{const f=e=>setCustIt(e.detail);window.addEventListener('rs-customize',f);return ()=>window.removeEventListener('rs-customize',f);},[]);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]);useEffect(()=>{const f=e=>setDlg(e.detail);window.addEventListener('rs-dialog',f);return ()=>window.removeEventListener('rs-dialog',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
+  const [dlg,setDlg]=useState(null);const [cmdk,setCmdk]=useState(false);
+  // Escape closes the open dialog (the top-most modal), unless something inside it already handled the key
+  useEffect(()=>{if(!dlg)return;const kd=e=>{if(e.key!=='Escape'||e.defaultPrevented)return;const bgs=document.querySelectorAll('.modal-bg');if(bgs.length!==1)return;const t=e.target;if(t&&t.closest&&t.closest('.menupop,.submenu'))return;setDlg(null);};window.addEventListener('keydown',kd);return ()=>window.removeEventListener('keydown',kd);},[dlg]);const [custIt,setCustIt]=useState(null);useEffect(()=>{const f=e=>setCustIt(e.detail);window.addEventListener('rs-customize',f);return ()=>window.removeEventListener('rs-customize',f);},[]);useEffect(()=>{const f=()=>setDlg('vendors');window.addEventListener('rs-vendor-import',f);return ()=>window.removeEventListener('rs-vendor-import',f);},[]);useEffect(()=>{const f=e=>setDlg(e.detail);window.addEventListener('rs-dialog',f);return ()=>window.removeEventListener('rs-dialog',f);},[]); const [toast,setToast]=useState(null); const fileHandle=useRef(null); const deskPath=useRef(null); const [recentFiles,setRecentFiles]=useState([]);
   const [savedProj,setSavedProj]=useState(()=>{if(DESK)return project;const q=listSaved().find(x=>x.id===project.id);return q?project:null;});
   const dirty=savedProj!==project;
   const say=(t,ok=true)=>{setToast({t,ok});clearTimeout(say.t);say.t=setTimeout(()=>setToast(null),3500);};
-  const openProject=(q,h)=>{load(q);fileHandle.current=h||null;setSavedProj(q);say('Opened '+q.name+'.');};
+  const openProject=(q,h)=>{load(q);fileHandle.current=h||null;setSavedProj(q);say('Opened '+q.name+'.');setModeS('dashboard');};
   const deskSave=async(pp,asNew)=>{const text=JSON.stringify(pp,null,1);let r;
     if(deskPath.current&&!asNew)r=await DESK.writePath(deskPath.current,text,pp.name);else{r=await DESK.saveProjectAs(pp.name,text);if(!r)return false;}
     if(!r.ok){say('Could not save: '+(r.error||'unknown error'),false);return false;}
     deskPath.current=r.path;setSavedProj(pp);say('Saved '+r.path+'.');DESK.recent().then(setRecentFiles);return true;};
   const deskOpen=async(res)=>{if(!res)return;if(res.error){say('Could not open the file: '+res.error,false);return;}
-    try{const q=parseProjectText(res.text);load(q);deskPath.current=res.path;fileHandle.current=null;setSavedProj(q);say('Opened '+res.path+'.');DESK.recent().then(setRecentFiles);}catch(e){say(e.message||'That file could not be read.',false);}};
+    try{const q=parseProjectText(res.text);load(q);deskPath.current=res.path;fileHandle.current=null;setSavedProj(q);say('Opened '+res.path+'.');setModeS('dashboard');DESK.recent().then(setRecentFiles);}catch(e){say(e.message||'That file could not be read.',false);}};
   const doOpen=()=>{if(DESK)DESK.openDialog().then(deskOpen);else setDlg('open');};
   const doSave=async(pp=project)=>{if(DESK)return deskSave(pp,false);const ok=saveToBrowser(pp);let where=ok?'in this browser':'';
     if(fileHandle.current){try{await writeHandle(fileHandle.current,pp);where+=(where?' and ':'')+'to '+fileHandle.current.name;}catch(e){say('Could not write the file: '+(e.message||e),false);}}
@@ -21660,7 +22031,7 @@ function App(){
       else{fileHandle.current=null;const r=await saveFile(safeName(name)+'.json',JSON.stringify(q,null,1));if(!r.ok){say(r.t,false);return;}}}
     else fileHandle.current=null;
     setProject(q);setDlg(null);await doSave(q);};
-  const newProject=kind=>{const q=kind==='sample'?sampleProject():blankProject();load(q);fileHandle.current=null;deskPath.current=null;setSavedProj(null);setDlg(null);say(kind==='sample'?'Sample house loaded.':'New blank project.');};
+  const newProject=kind=>{const q=kind==='sample'?sampleProject():newStandardProject();load(q);fileHandle.current=null;deskPath.current=null;setSavedProj(null);setDlg(null);say(kind==='sample'?'Sample house loaded.':'New blank project.');};
   const download=async()=>{const r=await saveFile(safeName(project.name)+'.json',JSON.stringify(project,null,1));say(r.t,r.ok);};
   // ---- clipboard ----
   const clip=useRef(null); const pasteN=useRef(0);
@@ -21684,9 +22055,11 @@ function App(){
   const selShow=s=>{setSel(s);if(s)setCollapsed(false);};
   window.__app={setTool,commit,get:()=>projRef.current,setSel,setMode,setLevelId,load:q=>{load(q);fileHandle.current=null;deskPath.current=null;setSavedProj(null);},save:()=>doSave(),dirty:()=>dirty};
   const shown=preview||project;
-  const issues=useMemo(()=>runChecks(project),[project]);
+  // heavy work (code checks, structure, the 3D rebuild) waits until edits pause, so the plan repaints first
+  const [settled,setSettled]=useState(project);useEffect(()=>{if(settled===project)return;const t=setTimeout(()=>setSettled(project),120);return ()=>clearTimeout(t);},[project]);
+  const issues=useMemo(()=>runChecks(settled),[settled]);
   const site=siteOf(project); const sunInfo=useMemo(()=>{if(!sun.on)return {on:false};const s=sunFor(site,sun.date,sun.min);return {on:true,alt:s.alt,az:s.az,bearing:site.bearing};},[sun.on,sun.date,sun.min,site.lat,site.lon,site.tz,site.dst,site.bearing]);
-  const members=useMemo(()=>analyzeStructure(project),[project]);
+  const members=useMemo(()=>analyzeStructure(settled),[settled]);
   const [structView,setStructView]=useState(false); const [layer,setLayer]=useState('both');
   const structMap=useMemo(()=>structView?new Map(members.map(m=>[m.id,m.ratio])):null,[structView,members]);
   const [panel,setPanel]=useState('props'); const [showIssues,setShowIssues]=useState(true);
@@ -21730,7 +22103,7 @@ function App(){
       <button className=${'chip'+(ortho?' on':'')} onClick=${()=>setOrtho(!ortho)}>45° snap ${ortho?'on':'off'}</button>`;
   const cmpModel=cmpOpt&&(ensureOptions(project).options.find(o=>o.id===cmpOpt)||{}).model;const planFor=(x={})=>html`<${PlanView} compareWalls=${cmpModel&&cmpModel.walls?cmpModel.walls.filter(w=>!project.walls.some(x=>x.id===w.id&&Math.abs(x.x1-w.x1)+Math.abs(x.y1-w.y1)+Math.abs(x.x2-w.x2)+Math.abs(x.y2-w.y2)<0.5)):[]} project=${shown} levelId=${lv.id} tool=${tool} setTool=${setTool} sel=${sel} setSel=${selShow} commit=${commit} setPreview=${setPreview} commitPreview=${commitPreview}
       ortho=${ortho} wallPreset=${wallPreset} layer=${layer} fixtureType=${fixtureType} openPreset=${openPreset} elecType=${elecType} showElec=${showElec||tool==='elec'} under=${under} ulMove=${ulMove&&tool==='select'} fitToken=${fitPlan} onDelete=${onDelete} onUndo=${doUndo} onRedo=${doRedo} narrow=${narrow} optbar=${optbar} issues=${showIssues?issues:[]} onIssue=${goTo} ...${x}/>`;const planEl=planFor();const inspEl=html`<${Inspector} libCtx=${{p:project,sel,commit,setTool,setFixtureType,setWallPreset,setOpenPreset,setMode,say}} p=${project} levelId=${lv.id} setLevelId=${setLevelId} sel=${sel} setSel=${selShow} commit=${commit} onDelete=${onDelete} collapsed=${collapsed} setCollapsed=${setCollapsed} onFile=${()=>setModal(true)} panel=${panel} setPanel=${setPanel} issues=${issues} goTo=${goTo} members=${members}/>`;
-  const v3El=html`<div className="pane" style=${{display:'grid'}}><${View3D} commit=${commit} setSel=${setSel} project=${shown} levelId=${lv.id} sel=${sel} cutaway=${cutaway} showRoof=${showRoof} fitToken=${fit3} struct=${structMap} layer=${layer} sunInfo=${sunInfo} cloud=${under.cloudPts}/>${sun.on?html`<${SunPanel} p=${project} commit=${commit} sun=${sun} setSun=${setSun}/>`:null}
+  const v3El=html`<div className="pane" style=${{display:'grid'}}><${View3D} commit=${commit} setSel=${setSel} project=${settled} levelId=${lv.id} sel=${sel} cutaway=${cutaway} showRoof=${showRoof} fitToken=${fit3} struct=${structMap} layer=${layer} sunInfo=${sunInfo} cloud=${under.cloudPts}/>${sun.on?html`<${SunPanel} p=${project} commit=${commit} sun=${sun} setSun=${setSun}/>`:null}
       <div className="corner"><button className=${'chip'+(showRoof?' on':'')} onClick=${()=>setShowRoof(!showRoof)}>Show roof</button><button className=${'chip'+(cutaway?' on':'')} onClick=${()=>setCutaway(!cutaway)} title="Hide levels above the one you are working on">Cut at level</button><button className=${'chip'+(sun.on?' on':'')} onClick=${()=>setSun(s=>({...s,on:!s.on,play:false}))} title="Sun and shadow study">Sun</button><button className="btn primary" onClick=${()=>setRenderOpen(true)} title="Photoreal render of this view, right here">Render</button><button className="btn" onClick=${()=>setExportOpen(true)} title="AR view on an iPhone, 3D printing and CAD export">AR / Export</button><button className=${'chip'+(structView?' on':'')} onClick=${()=>setStructView(!structView)} title="Color members by how much of their capacity they use">Loads</button><button className="btn" onClick=${()=>setFit3(x=>x+1)}>Fit</button></div></div>`;
   return html`<div className="app">
     <div className="chrome-top">
@@ -21740,13 +22113,16 @@ function App(){
       <${MenuButton} id="menu-file" label="File" items=${[
         {label:'New…',key:'Ctrl+N',run:()=>setDlg('new')},{label:'Open…',key:'Ctrl+O',run:doOpen},
         ...(DESK&&recentFiles.length?['-',...recentFiles.slice(0,8).map(r=>({label:'↻ '+r.name,run:()=>DESK.readPath(r.path).then(deskOpen)}))]:[]),'-',
-        {label:'Save',key:'Ctrl+S',run:()=>doSave()},{label:'Save as…',key:'Ctrl+Shift+S',run:()=>setDlg('saveas')},{label:'Backups…',run:()=>setDlg('backups')},...(DESK?[{label:'Show file in folder',run:()=>deskPath.current&&DESK.showInFolder(deskPath.current),disabled:!deskPath.current}]:[{label:'Download a copy (.json)',run:download}]),{label:'Copy or paste project text…',run:()=>setModal(true)},{label:'Versions…',run:()=>setDlg('versions')},'-',
-        {label:'Import DWG or DXF drawing…',run:()=>setDlg('dxf')},{label:'Walls from a scan or plan photo…',run:()=>setDlg('scanwalls')},{label:'Export IFC for Revit or Archicad…',run:()=>setDlg('ifc')},{label:'Import 3D model (OBJ, GLB, DAE, STL)…',run:()=>setDlg('obj')},{label:'Import vendor catalog…',run:()=>setDlg('vendors')},{label:'Add photos…',run:()=>setMode('capture')},{label:'Print plans (PDF) and DXF…',run:()=>setMode('sheets')},{label:'Materials list (CSV)…',run:()=>setMode('materials')},{label:'Render (photoreal)…',run:()=>setRenderOpen(true)},{label:'Photo match…',run:()=>setDlg('photomatch')},{label:'Homeowner binder (PDF)…',run:()=>setDlg('binder')},{label:'AR view and 3D export…',run:()=>setExportOpen(true)}]}/>
+        {label:'Save',key:'Ctrl+S',run:()=>doSave()},{label:'Save as…',key:'Ctrl+Shift+S',run:()=>setDlg('saveas')},{label:'Rename project…',run:()=>setDlg('rename')},'-',{label:'Backups…',run:()=>setDlg('backups')},{label:'Versions…',run:()=>setDlg('versions')},...(DESK?[{label:'Show file in folder',run:()=>deskPath.current&&DESK.showInFolder(deskPath.current),disabled:!deskPath.current}]:[{label:'Download a copy (.json)',run:download}]),{label:'Copy or paste project text…',run:()=>setModal(true)},'-',
+        {label:'Import',sub:[{label:'DWG or DXF drawing…',run:()=>setDlg('dxf')},{label:'3D model (OBJ, GLB, DAE, STL)…',run:()=>setDlg('obj')},{label:'Vendor catalog…',run:()=>setDlg('vendors')},{label:'Photos and scans…',run:()=>setMode('capture')},{label:'Walls from a scan or plan photo…',run:()=>setDlg('scanwalls')}]},
+        {label:'Export',sub:[{label:'Print plans (PDF) and DXF…',run:()=>setMode('sheets')},{label:'IFC for Revit or Archicad…',run:()=>setDlg('ifc')},{label:'AR view and 3D model (USDZ, GLB, STL)…',run:()=>setExportOpen(true)},{label:'Materials list (CSV)…',run:()=>setMode('materials')},{label:'Homeowner binder (PDF)…',run:()=>setDlg('binder')},{label:'Render (photoreal)…',run:()=>setRenderOpen(true)},{label:'Photo match…',run:()=>setDlg('photomatch')}]},'-',
+        {label:'My standards…',run:()=>setDlg('standards')}]}/>
       <${MenuButton} id="menu-edit" label="Edit" items=${[
         {label:'Undo',key:'Ctrl+Z',run:doUndo,disabled:!undo.current.length},{label:'Redo',key:'Ctrl+Y',run:doRedo,disabled:!redo.current.length},'-',
         {label:'Cut',key:'Ctrl+X',run:doCut,disabled:!sel},{label:'Copy',key:'Ctrl+C',run:doCopy,disabled:!sel},{label:'Paste',key:'Ctrl+V',run:doPaste,disabled:!clip.current},
         {label:'Duplicate',key:'Ctrl+D',run:doDup,disabled:!sel},{label:'Rotate 90° or flip',key:'E',run:doRotate,disabled:!sel},{label:'Delete',key:'Del',run:onDelete,disabled:!sel},'-',
-        {label:'Select nothing',key:'Esc',run:()=>setSel(null),disabled:!sel},'-',{label:'Save selection as block…',run:()=>setDlg('blocks'),disabled:!sel},{label:'Blocks…',run:()=>setDlg('blocks')},'-',{label:'Rename project…',run:()=>setDlg('rename')},{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')}]}/>
+        {label:'Select nothing',key:'Esc',run:()=>setSel(null),disabled:!sel},'-',{label:'Save selection as block…',run:()=>setDlg('blocks'),disabled:!sel},{label:'Blocks…',run:()=>setDlg('blocks')}]}/>
+      ${mode==='design'?null:html`<${MenuButton} id="menu-help" label="Help" items=${[{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')}]}/>`}
       <div id="rs-menuslot" className="menuslot"></div>
       </div>
       <div className="projname" title=${project.name+(dirty?' (not saved)':'')}>${project.name}${dirty?html`<span className="dirty" aria-label="not saved"> •</span>`:null}</div>
@@ -21759,12 +22135,12 @@ function App(){
       <${WorkflowTabs} mode=${mode} setMode=${setMode} narrow=${narrow} nErr=${nErr} nWarn=${nWarn}/>
       <div className="spacer"></div>
       <select id="option-pick" className="inp lvlsel" value=${ensureOptions(project).activeOption} onChange=${e=>{const v=e.target.value;if(v==='__new'){commit(addOption(project));}else commit(switchOption(project,v));setSel(null);}} aria-label="Design option" title="Design option">${ensureOptions(project).options.map(o=>html`<option key=${o.id} value=${o.id}>${o.name}</option>`)}<option value="__new">+ New option (copy)</option></select>${ensureOptions(project).options.length>1?html`<select className="inp lvlsel" value=${cmpOpt||''} onChange=${e=>setCmpOpt(e.target.value||null)} aria-label="Compare with option" title="Show another option's walls in magenta on the plan"><option value="">Compare: off</option>${ensureOptions(project).options.filter(o=>o.id!==ensureOptions(project).activeOption).map(o=>html`<option key=${o.id} value=${o.id}>vs ${o.name}</option>`)}</select>`:null}
-      <select id="layer-pick" className="inp lvlsel" value=${layer} onChange=${e=>setLayer(e.target.value)} aria-label="Remodel layer" title="Which remodel work to show"><option value="both">Existing + new</option><option value="existing">Existing only</option><option value="proposed">Proposed</option></select>
+      <select id="layer-pick" className="inp lvlsel" value=${layer} onChange=${e=>setLayer(e.target.value)} aria-label="Remodel layer" title="Which remodel work to show"><option value="both">Existing + new</option><option value="existing">Existing only</option><option value="proposed">New only</option></select>
       <select id="level-pick" className="inp lvlsel" value=${lv.id} onChange=${e=>setLevelId(e.target.value)} aria-label="Level">${sortedLevels(project).map(l=>html`<option key=${l.id} value=${l.id}>${l.name}</option>`)}</select>
-      <button className=${'btn'+(panel==='library'&&!['sheets','schedules','materials','capture','check','build','systems'].includes(mode)?' on':'')} id="lib-btn" onClick=${()=>{const open=!(panel==='library');setPanel(open?'library':'props');if(open){setCollapsed(false);if(['sheets','schedules','materials','capture','check','build','systems'].includes(mode))setMode(narrow?'plan':'design');}}} title="Doors, windows, cabinets, fixtures, trim, finishes and colors">Library</button>
+      ${mode==='design'?null:html`<button className=${'btn'+(panel==='library'&&!['dashboard','sheets','schedules','materials','capture','check','build','systems'].includes(mode)?' on':'')} id="lib-btn" onClick=${()=>{const open=!(panel==='library');setPanel(open?'library':'props');if(open){setCollapsed(false);if(['dashboard','sheets','schedules','materials','capture','check','build','systems'].includes(mode))setMode(narrow?'plan':'design');}}} title="Doors, windows, cabinets, fixtures, trim, finishes and colors">Library</button>`}
     </nav>
     </div>
-    ${mode==='check'?html`<${CheckView} p=${project} commit=${commit} issues=${issues} planFor=${planFor} setMode=${setMode} setSel=${selShow} setLevelId=${setLevelId} setDlg=${setDlg} lv=${lv}/>`:mode==='schedules'?html`<${SchedulesView} p=${project} commit=${commit} setMode=${setMode} setSel=${selShow} setLevelId=${setLevelId}/>`:mode==='build'?html`<${BuildView} p=${project} commit=${commit} setMode=${setMode} setSel=${selShow} levelId=${lv.id} setLevelId=${setLevelId}/>`:mode==='sheets'?html`<${SheetsView} p=${project} commit=${commit}/>`:mode==='materials'?html`<${MaterialsView} p=${project} commit=${commit}/>`:mode==='systems'?html`<${SystemsView} p=${project} commit=${commit}/>`:mode==='design'?html`<${DesignerView} D=${{p:project,shown,commit,sel,setSel:selShow,tool,setTool,lv,setLevelId,planFor,inspEl,libCtx:{p:project,sel,commit,setTool,setFixtureType,setWallPreset,setOpenPreset,setMode,say},setMode,say,setDlg,doUndo,doRedo,onDelete,issues,goTo,fixtureType,setFixtureType,setOpenPreset,setWallPreset,fitPlan:()=>setFitPlan(x=>x+1),fit3:()=>setFit3(x=>x+1),openRender:()=>setRenderOpen(true),openExport:()=>setExportOpen(true),layer,panel,setPanel,setCollapsed,showElec,setShowElec,v3:(x={})=>html`<${View3D} commit=${commit} setSel=${setSel} project=${shown} levelId=${lv.id} sel=${sel} cutaway=${cutaway} showRoof=${showRoof} fitToken=${fit3} struct=${structMap} layer=${layer} sunInfo=${sunInfo} cloud=${under.cloudPts} ...${x}/>`,cutaway,setCutaway,showRoof,setShowRoof,sun,setSun,undoN:undo.current.length,redoN:redo.current.length,doCopy,doPaste,doDup,doRotate,setStructView,structView}}/>`:mode==='capture'?html`<${CaptureView} libCtx=${{p:project,sel,commit,setTool,setFixtureType,setWallPreset,setOpenPreset,setMode,say}} p=${project} commit=${commit} sel=${sel} setSel=${setSel} levelId=${lv.id} setLevelId=${setLevelId} setMode=${setMode}/>`:html`<div className="main">
+    ${mode==='dashboard'?html`<${DashboardView} p=${project} commit=${commit} setMode=${setMode} setSel=${selShow} setLevelId=${setLevelId} setDlg=${setDlg} recent=${DESK?recentFiles:listSaved()} openRecent=${r=>{if(DESK)DESK.readPath(r.path).then(deskOpen);else{const q=loadFromBrowser?loadFromBrowser(r.id):null;if(q)openProject(q);}}}/>`:mode==='check'?html`<${CheckView} p=${project} commit=${commit} issues=${issues} planFor=${planFor} setMode=${setMode} setSel=${selShow} setLevelId=${setLevelId} setDlg=${setDlg} lv=${lv}/>`:mode==='schedules'?html`<${SchedulesView} p=${project} commit=${commit} setMode=${setMode} setSel=${selShow} setLevelId=${setLevelId}/>`:mode==='build'?html`<${BuildView} p=${project} commit=${commit} setMode=${setMode} setSel=${selShow} levelId=${lv.id} setLevelId=${setLevelId}/>`:mode==='sheets'?html`<${SheetsView} p=${project} commit=${commit}/>`:mode==='materials'?html`<${MaterialsView} p=${project} commit=${commit}/>`:mode==='systems'?html`<${SystemsView} p=${project} commit=${commit}/>`:mode==='design'?html`<${DesignerView} D=${{p:project,shown,commit,sel,setSel:selShow,tool,setTool,lv,setLevelId,planFor,inspEl,libCtx:{p:project,sel,commit,setTool,setFixtureType,setWallPreset,setOpenPreset,setMode,say},setMode,say,setDlg,doUndo,doRedo,onDelete,issues,goTo,fixtureType,setFixtureType,setOpenPreset,setWallPreset,fitPlan:()=>setFitPlan(x=>x+1),fit3:()=>setFit3(x=>x+1),openRender:()=>setRenderOpen(true),openExport:()=>setExportOpen(true),layer,panel,setPanel,setCollapsed,showElec,setShowElec,v3:(x={})=>html`<${View3D} commit=${commit} setSel=${setSel} project=${settled} levelId=${lv.id} sel=${sel} cutaway=${cutaway} showRoof=${showRoof} fitToken=${fit3} struct=${structMap} layer=${layer} sunInfo=${sunInfo} cloud=${under.cloudPts} ...${x}/>`,cutaway,setCutaway,showRoof,setShowRoof,sun,setSun,undoN:undo.current.length,redoN:redo.current.length,doCopy,doPaste,doDup,doRotate,setStructView,structView}}/>`:mode==='capture'?html`<${CaptureView} libCtx=${{p:project,sel,commit,setTool,setFixtureType,setWallPreset,setOpenPreset,setMode,say}} p=${project} commit=${commit} sel=${sel} setSel=${setSel} levelId=${lv.id} setLevelId=${setLevelId} setMode=${setMode}/>`:html`<div className="main">
       <${ToolRail} tool=${tool} setTool=${setTool} narrow=${narrow} setCollapsed=${setCollapsed}/>
       <div className=${'stage'+(mode==='split'?' split':'')}>${mode!=='3d'?planEl:null}${mode!=='plan'?v3El:null}</div>
       ${inspEl}

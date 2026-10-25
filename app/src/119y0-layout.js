@@ -10,14 +10,14 @@ const WORKFLOWS=[
   {id:'build',label:'Build',pages:[['build','Job']],title:'Job schedule, field notes and punch list, wall photos, homeowner binder'},
 ];
 const wfPages=(w,narrow)=>narrow&&w.narrowPages?w.narrowPages:w.pages;
-function wfOfMode(m){return WORKFLOWS.find(w=>w.pages.some(x=>x[0]===m)||(w.narrowPages||[]).some(x=>x[0]===m))||WORKFLOWS[1];}
+function wfOfMode(m){return WORKFLOWS.find(w=>w.pages.some(x=>x[0]===m)||(w.narrowPages||[]).some(x=>x[0]===m))||WORKFLOWS.find(w=>w.id==='design');}
 function WorkflowTabs({mode,setMode,narrow,nErr,nWarn}){const cur=wfOfMode(mode);
   const lastPage=w=>{let v=null;try{v=localStorage.getItem('remodel-studio:wf:'+w.id);}catch(e){}const pg=wfPages(w,narrow);return pg.some(x=>x[0]===v)?v:pg[0][0];};
   const go=(w,pageId)=>{const id=pageId||lastPage(w);try{localStorage.setItem('remodel-studio:wf:'+w.id,id);}catch(e){}setMode(id);};
   const pages=wfPages(cur,narrow);
-  return html`<div className="wf-tabs" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<button key=${w.id} role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
-      <span className="wf-n">${i+1}</span>${w.label}${w.id==='check'?html`${nErr?html`<span className="cnt bad">${nErr}</span>`:null}${nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}${!nErr&&!nWarn?html`<span className="cnt ok">✓</span>`:null}`:null}</button>`)}</div>
-    ${pages.length>1?html`<div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div>`:null}`;}
+  const pills=pages.length>1?html`<div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div>`:null;
+  return html`<div className="wf-tabs" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<${Fragment} key=${w.id}><button role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
+      <span className="wf-n">${i+1}</span>${w.label}${w.id==='check'?html`${nErr?html`<span className="cnt bad">${nErr}</span>`:null}${nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}${!nErr&&!nWarn?html`<span className="cnt ok">✓</span>`:null}`:null}</button>${cur.id===w.id?pills:null}<//>`)}</div>`;}
 
 /* ---------- issue categories ---------- */
 const ISSUE_CATS=['IRC','IBC','ADA','NKBA','Structure','Framing','Electrical','Plumbing','Appliances','Cabinets','Energy','Zoning','Landscape','Model'];
@@ -141,14 +141,20 @@ function ribbonSpec(R){const {D,p,lv,sel,selF,say,commit}=R;const T=id=>toolInfo
   ].map(([k,l,groups])=>[k,l,groups.map(([gl,items])=>[gl,items.filter(Boolean)]).filter(g=>g[1].length)]);}
 function Ribbon({R}){const tabs=ribbonSpec(R);const [tab,setTabS]=useState(()=>{try{return localStorage.getItem('remodel-studio:rb-tab')||'home';}catch(e){return 'home';}});const T=tabs.find(t=>t[0]===tab)||tabs[0];
   const [compact,setCompactS]=useState(()=>{try{return localStorage.getItem('remodel-studio:rb-compact')==='1';}catch(e){return false;}});
+  const [pinned,setPinnedS]=useState(()=>{try{return localStorage.getItem('remodel-studio:rb-pinned')==='1';}catch(e){return false;}});const setPinned=v=>{setPinnedS(v);try{localStorage.setItem('remodel-studio:rb-pinned',v?'1':'0');}catch(e){}};
+  const [open,setOpen]=useState(false);const rbRef=useRef(null);
+  useEffect(()=>{if(!open||pinned)return;const close=e=>{if(rbRef.current&&!rbRef.current.contains(e.target))setOpen(false);};const kd=e=>{if(e.key==='Escape')setOpen(false);};document.addEventListener('pointerdown',close);window.addEventListener('keydown',kd);return ()=>{document.removeEventListener('pointerdown',close);window.removeEventListener('keydown',kd);};},[open,pinned]);
   const setTab=k=>{setTabS(k);try{localStorage.setItem('remodel-studio:rb-tab',k);}catch(e){}};const setCompact=v=>{setCompactS(v);try{localStorage.setItem('remodel-studio:rb-compact',v?'1':'0');}catch(e){}};
   // jump to the tab that holds the current tool
   useEffect(()=>{if(!R.tool||R.tool==='select')return;const has=t=>t[2].some(g=>g[1].some(it=>it.t==='tool'&&it.id===R.tool));if(!has(T)){const t=tabs.find(has);if(t)setTab(t[0]);}},[R.tool]);
-  const btn=(it,i)=>{if(it.t==='tool'){const ti=toolInfo(it.id);return html`<button key=${it.id} className=${'rb-btn dz-tool'+(R.tool===it.id?' on':'')} aria-pressed=${R.tool===it.id} onClick=${()=>R.pickTool(it.id)} title=${ti.label+(ti.key?' ('+ti.key+')':'')}>${ti.icon}<span>${ti.short||ti.label}</span></button>`;}
+  const done=()=>{if(!pinned)setOpen(false);};
+  const btn=(it,i)=>{if(it.t==='tool'){const ti=toolInfo(it.id);return html`<button key=${it.id} className=${'rb-btn dz-tool'+(R.tool===it.id?' on':'')} aria-pressed=${R.tool===it.id} onClick=${()=>{R.pickTool(it.id);done();}} title=${ti.label+(ti.key?' ('+ti.key+')':'')}>${ti.icon}<span>${ti.short||ti.label}</span></button>`;}
     if(it.t==='menu')return html`<div key=${'m'+i} className="rb-menu"><${MenuButton} id=${'rb-'+it.label.replace(/\W+/g,'-').toLowerCase()} label=${html`<span className="rb-mi">${it.icon}<span>${it.label}</span></span>`} items=${it.items}/></div>`;
     if(it.t==='colorby')return html`<div key="cb" className="rb-colorby"><label htmlFor="rb-cb">Color the views by</label><select id="rb-cb" className="inp" value=${R.colorBy||''} onChange=${e=>R.setColorBy(e.target.value||null)}><option value="">Normal colors</option>${COLOR_BY.map(c=>html`<option key=${c.id} value=${c.id}>${c.label}</option>`)}</select></div>`;
-    return html`<button key=${it.label} className=${'rb-btn'+(it.on?' on':'')} aria-pressed=${it.on!=null?!!it.on:undefined} disabled=${it.disabled} onClick=${it.run} title=${it.title||it.label}>${it.icon}<span>${it.label}</span></button>`;};
-  return html`<div className=${'ribbon'+(compact?' compact':'')}>
-    <div className="rb-tabs" role="tablist" aria-label="Tool groups">${tabs.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${T[0]===k} className=${T[0]===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}<span className="grow"></span>
-      <button className="rb-compact" onClick=${()=>setCompact(!compact)} title=${compact?'Show button labels':'Icons only'}>${compact?'Show labels':'Icons only'}</button></div>
-    <div className="rb-body" role="toolbar" aria-label=${T[1]+' tools'}>${T[2].map(([gl,items])=>html`<div key=${gl} className="rb-group"><div className="rb-items">${items.map(btn)}</div><div className="rb-gl">${gl}</div></div>`)}</div></div>`;}
+    return html`<button key=${it.label} className=${'rb-btn'+(it.on?' on':'')} aria-pressed=${it.on!=null?!!it.on:undefined} disabled=${it.disabled} onClick=${()=>{it.run();if(it.on==null)done();}} title=${it.title||it.label}>${it.icon}<span>${it.label}</span></button>`;};
+  const showBody=pinned||open;
+  return html`<div ref=${rbRef} className=${'ribbon'+(compact?' compact':'')+(pinned?' pinned':' collapsed')+(showBody?' open':'')}>
+    <div className="rb-tabs" role="tablist" aria-label="Tool groups">${tabs.map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${T[0]===k} className=${T[0]===k&&showBody?'on':''} onClick=${()=>{if(!pinned&&open&&T[0]===k){setOpen(false);return;}setTab(k);setOpen(true);}}>${l}</button>`)}<span className="grow"></span>
+      ${showBody?html`<button className="rb-compact" onClick=${()=>setCompact(!compact)} title=${compact?'Show button labels':'Icons only'}>${compact?'Show labels':'Icons only'}</button>`:null}
+      <button className="rb-compact" onClick=${()=>{setPinned(!pinned);setOpen(false);}} title=${pinned?'Collapse the toolbar to its tabs (more room to draw)':'Keep the toolbar open'}>${pinned?'Collapse':'Pin open'}</button></div>
+    ${showBody?html`<div className="rb-body" role="toolbar" aria-label=${T[1]+' tools'}>${T[2].map(([gl,items])=>html`<div key=${gl} className="rb-group"><div className="rb-items">${items.map(btn)}</div><div className="rb-gl">${gl}</div></div>`)}</div>`:null}</div>`;}

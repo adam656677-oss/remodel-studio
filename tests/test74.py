@@ -3,7 +3,7 @@ from h import *
 from kitchen import KITCHEN_JS
 with app(1600,1000,mode='design') as (pg,errs):
     pg.wait_for_timeout(1200); pg.evaluate(KITCHEN_JS); pg.wait_for_timeout(600)
-    assert pg.locator('.wf-tab').count()==6 and pg.locator('.dz-menubar').count()==0
+    assert pg.locator('.wf-tab').count()==7 and pg.locator('.dz-menubar').count()==0
     for name,mode in [('Measure','capture'),('Check','check'),('Documents','sheets'),('Cost','materials'),('Build','build'),('Design','design')]:
         pg.click(f'.wf-tab:has-text("{name}")'); pg.wait_for_timeout(500)
         m=pg.evaluate("()=>document.querySelector('.wf-tab.on').innerText"); assert name in m, (name,m)
@@ -11,10 +11,11 @@ with app(1600,1000,mode='design') as (pg,errs):
     pg.click('.wf-pages button:has-text("Systems")'); pg.wait_for_timeout(500); assert pg.locator('.designer').count()==0
     pg.click('.wf-pages button:has-text("Model")'); pg.wait_for_timeout(600); assert pg.locator('.designer').count()==1
     # ribbon: a tool button picks the tool and the ribbon follows the tool
+    if not pg.evaluate("()=>document.querySelector('.ribbon').classList.contains('pinned')"): pg.click('.ribbon button:has-text("Pin open")'); pg.wait_for_timeout(200)
     pg.click('.rb-tabs button:has-text("Architecture")'); pg.wait_for_timeout(200); pg.click('.rb-btn[title^="Wall ("]'); pg.wait_for_timeout(200)
     assert pg.evaluate("()=>document.querySelector('.dz-status b').innerText")=='Wall'
     pg.click('.rb-tabs button:has-text("Home")'); pg.click('.rb-btn[title^="Select"]'); pg.wait_for_timeout(200)
-    pg.click('.rb-compact'); pg.wait_for_timeout(200); assert pg.locator('.ribbon.compact').count()==1; pg.click('.rb-compact')
+    pg.click('.ribbon button:has-text("Icons only")'); pg.wait_for_timeout(200); assert pg.locator('.ribbon.compact').count()==1; pg.click('.ribbon button:has-text("Show labels")')
     # project browser: open an interior elevation in the active pane, then save and restore a view setup
     pg.click('.dz-ltabs button:has-text("Project browser")'); pg.wait_for_timeout(300)
     pg.click('.pb-h:has-text("Interior elevations")'); pg.wait_for_timeout(200); pg.click('.pb-room summary >> nth=0'); pg.click('.pb-room .pb-leaf >> nth=0'); pg.wait_for_timeout(600)

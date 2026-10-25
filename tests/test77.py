@@ -4,7 +4,7 @@ from kitchen import KITCHEN_JS
 with app(1600,1000,mode='design') as (pg,errs):
     pg.wait_for_timeout(1200); pg.evaluate(KITCHEN_JS); pg.wait_for_timeout(500)
     pg.evaluate("()=>window.__app.setMode('materials')"); pg.wait_for_timeout(600)
-    pg.get_by_role('tab',name='Estimate').click(); pg.wait_for_timeout(600); pg.click('button:has-text("Lock the contract")'); pg.wait_for_timeout(400)
+    pg.get_by_role('tab',name='Change orders',exact=True).click(); pg.wait_for_timeout(600); pg.click('button:has-text("Lock the contract")'); pg.wait_for_timeout(400)
     assert pg.evaluate("()=>!!window.__app.get().contract.model")
     pg.evaluate("()=>{const p=window.__app.get();window.__app.commit({...p,fixtures:p.fixtures.filter(f=>f.type!=='dw')});}"); pg.wait_for_timeout(700)
     pg.fill('input[aria-label="Change description"]','Owner removed the dishwasher.'); pg.click('button:has-text("Create change order")'); pg.wait_for_timeout(500)

@@ -38,12 +38,14 @@ function rotatePart(p,sel){const o=findObj(p,sel);if(!o)return null;
 
 /* ---- the menu buttons ---- */
 function MenuButton({label,items,id}){
-  const [open,setOpen]=useState(false);const ref=useRef(null);
+  const [open,setOpen]=useState(false);const ref=useRef(null);const [sub,setSub]=useState(null);const [subRect,setSubRect]=useState(null);useEffect(()=>{if(!open)setSub(null);},[open]);
   useEffect(()=>{if(!open)return;const close=e=>{if(ref.current&&!ref.current.contains(e.target))setOpen(false);};const kd=e=>{if(e.key==='Escape')setOpen(false);};
     document.addEventListener('pointerdown',close);window.addEventListener('keydown',kd);return ()=>{document.removeEventListener('pointerdown',close);window.removeEventListener('keydown',kd);};},[open]);
   return html`<div className="menu" ref=${ref}>
     <button id=${id} className=${'btn'+(open?' on':'')} aria-haspopup="menu" aria-expanded=${open} onClick=${()=>setOpen(!open)}>${label} <span aria-hidden="true">▾</span></button>
-    ${open?html`<div className="menupop" role="menu">${items.map((it,i)=>it==='-'?html`<hr key=${i}/>`:html`<button key=${i} role="menuitem" disabled=${it.disabled} onClick=${()=>{setOpen(false);it.run();}}><span>${it.label}</span>${it.key?html`<kbd>${it.key}</kbd>`:null}</button>`)}</div>`:null}
+    ${open?html`<div className="menupop" role="menu">${items.map((it,i)=>it==='-'?html`<hr key=${i}/>`:it.sub?html`<div key=${i} className=${'subwrap'+(sub===i?' open':'')} onMouseEnter=${e=>{setSubRect(e.currentTarget.getBoundingClientRect());setSub(i);}}><button role="menuitem" aria-haspopup="menu" aria-expanded=${sub===i} onClick=${e=>{setSubRect(e.currentTarget.getBoundingClientRect());setSub(i);}}><span>${it.label}</span><span className="subcar" aria-hidden="true">▸</span></button></div>`
+      :html`<button key=${i} role="menuitem" disabled=${it.disabled} onMouseEnter=${()=>setSub(null)} onClick=${()=>{setOpen(false);it.run();}}><span>${it.label}</span>${it.key?html`<kbd>${it.key}</kbd>`:null}</button>`)}</div>`:null}
+    ${open&&sub!=null&&items[sub]&&items[sub].sub&&subRect?html`<div className="menupop submenu" role="menu" style=${{position:'fixed',left:Math.min(window.innerWidth-250,subRect.right+2)+'px',top:Math.min(window.innerHeight-40,subRect.top-6)+'px'}}>${items[sub].sub.map((s,j)=>s==='-'?html`<hr key=${j}/>`:html`<button key=${j} role="menuitem" disabled=${s.disabled} onClick=${()=>{setOpen(false);s.run();}}><span>${s.label}</span>${s.key?html`<kbd>${s.key}</kbd>`:null}</button>`)}</div>`:null}
   </div>`;
 }
 

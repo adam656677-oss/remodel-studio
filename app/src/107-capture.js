@@ -111,14 +111,14 @@ function questionsFor(kind,a){
 }
 function CaptureView({p,commit,sel,setSel,levelId,setLevelId,setMode,libCtx}){
   const pid=p.id||'default'; const assets=useAssets(pid);
-  const [tab,setTab]=useState('measure');
+  const [tab,setTab]=useState(()=>window.__rsCapTab||'photos');useEffect(()=>{window.__rsCapTab=null;},[]);
   return html`<div className="matview"><div className="matinner">
     <div className="mathead"><div><h2>Capture</h2><p className="note">Turn photos and tape measurements into the model. Photos and scans are kept in this browser only; the project file stores where they are pinned.</p></div></div>
-    <div className="seg" role="tablist">${[['measure','Measure, color and trim from photos'],['assistant','Photo assistant'],['room','Room from measurements'],['photos','Photos'],['underlay','Underlay and scans'],...CAPTURE_EXTRA.map(x=>[x[0],x[1]])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
+    <div className="seg" role="tablist">${[['photos','Photos'],['measure','Measure from photos'],['assistant','Photo assistant'],['underlay','Scans and plan images'],['walls','Make walls'],...CAPTURE_EXTRA.filter(x=>!['facade'].includes(x[0])).map(x=>[x[0],x[1]])].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${tab===k} className=${tab===k?'on':''} onClick=${()=>setTab(k)}>${l}</button>`)}</div>
     ${assets.err?html`<div className="msg err">${assets.err}</div>`:null}
     ${tab==='measure'?html`<${PhotoMeasure} p=${p} commit=${commit} sel=${sel} assets=${assets} libCtx=${libCtx}/>`:null}
     ${tab==='assistant'?html`<${PhotoAssistant} p=${p} commit=${commit} sel=${sel} levelId=${levelId} assets=${assets} setMode=${setMode} setSel=${setSel}/>`:null}
-    ${tab==='room'?html`<${RoomWizard} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel}/>`:null}
+    ${tab==='walls'?html`<${MakeWallsTab} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel} assets=${assets}/>`:null}
     ${tab==='photos'?html`<${PhotoGallery} p=${p} commit=${commit} sel=${sel} assets=${assets}/>`:null}
     ${tab==='underlay'?html`<${UnderlayPanel} p=${p} commit=${commit} levelId=${levelId} assets=${assets} setMode=${setMode}/>`:null}
     ${CAPTURE_EXTRA.filter(x=>x[0]===tab).map(x=>html`<${x[2]} key=${x[0]} p=${p} commit=${commit} sel=${sel} setSel=${setSel} levelId=${levelId} setMode=${setMode} assets=${assets}/>`)}
@@ -353,3 +353,10 @@ function useUnderlayImages(p,levelId){
   useEffect(()=>{let live=true;if(!cl){setSlice(null);setCloudPts(null);return;}assetGet(cl.asset).then(a=>{if(!live||!a)return;const pts=cloudToPlan({points:a.points},cl);setCloudPts({pts,colors:a.colors});const lv=lvlOf(p,cl.level);const e=(lv?lv.elevation:0);setSlice(cl.level===levelId?cloudSliceImage(pts,e+(cl.lo||12),e+(cl.hi||72)):null);}).catch(()=>{});return ()=>{live=false;};},[cl&&cl.asset,cl&&cl.scale,cl&&cl.up,cl&&cl.rot,cl&&cl.dx,cl&&cl.dy,cl&&cl.dz,cl&&cl.lo,cl&&cl.hi,cl&&cl.level,levelId]);
   return {u,slice,cloudPts};
 }
+
+// Make walls: three ways to get the existing walls into the model
+function MakeWallsTab({p,commit,levelId,setMode,setSel,assets}){const [way,setWay]=useState('tape');const X=CAPTURE_EXTRA.find(x=>x[0]==='facade');
+  return html`<div><div className="seg" role="tablist" style=${{marginBottom:'10px'}}>${[['tape','From tape measurements'],['scan','From a scan or plan image'],['facade','Trace an outside wall from a photo']].map(([k,l])=>html`<button key=${k} role="tab" aria-selected=${way===k} className=${way===k?'on':''} onClick=${()=>setWay(k)}>${l}</button>`)}</div>
+    ${way==='tape'?html`<${RoomWizard} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} setSel=${setSel}/>`:null}
+    ${way==='scan'?html`<section className="sec"><h3>Walls from a scan or plan image</h3><p className="note">Load a .ply scan or a photo of the paper plan under Scans and plan images first, set its scale, then let the app find the walls.</p><button className="btn primary" onClick=${()=>openDialog('scanwalls')}>Find the walls…</button></section>`:null}
+    ${way==='facade'&&X?html`<${X[2]} p=${p} commit=${commit} levelId=${levelId} setMode=${setMode} assets=${assets}/>`:null}</div>`;}

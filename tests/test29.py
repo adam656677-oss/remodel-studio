@@ -4,7 +4,7 @@ with app() as (pg,errs):
     pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(400)
     r=pg.evaluate("(t)=>{const r=parseDXF(t);return {n:r.ents.length,u:r.units,types:r.ents.map(e=>e.shape)}}",DXF); print('parse',r)
     # import through the menu dialog
-    pg.get_by_role('button',name='File').click(); pg.wait_for_timeout(200); pg.get_by_text('Import DWG or DXF drawing…').click(); pg.wait_for_timeout(300)
+    file_menu(pg,'Import','DWG or DXF drawing…')
     pg.get_by_label('Turn parallel line pairs into walls (CAD-to-walls)').check()
     w0=pg.evaluate("()=>window.__app.get().walls.length")
     pg.set_input_files('#dxf-file',files=[{'name':'t.dxf','mimeType':'application/dxf','buffer':DXF.encode()}]); pg.wait_for_timeout(400)
