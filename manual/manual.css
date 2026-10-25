@@ -1,0 +1,119 @@
+/* Remodel Studio user manual — print styles for paged.js */
+:root{--ink:#17202b;--ink2:#5b6675;--navy:#1f3a5f;--blue:#2d5f9e;--line:#d6dde6;--soft:#f3f6fa;--accent:#c58a3c}
+@page{size:8.5in 11in;margin:0.9in 0.85in 0.95in 0.85in;
+  @bottom-center{content:counter(page);font:9.5pt "Segoe UI",system-ui,sans-serif;color:var(--ink2)}
+  @top-left{content:string(chapter);font:8.5pt "Segoe UI",system-ui,sans-serif;color:var(--ink2);letter-spacing:.02em}
+  @top-right{content:"Remodel Studio · User manual";font:8.5pt "Segoe UI",system-ui,sans-serif;color:var(--ink2)}}
+@page cover{margin:0;@bottom-center{content:none}@top-left{content:none}@top-right{content:none}}
+@page plain{@bottom-center{content:counter(page)}@top-left{content:none}@top-right{content:none}}
+@page part{background:var(--navy);margin:0;@bottom-center{content:none}@top-left{content:none}@top-right{content:none}}
+@page:blank{@top-left{content:none}@top-right{content:none}}
+html{font:10.6pt/1.45 "Segoe UI","Public Sans",system-ui,-apple-system,sans-serif;color:var(--ink)}
+body{margin:0}
+h1,h2,h3,h4{font-family:"Segoe UI","Public Sans",system-ui,sans-serif;color:var(--navy);line-height:1.15;margin:0}
+p{margin:0 0 .55em;orphans:2;widows:2}
+a{color:inherit;text-decoration:none}
+strong{font-weight:650}
+code{font:9.4pt ui-monospace,Consolas,"Cascadia Mono",monospace;background:var(--soft);padding:0 .25em;border-radius:3px}
+ul,ol{margin:.1em 0 .7em;padding-left:1.35em}li{margin:.12em 0}li p{margin:0}
+hr{display:none}
+
+/* cover */
+.cover{page:cover;break-after:page;height:11in;width:8.5in;background:var(--navy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.25in}
+.cover-art img{width:4.6in;height:4.6in;border-radius:.6in;box-shadow:0 .25in .6in rgba(0,0,0,.45)}
+.cover-text{text-align:center}
+.cover-kicker{font-size:13pt;letter-spacing:.25em;text-transform:uppercase;color:#b9cce6}
+.cover h1{font-size:40pt;color:#fff;font-weight:800;letter-spacing:-.02em;margin:.08in 0 .1in}
+.cover-sub{font-size:14pt;color:#dce6f3}
+.cover-ver{margin-top:.35in;font-size:11pt;color:#b9cce6;border:1px solid rgba(255,255,255,.35);display:inline-block;padding:.08in .3in;border-radius:999px}
+/* title page */
+.titlepage{page:plain;break-after:page;text-align:center;padding-top:1.2in}
+.tp-logo img{width:1.6in;border-radius:.2in}
+.titlepage h1{font-size:30pt;margin-top:.3in}
+.tp-sub{color:var(--ink2);font-size:13pt;margin-bottom:.6in}
+.tp-body{max-width:5.2in;margin:0 auto;font-size:11pt;color:var(--ink)}
+.tp-foot{position:absolute;bottom:0;left:0;right:0;font-size:8.6pt;color:var(--ink2);max-width:5.8in;margin:0 auto}
+.tp-foot p{margin:0 0 .3em}
+/* contents */
+.toc{page:plain;break-after:page;break-before:page}
+.toc h1,.index h1{font-size:26pt;margin-bottom:.3in}
+.toc-part a::after{content:none}
+.toc-part{font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;font-size:9.5pt;margin:.22in 0 .06in;border-bottom:1px solid var(--line);padding-bottom:2px}
+.toc-ch a,.toc-sec a,.ix a{display:flex;align-items:baseline;gap:.4em}
+.toc-ch{font-weight:650;margin:.07in 0 .02in}
+.toc-ch .n{width:1.5em;color:var(--blue)}
+.toc-sec{font-size:9.4pt;color:#2d3a4a;padding-left:1.5em;margin:0}
+.toc .t{flex:0 1 auto}
+.toc .pg::before,.ix .pg::before{content:"";flex:1}
+.toc a,.ix a{position:relative}
+.toc .t::after,.ix .t::after{content:"";}
+.toc .pg,.ix .pg{display:none}
+.toc a::after{content:target-counter(attr(href),page);margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink2);min-width:2.2em;text-align:right;background:#fff;padding-left:.3em}
+.toc-ch a,.toc-sec a,.ix a{background-image:radial-gradient(circle,var(--line) 1px,transparent 1.2px);background-size:6px 6px;background-repeat:repeat-x;background-position:0 calc(100% - 3px)}
+.toc .t,.toc .n,.toc .pg,.ix .t,.ix .pg{background:#fff;padding:0 .2em}
+.toc .t{padding-left:0}
+.toc-ch .n{padding-right:0}
+/* part pages */
+.part{page:part;break-before:right;break-after:page;height:11in;width:8.5in;background:var(--navy);color:#fff;display:flex;align-items:center}
+.part-inner{padding:0 1.1in}
+.part-label{font-size:12pt;letter-spacing:.3em;text-transform:uppercase;color:#b9cce6;margin-bottom:.15in}
+.part h1{font-size:34pt;color:#fff;font-weight:800;letter-spacing:-.02em;margin-bottom:.25in}
+.part p{font-size:13pt;color:#dce6f3;max-width:5.4in;line-height:1.4}
+/* chapters */
+.chapter{break-before:page;string-set:chapter attr(data-chapter)}
+.chapter h2{string-set:chapter content(text);font-size:24pt;font-weight:800;letter-spacing:-.015em;margin:0 0 .28in;padding-bottom:.12in;border-bottom:2.5px solid var(--navy);break-after:avoid}
+.chapter h2 .chno{display:block;font-size:11pt;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:.06in}
+.chapter h2 .chno::before{content:"Chapter "}
+.chapter h3{font-size:14.5pt;font-weight:700;margin:.28in 0 .1in;break-after:avoid;counter-increment:sec}
+.chapter h3::before{content:attr(data-chapter)}
+.chapter{counter-reset:sec}
+.chapter h3::before{content:counter(sec) "  ";color:var(--blue);font-weight:700}
+.chapter h4{font-size:11.5pt;font-weight:700;margin:.18in 0 .06in;color:#243247;break-after:avoid}
+blockquote.note{margin:.12in 0 .18in;padding:.1in .16in;background:var(--soft);border-left:3px solid var(--accent);border-radius:0 6px 6px 0;break-inside:avoid}
+blockquote.note p{margin:0}
+/* tables */
+.tbl{margin:.08in 0 .2in}
+table{border-collapse:collapse;width:100%;font-size:9pt;line-height:1.32}
+th{background:var(--navy);color:#fff;text-align:left;font-weight:650;padding:4px 6px;font-size:8.6pt;letter-spacing:.01em}
+td{padding:3.5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:#f7f9fc}
+td code,th code{background:none;padding:0;font-size:8.6pt}
+tr{break-inside:avoid}
+thead{display:table-header-group}
+/* figures */
+figure.shot{margin:.12in 0 .22in;break-inside:avoid;text-align:center}
+figure.shot img{max-width:100%;border:1px solid var(--line);border-radius:6px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+figure.shot.wide img{width:100%;max-height:4.4in;object-fit:contain}
+figure.shot.narrow img{max-height:4.6in;width:auto}
+figure.shot.tall img{max-height:5.6in;width:auto}
+figure.shot.pair{display:flex;gap:.2in;justify-content:center;align-items:flex-start}
+figure.shot.pair div{flex:0 1 48%;text-align:center}
+figure.shot.pair img{max-height:5.2in;max-width:100%;width:auto}
+figcaption{font-size:8.8pt;color:var(--ink2);margin-top:4px;text-align:center}
+/* glossary */
+p.gl{margin:0 0 .5em;padding-left:1.2em;text-indent:-1.2em}
+p.gl strong{color:var(--navy)}
+/* index */
+.index{break-before:page;page:plain}
+.ix-cols{column-count:2;column-gap:.35in;font-size:9pt}
+.ix-letter{font-weight:800;color:var(--blue);margin:.14in 0 .04in;font-size:11pt;break-after:avoid}
+.ix{break-inside:avoid}
+.ix a::after{content:target-counter(attr(href),page);margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ink2);background:#fff;padding-left:.3em}
+/* paged.js page area */
+.pagedjs_page{background:#fff}
+pre{background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:.08in .12in;font:8.4pt/1.35 ui-monospace,Consolas,"Cascadia Mono",monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:.08in 0 .18in;break-inside:avoid}
+pre code{background:none;padding:0;font-size:inherit}
+
+/* tables: keep the heading, lead line and header row with the first rows; wide tables smaller */
+.chapter h3{break-after:avoid}
+.chapter h3+p{break-after:avoid}
+thead{break-after:avoid}
+thead tr{break-inside:avoid;break-after:avoid}
+tbody tr:first-child,tbody tr:nth-child(2){break-before:avoid}
+.tbl.wide table{font-size:8.2pt}.tbl.wide th{font-size:8pt}.tbl.wide td{padding:3px 5px}
+.tbl.vendors td:nth-child(5){width:34%}.tbl.vendors td:nth-child(1){width:11%}
+.tbl{break-before:avoid}
+/* walk a break back to before the heading when it would land in the first rows of a table */
+.tbl,.tbl table,.tbl thead,.tbl tbody,.tbl tbody tr:first-child,.tbl tbody tr:nth-child(2),.tbl tbody tr:nth-child(3){break-before:avoid}
+.chapter h4{break-after:avoid}
+.chapter h3+p,.chapter h4+p{break-before:avoid;break-after:avoid}

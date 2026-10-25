@@ -1,5 +1,5 @@
 /* ======================= clicking in 3D: select, or paint a surface ======================= */
-function pick3D(st,clientX,clientY){const r=st.renderer.domElement.getBoundingClientRect();const v=new THREE.Vector2(((clientX-r.left)/r.width)*2-1,-((clientY-r.top)/r.height)*2+1);
+function pick3D(st,clientX,clientY){if(st.syncSize&&st.syncSize())st.render();const r=st.renderer.domElement.getBoundingClientRect();const v=new THREE.Vector2(((clientX-r.left)/r.width)*2-1,-((clientY-r.top)/r.height)*2+1);
   const rc=new THREE.Raycaster();rc.setFromCamera(v,st.camera);const hits=rc.intersectObject(st.model,true);
   const clip=st.clipPlane;for(const h of hits){if(!h.object.isMesh||!h.object.userData.tag)continue;const mats=Array.isArray(h.object.material)?h.object.material:[h.object.material];
     if(mats[0]&&mats[0].clippingPlanes&&mats[0].clippingPlanes.length&&clip.distanceToPoint(h.point)<0)continue; // cut away by the section

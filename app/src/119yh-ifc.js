@@ -9,7 +9,7 @@ const ifcR=v=>{const x=Math.round(v*1e6)/1e6;return Number.isInteger(x)?x.toFixe
 const toM=v=>v*0.0254;
 function buildIFC(p,o={}){const W=ifcWriter();const A=W.add;const now=Math.floor(Date.now()/1000);
   const person=A(`IFCPERSON($,${ifcS(p.info&&p.info.designer||'')},$,$,$,$,$,$)`),org=A(`IFCORGANIZATION($,'Remodel Studio',$,$,$)`),po=A(`IFCPERSONANDORGANIZATION(${person},${org},$)`);
-  const app=A(`IFCAPPLICATION(${org},'2.2','Remodel Studio','RemodelStudio')`);const oh=A(`IFCOWNERHISTORY(${po},${app},$,.ADDED.,$,$,$,${now})`);
+  const app=A(`IFCAPPLICATION(${org},'2.3','Remodel Studio','RemodelStudio')`);const oh=A(`IFCOWNERHISTORY(${po},${app},$,.ADDED.,$,$,$,${now})`);
   const P3=(x,y,z)=>A(`IFCCARTESIANPOINT((${ifcR(x)},${ifcR(y)},${ifcR(z)}))`),P2=(x,y)=>A(`IFCCARTESIANPOINT((${ifcR(x)},${ifcR(y)}))`),D3=(x,y,z)=>A(`IFCDIRECTION((${ifcR(x)},${ifcR(y)},${ifcR(z)}))`),D2=(x,y)=>A(`IFCDIRECTION((${ifcR(x)},${ifcR(y)}))`);
   const O=P3(0,0,0),Z=D3(0,0,1),X=D3(1,0,0);const ax0=A(`IFCAXIS2PLACEMENT3D(${O},${Z},${X})`);
   const ctx=A(`IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.E-05,${ax0},$)`);

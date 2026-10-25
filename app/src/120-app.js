@@ -140,7 +140,7 @@ function App(){
         {label:'Cut',key:'Ctrl+X',run:doCut,disabled:!sel},{label:'Copy',key:'Ctrl+C',run:doCopy,disabled:!sel},{label:'Paste',key:'Ctrl+V',run:doPaste,disabled:!clip.current},
         {label:'Duplicate',key:'Ctrl+D',run:doDup,disabled:!sel},{label:'Rotate 90° or flip',key:'E',run:doRotate,disabled:!sel},{label:'Delete',key:'Del',run:onDelete,disabled:!sel},'-',
         {label:'Select nothing',key:'Esc',run:()=>setSel(null),disabled:!sel},'-',{label:'Save selection as block…',run:()=>setDlg('blocks'),disabled:!sel},{label:'Blocks…',run:()=>setDlg('blocks')}]}/>
-      ${mode==='design'?null:html`<${MenuButton} id="menu-help" label="Help" items=${[{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')}]}/>`}
+      ${mode==='design'?null:html`<${MenuButton} id="menu-help" label="Help" items=${[{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')},{label:'Appearance (light or dark)…',run:()=>setDlg('appearance')},{label:'My standards…',run:()=>setDlg('standards')}]}/>`}
       <div id="rs-menuslot" className="menuslot"></div>
       </div>
       <div className="projname" title=${project.name+(dirty?' (not saved)':'')}>${project.name}${dirty?html`<span className="dirty" aria-label="not saved"> •</span>`:null}</div>
@@ -150,7 +150,7 @@ function App(){
       <button className="btn undo-redo" onClick=${doRedo} disabled=${!redo.current.length} aria-label="Redo" title="Redo (Ctrl+Y)">${I.redo}</button>
     </header>
     <nav className="wfbar" aria-label="Workflow">
-      <${WorkflowTabs} mode=${mode} setMode=${setMode} narrow=${narrow} nErr=${nErr} nWarn=${nWarn}/>
+      <${WorkflowPages} mode=${mode} setMode=${setMode} narrow=${narrow}/>
       <div className="spacer"></div>
       <select id="option-pick" className="inp lvlsel" value=${ensureOptions(project).activeOption} onChange=${e=>{const v=e.target.value;if(v==='__new'){commit(addOption(project));}else commit(switchOption(project,v));setSel(null);}} aria-label="Design option" title="Design option">${ensureOptions(project).options.map(o=>html`<option key=${o.id} value=${o.id}>${o.name}</option>`)}<option value="__new">+ New option (copy)</option></select>${ensureOptions(project).options.length>1?html`<select className="inp lvlsel" value=${cmpOpt||''} onChange=${e=>setCmpOpt(e.target.value||null)} aria-label="Compare with option" title="Show another option's walls in magenta on the plan"><option value="">Compare: off</option>${ensureOptions(project).options.filter(o=>o.id!==ensureOptions(project).activeOption).map(o=>html`<option key=${o.id} value=${o.id}>vs ${o.name}</option>`)}</select>`:null}
       <select id="layer-pick" className="inp lvlsel" value=${layer} onChange=${e=>setLayer(e.target.value)} aria-label="Remodel layer" title="Which remodel work to show"><option value="both">Existing + new</option><option value="existing">Existing only</option><option value="proposed">New only</option></select>
@@ -180,6 +180,7 @@ function App(){
     ${cmdk?html`<${CommandPalette} ctx=${{p:project,sel,commit,setMode,setDlg,setSel:selShow,setLevelId,setTool,setFixtureType,setWallPreset,setOpenPreset,lv,say,doSave,doOpen,doUndo,doRedo,openRender:()=>setRenderOpen(true),openExport:()=>setExportOpen(true),issues}} onClose=${()=>setCmdk(false)}/>`:null}
     ${toast?html`<div className=${'toast'+(toast.ok?'':' err')} role="status">${toast.t}</div>`:null}
     ${exportOpen?html`<${ExportModal} p=${project} sun=${sun} onClose=${()=>setExportOpen(false)} onRender=${()=>setRenderOpen(true)}/>`:null}${renderOpen?html`<${RenderStudio} p=${project} sun=${sun} onClose=${()=>setRenderOpen(false)}/>`:null}
+    <${WorkflowTabBar} mode=${mode} setMode=${setMode} narrow=${narrow} nErr=${nErr} nWarn=${nWarn}/>
   </div>`;
 }
 ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);

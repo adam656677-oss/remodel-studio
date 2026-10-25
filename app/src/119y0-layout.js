@@ -11,13 +11,26 @@ const WORKFLOWS=[
 ];
 const wfPages=(w,narrow)=>narrow&&w.narrowPages?w.narrowPages:w.pages;
 function wfOfMode(m){return WORKFLOWS.find(w=>w.pages.some(x=>x[0]===m)||(w.narrowPages||[]).some(x=>x[0]===m))||WORKFLOWS.find(w=>w.id==='design');}
-function WorkflowTabs({mode,setMode,narrow,nErr,nWarn}){const cur=wfOfMode(mode);
-  const lastPage=w=>{let v=null;try{v=localStorage.getItem('remodel-studio:wf:'+w.id);}catch(e){}const pg=wfPages(w,narrow);return pg.some(x=>x[0]===v)?v:pg[0][0];};
-  const go=(w,pageId)=>{const id=pageId||lastPage(w);try{localStorage.setItem('remodel-studio:wf:'+w.id,id);}catch(e){}setMode(id);};
-  const pages=wfPages(cur,narrow);
-  const pills=pages.length>1?html`<div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div>`:null;
-  return html`<div className="wf-tabs" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<${Fragment} key=${w.id}><button role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
-      <span className="wf-n">${i+1}</span>${w.label}${w.id==='check'?html`${nErr?html`<span className="cnt bad">${nErr}</span>`:null}${nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}${!nErr&&!nWarn?html`<span className="cnt ok">✓</span>`:null}`:null}</button>${cur.id===w.id?pills:null}<//>`)}</div>`;}
+const WF_ICONS={
+  home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/>',
+  measure:'<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10.5 8v4.5M14.5 8v3M18.5 8v4.5"/>',
+  design:'<path d="M4 20 15.5 8.5l-4-4L4 16v4h0z"/><path d="M13 6.5 17.5 11"/><path d="M15.5 4.5l4 4"/><path d="M4 20h7"/>',
+  check:'<path d="M12 3 4.5 6v6c0 4.5 3.2 7.6 7.5 9 4.3-1.4 7.5-4.5 7.5-9V6L12 3z"/><path d="m8.8 12 2.2 2.2 4.4-4.6"/>',
+  docs:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M9.5 12h6M9.5 15.5h6M9.5 9h2.5"/>',
+  cost:'<circle cx="12" cy="12" r="9"/><path d="M12 6.5v11"/><path d="M14.8 9.2c-.4-1-1.5-1.5-2.8-1.5-1.6 0-2.8.8-2.8 2 0 2.8 5.6 1.2 5.6 4.2 0 1.3-1.3 2.2-3 2.2-1.5 0-2.7-.7-3.1-1.8"/>',
+  build:'<path d="M14 5.5 18.5 10l-2 2-4.5-4.5z"/><path d="M12.5 7.5 6 14l-2 4.5L8.5 16.5 15 10"/><path d="M15.5 4.5 20 9"/>'};
+const wfIcon=id=>html`<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" dangerouslySetInnerHTML=${{__html:WF_ICONS[id]||WF_ICONS.docs}}/>`;
+const wfLast=(w,narrow)=>{let v=null;try{v=localStorage.getItem('remodel-studio:wf:'+w.id);}catch(e){}const pg=wfPages(w,narrow);return pg.some(x=>x[0]===v)?v:pg[0][0];};
+const wfGo=(setMode,narrow)=>(w,pageId)=>{const id=pageId||wfLast(w,narrow);try{localStorage.setItem('remodel-studio:wf:'+w.id,id);}catch(e){}setMode(id);};
+// iOS-style tab bar at the bottom of the window: one tab per workflow, with an icon and a label
+function WorkflowTabBar({mode,setMode,narrow,nErr,nWarn}){const cur=wfOfMode(mode);const go=wfGo(setMode,narrow);
+  return html`<nav className="tabbar" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<button key=${w.id} role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
+      <span className="wf-ic">${wfIcon(w.id)}${w.id==='check'&&nErr?html`<span className="cnt bad">${nErr}</span>`:w.id==='check'&&nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}</span><span className="wf-n">${i+1}</span><span className="wf-l">${w.label}</span></button>`)}</nav>`;}
+// the pages of the current workflow (Model / Systems, Sheets / Schedules …) as a segmented control under the title bar
+function WorkflowPages({mode,setMode,narrow}){const cur=wfOfMode(mode);const go=wfGo(setMode,narrow);const pages=wfPages(cur,narrow);
+  if(pages.length<2)return html`<div className="wf-title"><span className="wf-crumb">${cur.label}</span></div>`;
+  return html`<div className="wf-title"><span className="wf-crumb">${cur.label}</span><div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div></div>`;}
+const WorkflowTabs=WorkflowTabBar;
 
 /* ---------- issue categories ---------- */
 const ISSUE_CATS=['IRC','IBC','ADA','NKBA','Structure','Framing','Electrical','Plumbing','Appliances','Cabinets','Energy','Zoning','Landscape','Model'];

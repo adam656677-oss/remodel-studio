@@ -828,3 +828,243 @@ tr.pick td{background:var(--accent-soft)}
 .cutopt .rw-stats{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 14px}.cutopt .rw-stats>div{display:flex;flex-direction:column;min-width:120px}.cutopt .rw-stats span{font-size:12px;color:var(--muted)}.cutopt .rw-stats b{font-size:20px}.cutopt .rw-stats small{color:var(--muted)}
 .cut-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}.cut-sheet{margin:0;background:var(--panel2,#fff);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center}.cut-sheet svg{max-width:100%;height:auto}.cut-sheet figcaption{font-size:12px;color:var(--muted);margin-top:6px}
 .fb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:12px 0 18px}.fb-tile{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel2,#fff)}.fb-tile img{display:block;width:100%;aspect-ratio:220/160;object-fit:cover}.fb-tile figcaption{padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px;position:relative}.fb-tile small{color:var(--accent,#1f5fbf);font-weight:600;letter-spacing:.04em;font-size:11px;text-transform:uppercase}.fb-tile b{font-size:14px}.fb-tile span{font-size:12px;color:var(--muted)}.fb-tile i{position:absolute;right:10px;top:10px;width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.2)}
+
+/* =====================================================================
+   iOS look: system font, SF-style large titles, grouped inset panels,
+   segmented controls, switches, translucent bars and menus, iOS blue.
+   ===================================================================== */
+:root{
+  --chrome:#f2f2f7; --panel:#ffffff; --line:rgba(60,60,67,.18); --ink:#000000; --ink-2:#6e6e73; --accent:#007aff; --accent-soft:#e5f0ff;
+  --paper:#ffffff; --grid:#eceef2; --grid-major:#d9dde4; --fill:rgba(120,120,128,.12); --fill-2:rgba(120,120,128,.2); --sep:rgba(60,60,67,.29);
+  --good:#34c759; --good-soft:#e6f8ea; --warn:#ff9500; --warn-soft:#fff3e0; --bad:#ff3b30; --bad-soft:#ffe9e7;
+  --f-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono",monospace;
+  --r-s:8px; --r-m:12px; --r-l:16px; --shadow-1:0 1px 2px rgba(0,0,0,.06),0 0 0 .5px rgba(0,0,0,.04); --shadow-2:0 10px 30px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.06);
+  --glass:rgba(249,249,249,.82);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --chrome:#000000; --panel:#1c1c1e; --line:rgba(84,84,88,.5); --ink:#ffffff; --ink-2:#98989f; --accent:#0a84ff; --accent-soft:#0e2a4a;
+  --paper:#1c1c1e; --grid:#262628; --grid-major:#3a3a3c; --fill:rgba(120,120,128,.24); --fill-2:rgba(120,120,128,.36); --sep:rgba(84,84,88,.65);
+  --good:#30d158; --good-soft:#12301b; --warn:#ff9f0a; --warn-soft:#3a2a0d; --bad:#ff453a; --bad-soft:#3a1715;
+  --wall:#f2f2f7; --wall-existing:#8e8e93; --ghost:#48484a; --dim:#b8c7dc; --sky:#101418; --ground:#242a22;
+  --shadow-1:0 1px 2px rgba(0,0,0,.5),0 0 0 .5px rgba(255,255,255,.06); --shadow-2:0 12px 36px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.08); --glass:rgba(30,30,32,.78);}}
+:root[data-theme="dark"]{
+  --chrome:#000000; --panel:#1c1c1e; --line:rgba(84,84,88,.5); --ink:#ffffff; --ink-2:#98989f; --accent:#0a84ff; --accent-soft:#0e2a4a;
+  --paper:#1c1c1e; --grid:#262628; --grid-major:#3a3a3c; --fill:rgba(120,120,128,.24); --fill-2:rgba(120,120,128,.36); --sep:rgba(84,84,88,.65);
+  --good:#30d158; --good-soft:#12301b; --warn:#ff9f0a; --warn-soft:#3a2a0d; --bad:#ff453a; --bad-soft:#3a1715;
+  --wall:#f2f2f7; --wall-existing:#8e8e93; --ghost:#48484a; --dim:#b8c7dc; --sky:#101418; --ground:#242a22;
+  --shadow-1:0 1px 2px rgba(0,0,0,.5),0 0 0 .5px rgba(255,255,255,.06); --shadow-2:0 12px 36px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.08); --glass:rgba(30,30,32,.78);}
+:root[data-theme="light"]{--wall:#1d2a39;--wall-existing:#7d8a99;--ghost:#a7b4c3;--dim:#3d5675;--sky:#dfe7ee;--ground:#c9d1c1}
+
+body{font-size:13.5px;letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(120,120,128,.35);border-radius:8px;border:2px solid transparent;background-clip:padding-box}::-webkit-scrollbar-track{background:transparent}
+*{scrollbar-width:thin;scrollbar-color:rgba(120,120,128,.4) transparent}
+
+/* headings: SF-style titles, no uppercase condensed type */
+.brand,.insp-h h2,.modal h2,.mathead h2,.dash-head h2,h2,h3{font-family:var(--f-display);text-transform:none;letter-spacing:-.02em}
+.brand{font-size:17px;font-weight:700}.brand span{color:var(--accent)}
+.mathead h2,.dash-head h2{font-size:28px;font-weight:700;line-height:1.1}
+.modal h2{font-size:20px;font-weight:700}
+.insp-h h2{font-size:17px;font-weight:600}
+.sec h3,.insp h3,.matinner h3{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+.note{color:var(--ink-2)}
+
+/* translucent bars */
+.top,.chrome-top,.dz-tabs,.ribbon,.dz-ltabs,.rail{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+.top,.chrome-top{border-bottom:.5px solid var(--sep)}
+.ribbon{border-bottom:.5px solid var(--sep)}
+.dz-tabs{border-top:.5px solid var(--sep)}
+
+/* buttons */
+.btn{border:0;background:var(--fill);border-radius:var(--r-s);padding:6px 12px;font-weight:600;font-size:13px;color:var(--accent);transition:background .12s,transform .08s}
+.btn:hover{background:var(--fill-2);border-color:transparent}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{background:color-mix(in srgb,var(--accent) 88%,#000)}
+.btn.danger{color:var(--bad);background:var(--bad-soft)}
+.btn.small{padding:3px 9px;font-size:12px;border-radius:7px}
+.btn.on{background:var(--accent-soft);color:var(--accent)}
+.menus .btn{background:none;color:var(--ink);font-weight:500;padding:4px 10px}.menus .btn:hover,.menu>.btn.on{background:var(--fill)}
+.linkbtn{color:var(--accent)}
+.chip{border:0;background:var(--fill);border-radius:999px;color:var(--ink);font-weight:500}.chip.on{background:var(--accent);color:#fff}
+
+/* segmented controls */
+.seg{background:var(--fill);border:0;border-radius:9px;padding:2px;gap:2px;overflow:visible}
+.seg button{border:0!important;border-radius:7px;padding:4px 12px;font-weight:500;font-size:13px;color:var(--ink);background:none}
+.seg button.on{background:var(--panel);color:var(--ink);font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.06)}
+:root[data-theme="dark"] .seg button.on,:root:not([data-theme="light"]) .seg button.on{background:#636366;color:#fff}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .seg button.on{background:var(--panel);color:var(--ink)}}
+.seg.mattabs,.seg.shtabs{flex-wrap:wrap;display:inline-flex}
+
+/* workflow tabs as a pill bar */
+.wf-tabs{gap:4px;align-items:center;align-self:center;background:var(--fill);border-radius:11px;padding:3px}
+.wf-tab{border:0;border-radius:9px;padding:5px 12px 5px 8px;font-weight:600;font-size:13px;color:var(--ink-2);top:0}
+.wf-tab:hover{background:var(--fill)}
+.wf-tab.on{background:var(--panel);color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.06)}
+.wf-n{background:var(--fill-2);color:var(--ink)}.wf-tab.on .wf-n{background:var(--accent);color:#fff}
+.wf-pages{background:var(--fill);border:0;border-radius:9px;padding:2px}.wf-pages button{border:0!important;border-radius:7px}.wf-pages button.on{background:var(--panel);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+
+/* ribbon */
+.rb-tabs button[role=tab]{border-radius:8px;font-weight:600}
+.rb-tabs button[role=tab].on,.rb-tabs button[role=tab][aria-selected=true]{background:var(--accent-soft);color:var(--accent)}
+.rb-btn{border-radius:10px;border:0}.rb-btn:hover{background:var(--fill);border-color:transparent}.rb-btn.on{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.rb-group{border-right:.5px solid var(--sep)}.rb-gl{font-size:10.5px;color:var(--ink-2)}
+.rb-compact{border-radius:7px}
+.ribbon.collapsed .rb-body{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border-radius:14px;box-shadow:var(--shadow-2);border:0}
+
+/* left dock tabs, pane tabs */
+.dz-ltabs button[role=tab]{border-bottom:2px solid transparent}.dz-ltabs button.on{background:none}
+.dz-tabs button{border:0;background:none;border-radius:7px;margin:0 2px;padding:4px 10px}.dz-tabs button.on{background:var(--fill);color:var(--accent)}
+.dz-pane{border-radius:var(--r-m);overflow:hidden}.dz-pane.active{outline:2px solid var(--accent);outline-offset:-2px}
+.dz-panes{padding:6px;gap:6px;background:var(--chrome)}
+.dz-vsel{border-radius:7px}
+
+/* inspector: grouped inset lists */
+.insp,.dz-insp>*{background:var(--chrome)}
+.insp-h{background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:.5px solid var(--sep)}
+.sec{background:var(--panel);border:0;border-radius:var(--r-m);margin:10px 12px 0;padding:10px 14px 12px;box-shadow:var(--shadow-1)}
+.secfold>.sec:last-child,.insp>.sec:last-child{margin-bottom:12px}
+.sec > h3{margin:0 0 2px}
+.sec[data-closed]{padding-bottom:10px}
+.field label{color:var(--ink-2)}
+.inp,select.inp,textarea.inp{border:0;background:var(--fill);border-radius:9px;padding:7px 10px;font-size:13px;color:var(--ink);outline:0;transition:box-shadow .12s}
+.inp:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+.inp.bad{box-shadow:0 0 0 2px var(--bad)}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:26px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 9px center}
+input[type=range]{accent-color:var(--accent)}
+input[type=color]{border:0;border-radius:8px;width:34px;height:26px;padding:0;background:none}
+
+/* switches instead of check boxes */
+input[type=checkbox]{appearance:none;-webkit-appearance:none;width:34px;height:20px;border-radius:999px;background:var(--fill-2);position:relative;vertical-align:middle;cursor:pointer;margin:0 6px 0 0;flex:none;transition:background .18s;border:0}
+input[type=checkbox]::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .18s}
+input[type=checkbox]:checked{background:var(--good)}input[type=checkbox]:checked::after{transform:translateX(14px)}
+input[type=checkbox]:disabled{opacity:.5}
+input[type=checkbox]:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+table input[type=checkbox],.ck-list input[type=checkbox],.insp-list input[type=checkbox],.sheetpick input[type=checkbox]{width:20px;height:20px;border-radius:6px;background:var(--fill)}
+table input[type=checkbox]::after,.ck-list input[type=checkbox]::after,.insp-list input[type=checkbox]::after,.sheetpick input[type=checkbox]::after{display:none}
+table input[type=checkbox]:checked,.ck-list input[type=checkbox]:checked,.insp-list input[type=checkbox]:checked,.sheetpick input[type=checkbox]:checked{background:var(--accent) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10'><path d='M1 5l3.5 3.5L11 1' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat}
+input[type=radio]{accent-color:var(--accent)}
+.chk{display:inline-flex;align-items:center;gap:6px}
+
+/* menus and popovers */
+.menupop{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border:0;border-radius:13px;box-shadow:var(--shadow-2);padding:6px;min-width:260px}
+.menupop button{border-radius:8px;padding:8px 12px;font-size:13.5px;font-weight:400}
+.menupop button:hover:not(:disabled),.menupop button:focus-visible{background:var(--accent);color:#fff}
+.menupop button:hover:not(:disabled) *{color:inherit}
+.menupop hr,.menupop .sep{border:0;border-top:.5px solid var(--sep);margin:5px -6px}
+.menupop .submenu{border-radius:13px}
+.layerpop,.flyout,.osnapbar{background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:0;border-radius:12px;box-shadow:var(--shadow-2)}
+
+/* modals and palette */
+.modal-bg{background:rgba(0,0,0,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.modal{border:0;border-radius:18px;box-shadow:var(--shadow-2);background:var(--panel)}
+.cmdk-box{border:0;border-radius:16px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(28px);backdrop-filter:saturate(180%) blur(28px);box-shadow:var(--shadow-2)}
+.cmdk-in input{font-size:17px;background:none;border:0}
+.cmdk-row{border-radius:9px}.cmdk-row.on,.cmdk-row:hover{background:var(--accent);color:#fff}
+.toast{background:var(--glass);color:var(--ink);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:14px;box-shadow:var(--shadow-2);padding:10px 18px;font-weight:500}
+.toast.err{color:var(--bad)}
+
+/* pages: cards and inset tables */
+.matview,.checkview,.capview,.sheetview,.sysview,.fieldview,.estview,.dashview{background:var(--chrome)}
+.mathead{margin-bottom:6px}
+.tablewrap,.matinner>table.mat,.sec>table.mat{background:var(--panel);border-radius:var(--r-m);box-shadow:var(--shadow-1);overflow:hidden}
+.matinner>table.mat{display:table}
+table.mat th{font-size:11.5px;letter-spacing:.03em;text-transform:none;font-weight:600;color:var(--ink-2);padding:9px 12px;border-bottom:.5px solid var(--sep);background:var(--panel)}
+table.mat td{padding:9px 12px;border-bottom:.5px solid var(--sep)}
+table.mat tr:hover td{background:var(--fill)}
+tr.pick td{background:var(--accent-soft)}
+.matcat td,.mattotal td{background:var(--chrome);font-weight:600}
+.estcard,.capcard,.optcard,.fv-card,.wp-card,.lesson,.sunpanel,.rs-side,.pmside,.sheetpanel,.well,.importbox,.estnums,.cut-sheet,.fb-tile,.dash-card,.ck-detail,.ck-list,.ck-plan,.gallery>*,.paintcard,.storeprice{background:var(--panel);border:0!important;border-radius:var(--r-m);box-shadow:var(--shadow-1)}
+.dash-card{border-radius:var(--r-l);padding:16px 18px}.dash-card.bad{box-shadow:var(--shadow-1),inset 0 0 0 1.5px var(--bad)}.dash-card.ok{box-shadow:var(--shadow-1),inset 0 0 0 1.5px var(--good)}
+.dash-card header h3{font-size:13px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
+.dash-big{font-size:34px;font-weight:700;letter-spacing:-.03em}
+.dash-bar{background:var(--fill);border-radius:999px;height:8px;overflow:hidden}.dash-bar i{background:var(--accent);border-radius:999px;display:block;height:100%}
+.pill{font-weight:600}.pill.sev-error{background:var(--bad-soft);color:var(--bad)}.pill.ok{background:var(--good-soft);color:var(--good)}
+.issue,.checkrow,.pb-h{border-radius:9px}
+.checkbtn{border-radius:9px}.checkbtn.on{background:var(--accent-soft);color:var(--accent)}
+.sheetbtn{border-radius:9px}.sheetbtn.on{background:var(--accent-soft);color:var(--accent)}
+.gantt,.ganttwrap{border-radius:var(--r-m);overflow:hidden}
+
+/* plan sheet and 3D stage edges */
+.stage,.pane,.view3d{border-radius:var(--r-m)}
+.paper{box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.badgeplan,.badge3d,.coords,.dz-coords{background:var(--glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:8px;border:0;box-shadow:var(--shadow-1);color:var(--ink)}
+.v3tools .btn,.dz-fit{border-radius:9px}
+.tool{border-radius:10px}.tool.on{background:var(--accent-soft);color:var(--accent)}
+.lvlsel .lvl{border-radius:8px}.lvl.on{background:var(--accent);color:#fff}
+.optbar .btn{border-radius:8px}
+.dz-status{color:var(--ink-2)}.dz-status b{color:var(--ink)}
+.designer .pane .corner .chip,.designer .pane .v3tools .chip,.designer .pane .optbar .chip,.designer .pane .corner .btn,.designer .pane .v3tools .btn,.designer .pane .optbar .btn{background:var(--glass);color:var(--ink);border-radius:999px;box-shadow:var(--shadow-1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.designer .pane .corner .chip.on,.designer .pane .v3tools .chip.on,.designer .pane .optbar .chip.on{background:var(--accent);color:#fff}
+.designer .pane .corner .btn.primary{background:var(--accent);color:#fff}
+.dz-preview{background:var(--panel);border:0;border-radius:var(--r-m);box-shadow:var(--shadow-1)}.dz-ph-empty{color:var(--ink-2)}
+.hint{background:var(--glass);border:0;border-radius:10px;box-shadow:var(--shadow-1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.v3views,.dz-legend{background:var(--glass);border:0;border-radius:14px;box-shadow:var(--shadow-2);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.dz-legend h4{text-transform:none;letter-spacing:-.01em;font-weight:600}
+.badge3d{text-transform:none;letter-spacing:0;font-weight:600;font-size:12px}
+.chrome-top,.top{position:relative;z-index:30}.ribbon{position:relative;z-index:25}.dz-ltabs{position:relative;z-index:5}.dz-tabs{position:relative;z-index:20}.insp-h{z-index:3}
+
+/* =====================================================================
+   iOS application look (2.3): bottom tab bar with icons, title bar with a
+   segmented page control, large titles, inset grouped panels, sheets.
+   ===================================================================== */
+.app{grid-template-rows:auto minmax(0,1fr) auto}.app>.main,.app>.stage,.app>div:not(.chrome-top){min-height:0}
+.tabbar{display:flex;justify-content:center;gap:6px;padding:3px 8px calc(3px + env(safe-area-inset-bottom,0px));background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--sep);min-height:50px}
+.tabbar .wf-tab{flex:0 1 116px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:3px 6px 2px;border:0;background:none;border-radius:10px;color:var(--ink-2);font-size:10.5px;font-weight:500;letter-spacing:0;cursor:pointer;box-shadow:none;line-height:1.1}
+.tabbar .wf-tab:hover{background:var(--fill);color:var(--ink)}
+.tabbar .wf-tab.on{color:var(--accent);background:none;box-shadow:none;font-weight:600}
+.tabbar .wf-tab.on svg{stroke-width:2.1}
+.tabbar .wf-ic{position:relative;display:block;line-height:0}
+.tabbar .wf-n{display:none}
+.tabbar .wf-l{display:block}
+.tabbar .cnt{position:absolute;top:-5px;right:-11px;min-width:17px;height:17px;border-radius:9px;font-size:10.5px;font-weight:700;color:#fff;background:var(--bad);display:flex;align-items:center;justify-content:center;padding:0 4px;border:1.5px solid var(--panel)}
+.tabbar .cnt.warn{background:var(--warn)}
+/* title bar under the menu bar: workflow name, page control, option / layer / level pickers */
+.wfbar{padding:3px 12px;gap:10px;border-bottom:.5px solid var(--sep);background:var(--glass);min-height:34px}
+.wf-title{display:flex;align-items:center;gap:12px;min-width:0}
+.wf-crumb{font-weight:700;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.wf-pages{margin:0}
+.wfbar .lvlsel{border-radius:9px;background:var(--fill);font-weight:500}
+.top .projname{font-weight:600;color:var(--ink);font-size:14px;max-width:40ch}
+/* large titles on content pages, like an iOS navigation bar */
+.mathead h2,.dash-head h2{font-size:32px;font-weight:700;letter-spacing:-.028em;line-height:1.08}
+.mathead{align-items:flex-end;gap:14px}
+.matinner,.dashview .matinner{padding-top:10px}
+/* inset grouped panels: white cards on the grouped-gray background, rounded */
+.matview{background:var(--chrome)}
+.matinner .sec,.insp .sec,.secfold .sec{border-radius:var(--r-m);box-shadow:var(--shadow-1)}
+.sec > h3{font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);padding-bottom:2px}
+.tablewrap{border-radius:var(--r-m);overflow:auto;background:var(--panel);box-shadow:var(--shadow-1)}
+table.mat th:first-child,table.mat td:first-child{padding-left:16px}table.mat th:last-child,table.mat td:last-child{padding-right:16px}
+/* buttons and controls */
+.btn{border-radius:10px;padding:7px 14px}.btn.small{border-radius:8px;padding:4px 10px}
+.btn.primary{box-shadow:0 1px 2px rgba(0,122,255,.25)}
+.inp,select.inp,textarea.inp{border-radius:10px;padding:8px 11px}
+select.inp{padding-right:28px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4.2 6 8l4-3.8' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 9px center;-webkit-appearance:none;appearance:none}
+.seg{border-radius:10px}.seg button{border-radius:8px}
+/* the ribbon reads as an iPadOS toolbar: no group boxes, soft rounded tiles */
+.rb-btn{border-radius:12px;width:64px}.rb-btn svg{width:22px;height:22px}.rb-group+.rb-group{border-left:.5px solid var(--sep)}
+.rb-tabs button{border-radius:8px;padding:3px 10px;font-weight:600}.rb-tabs button.on{background:var(--accent-soft);color:var(--accent)}
+/* sheets: dialogs with a grabber, a rounder corner and a soft rise */
+.modal{border-radius:22px;padding-top:4px}
+.modal::before{content:'';display:block;width:36px;height:5px;border-radius:3px;background:var(--fill-2);margin:6px auto 2px;justify-self:center}
+.modal h2{font-size:22px;font-weight:700;letter-spacing:-.022em}
+.modal .btn.primary{min-width:92px;justify-content:center}
+/* lists in the catalog and project browser read as iOS table rows */
+.dz-row,.libitem,.pb-leafrow{border-radius:0;border-bottom:.5px solid var(--sep)}
+.dz-row:hover,.libitem:hover,.pb-leafrow:hover{background:var(--fill)}
+.dz-list{border-radius:var(--r-m);overflow:hidden;background:var(--panel);box-shadow:var(--shadow-1)}
+/* dashboard cards */
+.dash-grid{gap:14px}.dash-card{border:0;box-shadow:var(--shadow-1);border-radius:var(--r-l)}
+.dash-big{font-size:30px;font-weight:700;letter-spacing:-.03em}
+/* toasts as iOS banners */
+.toast{border-radius:14px;box-shadow:var(--shadow-2);background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:var(--ink);font-weight:500}
+/* check page pills */
+.chip{font-weight:500}.pill{border-radius:999px}
+@media (max-width:900px){.tabbar .wf-tab{flex:1 1 0;font-size:10px}.wf-crumb{display:none}}
+/* performance: the structural bars never overlap the drawing, so they are solid; blur stays on floating menus, popovers and sheets */
+.top,.chrome-top,.dz-tabs,.ribbon,.dz-ltabs,.rail,.wfbar,.tabbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--chrome)}
+:root[data-theme="dark"] .top,:root[data-theme="dark"] .chrome-top,:root[data-theme="dark"] .wfbar,:root[data-theme="dark"] .tabbar{background:#0d0d0f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .top,:root:not([data-theme="light"]) .chrome-top,:root:not([data-theme="light"]) .wfbar,:root:not([data-theme="light"]) .tabbar{background:#0d0d0f}}
+.ribbon.collapsed .rb-body{-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);background:var(--glass)}

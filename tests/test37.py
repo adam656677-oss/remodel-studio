@@ -1,7 +1,7 @@
 from h import *
 def scr(pg,x,y,z):
     return pg.evaluate("([x,y,z])=>{const st=window.__view3d;const v=new THREE.Vector3(x*IN,z*IN,y*IN).project(st.camera);const r=st.renderer.domElement.getBoundingClientRect();return [r.left+(v.x+1)/2*r.width,r.top+(1-v.y)/2*r.height]}",[x,y,z])
-with app(1400,900) as (pg,errs):
+with app(1400,1000) as (pg,errs):
     pg.evaluate("()=>window.__app.setMode('3d')"); pg.wait_for_timeout(1800)
     # click a wall to select it
     x,y=scr(pg,240,340,48); pg.mouse.click(x,y); pg.wait_for_timeout(500)

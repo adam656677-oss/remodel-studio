@@ -837,6 +837,246 @@ tr.pick td{background:var(--accent-soft)}
 .cutopt .rw-stats{display:flex;gap:18px;flex-wrap:wrap;margin:8px 0 14px}.cutopt .rw-stats>div{display:flex;flex-direction:column;min-width:120px}.cutopt .rw-stats span{font-size:12px;color:var(--muted)}.cutopt .rw-stats b{font-size:20px}.cutopt .rw-stats small{color:var(--muted)}
 .cut-grid{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}.cut-sheet{margin:0;background:var(--panel2,#fff);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;align-items:center}.cut-sheet svg{max-width:100%;height:auto}.cut-sheet figcaption{font-size:12px;color:var(--muted);margin-top:6px}
 .fb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin:12px 0 18px}.fb-tile{margin:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel2,#fff)}.fb-tile img{display:block;width:100%;aspect-ratio:220/160;object-fit:cover}.fb-tile figcaption{padding:8px 10px 10px;display:flex;flex-direction:column;gap:2px;position:relative}.fb-tile small{color:var(--accent,#1f5fbf);font-weight:600;letter-spacing:.04em;font-size:11px;text-transform:uppercase}.fb-tile b{font-size:14px}.fb-tile span{font-size:12px;color:var(--muted)}.fb-tile i{position:absolute;right:10px;top:10px;width:18px;height:18px;border-radius:50%;border:1px solid rgba(0,0,0,.2)}
+
+/* =====================================================================
+   iOS look: system font, SF-style large titles, grouped inset panels,
+   segmented controls, switches, translucent bars and menus, iOS blue.
+   ===================================================================== */
+:root{
+  --chrome:#f2f2f7; --panel:#ffffff; --line:rgba(60,60,67,.18); --ink:#000000; --ink-2:#6e6e73; --accent:#007aff; --accent-soft:#e5f0ff;
+  --paper:#ffffff; --grid:#eceef2; --grid-major:#d9dde4; --fill:rgba(120,120,128,.12); --fill-2:rgba(120,120,128,.2); --sep:rgba(60,60,67,.29);
+  --good:#34c759; --good-soft:#e6f8ea; --warn:#ff9500; --warn-soft:#fff3e0; --bad:#ff3b30; --bad-soft:#ffe9e7;
+  --f-display:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI Variable Display","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-body:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI Variable Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:ui-monospace,"SF Mono",Menlo,Consolas,"Cascadia Mono",monospace;
+  --r-s:8px; --r-m:12px; --r-l:16px; --shadow-1:0 1px 2px rgba(0,0,0,.06),0 0 0 .5px rgba(0,0,0,.04); --shadow-2:0 10px 30px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.06);
+  --glass:rgba(249,249,249,.82);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --chrome:#000000; --panel:#1c1c1e; --line:rgba(84,84,88,.5); --ink:#ffffff; --ink-2:#98989f; --accent:#0a84ff; --accent-soft:#0e2a4a;
+  --paper:#1c1c1e; --grid:#262628; --grid-major:#3a3a3c; --fill:rgba(120,120,128,.24); --fill-2:rgba(120,120,128,.36); --sep:rgba(84,84,88,.65);
+  --good:#30d158; --good-soft:#12301b; --warn:#ff9f0a; --warn-soft:#3a2a0d; --bad:#ff453a; --bad-soft:#3a1715;
+  --wall:#f2f2f7; --wall-existing:#8e8e93; --ghost:#48484a; --dim:#b8c7dc; --sky:#101418; --ground:#242a22;
+  --shadow-1:0 1px 2px rgba(0,0,0,.5),0 0 0 .5px rgba(255,255,255,.06); --shadow-2:0 12px 36px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.08); --glass:rgba(30,30,32,.78);}}
+:root[data-theme="dark"]{
+  --chrome:#000000; --panel:#1c1c1e; --line:rgba(84,84,88,.5); --ink:#ffffff; --ink-2:#98989f; --accent:#0a84ff; --accent-soft:#0e2a4a;
+  --paper:#1c1c1e; --grid:#262628; --grid-major:#3a3a3c; --fill:rgba(120,120,128,.24); --fill-2:rgba(120,120,128,.36); --sep:rgba(84,84,88,.65);
+  --good:#30d158; --good-soft:#12301b; --warn:#ff9f0a; --warn-soft:#3a2a0d; --bad:#ff453a; --bad-soft:#3a1715;
+  --wall:#f2f2f7; --wall-existing:#8e8e93; --ghost:#48484a; --dim:#b8c7dc; --sky:#101418; --ground:#242a22;
+  --shadow-1:0 1px 2px rgba(0,0,0,.5),0 0 0 .5px rgba(255,255,255,.06); --shadow-2:0 12px 36px rgba(0,0,0,.6),0 0 0 .5px rgba(255,255,255,.08); --glass:rgba(30,30,32,.78);}
+:root[data-theme="light"]{--wall:#1d2a39;--wall-existing:#7d8a99;--ghost:#a7b4c3;--dim:#3d5675;--sky:#dfe7ee;--ground:#c9d1c1}
+
+body{font-size:13.5px;letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:rgba(120,120,128,.35);border-radius:8px;border:2px solid transparent;background-clip:padding-box}::-webkit-scrollbar-track{background:transparent}
+*{scrollbar-width:thin;scrollbar-color:rgba(120,120,128,.4) transparent}
+
+/* headings: SF-style titles, no uppercase condensed type */
+.brand,.insp-h h2,.modal h2,.mathead h2,.dash-head h2,h2,h3{font-family:var(--f-display);text-transform:none;letter-spacing:-.02em}
+.brand{font-size:17px;font-weight:700}.brand span{color:var(--accent)}
+.mathead h2,.dash-head h2{font-size:28px;font-weight:700;line-height:1.1}
+.modal h2{font-size:20px;font-weight:700}
+.insp-h h2{font-size:17px;font-weight:600}
+.sec h3,.insp h3,.matinner h3{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-2)}
+.note{color:var(--ink-2)}
+
+/* translucent bars */
+.top,.chrome-top,.dz-tabs,.ribbon,.dz-ltabs,.rail{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}
+.top,.chrome-top{border-bottom:.5px solid var(--sep)}
+.ribbon{border-bottom:.5px solid var(--sep)}
+.dz-tabs{border-top:.5px solid var(--sep)}
+
+/* buttons */
+.btn{border:0;background:var(--fill);border-radius:var(--r-s);padding:6px 12px;font-weight:600;font-size:13px;color:var(--accent);transition:background .12s,transform .08s}
+.btn:hover{background:var(--fill-2);border-color:transparent}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);color:#fff}
+.btn.primary:hover{background:color-mix(in srgb,var(--accent) 88%,#000)}
+.btn.danger{color:var(--bad);background:var(--bad-soft)}
+.btn.small{padding:3px 9px;font-size:12px;border-radius:7px}
+.btn.on{background:var(--accent-soft);color:var(--accent)}
+.menus .btn{background:none;color:var(--ink);font-weight:500;padding:4px 10px}.menus .btn:hover,.menu>.btn.on{background:var(--fill)}
+.linkbtn{color:var(--accent)}
+.chip{border:0;background:var(--fill);border-radius:999px;color:var(--ink);font-weight:500}.chip.on{background:var(--accent);color:#fff}
+
+/* segmented controls */
+.seg{background:var(--fill);border:0;border-radius:9px;padding:2px;gap:2px;overflow:visible}
+.seg button{border:0!important;border-radius:7px;padding:4px 12px;font-weight:500;font-size:13px;color:var(--ink);background:none}
+.seg button.on{background:var(--panel);color:var(--ink);font-weight:600;box-shadow:0 2px 6px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.06)}
+:root[data-theme="dark"] .seg button.on,:root:not([data-theme="light"]) .seg button.on{background:#636366;color:#fff}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .seg button.on{background:var(--panel);color:var(--ink)}}
+.seg.mattabs,.seg.shtabs{flex-wrap:wrap;display:inline-flex}
+
+/* workflow tabs as a pill bar */
+.wf-tabs{gap:4px;align-items:center;align-self:center;background:var(--fill);border-radius:11px;padding:3px}
+.wf-tab{border:0;border-radius:9px;padding:5px 12px 5px 8px;font-weight:600;font-size:13px;color:var(--ink-2);top:0}
+.wf-tab:hover{background:var(--fill)}
+.wf-tab.on{background:var(--panel);color:var(--ink);box-shadow:0 2px 6px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.06)}
+.wf-n{background:var(--fill-2);color:var(--ink)}.wf-tab.on .wf-n{background:var(--accent);color:#fff}
+.wf-pages{background:var(--fill);border:0;border-radius:9px;padding:2px}.wf-pages button{border:0!important;border-radius:7px}.wf-pages button.on{background:var(--panel);box-shadow:0 1px 4px rgba(0,0,0,.14)}
+
+/* ribbon */
+.rb-tabs button[role=tab]{border-radius:8px;font-weight:600}
+.rb-tabs button[role=tab].on,.rb-tabs button[role=tab][aria-selected=true]{background:var(--accent-soft);color:var(--accent)}
+.rb-btn{border-radius:10px;border:0}.rb-btn:hover{background:var(--fill);border-color:transparent}.rb-btn.on{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
+.rb-group{border-right:.5px solid var(--sep)}.rb-gl{font-size:10.5px;color:var(--ink-2)}
+.rb-compact{border-radius:7px}
+.ribbon.collapsed .rb-body{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border-radius:14px;box-shadow:var(--shadow-2);border:0}
+
+/* left dock tabs, pane tabs */
+.dz-ltabs button[role=tab]{border-bottom:2px solid transparent}.dz-ltabs button.on{background:none}
+.dz-tabs button{border:0;background:none;border-radius:7px;margin:0 2px;padding:4px 10px}.dz-tabs button.on{background:var(--fill);color:var(--accent)}
+.dz-pane{border-radius:var(--r-m);overflow:hidden}.dz-pane.active{outline:2px solid var(--accent);outline-offset:-2px}
+.dz-panes{padding:6px;gap:6px;background:var(--chrome)}
+.dz-vsel{border-radius:7px}
+
+/* inspector: grouped inset lists */
+.insp,.dz-insp>*{background:var(--chrome)}
+.insp-h{background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-bottom:.5px solid var(--sep)}
+.sec{background:var(--panel);border:0;border-radius:var(--r-m);margin:10px 12px 0;padding:10px 14px 12px;box-shadow:var(--shadow-1)}
+.secfold>.sec:last-child,.insp>.sec:last-child{margin-bottom:12px}
+.sec > h3{margin:0 0 2px}
+.sec[data-closed]{padding-bottom:10px}
+.field label{color:var(--ink-2)}
+.inp,select.inp,textarea.inp{border:0;background:var(--fill);border-radius:9px;padding:7px 10px;font-size:13px;color:var(--ink);outline:0;transition:box-shadow .12s}
+.inp:focus{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+.inp.bad{box-shadow:0 0 0 2px var(--bad)}
+select.inp{appearance:none;-webkit-appearance:none;padding-right:26px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 9px center}
+input[type=range]{accent-color:var(--accent)}
+input[type=color]{border:0;border-radius:8px;width:34px;height:26px;padding:0;background:none}
+
+/* switches instead of check boxes */
+input[type=checkbox]{appearance:none;-webkit-appearance:none;width:34px;height:20px;border-radius:999px;background:var(--fill-2);position:relative;vertical-align:middle;cursor:pointer;margin:0 6px 0 0;flex:none;transition:background .18s;border:0}
+input[type=checkbox]::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 2px 4px rgba(0,0,0,.25);transition:transform .18s}
+input[type=checkbox]:checked{background:var(--good)}input[type=checkbox]:checked::after{transform:translateX(14px)}
+input[type=checkbox]:disabled{opacity:.5}
+input[type=checkbox]:focus-visible{box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 35%,transparent)}
+table input[type=checkbox],.ck-list input[type=checkbox],.insp-list input[type=checkbox],.sheetpick input[type=checkbox]{width:20px;height:20px;border-radius:6px;background:var(--fill)}
+table input[type=checkbox]::after,.ck-list input[type=checkbox]::after,.insp-list input[type=checkbox]::after,.sheetpick input[type=checkbox]::after{display:none}
+table input[type=checkbox]:checked,.ck-list input[type=checkbox]:checked,.insp-list input[type=checkbox]:checked,.sheetpick input[type=checkbox]:checked{background:var(--accent) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10'><path d='M1 5l3.5 3.5L11 1' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat}
+input[type=radio]{accent-color:var(--accent)}
+.chk{display:inline-flex;align-items:center;gap:6px}
+
+/* menus and popovers */
+.menupop{background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);border:0;border-radius:13px;box-shadow:var(--shadow-2);padding:6px;min-width:260px}
+.menupop button{border-radius:8px;padding:8px 12px;font-size:13.5px;font-weight:400}
+.menupop button:hover:not(:disabled),.menupop button:focus-visible{background:var(--accent);color:#fff}
+.menupop button:hover:not(:disabled) *{color:inherit}
+.menupop hr,.menupop .sep{border:0;border-top:.5px solid var(--sep);margin:5px -6px}
+.menupop .submenu{border-radius:13px}
+.layerpop,.flyout,.osnapbar{background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border:0;border-radius:12px;box-shadow:var(--shadow-2)}
+
+/* modals and palette */
+.modal-bg{background:rgba(0,0,0,.28);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.modal{border:0;border-radius:18px;box-shadow:var(--shadow-2);background:var(--panel)}
+.cmdk-box{border:0;border-radius:16px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(28px);backdrop-filter:saturate(180%) blur(28px);box-shadow:var(--shadow-2)}
+.cmdk-in input{font-size:17px;background:none;border:0}
+.cmdk-row{border-radius:9px}.cmdk-row.on,.cmdk-row:hover{background:var(--accent);color:#fff}
+.toast{background:var(--glass);color:var(--ink);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-radius:14px;box-shadow:var(--shadow-2);padding:10px 18px;font-weight:500}
+.toast.err{color:var(--bad)}
+
+/* pages: cards and inset tables */
+.matview,.checkview,.capview,.sheetview,.sysview,.fieldview,.estview,.dashview{background:var(--chrome)}
+.mathead{margin-bottom:6px}
+.tablewrap,.matinner>table.mat,.sec>table.mat{background:var(--panel);border-radius:var(--r-m);box-shadow:var(--shadow-1);overflow:hidden}
+.matinner>table.mat{display:table}
+table.mat th{font-size:11.5px;letter-spacing:.03em;text-transform:none;font-weight:600;color:var(--ink-2);padding:9px 12px;border-bottom:.5px solid var(--sep);background:var(--panel)}
+table.mat td{padding:9px 12px;border-bottom:.5px solid var(--sep)}
+table.mat tr:hover td{background:var(--fill)}
+tr.pick td{background:var(--accent-soft)}
+.matcat td,.mattotal td{background:var(--chrome);font-weight:600}
+.estcard,.capcard,.optcard,.fv-card,.wp-card,.lesson,.sunpanel,.rs-side,.pmside,.sheetpanel,.well,.importbox,.estnums,.cut-sheet,.fb-tile,.dash-card,.ck-detail,.ck-list,.ck-plan,.gallery>*,.paintcard,.storeprice{background:var(--panel);border:0!important;border-radius:var(--r-m);box-shadow:var(--shadow-1)}
+.dash-card{border-radius:var(--r-l);padding:16px 18px}.dash-card.bad{box-shadow:var(--shadow-1),inset 0 0 0 1.5px var(--bad)}.dash-card.ok{box-shadow:var(--shadow-1),inset 0 0 0 1.5px var(--good)}
+.dash-card header h3{font-size:13px;font-weight:600;color:var(--ink-2);text-transform:uppercase;letter-spacing:.04em}
+.dash-big{font-size:34px;font-weight:700;letter-spacing:-.03em}
+.dash-bar{background:var(--fill);border-radius:999px;height:8px;overflow:hidden}.dash-bar i{background:var(--accent);border-radius:999px;display:block;height:100%}
+.pill{font-weight:600}.pill.sev-error{background:var(--bad-soft);color:var(--bad)}.pill.ok{background:var(--good-soft);color:var(--good)}
+.issue,.checkrow,.pb-h{border-radius:9px}
+.checkbtn{border-radius:9px}.checkbtn.on{background:var(--accent-soft);color:var(--accent)}
+.sheetbtn{border-radius:9px}.sheetbtn.on{background:var(--accent-soft);color:var(--accent)}
+.gantt,.ganttwrap{border-radius:var(--r-m);overflow:hidden}
+
+/* plan sheet and 3D stage edges */
+.stage,.pane,.view3d{border-radius:var(--r-m)}
+.paper{box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.badgeplan,.badge3d,.coords,.dz-coords{background:var(--glass);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-radius:8px;border:0;box-shadow:var(--shadow-1);color:var(--ink)}
+.v3tools .btn,.dz-fit{border-radius:9px}
+.tool{border-radius:10px}.tool.on{background:var(--accent-soft);color:var(--accent)}
+.lvlsel .lvl{border-radius:8px}.lvl.on{background:var(--accent);color:#fff}
+.optbar .btn{border-radius:8px}
+.dz-status{color:var(--ink-2)}.dz-status b{color:var(--ink)}
+.designer .pane .corner .chip,.designer .pane .v3tools .chip,.designer .pane .optbar .chip,.designer .pane .corner .btn,.designer .pane .v3tools .btn,.designer .pane .optbar .btn{background:var(--glass);color:var(--ink);border-radius:999px;box-shadow:var(--shadow-1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.designer .pane .corner .chip.on,.designer .pane .v3tools .chip.on,.designer .pane .optbar .chip.on{background:var(--accent);color:#fff}
+.designer .pane .corner .btn.primary{background:var(--accent);color:#fff}
+.dz-preview{background:var(--panel);border:0;border-radius:var(--r-m);box-shadow:var(--shadow-1)}.dz-ph-empty{color:var(--ink-2)}
+.hint{background:var(--glass);border:0;border-radius:10px;box-shadow:var(--shadow-1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.v3views,.dz-legend{background:var(--glass);border:0;border-radius:14px;box-shadow:var(--shadow-2);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px)}
+.dz-legend h4{text-transform:none;letter-spacing:-.01em;font-weight:600}
+.badge3d{text-transform:none;letter-spacing:0;font-weight:600;font-size:12px}
+.chrome-top,.top{position:relative;z-index:30}.ribbon{position:relative;z-index:25}.dz-ltabs{position:relative;z-index:5}.dz-tabs{position:relative;z-index:20}.insp-h{z-index:3}
+
+/* =====================================================================
+   iOS application look (2.3): bottom tab bar with icons, title bar with a
+   segmented page control, large titles, inset grouped panels, sheets.
+   ===================================================================== */
+.app{grid-template-rows:auto minmax(0,1fr) auto}.app>.main,.app>.stage,.app>div:not(.chrome-top){min-height:0}
+.tabbar{display:flex;justify-content:center;gap:6px;padding:3px 8px calc(3px + env(safe-area-inset-bottom,0px));background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--sep);min-height:50px}
+.tabbar .wf-tab{flex:0 1 116px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:3px 6px 2px;border:0;background:none;border-radius:10px;color:var(--ink-2);font-size:10.5px;font-weight:500;letter-spacing:0;cursor:pointer;box-shadow:none;line-height:1.1}
+.tabbar .wf-tab:hover{background:var(--fill);color:var(--ink)}
+.tabbar .wf-tab.on{color:var(--accent);background:none;box-shadow:none;font-weight:600}
+.tabbar .wf-tab.on svg{stroke-width:2.1}
+.tabbar .wf-ic{position:relative;display:block;line-height:0}
+.tabbar .wf-n{display:none}
+.tabbar .wf-l{display:block}
+.tabbar .cnt{position:absolute;top:-5px;right:-11px;min-width:17px;height:17px;border-radius:9px;font-size:10.5px;font-weight:700;color:#fff;background:var(--bad);display:flex;align-items:center;justify-content:center;padding:0 4px;border:1.5px solid var(--panel)}
+.tabbar .cnt.warn{background:var(--warn)}
+/* title bar under the menu bar: workflow name, page control, option / layer / level pickers */
+.wfbar{padding:3px 12px;gap:10px;border-bottom:.5px solid var(--sep);background:var(--glass);min-height:34px}
+.wf-title{display:flex;align-items:center;gap:12px;min-width:0}
+.wf-crumb{font-weight:700;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+.wf-pages{margin:0}
+.wfbar .lvlsel{border-radius:9px;background:var(--fill);font-weight:500}
+.top .projname{font-weight:600;color:var(--ink);font-size:14px;max-width:40ch}
+/* large titles on content pages, like an iOS navigation bar */
+.mathead h2,.dash-head h2{font-size:32px;font-weight:700;letter-spacing:-.028em;line-height:1.08}
+.mathead{align-items:flex-end;gap:14px}
+.matinner,.dashview .matinner{padding-top:10px}
+/* inset grouped panels: white cards on the grouped-gray background, rounded */
+.matview{background:var(--chrome)}
+.matinner .sec,.insp .sec,.secfold .sec{border-radius:var(--r-m);box-shadow:var(--shadow-1)}
+.sec > h3{font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-2);padding-bottom:2px}
+.tablewrap{border-radius:var(--r-m);overflow:auto;background:var(--panel);box-shadow:var(--shadow-1)}
+table.mat th:first-child,table.mat td:first-child{padding-left:16px}table.mat th:last-child,table.mat td:last-child{padding-right:16px}
+/* buttons and controls */
+.btn{border-radius:10px;padding:7px 14px}.btn.small{border-radius:8px;padding:4px 10px}
+.btn.primary{box-shadow:0 1px 2px rgba(0,122,255,.25)}
+.inp,select.inp,textarea.inp{border-radius:10px;padding:8px 11px}
+select.inp{padding-right:28px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'><path d='M2 4.2 6 8l4-3.8' fill='none' stroke='%238e8e93' stroke-width='1.6' stroke-linecap='round'/></svg>");background-repeat:no-repeat;background-position:right 9px center;-webkit-appearance:none;appearance:none}
+.seg{border-radius:10px}.seg button{border-radius:8px}
+/* the ribbon reads as an iPadOS toolbar: no group boxes, soft rounded tiles */
+.rb-btn{border-radius:12px;width:64px}.rb-btn svg{width:22px;height:22px}.rb-group+.rb-group{border-left:.5px solid var(--sep)}
+.rb-tabs button{border-radius:8px;padding:3px 10px;font-weight:600}.rb-tabs button.on{background:var(--accent-soft);color:var(--accent)}
+/* sheets: dialogs with a grabber, a rounder corner and a soft rise */
+.modal{border-radius:22px;padding-top:4px}
+.modal::before{content:'';display:block;width:36px;height:5px;border-radius:3px;background:var(--fill-2);margin:6px auto 2px;justify-self:center}
+.modal h2{font-size:22px;font-weight:700;letter-spacing:-.022em}
+.modal .btn.primary{min-width:92px;justify-content:center}
+/* lists in the catalog and project browser read as iOS table rows */
+.dz-row,.libitem,.pb-leafrow{border-radius:0;border-bottom:.5px solid var(--sep)}
+.dz-row:hover,.libitem:hover,.pb-leafrow:hover{background:var(--fill)}
+.dz-list{border-radius:var(--r-m);overflow:hidden;background:var(--panel);box-shadow:var(--shadow-1)}
+/* dashboard cards */
+.dash-grid{gap:14px}.dash-card{border:0;box-shadow:var(--shadow-1);border-radius:var(--r-l)}
+.dash-big{font-size:30px;font-weight:700;letter-spacing:-.03em}
+/* toasts as iOS banners */
+.toast{border-radius:14px;box-shadow:var(--shadow-2);background:var(--glass);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);color:var(--ink);font-weight:500}
+/* check page pills */
+.chip{font-weight:500}.pill{border-radius:999px}
+@media (max-width:900px){.tabbar .wf-tab{flex:1 1 0;font-size:10px}.wf-crumb{display:none}}
+/* performance: the structural bars never overlap the drawing, so they are solid; blur stays on floating menus, popovers and sheets */
+.top,.chrome-top,.dz-tabs,.ribbon,.dz-ltabs,.rail,.wfbar,.tabbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:var(--chrome)}
+:root[data-theme="dark"] .top,:root[data-theme="dark"] .chrome-top,:root[data-theme="dark"] .wfbar,:root[data-theme="dark"] .tabbar{background:#0d0d0f}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .top,:root:not([data-theme="light"]) .chrome-top,:root:not([data-theme="light"]) .wfbar,:root:not([data-theme="light"]) .tabbar{background:#0d0d0f}}
+.ribbon.collapsed .rb-body{-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);background:var(--glass)}
 </style>
 </head>
 <body>
@@ -10654,7 +10894,9 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     const groundMat=new THREE.MeshStandardMaterial({color:0xcccccc,roughness:1});
     const ground=new THREE.Mesh(new THREE.PlaneGeometry(600,600),groundMat); ground.rotation.x=-Math.PI/2; ground.position.y=-0.02; ground.receiveShadow=true; scene.add(ground);
     const model=new THREE.Group(); scene.add(model);
-    const render=()=>renderer.render(scene,camera);
+    // render after making sure the canvas still matches its box (a resize can arrive before the observer fires, e.g. when the pane layout changes)
+    const syncSize=()=>{const h=host.current;if(!h)return false;const r=h.getBoundingClientRect();const w=Math.round(r.width),ht=Math.round(r.height);if(w&&ht&&(Math.abs(renderer.domElement.width-w*renderer.getPixelRatio())>1||Math.abs(renderer.domElement.height-ht*renderer.getPixelRatio())>1)){renderer.setSize(w,ht,false);camera.aspect=w/ht;camera.updateProjectionMatrix();return true;}return false;};
+    const render=()=>{syncSize();renderer.render(scene,camera);};
     controls.addEventListener('change',render);
     const ro=new ResizeObserver(()=>{if(!host.current)return;const r=host.current.getBoundingClientRect();if(!r.width||!r.height)return;renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();const st=S.current;if(st)st.sized=true;if(st&&!st.fitted&&st.model.children.length){fit3d(st);st.fitted=true;}render();});
     ro.observe(host.current);
@@ -10662,11 +10904,12 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener?.('change',themeSync);
     const mo=new MutationObserver(themeSync); mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     themeSync();
-    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,themeSync,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
+    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,syncSize,themeSync,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
     window.__view3d=S.current;
     return ()=>{ro.disconnect();mo.disconnect();mq.removeEventListener?.('change',themeSync);controls.dispose();renderer.dispose();renderer.domElement.remove();if(window.__view3d===S.current)window.__view3d=null;};
   },[]);
 
+  useEffect(()=>{const st=S.current;if(st&&st.syncSize&&st.syncSize())st.render();});
   const selRef=useRef(sel);selRef.current=sel;useEffect(()=>{const st=S.current;if(!st||!st.model)return;highlight3D(st.model,sel);st.render();},[sel]);
   useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,null,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(tint&&typeof tint3D==='function'){try{tint3D(st.model,p,tint);}catch(e){console.error(e);}}highlight3D(st.model,selRef.current);if(st.themeSync){const bg=cssVar('--sky');if(!st.scene.background||'#'+st.scene.background.getHexString()!==bg.toLowerCase())st.themeSync();}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
     applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[tint,p,levelId,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
@@ -10957,7 +11200,7 @@ regExtra({checks:(p,add)=>{for(const lv of p.levels){const rooms=p.rooms.filter(
       if(!hasStair)add('error',R('R311.7','Stairways'),'The attic rooms need a stairway','Living space in an attic needs a code stair (7-3/4" max riser, 10" min tread, 36" wide). Add a stair on the floor below.',null,{x:c[0],y:c[1]},lv.id);
       add('warn',R('R502.3','Floor joists'),'Check the attic floor framing',`The ceiling joists under the attic become floor joists. Living space needs joists sized for 30 psf (sleeping) or 40 psf live load; ceiling joists usually need to be upsized or sistered.`,null,{x:c[0],y:c[1]},lv.id);}}}});
 /* ======================= clicking in 3D: select, or paint a surface ======================= */
-function pick3D(st,clientX,clientY){const r=st.renderer.domElement.getBoundingClientRect();const v=new THREE.Vector2(((clientX-r.left)/r.width)*2-1,-((clientY-r.top)/r.height)*2+1);
+function pick3D(st,clientX,clientY){if(st.syncSize&&st.syncSize())st.render();const r=st.renderer.domElement.getBoundingClientRect();const v=new THREE.Vector2(((clientX-r.left)/r.width)*2-1,-((clientY-r.top)/r.height)*2+1);
   const rc=new THREE.Raycaster();rc.setFromCamera(v,st.camera);const hits=rc.intersectObject(st.model,true);
   const clip=st.clipPlane;for(const h of hits){if(!h.object.isMesh||!h.object.userData.tag)continue;const mats=Array.isArray(h.object.material)?h.object.material:[h.object.material];
     if(mats[0]&&mats[0].clippingPlanes&&mats[0].clippingPlanes.length&&clip.distanceToPoint(h.point)<0)continue; // cut away by the section
@@ -19710,7 +19953,7 @@ function DesignerView({D}){
     ['Render',[{label:'Render studio…',run:D.openRender},{label:'Photo match…',run:()=>D.setDlg('photomatch')},{label:'360° panorama…',run:()=>D.setDlg('pano')},{label:'Walk-through video…',run:()=>D.setDlg('video')},{label:'Export 3D model…',run:D.openExport}]],
     ['Window',[{label:'One view',run:()=>{setLayout('1');setMaxed(null);}},{label:'Two views side by side',run:()=>{setLayout('2v');setMaxed(null);}},{label:'Two views stacked',run:()=>{setLayout('2h');setMaxed(null);}},{label:'Three views',run:()=>{setLayout('3');setMaxed(null);}},{label:'Four views',run:()=>{setLayout('4');setMaxed(null);}},'-',
       {label:'Project browser',run:()=>{setLeftS('browser');lsSet('left','browser');setDock(true);}},{label:'Catalog',run:()=>{setLeftS('catalog');lsSet('left','catalog');setDock(true);}},{label:(dock?'Hide':'Show')+' the left panel',run:()=>setDock(!dock)},{label:(insp?'Hide':'Show')+' properties panel',run:()=>setInsp(!insp)},{label:(issuesOpen?'Hide':'Show')+' issues panel',run:()=>setIssuesOpen(!issuesOpen)}]],
-    ['Help',[{label:'Lessons…',run:()=>D.setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>D.setDlg('keys')},{label:'My standards…',run:()=>D.setDlg('standards')},{label:'How the Designer works',run:()=>say('Pick a catalog, then a category, then an item. Double-click it (or press Place) and click in the plan. Each pane has its own view list; click a pane to make it active. The tabs along the bottom change what the plans show.')}]]];
+    ['Help',[{label:'Lessons…',run:()=>D.setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>D.setDlg('keys')},{label:'My standards…',run:()=>D.setDlg('standards')},{label:'Appearance (light or dark)…',run:()=>D.setDlg('appearance')},{label:'How the Designer works',run:()=>say('Pick a catalog, then a category, then an item. Double-click it (or press Place) and click in the plan. Each pane has its own view list; click a pane to make it active. The tabs along the bottom change what the plans show.')}]]];
   const o=findObj(p,sel);const selName=sel?(sel.kind==='multi'?`${sel.items.length} items`:(o&&(o.name||(FIXTURES[o.type]||{}).label||o.type))||sel.kind):'Nothing selected';
   const ti=toolInfo(tool);const nErr=D.issues.filter(i=>i.sev==='error').length,nWarn=D.issues.filter(i=>i.sev==='warn').length;
   const gridCls='dz-panes dz-l'+(maxed!=null?'1':layout);
@@ -20689,13 +20932,26 @@ const WORKFLOWS=[
 ];
 const wfPages=(w,narrow)=>narrow&&w.narrowPages?w.narrowPages:w.pages;
 function wfOfMode(m){return WORKFLOWS.find(w=>w.pages.some(x=>x[0]===m)||(w.narrowPages||[]).some(x=>x[0]===m))||WORKFLOWS.find(w=>w.id==='design');}
-function WorkflowTabs({mode,setMode,narrow,nErr,nWarn}){const cur=wfOfMode(mode);
-  const lastPage=w=>{let v=null;try{v=localStorage.getItem('remodel-studio:wf:'+w.id);}catch(e){}const pg=wfPages(w,narrow);return pg.some(x=>x[0]===v)?v:pg[0][0];};
-  const go=(w,pageId)=>{const id=pageId||lastPage(w);try{localStorage.setItem('remodel-studio:wf:'+w.id,id);}catch(e){}setMode(id);};
-  const pages=wfPages(cur,narrow);
-  const pills=pages.length>1?html`<div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div>`:null;
-  return html`<div className="wf-tabs" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<${Fragment} key=${w.id}><button role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
-      <span className="wf-n">${i+1}</span>${w.label}${w.id==='check'?html`${nErr?html`<span className="cnt bad">${nErr}</span>`:null}${nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}${!nErr&&!nWarn?html`<span className="cnt ok">✓</span>`:null}`:null}</button>${cur.id===w.id?pills:null}<//>`)}</div>`;}
+const WF_ICONS={
+  home:'<path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/>',
+  measure:'<rect x="2.5" y="8" width="19" height="8" rx="1.5"/><path d="M6.5 8v3M10.5 8v4.5M14.5 8v3M18.5 8v4.5"/>',
+  design:'<path d="M4 20 15.5 8.5l-4-4L4 16v4h0z"/><path d="M13 6.5 17.5 11"/><path d="M15.5 4.5l4 4"/><path d="M4 20h7"/>',
+  check:'<path d="M12 3 4.5 6v6c0 4.5 3.2 7.6 7.5 9 4.3-1.4 7.5-4.5 7.5-9V6L12 3z"/><path d="m8.8 12 2.2 2.2 4.4-4.6"/>',
+  docs:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M9.5 12h6M9.5 15.5h6M9.5 9h2.5"/>',
+  cost:'<circle cx="12" cy="12" r="9"/><path d="M12 6.5v11"/><path d="M14.8 9.2c-.4-1-1.5-1.5-2.8-1.5-1.6 0-2.8.8-2.8 2 0 2.8 5.6 1.2 5.6 4.2 0 1.3-1.3 2.2-3 2.2-1.5 0-2.7-.7-3.1-1.8"/>',
+  build:'<path d="M14 5.5 18.5 10l-2 2-4.5-4.5z"/><path d="M12.5 7.5 6 14l-2 4.5L8.5 16.5 15 10"/><path d="M15.5 4.5 20 9"/>'};
+const wfIcon=id=>html`<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" dangerouslySetInnerHTML=${{__html:WF_ICONS[id]||WF_ICONS.docs}}/>`;
+const wfLast=(w,narrow)=>{let v=null;try{v=localStorage.getItem('remodel-studio:wf:'+w.id);}catch(e){}const pg=wfPages(w,narrow);return pg.some(x=>x[0]===v)?v:pg[0][0];};
+const wfGo=(setMode,narrow)=>(w,pageId)=>{const id=pageId||wfLast(w,narrow);try{localStorage.setItem('remodel-studio:wf:'+w.id,id);}catch(e){}setMode(id);};
+// iOS-style tab bar at the bottom of the window: one tab per workflow, with an icon and a label
+function WorkflowTabBar({mode,setMode,narrow,nErr,nWarn}){const cur=wfOfMode(mode);const go=wfGo(setMode,narrow);
+  return html`<nav className="tabbar" role="tablist" aria-label="Workflow">${WORKFLOWS.map((w,i)=>html`<button key=${w.id} role="tab" aria-selected=${cur.id===w.id} className=${'wf-tab'+(cur.id===w.id?' on':'')+(w.id==='check'?' checkbtn':'')} title=${w.title} onClick=${()=>go(w)}>
+      <span className="wf-ic">${wfIcon(w.id)}${w.id==='check'&&nErr?html`<span className="cnt bad">${nErr}</span>`:w.id==='check'&&nWarn?html`<span className="cnt warn">${nWarn}</span>`:null}</span><span className="wf-n">${i+1}</span><span className="wf-l">${w.label}</span></button>`)}</nav>`;}
+// the pages of the current workflow (Model / Systems, Sheets / Schedules …) as a segmented control under the title bar
+function WorkflowPages({mode,setMode,narrow}){const cur=wfOfMode(mode);const go=wfGo(setMode,narrow);const pages=wfPages(cur,narrow);
+  if(pages.length<2)return html`<div className="wf-title"><span className="wf-crumb">${cur.label}</span></div>`;
+  return html`<div className="wf-title"><span className="wf-crumb">${cur.label}</span><div className="seg wf-pages" role="group" aria-label=${cur.label+' pages'}>${pages.map(([k,l])=>html`<button key=${k} className=${mode===k||(k==='design'&&['split','plan','3d'].includes(mode)&&!narrow)?'on':''} onClick=${()=>go(cur,k)}>${l}</button>`)}</div></div>`;}
+const WorkflowTabs=WorkflowTabBar;
 
 /* ---------- issue categories ---------- */
 const ISSUE_CATS=['IRC','IBC','ADA','NKBA','Structure','Framing','Electrical','Plumbing','Appliances','Cabinets','Energy','Zoning','Landscape','Model'];
@@ -21206,7 +21462,7 @@ function paletteCommands(ctx){const C=[];const add=(label,run,kw='',hint='')=>C.
   for(const w of WORKFLOWS)for(const [k,l] of w.pages)add(`Go to ${w.label}${w.pages.length>1?' › '+l:''}`,()=>ctx.setMode(k),w.title+' '+l,'Page');
   add('Save',()=>ctx.doSave(),'file','Ctrl+S');add('Open a project…',()=>ctx.doOpen(),'file','Ctrl+O');add('New project…',()=>ctx.setDlg('new'),'file');add('Save as…',()=>ctx.setDlg('saveas'),'file');add('Backups…',()=>ctx.setDlg('backups'),'restore autosave');add('Versions…',()=>ctx.setDlg('versions'),'history restore');
   add('Undo',ctx.doUndo,'','Ctrl+Z');add('Redo',ctx.doRedo,'','Ctrl+Y');
-  const dl=[['roofwiz','Roof wizard','truss rafter pitch'],['joists','Floor and ceiling joists','framing i-joist truss'],['wallframe','Wall framing and cut list','studs header'],['wallrm','Remove or open a wall','beam bearing'],['styleswap','Change cabinet door style and finish','swap'],['slab','Countertop slab layout','stone quartz granite seam'],['lessons','Lessons','learn tutorial'],['pano','360° panorama','render'],['video','Walk-through video','render'],['photomatch','Photo match','render overlay photo'],['ifc','Export IFC for Revit or Archicad','bim export'],['storeprices','Store prices','lowes home depot price list'],['dxf','Import DWG or DXF','cad'],['obj','Import 3D model','obj glb stl'],['vendors','Import vendor catalog',''],['keys','Keyboard shortcuts','help'],['blocks','Blocks','symbols'],['scanwalls','Walls from a scan or plan photo','lidar point cloud trace auto'],['binder','Homeowner binder','handover manual warranty pdf'],['standards','My standards','defaults selections brands']];
+  const dl=[['roofwiz','Roof wizard','truss rafter pitch'],['joists','Floor and ceiling joists','framing i-joist truss'],['wallframe','Wall framing and cut list','studs header'],['wallrm','Remove or open a wall','beam bearing'],['styleswap','Change cabinet door style and finish','swap'],['slab','Countertop slab layout','stone quartz granite seam'],['lessons','Lessons','learn tutorial'],['pano','360° panorama','render'],['video','Walk-through video','render'],['photomatch','Photo match','render overlay photo'],['ifc','Export IFC for Revit or Archicad','bim export'],['storeprices','Store prices','lowes home depot price list'],['dxf','Import DWG or DXF','cad'],['obj','Import 3D model','obj glb stl'],['vendors','Import vendor catalog',''],['keys','Keyboard shortcuts','help'],['blocks','Blocks','symbols'],['scanwalls','Walls from a scan or plan photo','lidar point cloud trace auto'],['binder','Homeowner binder','handover manual warranty pdf'],['standards','My standards','defaults selections brands'],['appearance','Appearance: light or dark mode','theme colors night']];
   const go=(mode,key,tab)=>()=>{try{localStorage.setItem('remodel-studio:'+key,tab);}catch(e){}ctx.setMode(mode);};
   for(const [m,k,t,l,kw] of [['materials','mattab','cuts','Cut plan for sheet goods','drywall plywood nest optimizer'],['materials','mattab','bids','Bids and quotes','subcontractor compare'],['materials','mattab','actual','Actual costs','receipts budget'],['materials','mattab','co','Change orders',''],['materials','mattab','selections','Selections and orders','track delivery'],['sheets','shtab','finishes','Finish board','samples cabinets counters paint'],['sheets','shtab','present','Board presentation','pdf deck'],['build','buildtab','inspections','Inspection prep','inspector checklist'],['build','buildtab','binder','Homeowner binder','handover'],['build','buildtab','photos','Wall photos','before drywall'],['dashboard','x','x','Job dashboard','home overview']])add(l,go(m,k,t),kw,'Page');
   for(const [k,l,kw] of dl)add(l+'…',()=>ctx.setDlg(k),kw,'Dialog');
@@ -21339,7 +21595,7 @@ const ifcR=v=>{const x=Math.round(v*1e6)/1e6;return Number.isInteger(x)?x.toFixe
 const toM=v=>v*0.0254;
 function buildIFC(p,o={}){const W=ifcWriter();const A=W.add;const now=Math.floor(Date.now()/1000);
   const person=A(`IFCPERSON($,${ifcS(p.info&&p.info.designer||'')},$,$,$,$,$,$)`),org=A(`IFCORGANIZATION($,'Remodel Studio',$,$,$)`),po=A(`IFCPERSONANDORGANIZATION(${person},${org},$)`);
-  const app=A(`IFCAPPLICATION(${org},'2.2','Remodel Studio','RemodelStudio')`);const oh=A(`IFCOWNERHISTORY(${po},${app},$,.ADDED.,$,$,$,${now})`);
+  const app=A(`IFCAPPLICATION(${org},'2.3','Remodel Studio','RemodelStudio')`);const oh=A(`IFCOWNERHISTORY(${po},${app},$,.ADDED.,$,$,$,${now})`);
   const P3=(x,y,z)=>A(`IFCCARTESIANPOINT((${ifcR(x)},${ifcR(y)},${ifcR(z)}))`),P2=(x,y)=>A(`IFCCARTESIANPOINT((${ifcR(x)},${ifcR(y)}))`),D3=(x,y,z)=>A(`IFCDIRECTION((${ifcR(x)},${ifcR(y)},${ifcR(z)}))`),D2=(x,y)=>A(`IFCDIRECTION((${ifcR(x)},${ifcR(y)}))`);
   const O=P3(0,0,0),Z=D3(0,0,1),X=D3(1,0,0);const ax0=A(`IFCAXIS2PLACEMENT3D(${O},${Z},${X})`);
   const ctx=A(`IFCGEOMETRICREPRESENTATIONCONTEXT($,'Model',3,1.E-05,${ax0},$)`);
@@ -21980,6 +22236,19 @@ SHEET_TABS.push(['finishes','Finish board',FinishBoardView]);
   const cols=B.length>8?5:B.length>4?4:Math.max(1,B.length);const rows=Math.ceil(B.length/cols);const gx=0.6,gy=1.45,gw=W-1.1,gh=H-1.45-0.7;const cw=(gw-(cols-1)*0.25)/cols,ch=Math.min(2.7,(gh-(rows-1)*0.2)/rows);const ih=Math.max(0.6,ch-0.7);
   B.forEach((x,i)=>{const c=i%cols,r=Math.floor(i/cols);const X=gx+c*(cw+0.25),Y=gy+r*(ch+0.2);try{d.addImage(x.img,'PNG',X,Y,cw,ih);}catch(e){}d.setDrawColor('#cccccc');d.setLineWidth(0.01);d.rect(X,Y,cw,ih);d.setFont('helvetica','bold');d.setFontSize(8);d.setTextColor('#1f5fbf');d.text(x.group.toUpperCase(),X,Y+ih+0.2);d.setFontSize(10.5);d.setTextColor('#111111');d.text(d.splitTextToSize(x.title,cw)[0],X,Y+ih+0.4);d.setFont('helvetica','normal');d.setFontSize(8.5);d.setTextColor('#555555');d.text(d.splitTextToSize(x.sub||'',cw).slice(0,2),X,Y+ih+0.58);});
   d.setFontSize(9);d.setTextColor('#777777');d.text((P.title||p.name||'Remodel plan')+(p.info?.address?'  ·  '+p.info.address:''),0.6,H-0.35);d.text(String(d.getNumberOfPages()),W-0.5,H-0.35,{align:'right'});return d;};}
+/* ======================= appearance: follow Windows, or force light or dark ======================= */
+const THEME_KEY='remodel-studio:theme';
+function themeGet(){try{return localStorage.getItem(THEME_KEY)||'system';}catch(e){return 'system';}}
+function themeApply(v){const el=document.documentElement;if(v==='light'||v==='dark')el.setAttribute('data-theme',v);else el.removeAttribute('data-theme');}
+function themeSet(v){try{if(v==='system')localStorage.removeItem(THEME_KEY);else localStorage.setItem(THEME_KEY,v);}catch(e){}themeApply(v);window.dispatchEvent(new CustomEvent('rs-theme',{detail:v}));}
+themeApply(themeGet());
+const THEME_ITEMS=()=>[['system','Follow Windows'],['light','Light'],['dark','Dark']].map(([k,l])=>({label:(themeGet()===k?'\u2713 ':'\u2003')+l,run:()=>themeSet(k)}));
+function AppearanceModal({onClose}){const [v,setV]=useState(themeGet());const pick=k=>{setV(k);themeSet(k);};
+  return html`<div className="modal-bg" onPointerDown=${e=>{if(e.target===e.currentTarget)onClose();}}><div className="modal" role="dialog" aria-label="Appearance" style=${{maxWidth:'420px'}}><h2>Appearance</h2>
+    <p className="note">Light or dark colors for the whole program, including the plan and the 3D views. "Follow Windows" uses the setting in Windows Settings \u203a Personalization \u203a Colors.</p>
+    <div className="seg" role="radiogroup" aria-label="Theme">${[['system','Follow Windows'],['light','Light'],['dark','Dark']].map(([k,l])=>html`<button key=${k} role="radio" aria-checked=${v===k} className=${v===k?'on':''} onClick=${()=>pick(k)}>${l}</button>`)}</div>
+    <div className="row" style=${{marginTop:'14px',justifyContent:'flex-end'}}><button className="btn primary" onClick=${onClose}>Done</button></div></div></div>`;}
+EXTRA_DIALOGS.appearance=AppearanceModal;
 /* ======================= app ======================= */
 function App(){
   const narrow=window.matchMedia('(max-width: 820px)').matches;
@@ -22122,7 +22391,7 @@ function App(){
         {label:'Cut',key:'Ctrl+X',run:doCut,disabled:!sel},{label:'Copy',key:'Ctrl+C',run:doCopy,disabled:!sel},{label:'Paste',key:'Ctrl+V',run:doPaste,disabled:!clip.current},
         {label:'Duplicate',key:'Ctrl+D',run:doDup,disabled:!sel},{label:'Rotate 90° or flip',key:'E',run:doRotate,disabled:!sel},{label:'Delete',key:'Del',run:onDelete,disabled:!sel},'-',
         {label:'Select nothing',key:'Esc',run:()=>setSel(null),disabled:!sel},'-',{label:'Save selection as block…',run:()=>setDlg('blocks'),disabled:!sel},{label:'Blocks…',run:()=>setDlg('blocks')}]}/>
-      ${mode==='design'?null:html`<${MenuButton} id="menu-help" label="Help" items=${[{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')}]}/>`}
+      ${mode==='design'?null:html`<${MenuButton} id="menu-help" label="Help" items=${[{label:'Lessons…',run:()=>setDlg('lessons')},{label:'Keyboard shortcuts',key:'?',run:()=>setDlg('keys')},{label:'Appearance (light or dark)…',run:()=>setDlg('appearance')},{label:'My standards…',run:()=>setDlg('standards')}]}/>`}
       <div id="rs-menuslot" className="menuslot"></div>
       </div>
       <div className="projname" title=${project.name+(dirty?' (not saved)':'')}>${project.name}${dirty?html`<span className="dirty" aria-label="not saved"> •</span>`:null}</div>
@@ -22132,7 +22401,7 @@ function App(){
       <button className="btn undo-redo" onClick=${doRedo} disabled=${!redo.current.length} aria-label="Redo" title="Redo (Ctrl+Y)">${I.redo}</button>
     </header>
     <nav className="wfbar" aria-label="Workflow">
-      <${WorkflowTabs} mode=${mode} setMode=${setMode} narrow=${narrow} nErr=${nErr} nWarn=${nWarn}/>
+      <${WorkflowPages} mode=${mode} setMode=${setMode} narrow=${narrow}/>
       <div className="spacer"></div>
       <select id="option-pick" className="inp lvlsel" value=${ensureOptions(project).activeOption} onChange=${e=>{const v=e.target.value;if(v==='__new'){commit(addOption(project));}else commit(switchOption(project,v));setSel(null);}} aria-label="Design option" title="Design option">${ensureOptions(project).options.map(o=>html`<option key=${o.id} value=${o.id}>${o.name}</option>`)}<option value="__new">+ New option (copy)</option></select>${ensureOptions(project).options.length>1?html`<select className="inp lvlsel" value=${cmpOpt||''} onChange=${e=>setCmpOpt(e.target.value||null)} aria-label="Compare with option" title="Show another option's walls in magenta on the plan"><option value="">Compare: off</option>${ensureOptions(project).options.filter(o=>o.id!==ensureOptions(project).activeOption).map(o=>html`<option key=${o.id} value=${o.id}>vs ${o.name}</option>`)}</select>`:null}
       <select id="layer-pick" className="inp lvlsel" value=${layer} onChange=${e=>setLayer(e.target.value)} aria-label="Remodel layer" title="Which remodel work to show"><option value="both">Existing + new</option><option value="existing">Existing only</option><option value="proposed">New only</option></select>
@@ -22162,6 +22431,7 @@ function App(){
     ${cmdk?html`<${CommandPalette} ctx=${{p:project,sel,commit,setMode,setDlg,setSel:selShow,setLevelId,setTool,setFixtureType,setWallPreset,setOpenPreset,lv,say,doSave,doOpen,doUndo,doRedo,openRender:()=>setRenderOpen(true),openExport:()=>setExportOpen(true),issues}} onClose=${()=>setCmdk(false)}/>`:null}
     ${toast?html`<div className=${'toast'+(toast.ok?'':' err')} role="status">${toast.t}</div>`:null}
     ${exportOpen?html`<${ExportModal} p=${project} sun=${sun} onClose=${()=>setExportOpen(false)} onRender=${()=>setRenderOpen(true)}/>`:null}${renderOpen?html`<${RenderStudio} p=${project} sun=${sun} onClose=${()=>setRenderOpen(false)}/>`:null}
+    <${WorkflowTabBar} mode=${mode} setMode=${setMode} narrow=${narrow} nErr=${nErr} nWarn=${nWarn}/>
   </div>`;
 }
 ReactDOM.createRoot(document.getElementById('root')).render(html`<${App}/>`);

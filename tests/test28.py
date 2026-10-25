@@ -1,7 +1,7 @@
 from h import *
 def cmd(pg,t):
     pg.locator('.cmdbar input').fill(t); pg.locator('.cmdbar input').press('Enter'); pg.wait_for_timeout(150)
-with app() as (pg,errs):
+with app(1400,1000) as (pg,errs):
     pg.evaluate("()=>window.__app.setMode('plan')"); pg.wait_for_timeout(500); pg.keyboard.press('f'); pg.wait_for_timeout(300)
     # line via command line with typed coordinates
     cmd(pg,'L'); cmd(pg,"-10',-5'"); cmd(pg,"@20',0"); cmd(pg,"@10'<90"); pg.keyboard.press('Escape'); pg.wait_for_timeout(200)

@@ -16,7 +16,9 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     const groundMat=new THREE.MeshStandardMaterial({color:0xcccccc,roughness:1});
     const ground=new THREE.Mesh(new THREE.PlaneGeometry(600,600),groundMat); ground.rotation.x=-Math.PI/2; ground.position.y=-0.02; ground.receiveShadow=true; scene.add(ground);
     const model=new THREE.Group(); scene.add(model);
-    const render=()=>renderer.render(scene,camera);
+    // render after making sure the canvas still matches its box (a resize can arrive before the observer fires, e.g. when the pane layout changes)
+    const syncSize=()=>{const h=host.current;if(!h)return false;const r=h.getBoundingClientRect();const w=Math.round(r.width),ht=Math.round(r.height);if(w&&ht&&(Math.abs(renderer.domElement.width-w*renderer.getPixelRatio())>1||Math.abs(renderer.domElement.height-ht*renderer.getPixelRatio())>1)){renderer.setSize(w,ht,false);camera.aspect=w/ht;camera.updateProjectionMatrix();return true;}return false;};
+    const render=()=>{syncSize();renderer.render(scene,camera);};
     controls.addEventListener('change',render);
     const ro=new ResizeObserver(()=>{if(!host.current)return;const r=host.current.getBoundingClientRect();if(!r.width||!r.height)return;renderer.setSize(r.width,r.height,false);camera.aspect=r.width/r.height;camera.updateProjectionMatrix();const st=S.current;if(st)st.sized=true;if(st&&!st.fitted&&st.model.children.length){fit3d(st);st.fitted=true;}render();});
     ro.observe(host.current);
@@ -24,11 +26,12 @@ function View3D({project:p,levelId,sel,cutaway,showRoof,fitToken,struct,layer,su
     const mq=window.matchMedia('(prefers-color-scheme: dark)'); mq.addEventListener?.('change',themeSync);
     const mo=new MutationObserver(themeSync); mo.observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
     themeSync();
-    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,themeSync,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
+    S.current={renderer,scene,camera,controls,sun,hemi,model,ground,render,syncSize,themeSync,fitted:false,clipPlane:new THREE.Plane(new THREE.Vector3(0,-1,0),1e6),walk:{on:false,yaw:0,pitch:0,keys:new Set(),pos:null}};
     window.__view3d=S.current;
     return ()=>{ro.disconnect();mo.disconnect();mq.removeEventListener?.('change',themeSync);controls.dispose();renderer.dispose();renderer.domElement.remove();if(window.__view3d===S.current)window.__view3d=null;};
   },[]);
 
+  useEffect(()=>{const st=S.current;if(st&&st.syncSize&&st.syncSize())st.render();});
   const selRef=useRef(sel);selRef.current=sel;useEffect(()=>{const st=S.current;if(!st||!st.model)return;highlight3D(st.model,sel);st.render();},[sel]);
   useEffect(()=>{const st=S.current;if(!st)return;buildModel(st,p,levelId,null,{cutaway:walk?true:cutaway,showRoof:walk?true:showRoof,struct,layer,interior:walk,ceilings:clip.mode!=='off',framing:framing&&!walk});try{applyMetalEnv(st.model,st.renderer);}catch(e){}if(tint&&typeof tint3D==='function'){try{tint3D(st.model,p,tint);}catch(e){console.error(e);}}highlight3D(st.model,selRef.current);if(st.themeSync){const bg=cssVar('--sky');if(!st.scene.background||'#'+st.scene.background.getHexString()!==bg.toLowerCase())st.themeSync();}if(st.ground){updateGround3D(st,p);const see=!!(lvlOf(p,levelId)?.basement)&&(cutaway||walk);const gm=st.ground.material;if(gm.transparent!==see){gm.transparent=see;gm.opacity=see?0.22:1;gm.depthWrite=!see;gm.needsUpdate=true;}}if(cloud&&cloud.pts){const n=cloud.pts.length/3;const arr=new Float32Array(n*3);for(let i=0;i<n;i++){arr[i*3]=cloud.pts[i*3]*IN;arr[i*3+1]=cloud.pts[i*3+2]*IN;arr[i*3+2]=cloud.pts[i*3+1]*IN;}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(arr,3));let mat;if(cloud.colors){const c=new Float32Array(n*3);for(let i=0;i<n*3;i++)c[i]=cloud.colors[i]/255;g.setAttribute('color',new THREE.BufferAttribute(c,3));mat=new THREE.PointsMaterial({size:0.12,vertexColors:true});}else mat=new THREE.PointsMaterial({size:0.12,color:0xc0503a});st.model.add(new THREE.Points(g,mat));}
     applyClip(st,clip,p);if(!st.fitted&&st.sized&&!st.walk.on){fit3d(st);st.fitted=true;}st.render();applySun(st,sunInfo);st.render();if(window.__onModelBuilt)window.__onModelBuilt(st);},[tint,p,levelId,cutaway,showRoof,struct,layer,sunInfo,cloud,walk,framing,clip.mode!=='off',modelTick]);
